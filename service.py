@@ -19,9 +19,9 @@ class read_one_table(db_connection):
     
     def __init__(self, table):
         self.table = table
-        #self.user_values = user_values
       
     def read_all_from_one_table(self):
+        """ GET WHOLE TABLE BASED ON TABLE NAME """
         try: 
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 all_fields = "SELECT * FROM {0};".format(self.table)
@@ -32,11 +32,11 @@ class read_one_table(db_connection):
             print(e)
         finally:
             print("Query Completed")
-            #db_connection.connection.close()
     
 class query_read_recipes(db_connection):
     
     def query_read_user(self, user_values):
+        """ GET USER ID FOR GIVEN USER BASED ON USER DETAILS"""
         try:
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 get_id_query = """SELECT UserId FROM User 
@@ -50,23 +50,22 @@ class query_read_recipes(db_connection):
             print(e)
         finally:
             print("Query Completed")
-            #db_connection.connection.close()
 
     def query_read_recipe_table_from_user_id(self, user_id):
+        """ GET WHOLE RECIPE TABLE FOR GIVEN USER """
         try:
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 recipes_query = """SELECT * FROM Recipe WHERE UserId = %s;"""
                 cursor.execute(recipes_query, user_id)
                 recipes = [row for row in cursor]
-                #print(recipes)
                 return recipes
         except pymysql.err.OperationalError as e:
             print(e)
         finally:
             print("Query Completed")
-            #db_connection.connection.close()
-    
+  
     def query_read_for_recipe_stats(self, recipe_id):
+        """ GET STATS FOR GIVEN RECIPE BASED ON RECIPE ID """
         try:
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 stats_query = """SELECT Rating.Rating, Comments, Cheap , Cost.Moderate, Pricey, 
@@ -79,7 +78,6 @@ class query_read_recipes(db_connection):
                                     
                 cursor.execute(stats_query, recipe_id)
                 stats = [row for row in cursor]
-                #print(stats)
                 return(stats)
         except pymysql.err.OperationalError as e:
             print(e)
