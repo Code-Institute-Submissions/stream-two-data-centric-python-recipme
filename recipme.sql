@@ -99,12 +99,12 @@ CREATE TABLE `MakePublic`
 
 CREATE TABLE `Cost`
 (
-    `MakePublicId` INT NOT NULL AUTO_INCREMENT,
+    `CostId` INT NOT NULL AUTO_INCREMENT,
     `Cheap` BOOLEAN NOT NULL,
     `Moderate` BOOLEAN NOT NULL,
     `Pricey` BOOLEAN NOT NULL,
     `RecipeId` INT NOT NULL,
-    CONSTRAINT `PK_Make_Public` PRIMARY KEY (`MakePublicId`)
+    CONSTRAINT `PK_Cost` PRIMARY KEY (`CostId`)
 );
 
 CREATE TABLE `Method`
@@ -136,19 +136,19 @@ CREATE INDEX `IFK_RecipeUserId` ON `Recipe` (`UserId`);
 
 
 ALTER TABLE `Cuisine` ADD CONSTRAINT `FK_CuisineRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_CuisineRecipeId` ON `Cuisine` (`RecipeId`);
 
 
 ALTER TABLE `Course` ADD CONSTRAINT `FK_CourseRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_CourseRecipeId` ON `Course` (`RecipeId`);
 
 
 ALTER TABLE `Rating` ADD CONSTRAINT `FK_RatingRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_RatingRecipeId` ON `Rating` (`RecipeId`);
 
@@ -159,35 +159,36 @@ CREATE INDEX `IFK_RatingUserId` ON `Rating` (`UserId`);
 
 
 ALTER TABLE `Health` ADD CONSTRAINT `FK_HealthRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_HealthRecipeId` ON `Health` (`RecipeId`);
 
 
 ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe`(`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe`(`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_IngredientRecipeId` ON `Ingredient`(`RecipeId`);
 
 
 ALTER TABLE `MakePublic` ADD CONSTRAINT `FK_Make_PublicRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_MakePublicRecipeId` ON `MakePublic` (`RecipeId`);
 
+
 ALTER TABLE `Cost` ADD CONSTRAINT `FK_CostRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_CostRecipeId` ON `Cost` (`RecipeId`);
 
 
 ALTER TABLE `Method` ADD CONSTRAINT `FK_MethodRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_MethodRecipeId` ON `Method` (`RecipeId`);
 
 ALTER TABLE `Servings` ADD CONSTRAINT `FK_ServingsRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_ServingsRecipeId` ON `Servings` (`RecipeId`);
 
@@ -197,7 +198,7 @@ CREATE INDEX `IFK_ServingsRecipeId` ON `Servings` (`RecipeId`);
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'Dafydd','Archard','password');
 
-INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`UserId`) VALUES ('BEANS ON TOAST',NOW(),'BEANS ON TOAST with brown sauce', 1);
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10, 1);
 
 INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 1);
 
@@ -226,7 +227,7 @@ INSERT INTO `Servings`(`One`,`TwotoFour`,`FourtoEight`,`EightandOver`,`RecipeId`
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'Frances','Ulph','password');
 
-INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`UserId`) VALUES ('Poached Eggs with Asparagus',NOW(),'Poached Eggs with Asparagus', 11);
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`) VALUES ('Poached Eggs with Asparagus',NOW(),'Poached Eggs with Asparagus',15, 11);
 
 INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 11);
 
