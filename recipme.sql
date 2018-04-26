@@ -40,6 +40,7 @@ CREATE TABLE `Recipe`
     `Image URL` NVARCHAR(500),
     `RecipeDescription` NVARCHAR (500) NOT NULL,
     `CookingTimeMins` INT NOT NULL,
+    `MakePublic` BOOLEAN NOT NULL,
     `UserId` INT NOT NULL,
     CONSTRAINT `PK_Recipe` PRIMARY KEY (`RecipeId`)
 );
@@ -87,14 +88,6 @@ CREATE TABLE `Ingredient`
     `RecipeId` INT NOT NULL,
     `Quantity` NVARCHAR(200) NOT NULL,
     CONSTRAINT `PK_Ingredient` PRIMARY KEY (`IngredientId`)
-);
-
-CREATE TABLE `MakePublic`
-(
-    `MakePublicId` INT NOT NULL AUTO_INCREMENT,
-    `MakePublic` BOOLEAN NOT NULL,
-    `RecipeId` INT NOT NULL,
-    CONSTRAINT `PK_MakePublic` PRIMARY KEY (`MakePublicId`)
 );
 
 CREATE TABLE `Cost`
@@ -169,13 +162,6 @@ ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientRecipeId`
 
 CREATE INDEX `IFK_IngredientRecipeId` ON `Ingredient`(`RecipeId`);
 
-
-ALTER TABLE `MakePublic` ADD CONSTRAINT `FK_Make_PublicRecipeId`
-    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
-CREATE INDEX `IFK_MakePublicRecipeId` ON `MakePublic` (`RecipeId`);
-
-
 ALTER TABLE `Cost` ADD CONSTRAINT `FK_CostRecipeId`
     FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -198,7 +184,7 @@ CREATE INDEX `IFK_ServingsRecipeId` ON `Servings` (`RecipeId`);
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'Dafydd','Archard','password');
 
-INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10, 1);
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`, `MakePublic`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10, 1,1);
 
 INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 1);
 
@@ -207,8 +193,6 @@ INSERT INTO `Course` (`CourseName`,`RecipeId`) VALUES ('Lunch', 1);
 INSERT INTO `Rating` (`Rating`,`Comments`,`RecipeId`,`UserId`) VALUES (5,'Loveley stuff',1,1);
 
 INSERT INTO `Health` (`Healthy`,`Moderate`,`Unhealthy`,`RecipeId`) VALUES (0,1,0,1);
-
-INSERT INTO `MakePublic` (`MakePublic`, `RecipeId` ) VALUES (1,1);
 
 INSERT INTO `Cost` (`Cheap`,`Moderate`,`Pricey`,`RecipeId`) VALUES (1,0,0,1);
 
@@ -227,7 +211,7 @@ INSERT INTO `Servings`(`One`,`TwotoFour`,`FourtoEight`,`EightandOver`,`RecipeId`
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'Frances','Ulph','password');
 
-INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`) VALUES ('Poached Eggs with Asparagus',NOW(),'Poached Eggs with Asparagus',15, 11);
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`, `MakePublic`) VALUES ('Poached Eggs with Asparagus',NOW(),'Poached Eggs with Asparagus',15, 11,1);
 
 INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 11);
 
@@ -236,8 +220,6 @@ INSERT INTO `Course` (`CourseName`,`RecipeId`) VALUES ('Breakfast', 11);
 INSERT INTO `Rating` (`Rating`,`Comments`,`RecipeId`,`UserId`) VALUES (4,'Nice and Light',11,11);
 
 INSERT INTO `Health` (`Healthy`,`Moderate`,`Unhealthy`,`RecipeId`) VALUES (0,1,0,11);
-
-INSERT INTO `MakePublic` (`MakePublic`, `RecipeId` ) VALUES (0,11);
 
 INSERT INTO `Cost` (`Cheap`,`Moderate`,`Pricey`,`RecipeId`) VALUES (0,0,0,11);
 
