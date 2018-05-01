@@ -16,11 +16,11 @@ def get_user_id(user_values):
     #print(user_id)
     return user_id
     
-def get_recipe_table_for_user(user_values):
+def get_mini_recipe(user_values):
     user_id = get_user_id(user_values)
     query_recipe = service.query_read_recipes()
-    recipe = query_recipe.query_read_recipe_table_from_user_id(user_id[0])
-    #print(recipe)
+    recipe = query_recipe.query_mini_recipe_from_user_id(user_id[0])
+    print(recipe)
     return recipe
 
 def get_recipe_stats_from_recipe_id(recipe_id):
@@ -29,6 +29,6 @@ def get_recipe_stats_from_recipe_id(recipe_id):
     print(stats)
     return stats
 
-get_user_id(user_values)
-get_recipe_table_for_user(user_values)
-get_recipe_stats_from_recipe_id('1')
+##get_user_id(user_values)
+get_mini_recipe(user_values)
+#get_recipe_stats_from_recipe_id('1')

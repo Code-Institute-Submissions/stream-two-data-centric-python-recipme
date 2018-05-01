@@ -51,11 +51,25 @@ class query_read_recipes(db_connection):
         finally:
             print("Query Completed")
 
-    def query_read_recipe_table_from_user_id(self, user_id):
-        """ GET WHOLE RECIPE TABLE FOR GIVEN USER """
+## UPDATE THIS QUERY SO THAT IT JOINS ALL THE INFO NEEDED FOR THE MINI RECIPE DISPLAY, ##
+## NOT JUST FULL RECIPE TABLE VIEW, USE FOR PUBLIC FEED, SEARCH FEED AND MY RECIPES VIEW ##
+    def query_mini_recipe_from_user_id(self, user_id):
+        """ GET ALL MINI RECIPE VIEW FOR GIVEN USER, UNFILTERED, USE FOR ME PAGE OF MINI RECIPES """
         try:
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                recipes_query = """SELECT * FROM Recipe WHERE UserId = %s;"""
+                recipes_query = """SELECT RecipeTitle, RecipeDescription, CookingTimeMins, Rating.Rating, 
+                                    Rating.Comments, User.Username, Cost.Cheap, Cost.Moderate, Cost.Pricey,
+                                    One, TwotoFour, FourtoEight, EightandOver, CuisineName, Healthy, 
+                                    Health.Moderate as Medium,Unhealthy, CourseName
+                                    FROM Recipe 
+                                    JOIN Rating on Recipe.RecipeId = Rating.RatingId
+                                    JOIN User on Recipe.UserId = User.UserId
+                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
+                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
+                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
+                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
+                                    JOIN Course on Recipe.RecipeId = Course.RecipeId
+                                    WHERE Recipe.UserId = %s;"""
                 cursor.execute(recipes_query, user_id)
                 recipes = [row for row in cursor]
                 return recipes
@@ -63,7 +77,23 @@ class query_read_recipes(db_connection):
             print(e)
         finally:
             print("Query Completed")
-  
+
+    """
+    def query_read_recipe_table_from_user_id(self, user_id):
+        GET MINI RECIPE VIEW FOR GIVEN USER 
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = ""SELECT * FROM Recipe WHERE UserId = %s;""
+                cursor.execute(recipes_query, user_id)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query Completed")        
+
+    """
+  ## START OF PARTIAL QUERIES FOR FULL RECIPE VIEW ##
     def query_read_for_recipe_stats(self, recipe_id):
         """ GET STATS FOR GIVEN RECIPE BASED ON RECIPE ID """
         try:
@@ -83,3 +113,6 @@ class query_read_recipes(db_connection):
             print(e)
         finally:
             print("Query Completed")
+
+## NEED TO COMPLETE QUERIES FOR FULL RECIPE VIEW ##
+
