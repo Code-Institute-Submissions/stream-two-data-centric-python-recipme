@@ -15,6 +15,18 @@ class db_connection():
                 password=os.environ.get('DATABASE_PASSWORD'), 
                 db=os.environ.get('DATABASE_NAME'))
 
+    main_selection = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
+                                    Rating.Comments, User.Username, Price, Servings, CuisineName, Calories, 
+                                    CourseName
+                                    FROM Recipe 
+                                    JOIN Rating on Recipe.RecipeId = Rating.RatingId
+                                    JOIN User on Recipe.UserId = User.UserId
+                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
+                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
+                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
+                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
+                                    JOIN Course on Recipe.RecipeId = Course.RecipeId"""
+
 class read_one_table(db_connection):
     
     def __init__(self, table):
@@ -35,8 +47,8 @@ class read_one_table(db_connection):
     
 class query_read_recipes(db_connection):
     
-    def query_read_user_for_id(self, user_values):
-        """ GET USER ID FOR GIVEN USER BASED ON USER DETAILS"""
+    def query_user_id(self, user_values):
+        """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
         try:
             with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 get_id_query = """SELECT UserId FROM User 
@@ -51,59 +63,88 @@ class query_read_recipes(db_connection):
         finally:
             print("Query read user completed")
 
+##### THIS WILL GET ALL UNFILTERED MINI VIEW RECIPES FOR USER, PUBLIC, RECIPE ID, SORTED BY CALORIES ETC... #####
+    def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
+        """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY GIVEN USER SELECTION  """
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = db_connection.main_selection + """ 
+                                WHERE %s = %s ORDER BY %s %s;""" % (search_by, search_value, order_by, direction) #SEARCH BY VALUE CAN BE USERID,MAKEPUBLIC, RECIPE ID#                    
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get mini recipes completed")
 
-    def query_all_mini_recipe(self, search_by, value):
-        """ GET ALL MINI RECIPE VIEW FOR GIVEN USER, UNFILTERED, OR FROM ALL RECIPES DECLARED PUBLIC BY A VALUE OF 1 FOR TRUE """
+## USE THIS QUERY WHEN UDER SELECTS GIVEN CUISINE, AND COURSE TO CHOOSE FROM ##
+    def query_filter_mini_recipes(self, search_by, search_value, course, cuisine, order_by, direction):
+        """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = db_connection.main_selection + """
+                                    WHERE %s = %s AND CourseName LIKE '%s' AND CuisineName LIKE '%s'
+                                    ORDER BY %s %s;""" % (search_by, search_value, course, cuisine, order_by, direction)                   
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get mini recipes completed")
+
+    def query_search_ingredient(self, search_by, search_value, course, cuisine, order_by, direction):
+        """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
+                                    Rating.Comments, User.Username, Price, Servings, CuisineName, Calories, 
+                                    CourseName
+                                    FROM Recipe 
+                                    JOIN Rating on Recipe.RecipeId = Rating.RatingId
+                                    JOIN User on Recipe.UserId = User.UserId
+                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
+                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
+                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
+                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
+                                    JOIN Course on Recipe.RecipeId = Course.RecipeId"""              
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get mini recipes completed")
+
+    def query_ingredients_for_full_recipe(self, recipe_id):
+        """ GET FULL RECIPE BASED ON GIVEN RECIPE ID """
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = """SELECT IngredientName, Quantity FROM Ingredient
+                                    WHERE Ingredient.RecipeId = %s;""" % (recipe_id)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get ingredients completed")
+
+    def query_method_for_full_recipe(self, recipe_id):
+        try:
+            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = """SELECT StepNumber, StepDescription FROM Method
+                                    WHERE Method.RecipeId = %s;""" % (recipe_id)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get method completed")
         
-        try:
-            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                recipes_query = """SELECT RecipeTitle, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
-                                    Rating.Comments, User.Username, Price, Servings, CuisineName, Calories, 
-                                    CourseName
-                                    FROM Recipe 
-                                    JOIN Rating on Recipe.RecipeId = Rating.RatingId
-                                    JOIN User on Recipe.UserId = User.UserId
-                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
-                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
-                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
-                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
-                                    JOIN Course on Recipe.RecipeId = Course.RecipeId
-                                    WHERE Recipe.%s = %s;""" % (search_by, value)
-                cursor.execute(recipes_query)
-                recipes = [row for row in cursor]
-                return recipes
-        except pymysql.err.OperationalError as e:
-            print(e)
-        finally:
-            print("Query Completed")
-
-    def query_mini_recipe_sorted(self, search_by, value):
-        """ GET ALL MINI RECIPES FILTERED BY CUISINE AND COURSE, SORTED BY EITHER COST,  """
-        try:
-            with db_connection.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                recipes_query = """SELECT RecipeTitle, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
-                                    Rating.Comments, User.Username, Price, Servings, CuisineName, Calories, 
-                                    CourseName
-                                    FROM Recipe 
-                                    JOIN Rating on Recipe.RecipeId = Rating.RatingId
-                                    JOIN User on Recipe.UserId = User.UserId
-                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
-                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
-                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
-                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
-                                    JOIN Course on Recipe.RecipeId = Course.RecipeId
-                                    WHERE Recipe.%s = %s
-                                    ORDER BY RecipeTitle asc;""" % (search_by, value)
-                                    
-                cursor.execute(recipes_query)
-                recipes = [row for row in cursor]
-                return recipes
-        except pymysql.err.OperationalError as e:
-            print(e)
-        finally:
-            print("Query Completed")
-
-    
+        
 
 ## NEED TO COMPLETE QUERIES FOR FULL RECIPE VIEW ##
 
