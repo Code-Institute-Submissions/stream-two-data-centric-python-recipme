@@ -6,20 +6,21 @@ from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD
 
   
 #### TO COME FROM FORM ####
-user_values = ["Dafydd","Archard","Password"]
+user_values = ["Frances","Ulph","Password"]
+
 ###########################
 
 def get_user_id(user_values):
     query = service.query_read_recipes()
-    user = query.query_read_user(user_values)
+    user = query.query_read_user_for_id(user_values)
     user_id = [item['UserId'] for item in user]
     #print(user_id)
     return user_id
     
-def get_mini_recipe(user_values):
+def get_mini_recipe_for_user(user_values):
     user_id = get_user_id(user_values)
     query_recipe = service.query_read_recipes()
-    recipe = query_recipe.query_mini_recipe_from_user_id(user_id[0])
+    recipe = query_recipe.query_all_mini_recipe('UserId', user_id[0])
     print(recipe)
     return recipe
 
@@ -29,6 +30,20 @@ def get_recipe_stats_from_recipe_id(recipe_id):
     print(stats)
     return stats
 
+def get_mini_recipe_for_public_recipes():
+    query_recipe = service.query_read_recipes()
+    recipe = query_recipe.query_all_mini_recipe('MakePublic', 1)
+    print(recipe)
+    return recipe
+
+def get_mini_recipe_sorted(user_values):
+    user_id = get_user_id(user_values)
+    query_recipe = service.query_read_recipes()
+    recipe = query_recipe.query_mini_recipe_sorted('UserId', user_id[0])
+    print(recipe)
+    return recipe
 ##get_user_id(user_values)
-get_mini_recipe(user_values)
+#get_mini_recipe_for_user(user_values)
+#get_mini_recipe_for_public_recipes()
+get_mini_recipe_sorted(user_values)
 #get_recipe_stats_from_recipe_id('1')

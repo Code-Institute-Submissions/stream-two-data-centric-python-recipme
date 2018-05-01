@@ -3,14 +3,13 @@
 
 CREATE DATABASE `heroku_4d0654e61ed0a78`;*/
 
-USE `heroku_4d0654e61ed0a78`;
+USE `heroku_8956bc974ce0fed`;
 
 DROP TABLE `Cuisine`;
 DROP TABLE `Course`;
 DROP TABLE `Rating`;
 DROP TABLE `Health`;
 DROP TABLE `Ingredient`;
-DROP TABLE `MakePublic`;
 DROP TABLE `Cost`;
 DROP TABLE `Method`;
 DROP TABLE `Servings`;
@@ -37,7 +36,7 @@ CREATE TABLE `Recipe`
     `RecipeId` INT NOT NULL AUTO_INCREMENT,
     `RecipeTitle` NVARCHAR(160) NOT NULL,
     `Created` DATETIME NOT NULL,
-    `Image URL` NVARCHAR(500),
+    `ImageURL` NVARCHAR(500) DEFAULT 'NONE',
     `RecipeDescription` NVARCHAR (500) NOT NULL,
     `CookingTimeMins` INT NOT NULL,
     `MakePublic` BOOLEAN NOT NULL,
@@ -74,9 +73,7 @@ CREATE TABLE `Rating`
 CREATE TABLE `Health`
 (
     `HealthId` INT NOT NULL AUTO_INCREMENT,
-    `Healthy` BOOLEAN NOT NULL,
-    `Moderate` BOOLEAN NOT NULL,
-    `Unhealthy` BOOLEAN NOT NULL,
+    `Calories` INT NOT NULL,
     `RecipeId` INT NOT NULL,
     CONSTRAINT `PK_Health` PRIMARY KEY (`HealthId`)
 );
@@ -93,9 +90,7 @@ CREATE TABLE `Ingredient`
 CREATE TABLE `Cost`
 (
     `CostId` INT NOT NULL AUTO_INCREMENT,
-    `Cheap` BOOLEAN NOT NULL,
-    `Moderate` BOOLEAN NOT NULL,
-    `Pricey` BOOLEAN NOT NULL,
+    `Price` INT NOT NULL,
     `RecipeId` INT NOT NULL,
     CONSTRAINT `PK_Cost` PRIMARY KEY (`CostId`)
 );
@@ -112,10 +107,7 @@ CREATE TABLE `Method`
 CREATE TABLE `Servings`
 (
     `ServingsId` INT NOT NULL AUTO_INCREMENT,
-    `One` BOOLEAN NOT NULL,
-    `TwotoFour` BOOLEAN NOT NULL,
-    `FourtoEight` BOOLEAN NOT NULL,
-    `EightandOver` BOOLEAN NOT NULL,
+    `Servings` INT NOT NULL,
     `RecipeId` INT NOT NULL,
     CONSTRAINT `PK_Servings` PRIMARY KEY (`ServingsId`)
 );
@@ -184,7 +176,7 @@ CREATE INDEX `IFK_ServingsRecipeId` ON `Servings` (`RecipeId`);
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'Dafydd','Archard','password');
 
-INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`, `MakePublic`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10, 1,1);
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`, `MakePublic`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10,1,1);
 
 INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 1);
 
@@ -192,9 +184,9 @@ INSERT INTO `Course` (`CourseName`,`RecipeId`) VALUES ('Lunch', 1);
 
 INSERT INTO `Rating` (`Rating`,`Comments`,`RecipeId`,`UserId`) VALUES (5,'Loveley stuff',1,1);
 
-INSERT INTO `Health` (`Healthy`,`Moderate`,`Unhealthy`,`RecipeId`) VALUES (0,1,0,1);
+INSERT INTO `Health` (`Calories`,`RecipeId`) VALUES (500,1);
 
-INSERT INTO `Cost` (`Cheap`,`Moderate`,`Pricey`,`RecipeId`) VALUES (1,0,0,1);
+INSERT INTO `Cost` (`Price`, `RecipeId`) VALUES (10,1);
 
 INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Baked Beans',1,'One tin');
 INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Sliced Bread',1,'2 Slices');
@@ -207,7 +199,7 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (3, 'Hea
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (4, 'Butter Bread', 1);
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (5, 'Pour Beans and add sauce to taste', 1);
 
-INSERT INTO `Servings`(`One`,`TwotoFour`,`FourtoEight`,`EightandOver`,`RecipeId`) VALUES (1, 0, 0, 0, 1);
+INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (4, 1);
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'Frances','Ulph','password');
 
@@ -219,9 +211,9 @@ INSERT INTO `Course` (`CourseName`,`RecipeId`) VALUES ('Breakfast', 11);
 
 INSERT INTO `Rating` (`Rating`,`Comments`,`RecipeId`,`UserId`) VALUES (4,'Nice and Light',11,11);
 
-INSERT INTO `Health` (`Healthy`,`Moderate`,`Unhealthy`,`RecipeId`) VALUES (0,1,0,11);
+INSERT INTO `Health` (`Calories`,`RecipeId`) VALUES (250,11);
 
-INSERT INTO `Cost` (`Cheap`,`Moderate`,`Pricey`,`RecipeId`) VALUES (0,0,0,11);
+INSERT INTO `Cost` (`Price`,`RecipeId`) VALUES (10,11);
 
 INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Eggs',11,'Two Medium');
 INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Muffins',11,'One halved');
@@ -236,7 +228,32 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (3, 'Add
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (4, 'Toast Muffins', 11);
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (5, 'Butter Muffins, lay Asparagus on top of the muffins with eggs on top and serve.', 11);
 
-INSERT INTO `Servings`(`One`,`TwotoFour`,`FourtoEight`,`EightandOver`,`RecipeId`) VALUES (1, 0, 0, 0, 11);
+INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (2, 11);
+
+
+
+INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`, `MakePublic`) VALUES ('Bacon Sandwich',NOW(),'Bacon Sandwich with Ketchup',15, 11,1);
+
+INSERT INTO `Cuisine` (`CuisineName`,`RecipeId` ) VALUES ('British', 21);
+
+INSERT INTO `Course` (`CourseName`,`RecipeId`) VALUES ('lUNCH', 21);
+
+INSERT INTO `Rating` (`Rating`,`Comments`,`RecipeId`,`UserId`) VALUES (4,'Yummm!',21,11);
+
+INSERT INTO `Health` (`Calories`,`RecipeId`) VALUES (550,21);
+
+INSERT INTO `Cost` (`Price`,`RecipeId`) VALUES (5,21);
+
+INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Bacon',21,'Four Rashers');
+INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('White Rolls',21,'One');
+INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Butter',21,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Ketchup',21,'To taste');
+
+INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (1, 'Place bacon under the grill and cook until crispy', 21);
+INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (2, 'Slice Bread and butter', 21);
+INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (3, 'Add sauce to taste', 21);
+
+INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (1, 21);
 
 
 SHOW TABLES;
