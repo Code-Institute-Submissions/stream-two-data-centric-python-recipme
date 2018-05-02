@@ -6,13 +6,16 @@ from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD
   
 #### TO COME FROM FORM ####
 user_values = ["Dafydd","Archard","password"]
-search_by = 'Recipe.UserId' ## MakePublic, UserId ##
+search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
 direction = 'ASC'
 order_by = 'Calories'
 course = "Lunch"
 cuisine = "British"
-recipe_id = 11
+recipe_id = 1
+ingredient = 'Eggs'
 ###########################
+
+
 
 def get_user_id(user_values):
     """ GET A GIVEN USERS ID BASED ON LOGIN VALUES """
@@ -61,10 +64,20 @@ def get_filtered_mini_recipes(search_by, search_value, course, cuisine, order_by
     print(filtered_recipes)
     return filtered_recipes
 
+def get_recipes_by_ingredient(search_by, search_value, ingredient, order_by, direction):
+    query_recipe = service.query_read_recipes()
+    search_recipe = query_recipe.query_search_ingredient(search_by, search_value, ingredient, order_by, direction)
+    print(search_recipe)
+    return search_recipe
+    
+    
+    
+
 ##get_user_id(user_values)
 #get_mini_recipe_for_user(user_values)
 #get_all_mini_recipes(search_by, recipe_id, order_by, direction)
 #get_mini_user_recipes(user_values, search_by, order_by, direction)
 #get_method_for_full_recipe(recipe_id)
 #get_ingredients_for_full_recipe(recipe_id)
-get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
+#get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
+get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
