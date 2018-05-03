@@ -87,9 +87,10 @@ class query_read_recipes(db):
         finally:
             print("Query read user completed")
 
-##### THIS WILL GET ALL UNFILTERED MINI VIEW RECIPES FOR USER, PUBLIC, RECIPE ID, SORTED BY CALORIES ETC... #####
+
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
-        """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY GIVEN USER SELECTION  """
+        """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
+            GIVEN USER SELECTION, PUBLIC AND USER SPECIFIC  """
         try:
             with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 recipes_query = db.main_selection + """ 
@@ -102,7 +103,7 @@ class query_read_recipes(db):
         finally:
             print("Query get mini recipes completed")
 
-## USE THIS QUERY WHEN UDER SELECTS GIVEN CUISINE, AND COURSE TO CHOOSE FROM ##
+
     def query_filter_mini_recipes(self, search_by, search_value, course, cuisine, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
         try:
@@ -177,5 +178,4 @@ class query_read_recipes(db):
             print("Query get method completed")    
     
 
-## NEED TO COMPLETE QUERIES FOR FULL RECIPE VIEW ##
 
