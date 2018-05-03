@@ -24,7 +24,7 @@ def get_user_id(user_values):
     return user_id
     
 def get_all_mini_recipes(search_by, search_value, order_by, direction):
-    """ GET MINI RECIPES FOR DISPLAY ON PUBLIC FEED """ 
+    """ GET ALL MINI RECIPES THAT ARE DECLARED PUBLIC """ 
     query_recipe = db_read.query_read_recipes()
     recipe = query_recipe.query_all_mini_recipes(search_by, search_value, order_by, direction)
     print(recipe)
@@ -85,4 +85,4 @@ def get_saved_recipes_for_user(user_id, order_by, direction):
 #get_ingredients_for_full_recipe(recipe_id)
 #get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
 #get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
-get_saved_recipes_for_user(11, order_by, direction)
+#get_saved_recipes_for_user(11, order_by, direction)

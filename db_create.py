@@ -4,23 +4,25 @@ import unittest
 import myenviron
 from db_read import db
 
-recipe = [{
+class query_create_user(db):
+    
+    def __init__(self, user_values):
+        self.username = user_values['Username'].lower()
+        self.first = user_values['First'].lower()
+        self.last = user_values['Last'].lower()
+        self.password = user_values['Password'].lower()
+       
 
-    'RecipeTitle': ,
-    'RecipeDescription': ,
-    'CookingTimeMins': ,
-    'UserId': ,
-    'MakePublic': ,
-    'RecipeId': ,
-    'CuisineName': ,
-    'CourseName': ,
-    'Calories': ,
-    'Price': ,
-    'IngredientName': []
-
-}]
-
-class 
+    def create_user(self):
+        query = """INSERT INTO User (`Username`,`First`,`Last`,`Password` ) VALUES (%s, %s, %s, %s);"""
+        try:
+            with db.connection.cursor() as cursor:
+                cursor.execute(query, (self.username, self.first, self.last, self.password));
+                db.connection.commit()
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally: 
+            print('New User Created')
 
 class query_create_recipes(db):
 
@@ -39,3 +41,4 @@ class query_create_recipes(db):
             print(e)
         finally:
             print("Query create recipe completed")
+

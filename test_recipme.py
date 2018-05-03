@@ -6,10 +6,10 @@ import unittest
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
 class TestRecipme(unittest.TestCase):
-    def test_read_all_from_one_table(self):
-        table = "recipe"
-        query = db_read.read_one_table(table)
-        result = query.read_all_from_one_table()
+    def test_query_username_and_password(self):
+        user_values = "recipe"
+        query = db_read.user_verify(user_values)
+        result = query.query_username_and_password()
 
         self.assertEqual(type(result), list)
 

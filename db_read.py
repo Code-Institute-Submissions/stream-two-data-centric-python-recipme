@@ -1,6 +1,5 @@
 import os
 import pymysql
-import unittest
 import myenviron
 
 class db():
@@ -10,13 +9,12 @@ class db():
                 password=os.environ.get('DATABASE_PASSWORD'), 
                 db=os.environ.get('DATABASE_NAME'))
 
-    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
-                        Rating.Comments,Price, Servings, CuisineName, Calories, 
+    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, 
+                        Price, Servings, CuisineName, Calories, 
                         CourseName, User.Username as Author"""
 
     main_selection = select + """
                                 FROM Recipe 
-                                JOIN Rating on Recipe.RecipeId = Rating.RecipeId
                                 JOIN User on Recipe.UserId = User.UserId
                                 JOIN Cost on Recipe.RecipeId = Cost.RecipeId
                                 JOIN Servings on Recipe.RecipeId = Servings.RecipeId
@@ -28,7 +26,6 @@ class db():
     search_ingredient =  select + """
                                     FROM Ingredient
                                     JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
-                                    JOIN Rating on Ingredient.RecipeId = Rating.RecipeId
                                     JOIN Cost on Ingredient.RecipeId = Cost.RecipeId
                                     JOIN Servings on Ingredient.RecipeId = Servings.RecipeId
                                     JOIN Cuisine on Ingredient.RecipeId = Cuisine.RecipeId
@@ -41,7 +38,6 @@ class db():
     saved_recipes = select + """
                                 FROM SavedRecipes
                                 JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
-                                JOIN Rating on SavedRecipes.RecipeId = Rating.RecipeId
                                 JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
                                 JOIN Servings on SavedRecipes.RecipeId = Servings.RecipeId
                                 JOIN Cuisine on SavedRecipes.RecipeId = Cuisine.RecipeId
@@ -51,23 +47,27 @@ class db():
                                 """
 
 
-class read_one_table(db):
+class user_verify(db):
     
-    def __init__(self, table):
-        self.table = table
+    def __init__(self, user_values):
+        self.username = user_values['Username']
+        self.password = user_values['Password']
       
-    def read_all_from_one_table(self):
+    def query_username_and_password(self):
         """ GET WHOLE TABLE BASED ON TABLE NAME """
+
         try: 
             with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                all_fields = "SELECT * FROM {0};".format(self.table)
-                cursor.execute(all_fields)
+                query = """SELECT `Username`, `Password` FROM User
+                            WHERE Username = %s AND `Password` = %s;"""
+                cursor.execute(query, (self.username, self.password))
                 from_db = [result for result in cursor]
+                print(from_db)
                 return from_db
         except pymysql.err.OperationalError as e:
             print(e)
         finally:
-            print("Query read one table completed")
+            print("Query Username and Password completed")
     
 class query_read_recipes(db):
     
