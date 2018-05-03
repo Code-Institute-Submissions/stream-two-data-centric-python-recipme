@@ -23,12 +23,12 @@ class TestRecipme(unittest.TestCase):
 
     def test_get_mini_recipes(self):
         
-        search_by = 'MakePublic'
+        search_by = 'Recipe.MakePublic'
         direction = 'ASC'
         order_by = 'Calories'
         search_value = 1
 
-        recipes = recipme.get_mini_recipes(search_by, search_value, order_by, direction)
+        recipes = recipme.get_all_mini_recipes(search_by, search_value, order_by, direction)
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 3)
@@ -36,11 +36,11 @@ class TestRecipme(unittest.TestCase):
     def test_get_mini_user_recipes(self):
         
         user_values = ["Dafydd","Archard","password"]
-        search_by = 'UserId'
+        search_by = 'User.UserId'
         direction = 'ASC'
         order_by = 'Calories'
 
-        recipes = recipme.get_all_mini_user_recipes(user_values, search_by, order_by, direction)
+        recipes = recipme.get_mini_user_recipes(user_values, search_by, order_by, direction)
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 1)
@@ -54,7 +54,7 @@ class TestRecipme(unittest.TestCase):
         self.assertEqual(type(ingredients), list)
         self.assertEqual(len(ingredients), 6)
 
-    def test_get_ingredients_for_full_recipe(self):
+    def test_get_method_for_full_recipe(self):
 
         recipe_id = 11
 
@@ -62,3 +62,47 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(type(method), list)
         self.assertEqual(len(method), 5)
+
+    def test_get_filtered_mini_recipes(self):
+        user_values = ["Dafydd","Archard","password"]
+        search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
+        direction = 'ASC'
+        order_by = 'Calories'
+        course = "Lunch"
+        cuisine = "British"
+      
+        recipe = recipme.get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
+        result = recipe[0]['RecipeTitle']
+        
+
+        self.assertEqual(type(recipe), list)
+        self.assertEqual(result, 'BEANS ON TOAST')
+
+    def test_get_recipes_by_ingredient(self):
+        user_values = ["Dafydd","Archard","password"]
+        search_by = 'Recipe.MakePublic' ## RecipeId, MakePublic, UserId ##
+        direction = 'ASC'
+        order_by = 'Calories'
+        ingredient = 'Eggs'
+      
+        recipe = recipme.get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
+        result = recipe[0]['RecipeTitle']
+        
+
+        self.assertEqual(type(recipe), list)
+        self.assertEqual(result, 'Poached Eggs with Asparagus')
+
+    def test_get_saved_recipes_for_user(self):
+        user_id = 11
+        direction = 'ASC'
+        order_by = 'Calories'
+
+        recipe = recipme.get_saved_recipes_for_user(user_id, order_by, direction)
+        author = recipe[0]['Author']
+
+        # TESTS TO SEE THAT RETURNED USERNAME IS THE ORIGINAL AUTHOR, NOT THE
+        # USERNAME FROM GIVEN ID
+
+        self.assertEqual(type(recipe), list)
+        self.assertEqual(author, 'darchard')  ORIGINAL AUTHOR
+        

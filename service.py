@@ -15,21 +15,22 @@ class db():
                 password=os.environ.get('DATABASE_PASSWORD'), 
                 db=os.environ.get('DATABASE_NAME'))
 
-    main_selection = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
-                                    Rating.Comments, User.Username, Price, Servings, CuisineName, Calories, 
-                                    CourseName
-                                    FROM Recipe 
-                                    JOIN Rating on Recipe.RecipeId = Rating.RecipeId
-                                    JOIN User on Recipe.UserId = User.UserId
-                                    JOIN Cost on Recipe.RecipeId = Cost.RecipeId
-                                    JOIN Servings on Recipe.RecipeId = Servings.RecipeId
-                                    JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
-                                    JOIN Health on Recipe.RecipeId = Health.RecipeId
-                                    JOIN Course on Recipe.RecipeId = Course.RecipeId"""
+    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
+                        Rating.Comments,Price, Servings, CuisineName, Calories, 
+                        CourseName, User.Username as Author"""
 
-    search_ingredient = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, Rating.Rating, 
-                                    Rating.Comments, Price, Servings, CuisineName, Calories, 
-                                    CourseName
+    main_selection = select + """
+                                FROM Recipe 
+                                JOIN Rating on Recipe.RecipeId = Rating.RecipeId
+                                JOIN User on Recipe.UserId = User.UserId
+                                JOIN Cost on Recipe.RecipeId = Cost.RecipeId
+                                JOIN Servings on Recipe.RecipeId = Servings.RecipeId
+                                JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
+                                JOIN Health on Recipe.RecipeId = Health.RecipeId
+                                JOIN Course on Recipe.RecipeId = Course.RecipeId 
+                                """
+
+    search_ingredient =  select + """
                                     FROM Ingredient
                                     JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
                                     JOIN Rating on Ingredient.RecipeId = Rating.RecipeId
@@ -37,9 +38,23 @@ class db():
                                     JOIN Servings on Ingredient.RecipeId = Servings.RecipeId
                                     JOIN Cuisine on Ingredient.RecipeId = Cuisine.RecipeId
                                     JOIN Health on Ingredient.RecipeId = Health.RecipeId
-                                    JOIN Course on Ingredient.RecipeId = Course.RecipeId"""
+                                    JOIN Course on Ingredient.RecipeId = Course.RecipeId
+                                    JOIN User on Ingredient.UserId = User.UserId 
+                                    """
 
-    #### NEED TO GET USERNAME FROM THIS SEARCH ###
+
+    saved_recipes = select + """
+                                FROM SavedRecipes
+                                JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
+                                JOIN Rating on SavedRecipes.RecipeId = Rating.RecipeId
+                                JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
+                                JOIN Servings on SavedRecipes.RecipeId = Servings.RecipeId
+                                JOIN Cuisine on SavedRecipes.RecipeId = Cuisine.RecipeId
+                                JOIN Health on SavedRecipes.RecipeId = Health.RecipeId
+                                JOIN Course on SavedRecipes.RecipeId = Course.RecipeId
+                                JOIN User on Recipe.UserId = User.UserId
+                                """
+
 
 class read_one_table(db):
     
@@ -151,7 +166,21 @@ class query_read_recipes(db):
         finally:
             print("Query get method completed")
     
-        
+    def query_users_saved_recipes(self, user_id, order_by, direction):
+        """ QUERY USERS SAVED RECIPES BASED ON USER ID """
+        try:
+            with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                recipes_query = db.saved_recipes + """ 
+                                WHERE SavedRecipes.UserId = %s 
+                                ORDER BY %s %s;""" % (user_id, order_by, direction)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        except pymysql.err.OperationalError as e:
+            print(e)
+        finally:
+            print("Query get method completed")    
+    
 
 ## NEED TO COMPLETE QUERIES FOR FULL RECIPE VIEW ##
 

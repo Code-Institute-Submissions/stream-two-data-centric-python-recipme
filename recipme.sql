@@ -2,7 +2,7 @@
 /*DROP DATABASE IF EXISTS `heroku_4d0654e61ed0a78`;
 
 CREATE DATABASE `heroku_4d0654e61ed0a78`;*/
-
+/*
 USE `heroku_8956bc974ce0fed`;
 
 DROP TABLE `Cuisine`;
@@ -15,12 +15,13 @@ DROP TABLE `Method`;
 DROP TABLE `Servings`;
 DROP TABLE `Recipe`;
 DROP TABLE `User`;
+DROP TABLE `SavedRecipes`;
 
 SHOW TABLES;
 
 
 /******************* CREATE TABLES ******************************/
-
+/*
 CREATE TABLE `User`
 (
     `UserId` INT NOT NULL AUTO_INCREMENT,
@@ -81,8 +82,9 @@ CREATE TABLE `Health`
 CREATE TABLE `Ingredient`
 (
     `IngredientId` INT NOT NULL AUTO_INCREMENT,
-    `IngredientName` NVARCHAR(200) NOT NULL,
+    `UserId` INT NOT NULL,
     `RecipeId` INT NOT NULL,
+    `IngredientName` NVARCHAR(200) NOT NULL,
     `Quantity` NVARCHAR(200) NOT NULL,
     CONSTRAINT `PK_Ingredient` PRIMARY KEY (`IngredientId`)
 );
@@ -112,8 +114,16 @@ CREATE TABLE `Servings`
     CONSTRAINT `PK_Servings` PRIMARY KEY (`ServingsId`)
 );
 
+CREATE TABLE `SavedRecipes`
+(   
+    `SavedRecipesId` INT NOT NULL AUTO_INCREMENT,
+    `UserId` INT NOT NULL,
+    `RecipeId` INT NOT NULL,
+    CONSTRAINT `PK_SavedRecipes` PRIMARY KEY (`SavedRecipesId`)
+);
+*/
 /******************* CREATE FOREIGN KEYS ******************************/
-
+/*
 ALTER TABLE `Recipe` ADD CONSTRAINT `FK_RecipeUserId`
     FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -154,6 +164,13 @@ ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientRecipeId`
 
 CREATE INDEX `IFK_IngredientRecipeId` ON `Ingredient`(`RecipeId`);
 
+
+ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientUserId`
+    FOREIGN KEY (`UserId`) REFERENCES `User`(`UserId`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+CREATE INDEX `IFK_IngredientUserId` ON `Ingredient`(`UserId`);
+
+
 ALTER TABLE `Cost` ADD CONSTRAINT `FK_CostRecipeId`
     FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -171,8 +188,23 @@ ALTER TABLE `Servings` ADD CONSTRAINT `FK_ServingsRecipeId`
 CREATE INDEX `IFK_ServingsRecipeId` ON `Servings` (`RecipeId`);
 
 
-/************************ TEST INSERT DATA ************************************/
+ALTER TABLE `SavedRecipes` ADD CONSTRAINT `FK_SavedRecipesRecipeId`
+    FOREIGN KEY (`RecipeId`) REFERENCES `Recipe` (`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
+CREATE INDEX `IFK_SavedRecipesRecipesId` ON `SavedRecipes` (`RecipeId`);
+
+
+ALTER TABLE `SavedRecipes` ADD CONSTRAINT `FK_SavedRecipesUserId`
+    FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+CREATE INDEX `IFK_SavedRecipesUserId` ON `SavedRecipes` (`UserId`);
+
+
+
+
+
+/************************ TEST INSERT DATA ************************************/
+/*
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'Dafydd','Archard','password');
 
@@ -188,10 +220,10 @@ INSERT INTO `Health` (`Calories`,`RecipeId`) VALUES (500,1);
 
 INSERT INTO `Cost` (`Price`, `RecipeId`) VALUES (10,1);
 
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Baked Beans',1,'One tin');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Sliced Bread',1,'2 Slices');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Butter',1,'To taste');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Brown Sauce',1,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Baked Beans',1,1,'One tin');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Sliced Bread',1,1,'2 Slices');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Butter',1,1,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Brown Sauce',1,1,'To taste');
 
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (1, 'Slice Bread', 1);
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (2, 'Toast Bread', 1);
@@ -200,6 +232,7 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (4, 'But
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (5, 'Pour Beans and add sauce to taste', 1);
 
 INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (4, 1);
+
 
 INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'Frances','Ulph','password');
 
@@ -215,12 +248,12 @@ INSERT INTO `Health` (`Calories`,`RecipeId`) VALUES (250,11);
 
 INSERT INTO `Cost` (`Price`,`RecipeId`) VALUES (10,11);
 
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Eggs',11,'Two Medium');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Muffins',11,'One halved');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Butter',11,'To taste');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Asparagus',11,'To taste');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('Salt and Pepper',11,'To taste');
-INSERT INTO `Ingredient` (`IngredientName`,`RecipeId`,`Quantity`) VALUES ('White Wine Vinegar',11,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Eggs',11,11,'Two Medium');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Muffins',11,11,'One halved');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Butter',11,11,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Asparagus',11,11,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('Salt and Pepper',11,11,'To taste');
+INSERT INTO `Ingredient` (`IngredientName`,`UserId`,`RecipeId`,`Quantity`) VALUES ('White Wine Vinegar',11,11,'To taste');
 
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (1, 'Boil Water, add splash of vinegar and add salt to taste', 11);
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (2, 'Crack eggs into cup, slowly introduce to water, boil for 3-5 mins', 11);
@@ -229,8 +262,6 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (4, 'Toa
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (5, 'Butter Muffins, lay Asparagus on top of the muffins with eggs on top and serve.', 11);
 
 INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (2, 11);
-
-
 
 INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`, `MakePublic`) VALUES ('Bacon Sandwich',NOW(),'Bacon Sandwich with Ketchup',15, 11,1);
 
@@ -254,6 +285,9 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (2, 'Sli
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (3, 'Add sauce to taste', 21);
 
 INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (1, 21);
+*/
+/*###############################################################*/
 
+INSERT INTO `SavedRecipes` (`RecipeId`, `UserId`) VALUES (1,11);
 
 SHOW TABLES;
