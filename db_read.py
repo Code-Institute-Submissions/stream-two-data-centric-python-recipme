@@ -1,73 +1,28 @@
 import os
 import pymysql
 import myenviron
-
-class db():
-    
-    connection = pymysql.connect(host=os.environ.get('DATABASE_HOST'), 
-                port=3306, user=os.environ.get('DATABASE_USER'),
-                password=os.environ.get('DATABASE_PASSWORD'), 
-                db=os.environ.get('DATABASE_NAME'))
-
-    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, 
-                        Price, Servings, CuisineName, Calories, 
-                        CourseName, User.Username as Author"""
-
-    main_selection = select + """
-                                FROM Recipe 
-                                JOIN User on Recipe.UserId = User.UserId
-                                JOIN Cost on Recipe.RecipeId = Cost.RecipeId
-                                JOIN Servings on Recipe.RecipeId = Servings.RecipeId
-                                JOIN Cuisine on Recipe.RecipeId = Cuisine.RecipeId
-                                JOIN Health on Recipe.RecipeId = Health.RecipeId
-                                JOIN Course on Recipe.RecipeId = Course.RecipeId 
-                                """
-
-    search_ingredient =  select + """
-                                    FROM Ingredient
-                                    JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
-                                    JOIN Cost on Ingredient.RecipeId = Cost.RecipeId
-                                    JOIN Servings on Ingredient.RecipeId = Servings.RecipeId
-                                    JOIN Cuisine on Ingredient.RecipeId = Cuisine.RecipeId
-                                    JOIN Health on Ingredient.RecipeId = Health.RecipeId
-                                    JOIN Course on Ingredient.RecipeId = Course.RecipeId
-                                    JOIN User on Ingredient.UserId = User.UserId 
-                                    """
-
-
-    saved_recipes = select + """
-                                FROM SavedRecipes
-                                JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
-                                JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
-                                JOIN Servings on SavedRecipes.RecipeId = Servings.RecipeId
-                                JOIN Cuisine on SavedRecipes.RecipeId = Cuisine.RecipeId
-                                JOIN Health on SavedRecipes.RecipeId = Health.RecipeId
-                                JOIN Course on SavedRecipes.RecipeId = Course.RecipeId
-                                JOIN User on Recipe.UserId = User.UserId
-                                """
-
+from db import db
 
 class user_verify(db):
     
     def __init__(self, user_values):
-        self.username = user_values['Username']
-        self.password = user_values['Password']
+        self.username = user_values['Username'].lower()
+        self.password = user_values['Password'].lower()
       
     def query_username_and_password(self):
-        """ GET WHOLE TABLE BASED ON TABLE NAME """
-
+        """ GET USERNAME AND PASSWORD BASED ON USER INFO """
         try: 
             with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 query = """SELECT `Username`, `Password` FROM User
-                            WHERE Username = %s AND `Password` = %s;"""
-                cursor.execute(query, (self.username, self.password))
+                            WHERE Username = %s;"""
+                cursor.execute(query, (self.username))
                 from_db = [result for result in cursor]
-                print(from_db)
                 return from_db
         except pymysql.err.OperationalError as e:
             print(e)
         finally:
             print("Query Username and Password completed")
+
     
 class query_read_recipes(db):
     

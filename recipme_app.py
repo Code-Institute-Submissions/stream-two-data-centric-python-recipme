@@ -3,7 +3,8 @@ import pymysql
 import myenviron
 import json
 import db_create
-from db_read import db, user_verify
+from db_read import user_verify
+from db import db
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -23,28 +24,30 @@ def get_existing_user(user_values):
     return existing_user
 
 def sign_up(user_values):
-    ############### IF THE USERNAME DOESN'T EXIST 
+    ############### IF THE USERNAME DOESN'T EXIST SIGN UP ###########
     existing_user = get_existing_user(user_values)
-    print(existing_user)
     if existing_user == []:
         create_user(user_values)
-        print('user created')
         return True
-    else:
+    elif existing_user[0]['Username'] == user_values['Username']:
         print('Username taken, enter a unique username')
         return False
       
 def user_login(user_values):
+    ############## IF THE USERNAME AND PASSWORD MATCH LOGIN ###########
     existing_user = get_existing_user(user_values)
-    print(existing_user)
-    if existing_user[0]['Username'] == user_values['Username']:
-        if existing_user[0]['Password'] == user_values['Password']:
-            return True
+    if existing_user != []:
+        if existing_user[0]['Username'] == user_values['Username']:
+            if existing_user[0]['Password'] == user_values['Password']:
+                return True
     else:
-        return False    
+        return False
+        
+   
 
 ################################# ROUTES ###########################################    
 
+################################# LOGIN ROUTES #####################################
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -54,11 +57,16 @@ def index():
 def signup():
     if request.method == 'POST':
         user_values = request.form
-        print(user_values)
         new_user = sign_up(user_values)
-        print(new_user)
+        print(user_values)
         if new_user == True:
             return redirect('my_recipme')
+        else:
+            return redirect('user_taken') 
+
+@app.route('/user_taken', methods=['GET', 'POST'])
+def user_taken():    
+    return render_template('user_taken.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -69,12 +77,17 @@ def login():
         if returning_user == True:
             return redirect('my_recipme')
         else:
-            return False ##### NEED TO RETURN A REDIRECT FOR INCORRECT LOGIN ######
-    #return render_template('my_recipme.html')
+            return redirect('invalid_login')
 
+@app.route('/invalid_login', methods=['GET', 'POST'])
+def invalid_login():
+    return render_template('invalid_login.html')
+    
 @app.route('/my_recipme')
 def my_recipme():
     return render_template('my_recipme.html')
+
+###################### NEED TO PASS USERNAME AND ID THROUGH TO REDIRECT TO MY RECIPE ################
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port = os.getenv('PORT'), debug=True)

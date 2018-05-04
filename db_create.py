@@ -2,15 +2,15 @@ import os
 import pymysql
 import unittest
 import myenviron
-from db_read import db
+from db import db
 
 class query_create_user(db):
     
     def __init__(self, user_values):
-        self.username = user_values['Username'].lower()
-        self.first = user_values['First'].lower()
-        self.last = user_values['Last'].lower()
-        self.password = user_values['Password'].lower()
+        self.username = user_values['Username']
+        self.first = user_values['First']
+        self.last = user_values['Last']
+        self.password = user_values['Password']
        
 
     def create_user(self):

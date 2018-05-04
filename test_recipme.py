@@ -1,13 +1,14 @@
 import os
 import pymysql
 import recipme
+import db
 import db_read
 import unittest
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
 class TestRecipme(unittest.TestCase):
     def test_query_username_and_password(self):
-        user_values = "recipe"
+        user_values = {'Username': 'test', 'Password': 'test'}
         query = db_read.user_verify(user_values)
         result = query.query_username_and_password()
 
@@ -104,5 +105,7 @@ class TestRecipme(unittest.TestCase):
         # USERNAME FROM GIVEN ID
 
         self.assertEqual(type(recipe), list)
-        self.assertEqual(author, 'darchard')  
+        self.assertEqual(author, 'darchard') 
+
+   
         
