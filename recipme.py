@@ -15,13 +15,7 @@ recipe_id = 1
 ingredient = 'Butter'
 ###########################
 
-def get_user_id(user_values):
-    """ GET A GIVEN USERS ID BASED ON LOGIN VALUES """
-    query = db_read.query_read_recipes()
-    user = query.query_user_id(user_values)
-    user_id = [item['UserId'] for item in user]
-    #print(user_id)
-    return user_id
+
     
 def get_all_mini_recipes(search_by, search_value, order_by, direction):
     """ GET ALL MINI RECIPES THAT ARE DECLARED PUBLIC """ 

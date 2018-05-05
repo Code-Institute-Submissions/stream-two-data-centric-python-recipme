@@ -15,15 +15,7 @@ class TestRecipme(unittest.TestCase):
         result = query.query_user()
 
         self.assertEqual(type(result), list)
-    """
-    def test_get_user_id(self):
-        user_values = [{'Username':'darchard'}]
-
-        user_id = recipme.get_user_id(user_values)
-
-        self.assertEqual(type(user_id), list)
-        self.assertEqual(user_id[0], 1)
-    """
+   
     def test_get_mini_recipes(self):
         
         search_by = 'Recipe.MakePublic'
@@ -35,10 +27,10 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 3)
-    
+    """
     def test_get_mini_user_recipes(self):
         
-        user_values = ["Dafydd","Archard","password"]
+        user_values = ["darchard"]
         search_by = 'User.UserId'
         direction = 'ASC'
         order_by = 'Calories'
@@ -47,7 +39,7 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 1)
-    
+    """
     def test_get_ingredients_for_full_recipe(self):
 
         recipe_id = 11
@@ -160,5 +152,70 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(successful, True)
         self.assertEqual(unsuccessful, False)
+
+################################### CREATE RECIPE TESTS ##########################################
         
+    def test_convert_numeric_strings_to_int(self):
+        recipe = {
+                'RecipeTitle': 'Sausage and Mash', 
+                'RecipeDescription': "Lot's of it.", 
+                'CookingTimeMins': '30', 
+                'MakePublic': '1', 
+                }
+
+        converted_recipe = recipme_app.convert_numeric_strings_to_int(recipe)
         
+        self.assertEqual(type(converted_recipe['CookingTimeMins']), int)
+        self.assertEqual(type(converted_recipe['MakePublic']), int)
+
+    def test_get_user_id(self):
+        username = 'darchard'
+
+        user_id = recipme_app.get_user_id(username)
+
+        self.assertEqual(type(user_id), dict)
+        self.assertEqual(user_id['UserId'], 1)
+
+    def test_add_user_id_to_recipe_dict(self):
+        recipe = {
+                'RecipeTitle': 'Sausage and Mash', 
+                'RecipeDescription': "Lot's of it.", 
+                'CookingTimeMins': 30, 
+                'MakePublic': 1, 
+                }
+        user_id = {'UserId': 1}
+        new_recipe = recipme_app.add_user_id_to_recipe_dict(recipe, user_id)
+
+        self.assertEqual(new_recipe['UserId'], user_id['UserId'] )
+    
+        
+    def test_validate_recipe_dict(self):
+        username = 'darchard'
+        recipe = {
+                'RecipeTitle': 'Sausage and Mash', 
+                'RecipeDescription': "Lot's of it.", 
+                'CookingTimeMins': '30', 
+                'MakePublic': '1', 
+                }
+
+        validate = recipme_app.validate_recipe_dict(username, recipe)
+
+        self.assertEqual(type(validate['CookingTimeMins']), int)
+        self.assertEqual(type(validate['MakePublic']), int)
+        self.assertEqual(type(validate['UserId']), int)
+        self.assertEqual(validate['UserId'], 1)
+    """
+    NEED TO WRITE ADDITIONAL READ TABLE CLASS
+    
+    def test_write_to_recipe_table(self):
+        recipe = {
+                'RecipeTitle': 'Sausage and Mash', 
+                'RecipeDescription': "Lot's of it.", 
+                'CookingTimeMins': 30, 
+                'MakePublic': 1,
+                'UserId': 1
+                }
+
+        write_recipe = recipme_app.write_to_recipe_table(recipe)
+        read_recipe = read_db
+    """

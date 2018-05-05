@@ -18,27 +18,63 @@
         <br>
         <label>Total Cooking Time in minutes:</label>
         <br>
-        <input type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' max='1440' required> mins
+        <input type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' min='0' max='1440' required> mins
         <br>
         <label>Make Recipe Public:</label>
         <br>
         <input type='radio' id='MakePublicYes' name='MakePublic' value='1'required checked> Yes
         <input type='radio' id='MakePublicNo' name='MakePublic' value='0' required> No
         <br>
-        <input type='submit' value='Add Recipe'>
     </fieldset>
-    <script>
-        const characterCounter = (input, counter, count) => {
-            document.getElementById(input).onkeyup = function() {
-
-                document.getElementById(counter).innerHTML = 'Characters remaining:' + (count-this.value.length);
-            };
-        }
-
-        characterCounter('RecipeTitle','recipe-title-counter',150 )
-        characterCounter('RecipeDescription','recipe-description-counter', 500)
-
-    </script>
+    <fieldset>
+        <legend>Stats</legend>
+        <label>Cuisine</label>
+        <br>
+        <input type='text' id='Cuisine' placeholder='Cuisine' name='CuisineName' maxlength='160' required>
+        <p id='cuisine-description-counter'></p>
+        <br>
+        <label>Course</label>
+        <br>
+        <input type='text' id='Course' placeholder='Course' name='CourseName' maxlength='160' required>
+        <p id='course-description-counter'></p>
+        <br>
+        <label>Calories</label>
+        <br>
+        <input type='number' id='Calories' placeholder='Number of Calories' value='1' name='Calories' min='0' max='20000' required>
+        <br>
+        <label>Cost</label>
+        <br>
+        <input type='number' id='Cost' placeholder='Total Cost to Nearest Pound' value='1' name='Cost' min='0' max='10000' required>
+        <br>
+        <label>Total Servings</label>
+        <br>
+        <input type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
+        <br>
+    </fieldset>
+    <input type='submit' value='Add Recipe'> 
 </form>
+<script>
+    const characterCounter = (input, counter, count) => {
+        document.getElementById(input).onkeyup = function() {
+
+            document.getElementById(counter).innerHTML = 'Characters remaining:'+ (count-this.value.length);
+        };
+    }
+
+    const totalCharacters = (counter, count) => {
+
+        document.getElementById(counter).innerHTML = 'Characters remaining:'+ count;
+    }
+    // WRITE A LOOP FOR THIS //
+    totalCharacters('recipe-title-counter',150)
+    totalCharacters('recipe-description-counter',250)
+    totalCharacters('cuisine-description-counter',160)
+    totalCharacters('course-description-counter',160)
+    characterCounter('RecipeTitle','recipe-title-counter',150 )
+    characterCounter('RecipeDescription','recipe-description-counter', 250)
+    characterCounter('Cuisine','cuisine-description-counter',160)
+    characterCounter('Course','course-description-counter', 160)
+
+</script>
 
 {% endblock %}

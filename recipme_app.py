@@ -67,7 +67,7 @@ def get_user_id(username):
     return user_id
 
 #################### INSERT USER ID INTO RECIPE DICT #####################
-def add_user_id_to_recipe_dict(recipe,user_id):
+def add_user_id_to_recipe_dict(recipe, user_id):
     recipe['UserId'] = user_id['UserId']
     #print(recipe)
     return recipe  
@@ -142,7 +142,7 @@ def recipe_created(username):
         recipe = request.form.to_dict()
         recipe = validate_recipe_dict(username, recipe)
         print(recipe)
-        write_to_recipe_table(recipe)
+       # write_to_recipe_table(recipe)
         
         return redirect('my_recipme/%s'% username)
     
