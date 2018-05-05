@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>My Recipme</h1>
+<p>Hello {{ username }}!</p>
+<a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
 {% endblock %}

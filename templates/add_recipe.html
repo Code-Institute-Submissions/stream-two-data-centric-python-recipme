@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Hi {{ username }} </h1>
+<h2>Go ahead and create a new RecipMe</p>
+<br>
+<form action="{{ url_for('recipe_created', username=username) }}" method='POST'>
+    <fieldset>
+        <legend>Main Details</legend>
+        <label>Recipe Title </label>
+        <br>
+        <input type='text' id='RecipeTitle' placeholder='Recipe Title' name='RecipeTitle' maxlength='150'required>
+        <p id='recipe-title-counter'></p>
+        <br>
+        <label>Brief Description:</label> 
+        <br>
+        <textarea id='RecipeDescription' placeholder='Description' name='RecipeDescription' maxlength='250' required></textarea>
+        <p id='recipe-description-counter'></p>
+        <br>
+        <label>Total Cooking Time in minutes:</label>
+        <br>
+        <input type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' max='1440' required> mins
+        <br>
+        <label>Make Recipe Public:</label>
+        <br>
+        <input type='radio' id='MakePublicYes' name='MakePublic' value='1'required checked> Yes
+        <input type='radio' id='MakePublicNo' name='MakePublic' value='0' required> No
+        <br>
+        <input type='submit' value='Add Recipe'>
+    </fieldset>
+    <script>
+        const characterCounter = (input, counter, count) => {
+            document.getElementById(input).onkeyup = function() {
+
+                document.getElementById(counter).innerHTML = 'Characters remaining:' + (count-this.value.length);
+            };
+        }
+
+        characterCounter('RecipeTitle','recipe-title-counter',150 )
+        characterCounter('RecipeDescription','recipe-description-counter', 500)
+
+    </script>
+</form>
+
+{% endblock %}

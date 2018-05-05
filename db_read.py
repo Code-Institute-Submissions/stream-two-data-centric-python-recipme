@@ -6,14 +6,14 @@ from db import db
 class user_verify(db):
     
     def __init__(self, user_values):
-        self.username = user_values['Username'].lower()
-        self.password = user_values['Password'].lower()
+        self.username = user_values['Username']
+        self.password = user_values['Password']
       
-    def query_username_and_password(self):
-        """ GET USERNAME AND PASSWORD BASED ON USER INFO """
+    def query_user(self):
+        """ GET USER BASED ON USER INFO """
         try: 
             with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                query = """SELECT `Username`, `Password` FROM User
+                query = """SELECT `Username`,`First`,`Last`,`Password`, `UserId` FROM User
                             WHERE Username = %s;"""
                 cursor.execute(query, (self.username))
                 from_db = [result for result in cursor]
@@ -25,16 +25,14 @@ class user_verify(db):
 
     
 class query_read_recipes(db):
-    
-    def query_user_id(self, user_values):
+    #################### NEED TO RE-WRITE THIS QUERY TO BE BASED ON USERNAME ############
+    def query_user_id(self, username):
         """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
         try:
             with db.connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                get_id_query = """SELECT UserId FROM User 
-                            WHERE First = %s 
-                            AND Last = %s 
-                            AND Password = %s;"""
-                cursor.execute(get_id_query, user_values)
+                get_id_query = """SELECT UserId FROM User
+                                    WHERE Username = '%s';""" % (username)                  
+                cursor.execute(get_id_query)
                 user_id = [row for row in cursor]
                 return(user_id)
         except pymysql.err.OperationalError as e:

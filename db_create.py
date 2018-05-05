@@ -1,15 +1,14 @@
 import os
 import pymysql
-import unittest
 import myenviron
 from db import db
 
 class query_create_user(db):
     
     def __init__(self, user_values):
-        self.username = user_values['Username']
-        self.first = user_values['First']
-        self.last = user_values['Last']
+        self.username = user_values['Username'].lower()
+        self.first = user_values['First'].lower()
+        self.last = user_values['Last'].lower()
         self.password = user_values['Password']
        
 
@@ -27,16 +26,25 @@ class query_create_user(db):
 class query_create_recipes(db):
 
     def __init__(self,recipe):
-        self.recipe = recipe
+        self.recipe_title = recipe['RecipeTitle']
+        self.recipe_description = recipe['RecipeDescription']
+        self.cooking_time = recipe['CookingTimeMins']
+        self.make_public = recipe['MakePublic']
+        self.user_id = recipe['UserId']
 
     def create_recipe(self):
+        query = """ INSERT INTO Recipe (`RecipeTitle`, 
+                                        `RecipeDescription`, 
+                                        `CookingTimeMins`, 
+                                        `MakePublic`, 
+                                        `UserId`) 
+                    VALUES (%s, %s, %s, %s, %s);"""
+        values = (self.recipe_title, self.recipe_description,self.cooking_time, self.make_public,self.user_id)
+                                                                            
         try:
             with db.connection.cursor() as cursor:
-                values = [("Daf", 33, "1984-09-14 23:00:00"),
-                            ("Jim", 55, "1977-09-14 23:00:00"),
-                        ("Jill", 66,"1977-09-14 23:00:00")]
-                cursor.executemany("INSERT INTO Friends VALUES (%s, %s, %s);", values);
-                connection.commit()
+                cursor.execute(query, values);
+                db.connection.commit()
         except pymysql.err.OperationalError as e:
             print(e)
         finally:

@@ -1,7 +1,7 @@
 /***************** CREATE DATA-BASE *********************/
-/*DROP DATABASE IF EXISTS `heroku_4d0654e61ed0a78`;
+/*DROP DATABASE IF EXISTS `heroku_8956bc974ce0fed`;
 
-CREATE DATABASE `heroku_4d0654e61ed0a78`;*/
+CREATE DATABASE `heroku_8956bc974ce0fed`;*/
 /*
 USE `heroku_8956bc974ce0fed`;
 
@@ -18,7 +18,7 @@ DROP TABLE `User`;
 DROP TABLE `SavedRecipes`;
 
 SHOW TABLES;
-
+*/
 
 /******************* CREATE TABLES ******************************/
 /*
@@ -36,7 +36,7 @@ CREATE TABLE `Recipe`
 (
     `RecipeId` INT NOT NULL AUTO_INCREMENT,
     `RecipeTitle` NVARCHAR(160) NOT NULL,
-    `Created` DATETIME NOT NULL,
+    `Created` DATETIME NOT NULL DEFAULT NOW(),
     `ImageURL` NVARCHAR(500) DEFAULT 'NONE',
     `RecipeDescription` NVARCHAR (500) NOT NULL,
     `CookingTimeMins` INT NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE `SavedRecipes`
     `RecipeId` INT NOT NULL,
     CONSTRAINT `PK_SavedRecipes` PRIMARY KEY (`SavedRecipesId`)
 );
-*/
+
 /******************* CREATE FOREIGN KEYS ******************************/
 /*
 ALTER TABLE `Recipe` ADD CONSTRAINT `FK_RecipeUserId`
@@ -199,14 +199,11 @@ ALTER TABLE `SavedRecipes` ADD CONSTRAINT `FK_SavedRecipesUserId`
 
 CREATE INDEX `IFK_SavedRecipesUserId` ON `SavedRecipes` (`UserId`);
 
-
-
-
-
-/************************ TEST INSERT DATA ************************************/
 /*
+/************************ TEST INSERT DATA ************************************/
 
-INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'Dafydd','Archard','password');
+
+INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('darchard', 'dafydd','archard','password');
 
 INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`, `CookingTimeMins` ,`UserId`, `MakePublic`) VALUES ('BEANS ON TOAST',NOW(),'Beans on Toast with brown sauce',10,1,1);
 
@@ -234,7 +231,7 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (5, 'Pou
 INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (4, 1);
 
 
-INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'Frances','Ulph','password');
+INSERT INTO `User` (`Username`,`First`,`Last`,`Password` ) VALUES ('fulph', 'frances','ulph','password');
 
 INSERT INTO `Recipe` (`RecipeTitle`,`Created`,`RecipeDescription`,`CookingTimeMins`,`UserId`, `MakePublic`) VALUES ('Poached Eggs with Asparagus',NOW(),'Poached Eggs with Asparagus',15, 11,1);
 
@@ -285,7 +282,7 @@ INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (2, 'Sli
 INSERT INTO `Method` (`StepNumber`,`StepDescription`,`RecipeId`) VALUES (3, 'Add sauce to taste', 21);
 
 INSERT INTO `Servings`(`Servings`,`RecipeId`) VALUES (1, 21);
-*/
+
 /*###############################################################*/
 
 INSERT INTO `SavedRecipes` (`RecipeId`, `UserId`) VALUES (1,11);

@@ -1,27 +1,29 @@
 import os
 import pymysql
 import recipme
+import recipme_app
 import db
 import db_read
 import unittest
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
 class TestRecipme(unittest.TestCase):
-    def test_query_username_and_password(self):
+    ########################## READ DB TESTS ################################
+    def test_query_user(self):
         user_values = {'Username': 'test', 'Password': 'test'}
         query = db_read.user_verify(user_values)
-        result = query.query_username_and_password()
+        result = query.query_user()
 
         self.assertEqual(type(result), list)
-
+    """
     def test_get_user_id(self):
-        user_values = ["Dafydd","Archard","password"]
+        user_values = [{'Username':'darchard'}]
 
         user_id = recipme.get_user_id(user_values)
 
         self.assertEqual(type(user_id), list)
         self.assertEqual(user_id[0], 1)
-
+    """
     def test_get_mini_recipes(self):
         
         search_by = 'Recipe.MakePublic'
@@ -105,7 +107,58 @@ class TestRecipme(unittest.TestCase):
         # USERNAME FROM GIVEN ID
 
         self.assertEqual(type(recipe), list)
-        self.assertEqual(author, 'darchard') 
+        self.assertEqual(author, 'darchard')
 
-   
+    ############################ LOGIN/SIGNUP TESTS ##################################
+
+    def test_get_existing_user(self):
+        user_values = {'Username': 'darchard', 'Password': 'password'}
+        user = recipme_app.get_existing_user(user_values)
+        username = user[0]['Username']
+        password = user[0]['Password']
+
+        self.assertEqual(user_values['Username'], username)
+        self.assertEqual(user_values['Password'], password)
+
+    ######### TEST WORKS, COMMENTED OUT TO AVOID DUPLICATION IN TABLE #######
+    """
+    def test_create_user(self):
+        user_values = {
+                        'Username': 'jdoe',
+                        'First': 'Jane', 
+                        'Last':'Doe', 
+                        'Password': 'password'
+                        }
+
+        write_user = recipme_app.create_user(user_values)
+        check_user = recipme_app.get_existing_user(user_values)
+        
+        self.assertEqual(user_values['Username'], check_user[0]['Username'])
+        self.assertEqual(user_values['First'], check_user[0]['First'])
+        self.assertEqual(user_values['Last'], check_user[0]['Last'])
+        self.assertEqual(user_values['Password'], check_user[0]['Password'])
+    
+
+    def test_sign_up(self):
+        existing_user_values = {'Username': 'darchard', 'First':'Dafydd', 'Last':'Archard','Password': 'password'}
+        new_user_vales = {'Username': 'newuser', 'First':'newuser', 'Last':'newuser','Password': 'newuser'}
+
+        successful = recipme_app.sign_up(existing_user_values)
+        unsuccessful = recipme_app.sign_up(new_user_vales)
+
+        self.assertEqual(successful, False)
+        self.assertEqual(unsuccessful, True)
+    """
+        
+
+    def test_user_login(self):
+        actual_user_values = {'Username': 'darchard', 'Password': 'password'}
+        invalid_user_vales = {'Username': 'invalid', 'Password': 'invalid'}
+
+        successful = recipme_app.user_login(actual_user_values)
+        unsuccessful = recipme_app.user_login(invalid_user_vales)
+
+        self.assertEqual(successful, True)
+        self.assertEqual(unsuccessful, False)
+        
         
