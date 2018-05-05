@@ -3,13 +3,22 @@ import pymysql
 import myenviron
 
 class db():
+    def __init__(self):
+        self.connection = pymysql.connect(host=os.environ.get('DATABASE_HOST'), 
+                    port=3306, user=os.environ.get('DATABASE_USER'),
+                    password=os.environ.get('DATABASE_PASSWORD'), 
+                    db=os.environ.get('DATABASE_NAME'))
     
-    connection = pymysql.connect(host=os.environ.get('DATABASE_HOST'), 
-                port=3306, user=os.environ.get('DATABASE_USER'),
-                password=os.environ.get('DATABASE_PASSWORD'), 
-                db=os.environ.get('DATABASE_NAME'))
+    def __enter__(self):
+        return self
 
-    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, CookingTimeMins, Created, ImageURL, 
+    def __exit__(self):
+        self.connection.close()
+
+class query():
+    
+    select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, 
+                        CookingTimeMins, Created, ImageURL, 
                         Price, Servings, CuisineName, Calories, 
                         CourseName, User.Username as Author"""
 
@@ -46,4 +55,4 @@ class db():
                                 JOIN User on Recipe.UserId = User.UserId
                                 """
 
-
+    

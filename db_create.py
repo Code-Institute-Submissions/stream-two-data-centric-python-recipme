@@ -15,9 +15,9 @@ class query_create_user(db):
     def create_user(self):
         query = """INSERT INTO User (`Username`,`First`,`Last`,`Password` ) VALUES (%s, %s, %s, %s);"""
         try:
-            with db.connection.cursor() as cursor:
+            with db().connection.cursor() as cursor:
                 cursor.execute(query, (self.username, self.first, self.last, self.password));
-                db.connection.commit()
+                db().connection.commit()
         except pymysql.err.OperationalError as e:
             print(e)
         finally: 
@@ -31,6 +31,7 @@ class query_create_recipes(db):
         self.cooking_time = recipe['CookingTimeMins']
         self.make_public = recipe['MakePublic']
         self.user_id = recipe['UserId']
+        
 
     def create_recipe(self):
         
@@ -43,9 +44,9 @@ class query_create_recipes(db):
         values = (self.recipe_title, self.recipe_description,
                     self.cooking_time, self.make_public,self.user_id)                                                                   
         try:
-            with db.connection.cursor() as cursor:
+            with db().connection.cursor() as cursor:
                 cursor.execute(query, values);
-                db.connection.commit()
+                db().connection.commit()
         except pymysql.err.OperationalError as e:
             print(e)
         finally:
@@ -54,9 +55,9 @@ class query_create_recipes(db):
     def create_cuisine(self):
                                                                       
         try:
-            with db.connection.cursor() as cursor:
+            with db().connection.cursor() as cursor:
                 cursor.execute(query, values);
-                db.connection.commit()
+                db().connection.commit()
         except pymysql.err.OperationalError as e:
             print(e)
         finally:
