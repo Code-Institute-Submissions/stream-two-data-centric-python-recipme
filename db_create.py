@@ -15,13 +15,36 @@ class query_create_user(db):
     def create_user(self):
         query = """INSERT INTO User (`Username`,`First`,`Last`,`Password` ) VALUES (%s, %s, %s, %s);"""
         try:
-            with db().connection.cursor() as cursor:
+            with db(commit=True) as cursor:
                 cursor.execute(query, (self.username, self.first, self.last, self.password));
-                db().connection.commit()
-        except pymysql.err.OperationalError as e:
-            print(e)
+                #db.connection.commit()
         finally: 
             print('New User Created')
+
+class create_query(db):
+    
+    recipe_query = """ INSERT INTO Recipe (`RecipeTitle`, 
+                                        `RecipeDescription`, 
+                                        `CookingTimeMins`, 
+                                        `MakePublic`, 
+                                        `UserId`) 
+                    VALUES (%s, %s, %s, %s, %s); """
+
+
+    cuisine_query = """ INSERT INTO Cuisine (`CuisineName`, `RecipeId`) 
+                    VALUES (%s, %s); """
+
+    course_query = """ INSERT INTO Course (`CourseName`, `RecipeId`) 
+                    VALUES (%s, %s); """
+    
+    calories_query = """ INSERT INTO Health (`Calories`, `RecipeId`) 
+                    VALUES (%s, %s); """
+
+    cost_query = """ INSERT INTO Cost (`Price`, `RecipeId`) 
+                    VALUES (%s, %s); """
+
+    servings_query = """ INSERT INTO Servings (`Servings`, `RecipeId`) 
+                    VALUES (%s, %s); """
 
 class query_create_recipes(db):
 
@@ -31,35 +54,36 @@ class query_create_recipes(db):
         self.cooking_time = recipe['CookingTimeMins']
         self.make_public = recipe['MakePublic']
         self.user_id = recipe['UserId']
+        self.cuisine_name = recipe['CuisineName']
+        self.course_name = recipe['CourseName']
+        self.calories = recipe['Calories']
+        self.cost = recipe['Cost']
+        self.servings = recipe['Servings']
         
+         
 
     def create_recipe(self):
-        
-        query = """ INSERT INTO Recipe (`RecipeTitle`, 
-                                        `RecipeDescription`, 
-                                        `CookingTimeMins`, 
-                                        `MakePublic`, 
-                                        `UserId`) 
-                    VALUES (%s, %s, %s, %s, %s); """
-        values = (self.recipe_title, self.recipe_description,
-                    self.cooking_time, self.make_public,self.user_id)                                                                   
+        recipe_values = (self.recipe_title, self.recipe_description,
+                                self.cooking_time, self.make_public,self.user_id)                                
         try:
-            with db().connection.cursor() as cursor:
-                cursor.execute(query, values);
-                db().connection.commit()
-        except pymysql.err.OperationalError as e:
-            print(e)
+            with db(commit=True) as cursor:
+                cursor.execute(create_query.recipe_query, recipe_values);
+                recipe_primary_key = cursor.lastrowid
         finally:
+            return recipe_primary_key
             print("Query create recipe completed")
 
-    def create_cuisine(self):
-                                                                      
+    def create_stats(self, recipe_primary_key):
+        stat_queries = [[create_query.cuisine_query,(self.cuisine_name, recipe_primary_key)],
+                        [create_query.course_query,(self.course_name, recipe_primary_key)],
+                        [create_query.calories_query,(self.calories, recipe_primary_key)],
+                        [create_query.cost_query,(self.cost, recipe_primary_key)],
+                        [create_query.servings_query,(self.servings, recipe_primary_key)]]
         try:
-            with db().connection.cursor() as cursor:
-                cursor.execute(query, values);
-                db().connection.commit()
-        except pymysql.err.OperationalError as e:
-            print(e)
+            with db(commit=True) as cursor:
+                for stat in stat_queries:
+                    cursor.execute(stat[0], stat[1]);
+                #db().connection.commit()
         finally:
             print("Query create recipe completed")
 

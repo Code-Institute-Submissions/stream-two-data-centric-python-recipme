@@ -83,8 +83,11 @@ def validate_recipe_dict(username,recipe):
 
 def write_to_recipe_table(recipe):
     new_recipe = db_create.query_create_recipes(recipe)
-    new_recipe.create_recipe()
-    return True
+    recipe_primary_key = new_recipe.create_recipe()
+    cuisine = new_recipe.create_stats(recipe_primary_key)
+    #print(recipe_primary_key)
+    #print(cuisine)
+    return recipe_primary_key
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -102,6 +105,7 @@ def signup():
         user_values = request.form
         username = user_values['Username']
         new_user = sign_up(user_values)
+        print(user_values)
         if new_user == True:
             return redirect('my_recipme/%s'% username)
         else:
@@ -115,6 +119,7 @@ def user_taken():
 def login():
     if request.method == 'POST':
         user_values = request.form
+        print(user_values)
         username = user_values['Username']
         returning_user = user_login(user_values)
         if returning_user == True:
@@ -142,7 +147,7 @@ def recipe_created(username):
         recipe = request.form.to_dict()
         recipe = validate_recipe_dict(username, recipe)
         print(recipe)
-       # write_to_recipe_table(recipe)
+        write_to_recipe_table(recipe)
         
         return redirect('my_recipme/%s'% username)
     

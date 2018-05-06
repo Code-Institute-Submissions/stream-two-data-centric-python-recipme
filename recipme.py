@@ -5,7 +5,7 @@ import db_read
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
   
 #### TO COME FROM FORM ####
-user_values = ["Dafydd","Archard","password"]
+user_values = ["darchard"]
 search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
 direction = 'ASC'
 order_by = 'Calories'
@@ -23,6 +23,7 @@ def get_all_mini_recipes(search_by, search_value, order_by, direction):
     recipe = query_recipe.query_all_mini_recipes(search_by, search_value, order_by, direction)
     #print(recipe)
     return recipe
+
 
 def get_mini_user_recipes(user_values, search_by, order_by, direction):
     """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
