@@ -1,5 +1,5 @@
 import os
-import pymysql
+#import pymysql
 import myenviron
 from db import db
 
@@ -16,7 +16,7 @@ class query_create_user(db):
         query = """INSERT INTO User (`Username`,`First`,`Last`,`Password` ) VALUES (%s, %s, %s, %s);"""
         try:
             with db(commit=True) as cursor:
-                cursor.execute(query, (self.username, self.first, self.last, self.password));
+                cursor.execute(query, (self.username, self.first, self.last, self.password))
                 #db.connection.commit()
         finally: 
             print('New User Created')
@@ -30,7 +30,7 @@ class create_query(db):
                                         `UserId`) 
                     VALUES (%s, %s, %s, %s, %s); """
 
-
+    
     cuisine_query = """ INSERT INTO Cuisine (`CuisineName`, `RecipeId`) 
                     VALUES (%s, %s); """
 
@@ -64,15 +64,16 @@ class query_create_recipes(db):
 
     def create_recipe(self):
         recipe_values = (self.recipe_title, self.recipe_description,
-                                self.cooking_time, self.make_public,self.user_id)                                
+                                self.cooking_time, self.make_public,self.user_id) 
+                                       
         try:
             with db(commit=True) as cursor:
-                cursor.execute(create_query.recipe_query, recipe_values);
+                cursor.execute(create_query.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
         finally:
-            return recipe_primary_key
             print("Query create recipe completed")
-
+            return recipe_primary_key
+           
     def create_stats(self, recipe_primary_key):
         stat_queries = [[create_query.cuisine_query,(self.cuisine_name, recipe_primary_key)],
                         [create_query.course_query,(self.course_name, recipe_primary_key)],
@@ -82,7 +83,7 @@ class query_create_recipes(db):
         try:
             with db(commit=True) as cursor:
                 for stat in stat_queries:
-                    cursor.execute(stat[0], stat[1]);
+                    cursor.execute(stat[0], stat[1])
                 #db().connection.commit()
         finally:
             print("Query create recipe completed")

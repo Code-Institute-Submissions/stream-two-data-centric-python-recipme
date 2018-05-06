@@ -51,6 +51,14 @@
         <input type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
         <br>
     </fieldset>
+    <fieldset id="ingredients">
+        <legend>Ingredients</legend>
+        <button type='button' id='add-ingredient'>Add Ingredient</button>
+        <br>
+        <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
+       
+        
+    </fieldset>
     <input type='submit' value='Add Recipe'> 
 </form>
 <script>
@@ -65,6 +73,35 @@
 
         document.getElementById(counter).innerHTML = 'Characters remaining:'+ count;
     }
+
+    const createInput = () => {
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'Ingredient';
+        input.placeholder = 'Add Ingredient';
+        input.required;
+        
+        return input;
+    }
+
+    const createBr = () => {
+
+        const br = document.createElement('br');
+
+        return br
+    }
+
+    const ingredients = document.getElementById('ingredients');
+
+    document.getElementById('add-ingredient').addEventListener('click', (e) => {
+
+        ingredients.appendChild(createInput());
+        ingredients.appendChild(createBr());
+
+    });
+
+
     // WRITE A LOOP FOR THIS //
     totalCharacters('recipe-title-counter',150)
     totalCharacters('recipe-description-counter',250)

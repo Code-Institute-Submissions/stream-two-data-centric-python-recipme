@@ -1,5 +1,5 @@
 import os
-import pymysql
+#import pymysql
 import myenviron
 import json
 import db_create
