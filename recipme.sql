@@ -18,7 +18,7 @@ DROP TABLE `User`;
 DROP TABLE `SavedRecipes`;
 
 SHOW TABLES;
-*/
+
 
 /******************* CREATE TABLES ******************************/
 /*

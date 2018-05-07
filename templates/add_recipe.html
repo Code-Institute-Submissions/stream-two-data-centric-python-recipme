@@ -51,24 +51,37 @@
         <input type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
         <br>
     </fieldset>
-    <fieldset id="ingredients">
+    <fieldset id='ingredients'>
         <legend>Ingredients</legend>
         <button type='button' id='add-ingredient'>Add Ingredient</button><button type='button' id='remove-ingredient'>Remove Ingredient</button>
         <br>
         <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
-       
-        
+    </fieldset>
+    <fieldset id = 'method'>
+        <legend>Method</legend>
+        <button type='button' id='add-step'>Add Step</button><button type='button' id='remove-step'>Remove Step</button>
+        <br>
     </fieldset>
     <input type='submit' value='Add Recipe'> 
 </form>
 <script>
 
+    // -----------------------  DOM VARIABLES -------------------------- //
     const ingredients = document.getElementById('ingredients');
     const addIngredientButton =  document.getElementById('add-ingredient');
     const removeIngredientButton =  document.getElementById('remove-ingredient');
-    
-    let ingredientCounter = 1;
 
+    const method =  document.getElementById('method');
+    const addStepButton = document.getElementById('add-step');
+    const removeStepButton = document.getElementById('remove-step');
+    
+    // --------------------- INPUT FIELD COUNTERS --------------------//
+
+    let ingredientCounter = 1;
+    let methodCounter = 1;
+    // --------------------------------------------------------------//
+
+    // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
     const characterCounter = (input, counter, count) => {
         document.getElementById(input).onkeyup = function() {
 
@@ -81,60 +94,120 @@
         document.getElementById(counter).innerHTML = 'Characters remaining:'+ count;
     }
 
-    const createInput = () => {
+    // ------------------- CREATE INPUT TEXT FIELD -------------------- //
+    const createInput = (field, counter) => {
 
         const input = document.createElement('input');
-        input.id = `ingredient-${ingredientCounter}`;
+        input.id = `${field}-${counter}`;
         input.type = 'text';
-        input.name = `Ingredient-${ingredientCounter}`;
-        input.placeholder = `Ingredient ${ingredientCounter}`;
+        input.name = `${field}-${counter}`;
+        input.placeholder = `${field} ${counter}`;
         input.required;
         
         return input;
     }
 
-    const createBr = () => {
+    const createStepNumber = (counter) => {
+
+        const input = document.createElement('input');
+        input.id = `step-${counter}`;
+        input.class = 'step-number';
+        input.type = 'number';
+        input.name = `StepNumber-${counter}`;
+        input.value = `${counter}`;
+        
+        return input
+    }
+    // ------------------ CREATE BR -------------------------------- //
+    const createBr = (field, counter) => {
 
         const br = document.createElement('br');
-        br.id = `br-${ingredientCounter}`;
+        br.id = `br-${field}-${counter}`;
         return br
     }
 
-   
-    const addAnIngredient = () => {
+   // ----------------- ADD INGREDIENT TEXT FIELD ON CLICK ------------- //
+    const addAnIngredient = (field, button, parent) => {
 
-        addIngredientButton.addEventListener('click', (e) => {    
+        button.addEventListener('click', (e) => {    
 
             if (ingredientCounter <= 25) {
-                ingredients.appendChild(createInput());
-                ingredients.appendChild(createBr());
-            }
 
+                parent.appendChild(createInput(field, ingredientCounter));
+                parent.appendChild(createBr(field, ingredientCounter));
+            }
+            
+            console.log(ingredientCounter);
             ingredientCounter += 1;
               
         });
 
     }
 
-    const removeIngredient = () => {
+    // ----------------- REMOVE INGREDIENT TEXT FIELD ON CLICK ------------- //
 
-        removeIngredientButton.addEventListener('click', (e) => {
+    const removeIngredient = (field, button, parent) => {
+
+        button.addEventListener('click', (e) => {
             
-            const removeIngredient = document.getElementById(`ingredient-${ingredientCounter -1}`);
-            const removeBr = document.getElementById(`br-${ingredientCounter - 1}`);
+            const removeInput = document.getElementById(`${field}-${ingredientCounter -1}`);
+            const removeBr = document.getElementById(`br-${field}-${ingredientCounter -1}`);
             
             if (ingredientCounter > 0) {
-
-                ingredients.removeChild(removeIngredient);
-                ingredients.removeChild(removeBr);
+                
+                parent.removeChild(removeInput);
+                parent.removeChild(removeBr);
 
             }
-
+            
             ingredientCounter -=1;
             //console.log(`ingredient-${ingredientCounter-1}`)
         });
         
     }
+
+    // ----------------- ADD METHOD TEXT FIELD ON CLICK ------------- //
+    const addStep = (field, button, parent) => {
+
+        button.addEventListener('click', (e) => {    
+
+            if (methodCounter <= 25) {
+
+                parent.appendChild(createStepNumber(methodCounter));
+                parent.appendChild(createInput(field, methodCounter));
+                parent.appendChild(createBr(field, methodCounter));
+            }
+            
+            console.log(methodCounter);
+            methodCounter += 1;
+            
+        });
+
+    }
+
+    // ----------------- REMOVE METHOD TEXT FIELD ON CLICK ------------- //
+    const removeStep = (field, button, parent) => {
+
+        button.addEventListener('click', (e) => {
+            
+            const removeInput = document.getElementById(`${field}-${methodCounter -1}`);
+            const removeBr = document.getElementById(`br-${field}-${methodCounter -1}`);
+            const removeStepNumber = document.getElementById(`step-${methodCounter - 1}`);
+            
+            if (methodCounter > 0) {
+
+                parent.removeChild(removeStepNumber);
+                parent.removeChild(removeInput);
+                parent.removeChild(removeBr);
+
+            }
+            
+            methodCounter -=1;
+            //console.log(`ingredient-${ingredientCounter-1}`)
+        });
+
+    }
+
    
 
 
@@ -143,12 +216,16 @@
     totalCharacters('recipe-description-counter',250);
     totalCharacters('cuisine-description-counter',160);
     totalCharacters('course-description-counter',160);
+
     characterCounter('RecipeTitle','recipe-title-counter',150 );
     characterCounter('RecipeDescription','recipe-description-counter', 250);
     characterCounter('Cuisine','cuisine-description-counter',160);
     characterCounter('Course','course-description-counter', 160);
-    addAnIngredient();
-    removeIngredient();
+
+    addAnIngredient('Ingredient',addIngredientButton, ingredients);
+    removeIngredient('Ingredient',removeIngredientButton, ingredients);
+    addStep('Step', addStepButton, method);
+    removeStep('Step', removeStepButton, method);
       
 </script>
 
