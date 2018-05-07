@@ -46,6 +46,10 @@ class create_query(db):
     servings_query = """ INSERT INTO Servings (`Servings`, `RecipeId`) 
                     VALUES (%s, %s); """
 
+    ingredients_query = """ INSERT INTO Ingredient (`IngredientName`, `RecipeId`)
+                    VALUES (%s, %s); """
+
+
 class query_create_recipes(db):
 
     def __init__(self,recipe):
@@ -60,7 +64,6 @@ class query_create_recipes(db):
         self.cost = recipe['Cost']
         self.servings = recipe['Servings']
         
-         
 
     def create_recipe(self):
         recipe_values = (self.recipe_title, self.recipe_description,
@@ -87,4 +90,21 @@ class query_create_recipes(db):
                 #db().connection.commit()
         finally:
             print("Query create recipe completed")
+    
 
+class query_create_method_items(db):
+    
+    def __init__(self, prepped_items):
+        self.ingredients = prepped_items[0]
+        self.step_number = prepped_items[1]
+        self.step = prepped_items[2]
+
+    def create_ingredients(self):
+        ingredients = self.ingredients
+        try:
+            with db(commit=True) as cursor:
+                cursor.executemany(create_query.ingredients_query, ingredients)
+                #db().connection.commit()
+        finally:
+            print("Query create recipe completed")
+        

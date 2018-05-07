@@ -3,6 +3,7 @@ import os
 import myenviron
 import json
 import db_create
+import collections
 from db_read import user_verify, query_read_recipes
 from db import db
 from flask import Flask, redirect, render_template, request
@@ -79,15 +80,40 @@ def validate_recipe_dict(username,recipe):
     recipe = add_user_id_to_recipe_dict(recipe, user_id)
     #print(recipe)
     #print(user_id)
-    return recipe
+    return recipe    
 
-def write_to_recipe_table(recipe):
+def merge_recipe_id_into_method_item(recipe_id, method_item):
+    merged = []
+    merged_split= []
+
+    for item in method_item:
+        merged.append(item)
+        merged.append(recipe_id)
+
+    for item in range(0, len(merged), 2):
+        merged_split.append(merged[item: item+2])
+    
+    return merged_split
+
+def method_items_ready_to_write(recipe_primary_key, method_item):
+    ingredient = merge_recipe_id_into_method_item(recipe_primary_key, method_item[0])
+    step_number = merge_recipe_id_into_method_item(recipe_primary_key, method_item[1])
+    step = merge_recipe_id_into_method_item(recipe_primary_key, method_item[2])
+
+    method_items_to_write = [ingredient, step_number, step]
+    return method_items_to_write
+
+def write_recipe(recipe):
     new_recipe = db_create.query_create_recipes(recipe)
     recipe_primary_key = new_recipe.create_recipe()
-    cuisine = new_recipe.create_stats(recipe_primary_key)
-    #print(recipe_primary_key)
-    #print(cuisine)
+    new_recipe.create_stats(recipe_primary_key)
+
     return recipe_primary_key
+
+def write_ingredients(prepped_items):
+    new_ingredient = db_create.query_create_method_items(prepped_items)
+    new_ingredient.create_ingredients()
+    return  True
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -119,7 +145,6 @@ def user_taken():
 def login():
     if request.method == 'POST':
         user_values = request.form
-        print(user_values)
         username = user_values['Username']
         returning_user = user_login(user_values)
         if returning_user == True:
@@ -145,10 +170,17 @@ def add_recipe(username):
 def recipe_created(username):
     if request.method == 'POST':
         recipe = request.form.to_dict()
+        ingredients = request.form.getlist('Ingredient')
+        step_number = request.form.getlist('StepNumber')
+        method = request.form.getlist('Step')
+        method_items = [ingredients, step_number, method]
         recipe = validate_recipe_dict(username, recipe)
-        print(recipe)
-        write_to_recipe_table(recipe)
         
+        recipe_primary_key = write_recipe(recipe)
+        prepped_items = method_items_ready_to_write(recipe_primary_key, method_items)
+        write_ingredients(prepped_items)
+        
+
         return redirect('my_recipme/%s'% username)
     
     

@@ -100,7 +100,7 @@
         const input = document.createElement('input');
         input.id = `${field}-${counter}`;
         input.type = 'text';
-        input.name = `${field}-${counter}`;
+        input.name = `${field}`;
         input.placeholder = `${field} ${counter}`;
         input.required;
         
@@ -113,8 +113,11 @@
         input.id = `step-${counter}`;
         input.class = 'step-number';
         input.type = 'number';
-        input.name = `StepNumber-${counter}`;
+        input.min = `${counter}`
+        input.max = `${counter}`
+        input.name = `StepNumber`;
         input.value = `${counter}`;
+        input.required;
         
         return input
     }
