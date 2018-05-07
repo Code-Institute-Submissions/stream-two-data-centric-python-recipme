@@ -101,7 +101,7 @@
         input.id = `${field}-${counter}`;
         input.type = 'text';
         input.name = `${field}`;
-        input.placeholder = `${field} ${counter}`;
+        input.placeholder = `${field}`;
         input.required;
         
         return input;
@@ -110,7 +110,7 @@
     const createStepNumber = (counter) => {
 
         const input = document.createElement('input');
-        input.id = `step-${counter}`;
+        input.id = `s-${counter}`;
         input.class = 'step-number';
         input.type = 'number';
         input.min = `${counter}`
@@ -130,14 +130,15 @@
     }
 
    // ----------------- ADD INGREDIENT TEXT FIELD ON CLICK ------------- //
-    const addAnIngredient = (field, button, parent) => {
+    const addAnIngredient = (button, parent) => {
 
         button.addEventListener('click', (e) => {    
 
             if (ingredientCounter <= 25) {
 
-                parent.appendChild(createInput(field, ingredientCounter));
-                parent.appendChild(createBr(field, ingredientCounter));
+                parent.appendChild(createInput('Quantity', ingredientCounter));
+                parent.appendChild(createInput('Ingredient',ingredientCounter));
+                parent.appendChild(createBr('Ingredient', ingredientCounter));
             }
             
             console.log(ingredientCounter);
@@ -149,15 +150,16 @@
 
     // ----------------- REMOVE INGREDIENT TEXT FIELD ON CLICK ------------- //
 
-    const removeIngredient = (field, button, parent) => {
+    const removeIngredient = (button, parent) => {
 
         button.addEventListener('click', (e) => {
             
-            const removeInput = document.getElementById(`${field}-${ingredientCounter -1}`);
-            const removeBr = document.getElementById(`br-${field}-${ingredientCounter -1}`);
-            
+            const removeInput = document.getElementById(`Ingredient-${ingredientCounter -1}`);
+            const removeBr = document.getElementById(`br-Ingredient-${ingredientCounter -1}`);
+            const removeQuantity = document.getElementById(`Quantity-${ingredientCounter - 1}`);
+
             if (ingredientCounter > 0) {
-                
+                parent.removeChild(removeQuantity);
                 parent.removeChild(removeInput);
                 parent.removeChild(removeBr);
 
@@ -170,15 +172,15 @@
     }
 
     // ----------------- ADD METHOD TEXT FIELD ON CLICK ------------- //
-    const addStep = (field, button, parent) => {
+    const addStep = (button, parent) => {
 
         button.addEventListener('click', (e) => {    
 
             if (methodCounter <= 25) {
 
                 parent.appendChild(createStepNumber(methodCounter));
-                parent.appendChild(createInput(field, methodCounter));
-                parent.appendChild(createBr(field, methodCounter));
+                parent.appendChild(createInput('Step', methodCounter));
+                parent.appendChild(createBr('Step', methodCounter));
             }
             
             console.log(methodCounter);
@@ -189,13 +191,13 @@
     }
 
     // ----------------- REMOVE METHOD TEXT FIELD ON CLICK ------------- //
-    const removeStep = (field, button, parent) => {
+    const removeStep = (button, parent) => {
 
         button.addEventListener('click', (e) => {
             
-            const removeInput = document.getElementById(`${field}-${methodCounter -1}`);
-            const removeBr = document.getElementById(`br-${field}-${methodCounter -1}`);
-            const removeStepNumber = document.getElementById(`step-${methodCounter - 1}`);
+            const removeInput = document.getElementById(`Step-${methodCounter -1}`);
+            const removeBr = document.getElementById(`br-Step-${methodCounter -1}`);
+            const removeStepNumber = document.getElementById(`s-${methodCounter - 1}`);
             
             if (methodCounter > 0) {
 
@@ -225,10 +227,10 @@
     characterCounter('Cuisine','cuisine-description-counter',160);
     characterCounter('Course','course-description-counter', 160);
 
-    addAnIngredient('Ingredient',addIngredientButton, ingredients);
-    removeIngredient('Ingredient',removeIngredientButton, ingredients);
-    addStep('Step', addStepButton, method);
-    removeStep('Step', removeStepButton, method);
+    addAnIngredient(addIngredientButton, ingredients);
+    removeIngredient(removeIngredientButton, ingredients);
+    addStep(addStepButton, method);
+    removeStep(removeStepButton, method);
       
 </script>
 

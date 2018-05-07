@@ -46,23 +46,23 @@ class create_query(db):
     servings_query = """ INSERT INTO Servings (`Servings`, `RecipeId`) 
                     VALUES (%s, %s); """
 
-    ingredients_query = """ INSERT INTO Ingredient (`IngredientName`, `RecipeId`)
-                    VALUES (%s, %s); """
+    ingredients_query = """ INSERT INTO Ingredient (`IngredientName`, `UserId`, `RecipeId`, `Quantity`)
+                    VALUES (%s, %s, %s, %s); """
 
 
 class query_create_recipes(db):
 
-    def __init__(self,recipe):
+    def __init__(self,recipe, user_id):
         self.recipe_title = recipe['RecipeTitle']
         self.recipe_description = recipe['RecipeDescription']
-        self.cooking_time = recipe['CookingTimeMins']
-        self.make_public = recipe['MakePublic']
-        self.user_id = recipe['UserId']
+        self.cooking_time = int(recipe['CookingTimeMins'])
+        self.make_public = int(recipe['MakePublic'])
+        self.user_id = int(user_id['UserId'])
         self.cuisine_name = recipe['CuisineName']
         self.course_name = recipe['CourseName']
-        self.calories = recipe['Calories']
-        self.cost = recipe['Cost']
-        self.servings = recipe['Servings']
+        self.calories = int(recipe['Calories'])
+        self.cost = int(recipe['Cost'])
+        self.servings = int(recipe['Servings'])
         
 
     def create_recipe(self):
@@ -71,6 +71,7 @@ class query_create_recipes(db):
                                        
         try:
             with db(commit=True) as cursor:
+                print(recipe_values)
                 cursor.execute(create_query.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
         finally:
@@ -95,16 +96,14 @@ class query_create_recipes(db):
 class query_create_method_items(db):
     
     def __init__(self, prepped_items):
-        self.ingredients = prepped_items[0]
+        self.ingredients = prepped_items
         self.step_number = prepped_items[1]
         self.step = prepped_items[2]
 
     def create_ingredients(self):
-        ingredients = self.ingredients
         try:
             with db(commit=True) as cursor:
-                cursor.executemany(create_query.ingredients_query, ingredients)
-                #db().connection.commit()
+                cursor.executemany(create_query.ingredients_query, self.ingredients)
         finally:
             print("Query create recipe completed")
         

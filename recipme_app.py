@@ -74,37 +74,40 @@ def add_user_id_to_recipe_dict(recipe, user_id):
     return recipe  
 
 ################### CALL ABOVE THREE FUNCTIONS TO VALIDATE DICT ##########
-def validate_recipe_dict(username,recipe):
-    recipe = convert_numeric_strings_to_int(recipe)
-    user_id = get_user_id(username)
-    recipe = add_user_id_to_recipe_dict(recipe, user_id)
+#def validate_recipe_dict(username,recipe):
+   #recipe = convert_numeric_strings_to_int(recipe)
+    #user_id = get_user_id(username)
+    #recipe = add_user_id_to_recipe_dict(recipe, user_id)
     #print(recipe)
     #print(user_id)
-    return recipe    
+    #return recipe    
 
-def merge_recipe_id_into_method_item(recipe_id, method_item):
+def merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key):
     merged = []
     merged_split= []
 
-    for item in method_item:
-        merged.append(item)
-        merged.append(recipe_id)
+    for i in range(0, len(ingredient_item[0])):
+        merged.append(ingredient_item[0][i])
+        merged.append(ingredient_item[1]['UserId'])
+        merged.append(recipe_primary_key)
+        merged.append(ingredient_item[2][i])
 
-    for item in range(0, len(merged), 2):
-        merged_split.append(merged[item: item+2])
+    for item in range(0, len(merged), 4):
+        merged_split.append(merged[item: item+4])
+
     
     return merged_split
 
-def method_items_ready_to_write(recipe_primary_key, method_item):
-    ingredient = merge_recipe_id_into_method_item(recipe_primary_key, method_item[0])
-    step_number = merge_recipe_id_into_method_item(recipe_primary_key, method_item[1])
-    step = merge_recipe_id_into_method_item(recipe_primary_key, method_item[2])
+#def prep_ingredient_items(recipe_primary_key, ingredient_item):
+    #ingredient = merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key)
+    #step_number = merge_recipe_id_into_method_item(recipe_primary_key, method_item[1])
+    #step = merge_recipe_id_into_method_item(recipe_primary_key, method_item[2])
 
-    method_items_to_write = [ingredient, step_number, step]
-    return method_items_to_write
+    #method_items_to_write = [ingredient, step_number, step]
+    #return ingredient
 
-def write_recipe(recipe):
-    new_recipe = db_create.query_create_recipes(recipe)
+def write_recipe(recipe, user_id):
+    new_recipe = db_create.query_create_recipes(recipe, user_id)
     recipe_primary_key = new_recipe.create_recipe()
     new_recipe.create_stats(recipe_primary_key)
 
@@ -113,6 +116,7 @@ def write_recipe(recipe):
 def write_ingredients(prepped_items):
     new_ingredient = db_create.query_create_method_items(prepped_items)
     new_ingredient.create_ingredients()
+    #print(prepped_items)
     return  True
 
 ###################################################################################
@@ -169,23 +173,26 @@ def add_recipe(username):
 @app.route('/my_recipeme/<username>/recipe_created', methods=['GET', 'POST'])
 def recipe_created(username):
     if request.method == 'POST':
-        recipe = request.form.to_dict()
+        recipe = request.form
         ingredients = request.form.getlist('Ingredient')
         step_number = request.form.getlist('StepNumber')
         method = request.form.getlist('Step')
-        method_items = [ingredients, step_number, method]
-        recipe = validate_recipe_dict(username, recipe)
+        quantity = request.form.getlist('Quantity')
+        user_id = get_user_id(username)
+        ingredient_item = [ingredients, user_id, quantity]
+        #recipe = validate_recipe_dict(username, recipe)
         
-        recipe_primary_key = write_recipe(recipe)
-        prepped_items = method_items_ready_to_write(recipe_primary_key, method_items)
+        recipe_primary_key = write_recipe(recipe, user_id)
+        prepped_items = merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key)
         write_ingredients(prepped_items)
+        #print(type(recipe_primary_key))
         
 
         return redirect('my_recipme/%s'% username)
     
     
+###################### NEED TO INSERT USER ID INTO INGREDIENTS #######################  
 
-###################### NEED TO PASS USERNAME AND ID THROUGH TO REDIRECT TO MY RECIPE ################
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port = os.getenv('PORT'), debug=True)
