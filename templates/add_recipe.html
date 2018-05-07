@@ -53,7 +53,7 @@
     </fieldset>
     <fieldset id="ingredients">
         <legend>Ingredients</legend>
-        <button type='button' id='add-ingredient'>Add Ingredient</button>
+        <button type='button' id='add-ingredient'>Add Ingredient</button><button type='button' id='remove-ingredient'>Remove Ingredient</button>
         <br>
         <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
        
@@ -62,6 +62,13 @@
     <input type='submit' value='Add Recipe'> 
 </form>
 <script>
+
+    const ingredients = document.getElementById('ingredients');
+    const addIngredientButton =  document.getElementById('add-ingredient');
+    const removeIngredientButton =  document.getElementById('remove-ingredient');
+    
+    let ingredientCounter = 1;
+
     const characterCounter = (input, counter, count) => {
         document.getElementById(input).onkeyup = function() {
 
@@ -77,9 +84,10 @@
     const createInput = () => {
 
         const input = document.createElement('input');
+        input.id = `ingredient-${ingredientCounter}`;
         input.type = 'text';
-        input.name = 'Ingredient';
-        input.placeholder = 'Add Ingredient';
+        input.name = `Ingredient-${ingredientCounter}`;
+        input.placeholder = `Ingredient ${ingredientCounter}`;
         input.required;
         
         return input;
@@ -88,30 +96,60 @@
     const createBr = () => {
 
         const br = document.createElement('br');
-
+        br.id = `br-${ingredientCounter}`;
         return br
     }
 
-    const ingredients = document.getElementById('ingredients');
+   
+    const addAnIngredient = () => {
 
-    document.getElementById('add-ingredient').addEventListener('click', (e) => {
+        addIngredientButton.addEventListener('click', (e) => {    
 
-        ingredients.appendChild(createInput());
-        ingredients.appendChild(createBr());
+            if (ingredientCounter <= 25) {
+                ingredients.appendChild(createInput());
+                ingredients.appendChild(createBr());
+            }
 
-    });
+            ingredientCounter += 1;
+              
+        });
+
+    }
+
+    const removeIngredient = () => {
+
+        removeIngredientButton.addEventListener('click', (e) => {
+            
+            const removeIngredient = document.getElementById(`ingredient-${ingredientCounter -1}`);
+            const removeBr = document.getElementById(`br-${ingredientCounter - 1}`);
+            
+            if (ingredientCounter > 0) {
+
+                ingredients.removeChild(removeIngredient);
+                ingredients.removeChild(removeBr);
+
+            }
+
+            ingredientCounter -=1;
+            //console.log(`ingredient-${ingredientCounter-1}`)
+        });
+        
+    }
+   
 
 
     // WRITE A LOOP FOR THIS //
-    totalCharacters('recipe-title-counter',150)
-    totalCharacters('recipe-description-counter',250)
-    totalCharacters('cuisine-description-counter',160)
-    totalCharacters('course-description-counter',160)
-    characterCounter('RecipeTitle','recipe-title-counter',150 )
-    characterCounter('RecipeDescription','recipe-description-counter', 250)
-    characterCounter('Cuisine','cuisine-description-counter',160)
-    characterCounter('Course','course-description-counter', 160)
-
+    totalCharacters('recipe-title-counter',150);
+    totalCharacters('recipe-description-counter',250);
+    totalCharacters('cuisine-description-counter',160);
+    totalCharacters('course-description-counter',160);
+    characterCounter('RecipeTitle','recipe-title-counter',150 );
+    characterCounter('RecipeDescription','recipe-description-counter', 250);
+    characterCounter('Cuisine','cuisine-description-counter',160);
+    characterCounter('Course','course-description-counter', 160);
+    addAnIngredient();
+    removeIngredient();
+      
 </script>
 
 {% endblock %}
