@@ -1,10 +1,10 @@
 import os
-import json
 import db_create
 from db_read import user_verify, query_read_recipes
 from db import db
 import write_recipe
 import login_func
+import find_recipe
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -55,10 +55,16 @@ def invalid_login():
 
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    return render_template('my_recipme.html', username=username)
+   
+    my_recipme = find_recipe.get_mini_user_recipes(username, 'User.UserId', 'RecipeTitle', 'desc' )        
+    recipme_to_json = find_recipe.convert_to_json(my_recipme)
+    print(recipme_to_json)
+    print(recipme_to_json[0])
+    return render_template('my_recipme.html', username=username, my_recipme=recipme_to_json)
 
 @app.route('/my_recipme/<username>/add_recipe')
-def add_recipe(username):        
+def add_recipe(username):
+  
     return render_template('add_recipe.html',username=username)
 
 @app.route('/my_recipeme/<username>/recipe_created', methods=['GET', 'POST'])

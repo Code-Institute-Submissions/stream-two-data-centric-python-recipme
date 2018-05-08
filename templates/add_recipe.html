@@ -95,39 +95,54 @@
     }
 
     // ------------------- CREATE INPUT TEXT FIELD -------------------- //
-    const createInput = (field, counter) => {
 
-        const input = document.createElement('input');
-        input.id = `${field}-${counter}`;
-        input.type = 'text';
-        input.name = `${field}`;
-        input.placeholder = `${field}`;
-        input.required;
-        
-        return input;
+    class createElement {
+
+        constructor(field, counter) {
+
+            this.field = field;
+            this.counter = counter;
+        }
+
+        createInput() {
+
+            const input = document.createElement('input');
+            input.id = `${this.field}-${this.counter}`;
+            input.type = 'text';
+            input.name = `${this.field}`;
+            input.placeholder = `${this.field}`;
+            input.required;
+
+            return input;
+        }
+
+        createStepNumber(counter) {
+
+            const input = document.createElement('input');
+            input.id = `s-${counter}`;
+            input.class = 'step-number';
+            input.type = 'number';
+            input.min = `${counter}`
+            input.max = `${counter}`
+            input.name = `StepNumber`;
+            input.value = `${counter}`;
+            input.required;
+
+            return input
+        }
+
+        // ------------------ CREATE BR -------------------------------- //
+        createBr() {
+
+            const br = document.createElement('br');
+            br.id = `br-${this.field}-${this.counter}`;
+            return br
+        }
+
     }
-
-    const createStepNumber = (counter) => {
-
-        const input = document.createElement('input');
-        input.id = `s-${counter}`;
-        input.class = 'step-number';
-        input.type = 'number';
-        input.min = `${counter}`
-        input.max = `${counter}`
-        input.name = `StepNumber`;
-        input.value = `${counter}`;
-        input.required;
-        
-        return input
-    }
-    // ------------------ CREATE BR -------------------------------- //
-    const createBr = (field, counter) => {
-
-        const br = document.createElement('br');
-        br.id = `br-${field}-${counter}`;
-        return br
-    }
+    
+    
+    
 
    // ----------------- ADD INGREDIENT TEXT FIELD ON CLICK ------------- //
     const addAnIngredient = (button, parent) => {
@@ -136,9 +151,13 @@
 
             if (ingredientCounter <= 25) {
 
-                parent.appendChild(createInput('Quantity', ingredientCounter));
-                parent.appendChild(createInput('Ingredient',ingredientCounter));
-                parent.appendChild(createBr('Ingredient', ingredientCounter));
+                const quantity = new createElement('Quantity', ingredientCounter);
+                const ingredient = new createElement('Ingredient', ingredientCounter);
+                const br = new createElement('Ingredient', ingredientCounter);
+
+                parent.appendChild(quantity.createInput());
+                parent.appendChild(ingredient.createInput());
+                parent.appendChild(br.createBr());
             }
             
             console.log(ingredientCounter);
@@ -178,9 +197,13 @@
 
             if (methodCounter <= 25) {
 
-                parent.appendChild(createStepNumber(methodCounter));
-                parent.appendChild(createInput('Step', methodCounter));
-                parent.appendChild(createBr('Step', methodCounter));
+                const stepNumber = new createElement();
+                const step = new createElement('Step', methodCounter);
+                const br = new createElement('Step', methodCounter);
+
+                parent.appendChild(stepNumber.createStepNumber(methodCounter));
+                parent.appendChild(step.createInput());
+                parent.appendChild(br.createBr());
             }
             
             console.log(methodCounter);

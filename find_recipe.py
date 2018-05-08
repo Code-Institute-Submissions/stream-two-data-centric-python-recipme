@@ -2,7 +2,9 @@ import os
 import pymysql
 import unittest
 import db_read
-from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
+import write_recipe
+import datetime
+import json
   
 #### TO COME FROM FORM ####
 user_values = ["darchard"]
@@ -15,7 +17,18 @@ recipe_id = 1
 ingredient = 'Butter'
 ###########################
 
+########################## JSON CONVERSION ###############################
+"""WRITE A TEST FOR THIS FUNCTION"""
+def datetime_converter(my_recipme):
+    if isinstance(my_recipme, datetime.datetime):
+        return my_recipme.__str__()
 
+def convert_to_json(data):
+    """ CONVERT DATETIME TO A STRING ON JSON """
+    data_to_json = json.dumps(data, default = datetime_converter)
+    return data_to_json
+    
+############################################################################
     
 def get_all_mini_recipes(search_by, search_value, order_by, direction):
     """ GET ALL MINI RECIPES THAT ARE DECLARED PUBLIC """ 
@@ -27,10 +40,10 @@ def get_all_mini_recipes(search_by, search_value, order_by, direction):
 
 def get_mini_user_recipes(user_values, search_by, order_by, direction):
     """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
-    user_id = get_user_id(user_values)
+    user_id = write_recipe.get_user_id(user_values)
     query_recipe = db_read.query_read_recipes()
-    recipe = query_recipe.query_all_mini_recipes(search_by, user_id[0], order_by, direction)
-    #print(recipe)
+    recipe = query_recipe.query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
+    #print(user_id)
     return recipe
 
 
@@ -68,9 +81,8 @@ def get_saved_recipes_for_user(user_id, order_by, direction):
     saved_recipes = query_recipe.query_users_saved_recipes(user_id, order_by, direction)
    # print(saved_recipes)
     return saved_recipes
-    
-    
-    
+
+
 
 ##get_user_id(user_values)
 #get_mini_recipe_for_user(user_values)

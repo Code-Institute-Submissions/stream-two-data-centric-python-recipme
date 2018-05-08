@@ -3,4 +3,15 @@
 <h1>My Recipme</h1>
 <p>Hello {{ username }}!</p>
 <a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
+<div>
+    <h2>Your RecipMe's!</h2>
+    <hr>
+    {% for recipe in my_recipme %}
+    <h3>{{ recipe['RecipeTitle']}}</h3>
+    <p>{{ recipe['RecipeDescription']}}</p>
+    {%endfor%}
+
+
+    
+</div>
 {% endblock %}

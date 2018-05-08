@@ -92,7 +92,6 @@ class query_create_recipes(db):
             with db(commit=True) as cursor:
                 for stat in stat_queries:
                     cursor.execute(stat[0], stat[1])
-                #db().connection.commit()
         finally:
             print("Query create recipe completed")
     
@@ -102,8 +101,6 @@ class query_create_method_items(db):
     def __init__(self, prepped_ingredients, prepped_method):
         self.ingredients = prepped_ingredients
         self.method = prepped_method
-        #self.step_number = prepped_items[1]
-        #self.step = prepped_items[2]
 
     def create_ingredients_and_method(self):
         try:

@@ -82,7 +82,7 @@ CREATE TABLE `Health`
 CREATE TABLE `Ingredient`
 (
     `IngredientId` INT NOT NULL AUTO_INCREMENT,
-    `UserId` INT NOT NULL,
+    `UserId` INT NOT NULL,St
     `RecipeId` INT NOT NULL,
     `IngredientName` NVARCHAR(200) NOT NULL,
     `Quantity` NVARCHAR(200) NOT NULL,

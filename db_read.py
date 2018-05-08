@@ -1,5 +1,5 @@
 import os
-#import pymysql
+import pymysql
 import myenviron
 from db import db
 
@@ -76,9 +76,6 @@ class query_read_recipes(db):
                 return(user_id)
         finally:
             print("Query read user completed")
-
-
-
 
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
