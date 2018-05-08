@@ -1,9 +1,10 @@
 import os
 import pymysql
-import recipme
-import recipme_app
 import db
 import db_read
+import recipme
+import login_func
+import write_recipe
 import unittest
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
@@ -82,7 +83,7 @@ class TestRecipme(unittest.TestCase):
 
     def test_get_existing_user(self):
         user_values = {'Username': 'darchard', 'Password': 'password'}
-        user = recipme_app.get_existing_user(user_values)
+        user = login_func.get_existing_user(user_values)
         username = user[0]['Username']
         password = user[0]['Password']
 
@@ -124,42 +125,38 @@ class TestRecipme(unittest.TestCase):
         actual_user_values = {'Username': 'darchard', 'Password': 'password'}
         invalid_user_vales = {'Username': 'invalid', 'Password': 'invalid'}
 
-        successful = recipme_app.user_login(actual_user_values)
-        unsuccessful = recipme_app.user_login(invalid_user_vales)
+        successful = login_func.user_login(actual_user_values)
+        unsuccessful = login_func.user_login(invalid_user_vales)
 
         self.assertEqual(successful, True)
         self.assertEqual(unsuccessful, False)
 
 ################################### CREATE RECIPE TESTS ##########################################
-        
-    def test_convert_numeric_strings_to_int(self):
-        recipe = {
-                'RecipeTitle': 'Sausage and Mash', 
-                'RecipeDescription': "Lot's of it.", 
-                'CookingTimeMins': '30', 
-                'MakePublic': '1', 
-                }
 
-        converted_recipe = recipme_app.convert_numeric_strings_to_int(recipe)
-        
-        self.assertEqual(type(converted_recipe['CookingTimeMins']), int)
-        self.assertEqual(type(converted_recipe['MakePublic']), int)
 
     def test_get_user_id(self):
         username = 'darchard'
 
-        user_id = recipme_app.get_user_id(username)
+        user_id = write_recipe.get_user_id(username)
 
         self.assertEqual(type(user_id), dict)
         self.assertEqual(user_id['UserId'], 1)
 
-    def merge_recipe_id_into_ingredients(self):
-        ingredient_item = [['Chicken Breasts', 'Wraps'], {'UserId': 1}, ['2', '4']]
+    def test_merge_recipe_id_into_ingredients(self):
+        ingredient_list = [['Chicken Breasts', 'Wraps'], {'UserId': 1}, ['2', '4']]
         recipe_primary_key = 1
 
-        result = recipme_app.merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key)
+        result = write_recipe.merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
 
-        self.assertEqual(result, ['Chicken Breasts', 1, 881, '2'])
+        self.assertEqual(result, [['Chicken Breasts', 1, 1, '2'], ['Wraps', 1, 1, '4']])
+
+    def test_merge_recipe_id_into_method(self):
+        method_list = [['1', '2'], ['Slice Cheese', 'Pour Wine']]
+        recipe_primary_key = 1
+
+        result = write_recipe.merge_recipe_id_into_method(method_list, recipe_primary_key)
+
+        self.assertEqual(result, [['1', 'Slice Cheese', 1], ['2', 'Pour Wine', 1]])
 
    
 class ExpectedFailureTestCase(unittest.TestCase):
