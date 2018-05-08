@@ -9,6 +9,7 @@ from db import db
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
+
 ###################################################################################
 ##################### LOGIN/SIGNUP FUNCTIONS ######################################
 ###################################################################################
@@ -19,6 +20,7 @@ def create_user(user_values):
     new_user = db_create.query_create_user(user_values)
     new_user.create_user()
     return user_values
+
 ############### SEARCH USER TABLE FOR USER AND RETURN RESULT ######
 
 def get_existing_user(user_values):
@@ -28,6 +30,7 @@ def get_existing_user(user_values):
     return existing_user
 
 ############### IF THE USERNAME DOESN'T EXIST SIGN UP ###########
+
 def sign_up(user_values):
     existing_user = get_existing_user(user_values)
     if existing_user == []:
@@ -38,6 +41,7 @@ def sign_up(user_values):
         return False
 
 ############## IF THE USERNAME AND PASSWORD MATCH LOGIN ###########
+
 def user_login(user_values): 
     existing_user = get_existing_user(user_values)
     if existing_user != []:
@@ -52,6 +56,7 @@ def user_login(user_values):
 ###################################################################################
 
 ############### CONVERT THE FORM DATA STRINGS TO INTEGERS ###################
+
 def convert_numeric_strings_to_int(recipe):
     for key in recipe:
         is_value_number = recipe[key].isnumeric()
@@ -60,6 +65,7 @@ def convert_numeric_strings_to_int(recipe):
     return recipe
 
 #################### GET USERS ID BASED ON USERNAME #######################
+
 def get_user_id(username):
     new_read_query = query_read_recipes()
     user = new_read_query.query_user_id(username)
@@ -67,57 +73,63 @@ def get_user_id(username):
     
     return user_id
 
-#################### INSERT USER ID INTO RECIPE DICT #####################
-def add_user_id_to_recipe_dict(recipe, user_id):
-    recipe['UserId'] = user_id['UserId']
-    #print(recipe)
-    return recipe  
+#################### ADD RECIPE ID TO LIST READY FOR WRITING TO TABLE ############
 
-################### CALL ABOVE THREE FUNCTIONS TO VALIDATE DICT ##########
-#def validate_recipe_dict(username,recipe):
-   #recipe = convert_numeric_strings_to_int(recipe)
-    #user_id = get_user_id(username)
-    #recipe = add_user_id_to_recipe_dict(recipe, user_id)
-    #print(recipe)
-    #print(user_id)
-    #return recipe    
+def merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key):
+    ingredients = [] ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
 
-def merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key):
-    merged = []
-    merged_split= []
+    for i in range(0, len(ingredient_list[0])):
+        ingredients.append(ingredient_list[0][i])
+        ingredients.append(ingredient_list[1]['UserId'])
+        ingredients.append(recipe_primary_key)
+        ingredients.append(ingredient_list[2][i])
+     # SPLIT LIST INTO SUBLISTS FOR FIELD ENTRY #
+    ingredients_split = [ingredients[i: i+4] for i in range(0, len(ingredients),4)]
 
-    for i in range(0, len(ingredient_item[0])):
-        merged.append(ingredient_item[0][i])
-        merged.append(ingredient_item[1]['UserId'])
-        merged.append(recipe_primary_key)
-        merged.append(ingredient_item[2][i])
+    return ingredients_split
 
-    for item in range(0, len(merged), 4):
-        merged_split.append(merged[item: item+4])
+def merge_recipe_id_into_method(method_item, recipe_primary_key):
+    method = [] ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
 
+    for i in range(0, len(method_item[0])):
+        method.append(method_item[0][i])
+        method.append(method_item[1][i])
+        method.append(recipe_primary_key)
+    # SPLIT LIST INTO SUBLISTS FOR FIELD ENTRY #
+    method_split = [method[i: i+3] for i in range(0, len(method), 3)]
+
+    return method_split
+
+###################### WRITE DETAILS TO RECIPE TABLE AND STATS TABLES ################
+
+
+
+####################### WRITE INGREDIENTS TO INGREDIENTS TABLE ######################
+def prep_method_and_ingredients(ingredient_list, method_list, recipe_primary_key):
+    prepped_ingredients = merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
+    prepped_method = merge_recipe_id_into_method(method_list, recipe_primary_key)
     
-    return merged_split
+    return prepped_ingredients, prepped_method
 
-#def prep_ingredient_items(recipe_primary_key, ingredient_item):
-    #ingredient = merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key)
-    #step_number = merge_recipe_id_into_method_item(recipe_primary_key, method_item[1])
-    #step = merge_recipe_id_into_method_item(recipe_primary_key, method_item[2])
+def write_ingredients_and_method(prepped_ingredients, prepped_method):
+    new_ingredient = db_create.query_create_method_items(prepped_ingredients, prepped_method)
+    new_ingredient.create_ingredients_and_method()
+    
+    return True
 
-    #method_items_to_write = [ingredient, step_number, step]
-    #return ingredient
-
-def write_recipe(recipe, user_id):
+def write_recipe_and_stats(recipe, user_id):
     new_recipe = db_create.query_create_recipes(recipe, user_id)
     recipe_primary_key = new_recipe.create_recipe()
     new_recipe.create_stats(recipe_primary_key)
 
     return recipe_primary_key
 
-def write_ingredients(prepped_items):
-    new_ingredient = db_create.query_create_method_items(prepped_items)
-    new_ingredient.create_ingredients()
-    #print(prepped_items)
-    return  True
+def write_full_recipe(recipe, user_id, ingredient_list, method_list):
+    recipe_primary_key = write_recipe_and_stats(recipe, user_id)
+    prep = prep_method_and_ingredients(ingredient_list, method_list,recipe_primary_key)
+    write_ingredients_and_method(prep[0], prep[1])
+
+    return True
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -174,25 +186,12 @@ def add_recipe(username):
 def recipe_created(username):
     if request.method == 'POST':
         recipe = request.form
-        ingredients = request.form.getlist('Ingredient')
-        step_number = request.form.getlist('StepNumber')
-        method = request.form.getlist('Step')
-        quantity = request.form.getlist('Quantity')
         user_id = get_user_id(username)
-        ingredient_item = [ingredients, user_id, quantity]
-        #recipe = validate_recipe_dict(username, recipe)
-        
-        recipe_primary_key = write_recipe(recipe, user_id)
-        prepped_items = merge_recipe_id_into_ingredient_item(ingredient_item, recipe_primary_key)
-        write_ingredients(prepped_items)
-        #print(type(recipe_primary_key))
-        
-
+        method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
+        ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
+        write_full_recipe(recipe, user_id, ingredient_list, method_list)
+    
         return redirect('my_recipme/%s'% username)
     
-    
-###################### NEED TO INSERT USER ID INTO INGREDIENTS #######################  
-
-
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port = os.getenv('PORT'), debug=True)

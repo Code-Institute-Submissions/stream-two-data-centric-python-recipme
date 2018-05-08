@@ -48,6 +48,10 @@ class create_query(db):
 
     ingredients_query = """ INSERT INTO Ingredient (`IngredientName`, `UserId`, `RecipeId`, `Quantity`)
                     VALUES (%s, %s, %s, %s); """
+    
+    method_query = """ INSERT INTO Method (`StepNumber`, `StepDescription`, `RecipeId`)
+                    VALUES (%s, %s, %s); """
+
 
 
 class query_create_recipes(db):
@@ -95,15 +99,17 @@ class query_create_recipes(db):
 
 class query_create_method_items(db):
     
-    def __init__(self, prepped_items):
-        self.ingredients = prepped_items
-        self.step_number = prepped_items[1]
-        self.step = prepped_items[2]
+    def __init__(self, prepped_ingredients, prepped_method):
+        self.ingredients = prepped_ingredients
+        self.method = prepped_method
+        #self.step_number = prepped_items[1]
+        #self.step = prepped_items[2]
 
-    def create_ingredients(self):
+    def create_ingredients_and_method(self):
         try:
             with db(commit=True) as cursor:
                 cursor.executemany(create_query.ingredients_query, self.ingredients)
+                cursor.executemany(create_query.method_query,self.method)
         finally:
             print("Query create recipe completed")
         
