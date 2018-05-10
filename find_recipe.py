@@ -5,10 +5,11 @@ import db_read
 import write_recipe
 import datetime
 import json
+from db_read import query_read_recipes
   
 #### TO COME FROM FORM ###
 # #
-
+"""
 user_values = ["darchard"]
 search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
 direction = 'ASC'
@@ -17,18 +18,20 @@ course = "Lunch"
 cuisine = "British"
 recipe_id = 1
 ingredient = 'Butter'
-
+"""
 ###########################
 
-########################## JSON CONVERSION ###############################
+########################## DATE TIME CONVERSION ###############################
+""""""""""""""""""""""""""""""""""""
 """WRITE A TEST FOR THIS FUNCTION"""
+""""""""""""""""""""""""""""""""""""
 def date_time_converter(recipes):
     
     for recipe in recipes:
         recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
         print(recipes)
         return recipes
-
+"""
 def datetime_converter(my_recipme):
     print('here')
     if isinstance(my_recipme, datetime.datetime):
@@ -39,7 +42,7 @@ def convert_to_json(data):
   
     data_to_json = json.dumps(data, default = datetime_converter)
     return data_to_json
-  
+""" 
 ############################################################################
     
 def get_all_mini_recipes(search_by, search_value, order_by, direction):
@@ -93,6 +96,17 @@ def get_saved_recipes_for_user(user_id, order_by, direction):
     saved_recipes = query_recipe.query_users_saved_recipes(user_id, order_by, direction)
    # print(saved_recipes)
     return saved_recipes
+
+""" WRITE TEST FOR THIS FUNCTION """
+def get_all_column_group_for_user(column, user_id, table):
+    column_query = query_read_recipes()
+    cuisines = column_query.query_count_and_group_column(column, user_id['UserId'], table)
+    return cuisines
+
+def get_all_courses_for_cuisine(user_id, cuisine):
+    course_query = query_read_recipes()
+    courses = course_query.query_count_and_group_courses(user_id, cuisine)
+    return courses
 
 
 

@@ -60,10 +60,8 @@ class query():
                                 JOIN User on Recipe.UserId = User.UserId
                                 """
 
-
-    
 class query_read_recipes(db):
-    #################### NEED TO RE-WRITE THIS QUERY TO BE BASED ON USERNAME ############
+
     def query_user_id(self, username):
         """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
         try:
@@ -153,5 +151,35 @@ class query_read_recipes(db):
         finally:
             print("Query get method completed")    
     
+    def query_count_and_group_column(self, column, user_id, table):
+        """ QUERY THE COUNT OF A SPECIFIC COLUMN AND GROUP BY THAT COLUMN """
+        """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
+        try:
+            with db() as cursor:
+                recipes_query = """ SELECT COUNT(%s) as Total,%s,Recipe.UserId
+                                    FROM %s
+                                    JOIN Recipe on %s.RecipeId = Recipe.RecipeId
+                                    WHERE UserId = %s 
+                                    GROUP BY %s;""" % (column, column,table, table, user_id, column)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        finally:
+            print("Query count Column based on UserId Completed")
 
+    def query_count_and_group_courses(self,user_id, cuisine):
+        try:
+            with db() as cursor:
+                recipes_query = """ SELECT COUNT(CourseName) as Total, CourseName, Recipe.UserId, 
+                                    CuisineName
+                                    FROM Course
+                                    JOIN Cuisine on Cuisine.RecipeId = Course.RecipeId
+                                    JOIN Recipe on Recipe.RecipeId = Course.RecipeId
+                                    WHERE UserId = %s AND CuisineName = '%s'
+                                    GROUP BY CourseName;""" % (user_id, cuisine)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        finally:
+            print("Query count Course based on Cuisine and UserId Completed")
 

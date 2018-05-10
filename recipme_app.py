@@ -58,11 +58,22 @@ def invalid_login():
 
 ################ MAIN MY RECIPME ROUTE ##########################
 
-""" USER MY RECIPME MAIN PAGE """
+""" USER MY RECIPME MAIN PAGE, POPULATE CUISINES """
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
+    user_id = write_recipe.get_user_id(username)
+    cuisines = find_recipe.get_all_column_group_for_user('CuisineName', user_id, 'Cuisine')
+    return render_template('my_recipme.html', username=username, cuisines=cuisines)
+
+@app.route('/my_recipme/<username>/courses', methods=['GET','POST'])
+def get_courses(username):
+    if request.method == 'POST':
+        cuisine = request.form['Cuisine']
+        user_id = write_recipe.get_user_id(username)
+        courses = find_recipe.get_all_courses_for_cuisine(user_id['UserId'], cuisine)
+        print(courses)
+        return redirect('my_recipme/%s'% username)
     
-    return render_template('my_recipme.html', username=username)
 
 ################ SEARCH ROUTES #################################
 
@@ -71,7 +82,8 @@ def my_recipme(username):
 def all_myrecipme(username):
     result = find_recipe.get_mini_user_recipes(username, 'User.UserId', 'RecipeTitle', 'asc' )        
     recipes = find_recipe.date_time_converter(result)
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipes)
+    count = len(recipes)
+    return render_template('all_my_recipme.html', username=username, my_recipme=recipes, count=count)
 
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
@@ -79,8 +91,10 @@ def ingredient_search(username):
         ingredient = request.form['Ingredient']
         user_id = write_recipe.get_user_id(username)
         result = find_recipe.get_recipes_by_ingredient('User.UserId', user_id['UserId'], ingredient, 'RecipeTitle', 'asc')
+        recipes = find_recipe.date_time_converter(result)
+        count = len(recipes)
         print(result)
-    return render_template('ingredient_search.html', username=username, ingredient=ingredient, my_recipme=result)
+    return render_template('ingredient_search.html', username=username, ingredient=ingredient, my_recipme=recipes, count=count)
 
 ############### ADD RECIPE ROUTES #############################
 

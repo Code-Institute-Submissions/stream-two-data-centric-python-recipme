@@ -1,6 +1,11 @@
 
 {% include 'my_recipme.html' %}
 <h2>All {{ username }} RecipMe's.</h2>
+{% if count == 1 %}
+<p> Found {{ count }} RecipMe.</p>
+{% else %}
+<p>Found {{ count }} RecipeMe's.</p>
+{% endif %}
 {% include 'mini_recipe_partial.html' %}
 {% block mini_recipe %}
 {% endblock mini_recipe %}
