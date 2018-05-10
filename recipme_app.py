@@ -28,7 +28,7 @@ def signup():
         user_values = request.form
         username = user_values['Username']
         new_user = login_func.sign_up(user_values)
-        print(user_values)
+        #print(user_values)
         if new_user == True:
             return redirect('my_recipme/%s'% username)
         else:
@@ -69,14 +69,19 @@ def my_recipme(username):
 """ GET ALL RECIPES FOR A GIVEN USER """
 @app.route('/my_recipme/<username>/all_myrecipme')
 def all_myrecipme(username):
-    recipes = find_recipe.get_mini_user_recipes(username, 'User.UserId', 'RecipeTitle', 'desc' )        
-    recipes_convert_datetime = find_recipe.date_time_converter(recipes)
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipes_convert_datetime)
+    result = find_recipe.get_mini_user_recipes(username, 'User.UserId', 'RecipeTitle', 'asc' )        
+    recipes = find_recipe.date_time_converter(result)
+    return render_template('all_my_recipme.html', username=username, my_recipme=recipes)
 
-@app.route('/my_recipme/<username>/search')
+@app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
-    
-    return render_template('ingredient_search.html', username=username)
+    if request.method == 'POST':
+        ingredient = request.form['Ingredient']
+        user_id = write_recipe.get_user_id(username)
+        result = find_recipe.get_recipes_by_ingredient('User.UserId', user_id['UserId'], ingredient, 'RecipeTitle', 'asc')
+        print(result)
+    return render_template('ingredient_search.html', username=username, ingredient=ingredient, my_recipme=result)
+
 ############### ADD RECIPE ROUTES #############################
 
 """ ADD RECIPE FOR GIVEN USER"""

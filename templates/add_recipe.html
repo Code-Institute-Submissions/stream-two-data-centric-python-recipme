@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1> Hi {{ username }} </h1>
+<h1><a href="{{ url_for('my_recipme', username=username)}}">My RecipMe.</a></h1>
 <h2>Go ahead and create a new RecipMe</p>
 <br>
 <form action="{{ url_for('recipe_created', username=username) }}" method='POST'>

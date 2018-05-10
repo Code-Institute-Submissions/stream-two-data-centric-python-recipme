@@ -8,7 +8,7 @@ import json
   
 #### TO COME FROM FORM ###
 # #
-"""
+
 user_values = ["darchard"]
 search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
 direction = 'ASC'
@@ -17,7 +17,7 @@ course = "Lunch"
 cuisine = "British"
 recipe_id = 1
 ingredient = 'Butter'
-"""
+
 ###########################
 
 ########################## JSON CONVERSION ###############################
@@ -55,7 +55,6 @@ def get_mini_user_recipes(user_values, search_by, order_by, direction):
     user_id = write_recipe.get_user_id(user_values)
     query_recipe = db_read.query_read_recipes()
     recipe = query_recipe.query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
-    
     #print(user_id)
     return recipe
 
