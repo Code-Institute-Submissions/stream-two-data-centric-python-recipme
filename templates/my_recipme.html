@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>My Recipme</h1>
 <p>Hello {{ username }}!</p>
-<a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
+
 <div>
-    <h2>Your RecipMe's!</h2>
-    <hr>
-    {% for recipe in my_recipme %}
-    <h3>{{ recipe['RecipeTitle']}}</h3>
-    <p>{{ recipe['RecipeDescription']}}</p>
-    {%endfor%}
+    <h1>My RecipMe.</h1>
+    <h2>View your RecipMe's.</h2>
+    <p>Search all of your cookbook, search by Cuisine, Course, or by Ingredient.</p>
 </div>
+<div></div>
+<a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
+<a href="{{ url_for('all_myrecipme', username=username)}}"> Get All My RecipeMe</a>
+<a href="">Course</a>
+<a href="">Cuisine</a>
+<h3>Search by Ingredient.</h3>
+<form action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+    <input type='text' placeholder='Ingredient' name='Ingredient' required maxlength="50">
+    <input type='submit' value='Search MyRecipMe'>
+</form>
+
+<p> IMAGE OF FOOD HERE </p>
 {% endblock %}

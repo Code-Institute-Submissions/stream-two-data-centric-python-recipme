@@ -1,0 +1,24 @@
+{% block mini_recipe %}
+{% for recipe in my_recipme %}
+<br>
+<h2>{{ recipe['RecipeTitle']}}</h2>
+<h3>Description</h3>
+<p>{{ recipe['RecipeDescription']}}</p>
+<h3> Recipe Stats </h3>
+<p><strong>Cuisine</strong>:{{ recipe['CuisineName'] }}.</p>
+<p><strong>Course</strong>: {{ recipe ['CourseName'] }}.</p>
+<p><strong>Total cooking time</strong>: {{ recipe['CookingTimeMins']}} minutes.</p>
+<p><strong>Cost</strong>: £{{ recipe['Price'] }}.</p>
+<p><strong>Servings</strong>: {{ recipe['Servings'] }}.</p>
+<p><strong>Estimated Calories</strong>: {{ 'Calories' }}.</p>
+{% if recipe['Rating'] == "" %}
+<p><strong>Overall Rating: unrated </strong></p>
+{% else %}
+<p><strong>Overall Rating: {{ recipe['Rating'] }}</strong></p>
+{% endif %}
+<h3>RecipMe Author</h3>
+<p>Recipe created by: <strong>{{ recipe['Author'] }}</strong> at {{ recipe['Created'] }}.</p>
+<button>Full RecipMe</button>
+<hr>
+{%endfor%}
+{% endblock mini_recipe %}

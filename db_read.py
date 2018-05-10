@@ -24,9 +24,8 @@ class user_verify(db):
 class query():
     
     select = """SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, 
-                        CookingTimeMins, Created, ImageURL, 
-                        Price, Servings, CuisineName, Calories, 
-                        CourseName, User.Username as Author"""
+                        CookingTimeMins, Created, ImageURL, Price, Servings, CuisineName, 
+                        Calories, CourseName, User.Username as Author"""
 
     main_selection = select + """
                                 FROM Recipe 
