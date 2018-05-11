@@ -76,12 +76,12 @@ def get_method_for_full_recipe(recipe_id):
     #print(method)
     return method
 
-def get_filtered_mini_recipes(search_by, search_value, course, cuisine, order_by, direction):
+def get_category_mini_recipes(search_by, search_value, column, category, order_by, direction):
     """ GETS A FILTERED SET OF RECIPES SET BY CUISINE AND COURSE """
     query_recipe = db_read.query_read_recipes()
-    filtered_recipes = query_recipe.query_filter_mini_recipes(search_by, search_value, course, cuisine, order_by, direction)
-    #print(filtered_recipes)
-    return filtered_recipes
+    category_recipes = query_recipe.query_category_mini_recipes(search_by, search_value, column, category, order_by, direction)
+    #print(category_recipes)
+    return category_recipes
 
 def get_recipes_by_ingredient(search_by, search_value, ingredient, order_by, direction):
     """ GETS A SET OF RECIPES FILTERED BY AN INGREDIENTS SEARCH """
@@ -103,11 +103,17 @@ def get_all_column_group_for_user(column, user_id, table):
     cuisines = column_query.query_count_and_group_column(column, user_id['UserId'], table)
     return cuisines
 
+def get_cuisine_and_course_count(user_id):
+    cuisines = get_all_column_group_for_user('CuisineName', user_id, 'Cuisine')
+    courses = get_all_column_group_for_user('CourseName', user_id, 'Course')
+    return cuisines, courses
+
+"""
 def get_all_courses_for_cuisine(user_id, cuisine):
     course_query = query_read_recipes()
     courses = course_query.query_count_and_group_courses(user_id, cuisine)
     return courses
-
+"""
 
 
 ##get_user_id(user_values)

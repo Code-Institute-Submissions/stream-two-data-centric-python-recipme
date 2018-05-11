@@ -8,19 +8,25 @@
 </div>
 <div></div>
 <a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
-<a href="{{ url_for('all_myrecipme', username=username)}}"> Get All My RecipeMe</a>
+<br> 
+<a href="{{ url_for('all_myrecipme', username=username)}}"> Get All My RecipeMe's</a>
+<br>
 <a href="{{ url_for('index')}}">Log Out</a>
+<br>
 <h3>Choose RecipMe by Cuisine</h3>
-<form action="{{ url_for ('get_courses', username=username)}}" method='POST'>
+<form action="{{ url_for('category_search', username=username)}}" method='POST'>
     {% for cuisine in cuisines %}
-    <label> {{ cuisine['CuisineName'] }} ({{ cuisine['Total'] }})
-        <input type="checkbox" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">
-    </label>
+        <button type="submit" id="{{cuisine['CuisineName']}}" name="CuisineName" value="{{cuisine['CuisineName']}}">{{cuisine['CuisineName']}}</button>
     {% endfor %} 
-    <input type="submit" value="Get Courses">
 </form>
 <br>
 <h3>Choose RecipeMe by Course</h3>
+<form action="{{ url_for('category_search', username=username)}}" method='POST'>
+    {% for course in courses %}
+    <button type="submit" id="{{course['CourseName']}}" name="CourseName" value="{{course['CourseName']}}">{{course['CourseName']}}</button>
+    {% endfor %}
+</form>
+<h3>OR</h3>
 <h3>Search by Ingredient.</h3>
 
 <form action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>

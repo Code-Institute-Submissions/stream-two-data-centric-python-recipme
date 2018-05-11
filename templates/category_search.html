@@ -1,0 +1,11 @@
+
+{% include 'my_recipme.html' %}
+<h2>You searched for RecipMe's that are in the {{ category }} course category.</h2>
+{% if count == 1 %}
+<p> Found {{ count }} RecipMe that are in the {{ category }} course category.</p>
+{% else %}
+<p>Found {{ count }} RecipeMe's that are in the {{ category }} course category.</p>
+{% endif %}
+{% include 'mini_recipe_partial.html' %}
+{% block mini_recipe %}
+{% endblock mini_recipe %}

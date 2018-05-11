@@ -36,15 +36,15 @@ class TestRecipme(unittest.TestCase):
         self.assertEqual(type(method), list)
         self.assertEqual(len(method), 5)
 
-    def test_get_filtered_mini_recipes(self):
+    def test_get_category_mini_recipes(self):
         user_values = ["Dafydd","Archard","password"]
         search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
         direction = 'ASC'
         order_by = 'Calories'
-        course = "Lunch"
-        cuisine = "British"
+        category = "Lunch"
+       
       
-        recipe = recipme.get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
+        recipe = recipme.get_category_mini_recipes(search_by, 1, cateogry, order_by, direction)
         result = recipe[0]['RecipeTitle']
         
 

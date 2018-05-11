@@ -2,9 +2,9 @@
 {% include 'my_recipme.html' %}
 <h2>You searched for RecipMe's that use {{ ingredient }}</h2>
 {% if count == 1 %}
-<p> Found {{ count }} RecipMe.</p>
+<p> Found {{ count }} RecipMe that uses {{ ingredient }}.</p>
 {% else %}
-<p>Found {{ count }} RecipeMe's.</p>
+<p>Found {{ count }} RecipeMe's that use {{ ingredient }}.</p>
 {% endif %}
 {% include 'mini_recipe_partial.html' %}
 {% block mini_recipe %}

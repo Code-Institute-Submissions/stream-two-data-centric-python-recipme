@@ -37,7 +37,20 @@ class query():
                                 JOIN Course on Recipe.RecipeId = Course.RecipeId 
                                 """
 
-    search_ingredient =  select + """
+    def category_selection(self, table):
+        search_category =  self.select + """
+                                    FROM %s
+                                    JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
+                                    JOIN Cost on Ingredient.RecipeId = Cost.RecipeId
+                                    JOIN Servings on Ingredient.RecipeId = Servings.RecipeId
+                                    JOIN Cuisine on Ingredient.RecipeId = Cuisine.RecipeId
+                                    JOIN Health on Ingredient.RecipeId = Health.RecipeId
+                                    JOIN Course on Ingredient.RecipeId = Course.RecipeId
+                                    JOIN User on Ingredient.UserId = User.UserId 
+                                    """ % (table)
+        return search_category
+
+    search_ingredient =  self.select + """
                                     FROM Ingredient
                                     JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
                                     JOIN Cost on Ingredient.RecipeId = Cost.RecipeId
@@ -46,10 +59,10 @@ class query():
                                     JOIN Health on Ingredient.RecipeId = Health.RecipeId
                                     JOIN Course on Ingredient.RecipeId = Course.RecipeId
                                     JOIN User on Ingredient.UserId = User.UserId 
-                                    """
+                                    """ 
 
 
-    saved_recipes = select + """
+    saved_recipes = self.select + """
                                 FROM SavedRecipes
                                 JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
                                 JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
@@ -88,13 +101,14 @@ class query_read_recipes(db):
             print("Query get mini recipes completed")
 
 
-    def query_filter_mini_recipes(self, search_by, search_value, course, cuisine, order_by, direction):
+    def query_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
         try:
             with db() as cursor:
-                recipes_query = query.main_selection + """
-                                WHERE %s = %s AND CourseName LIKE '%s' AND CuisineName LIKE '%s'
-                                ORDER BY %s %s;""" % (search_by, search_value, course, cuisine, order_by, direction)                   
+                recipes_query = query.category_selection(table) + """
+                                FROM %s
+                                WHERE %s = %s AND %s = %s
+                                ORDER BY %s %s;""" % (table, search_by, search_value, column, category, order_by, direction)                   
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
