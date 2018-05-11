@@ -120,10 +120,10 @@ def category_search(username):
         query_recipe = query_read_recipes()
         category_recipes = query_recipe.query_category_mini_recipes('Cuisine', 'User.UserId', user_id['UserId'],  column_name, request.form[column_name], 
                                                                     'Recipe.RecipeTitle', 'asc') 
-        print(request.form[column_name])
-        print(column_name)
+        ##print(request.form[column_name])
+        #print(column_name)
             
-        print(category_recipes)
+        #print(category_recipes)
         return render_template('category_search.html', username=username,cuisines=categories[0], courses=categories[1])
 
 ############### ADD RECIPE ROUTES #############################
