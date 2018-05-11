@@ -26,15 +26,18 @@ ingredient = 'Butter'
 """WRITE A TEST FOR THIS FUNCTION"""
 """"""""""""""""""""""""""""""""""""
 def date_time_converter(recipes):
-    print(recipes)
-    for recipe in recipes:
-        for k in recipe.items():
-            
-            print(k)
-            #recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
-            #recipe = k.strftime('%H:%M:%S on %m.%d.%Y')
-           
-        return recipes
+   # print(recipes)
+    
+    
+    for i in recipes:
+        print(i['Created'])
+        i['Created'] = i['Created'].strftime('%H:%M:%S on %m.%d.%Y')
+        print(i['Created'])
+        
+        #recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
+        #recipe = k.strftime('%H:%M:%S on %m.%d.%Y')
+        #print(recipes)
+    return recipes
 """
 def datetime_converter(my_recipme):
     print('here')

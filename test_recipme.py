@@ -35,7 +35,7 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(type(method), list)
         self.assertEqual(len(method), 5)
-
+    
     def test_get_category_mini_recipes(self):
         user_values = ["Dafydd","Archard","password"]
         search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
