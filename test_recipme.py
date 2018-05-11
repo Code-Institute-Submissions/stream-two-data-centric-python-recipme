@@ -2,7 +2,7 @@ import os
 import pymysql
 import db
 import db_read
-import recipme
+import find_recipe
 import login_func
 import write_recipe
 import unittest
@@ -22,7 +22,7 @@ class TestRecipme(unittest.TestCase):
 
         recipe_id = 11
 
-        ingredients = recipme.get_ingredients_for_full_recipe(recipe_id)
+        ingredients = find_recipe.get_ingredients_for_full_recipe(recipe_id)
 
         self.assertEqual(type(ingredients), list)
         self.assertEqual(len(ingredients), 6)
@@ -31,7 +31,7 @@ class TestRecipme(unittest.TestCase):
 
         recipe_id = 11
 
-        method = recipme.get_method_for_full_recipe(recipe_id)
+        method = find_recipe.get_method_for_full_recipe(recipe_id)
 
         self.assertEqual(type(method), list)
         self.assertEqual(len(method), 5)
@@ -44,7 +44,7 @@ class TestRecipme(unittest.TestCase):
         category = "Lunch"
        
       
-        recipe = recipme.get_category_mini_recipes(search_by, 1, cateogry, order_by, direction)
+        recipe = find_recipe.get_category_mini_recipes(search_by, 1, category, order_by, direction)
         result = recipe[0]['RecipeTitle']
         
 
@@ -58,7 +58,7 @@ class TestRecipme(unittest.TestCase):
         order_by = 'Calories'
         ingredient = 'Eggs'
       
-        recipe = recipme.get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
+        recipe = find_recipe.get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
         result = recipe[0]['RecipeTitle']
         
 
@@ -70,14 +70,14 @@ class TestRecipme(unittest.TestCase):
         direction = 'ASC'
         order_by = 'Calories'
 
-        recipe = recipme.get_saved_recipes_for_user(user_id, order_by, direction)
+        recipe = find_recipe.get_saved_recipes_for_user(user_id, order_by, direction)
         author = recipe[0]['Author']
 
         # TESTS TO SEE THAT RETURNED USERNAME IS THE ORIGINAL AUTHOR, NOT THE
         # USERNAME FROM GIVEN ID
 
         self.assertEqual(type(recipe), list)
-        self.assertEqual(author, 'darchard')
+        self.assertEqual(author, 'fulph')
 
     ############################ LOGIN/SIGNUP TESTS ##################################
 
@@ -100,8 +100,8 @@ class TestRecipme(unittest.TestCase):
                         'Password': 'password'
                         }
 
-        write_user = recipme_app.create_user(user_values)
-        check_user = recipme_app.get_existing_user(user_values)
+        write_user = find_recipe_app.create_user(user_values)
+        check_user = find_recipe_app.get_existing_user(user_values)
         
         self.assertEqual(user_values['Username'], check_user[0]['Username'])
         self.assertEqual(user_values['First'], check_user[0]['First'])
@@ -113,8 +113,8 @@ class TestRecipme(unittest.TestCase):
         existing_user_values = {'Username': 'darchard', 'First':'Dafydd', 'Last':'Archard','Password': 'password'}
         new_user_vales = {'Username': 'newuser', 'First':'newuser', 'Last':'newuser','Password': 'newuser'}
 
-        successful = recipme_app.sign_up(existing_user_values)
-        unsuccessful = recipme_app.sign_up(new_user_vales)
+        successful = find_recipe_app.sign_up(existing_user_values)
+        unsuccessful = find_recipe_app.sign_up(new_user_vales)
 
         self.assertEqual(successful, False)
         self.assertEqual(unsuccessful, True)
@@ -168,7 +168,7 @@ class ExpectedFailureTestCase(unittest.TestCase):
         order_by = 'Calories'
         search_value = 1
 
-        recipes = recipme.get_all_mini_recipes(search_by, search_value, order_by, direction)
+        recipes = find_recipe.get_all_mini_recipes(search_by, search_value, order_by, direction)
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 3)

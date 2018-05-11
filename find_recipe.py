@@ -26,10 +26,14 @@ ingredient = 'Butter'
 """WRITE A TEST FOR THIS FUNCTION"""
 """"""""""""""""""""""""""""""""""""
 def date_time_converter(recipes):
-    
+    print(recipes)
     for recipe in recipes:
-        recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
-        print(recipes)
+        for k in recipe.items():
+            
+            print(k)
+            #recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
+            #recipe = k.strftime('%H:%M:%S on %m.%d.%Y')
+           
         return recipes
 """
 def datetime_converter(my_recipme):
@@ -76,10 +80,10 @@ def get_method_for_full_recipe(recipe_id):
     #print(method)
     return method
 
-def get_category_mini_recipes(search_by, search_value, column, category, order_by, direction):
+def get_category_mini_recipes(table, search_by, search_value, column, category, order_by, direction):
     """ GETS A FILTERED SET OF RECIPES SET BY CUISINE AND COURSE """
     query_recipe = db_read.query_read_recipes()
-    category_recipes = query_recipe.query_category_mini_recipes(search_by, search_value, column, category, order_by, direction)
+    category_recipes = query_recipe.query_category_mini_recipes(table, search_by, search_value, column, category, order_by, direction)
     #print(category_recipes)
     return category_recipes
 

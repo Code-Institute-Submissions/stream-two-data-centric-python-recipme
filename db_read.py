@@ -45,13 +45,13 @@ class query():
     
         search_ingredient = self.select + """
                                             FROM Ingredient
+                                            JOIN User on Ingredient.UserId = User.UserId 
                                             JOIN Recipe on Ingredient.RecipeId = Recipe.RecipeId
                                             JOIN Cost on Ingredient.RecipeId = Cost.RecipeId
                                             JOIN Servings on Ingredient.RecipeId = Servings.RecipeId
                                             JOIN Cuisine on Ingredient.RecipeId = Cuisine.RecipeId
                                             JOIN Health on Ingredient.RecipeId = Health.RecipeId
                                             JOIN Course on Ingredient.RecipeId = Course.RecipeId
-                                            JOIN User on Ingredient.UserId = User.UserId 
                                             """ 
         return search_ingredient
 
@@ -59,33 +59,34 @@ class query():
     def saved_recipes(self):
         saved_recipes = self.select + """
                                         FROM SavedRecipes
+                                        JOIN User on SavedRecipes.UserId = User.UserId
                                         JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
                                         JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
                                         JOIN Servings on SavedRecipes.RecipeId = Servings.RecipeId
                                         JOIN Cuisine on SavedRecipes.RecipeId = Cuisine.RecipeId
                                         JOIN Health on SavedRecipes.RecipeId = Health.RecipeId
                                         JOIN Course on SavedRecipes.RecipeId = Course.RecipeId
-                                        JOIN User on Recipe.UserId = User.UserId
                                         """
         return saved_recipes
 
 class query_category(query):
     
-    def __init__(self, table, join):
+    def __init__(self, table, join_table):
         super().__init__()
         self.table = table
-        self.join = join
+        self.join_table = join_table
 
     def category_selection(self):
-        search_category =  self.select + f"""
-                                FROM {self.table}
-                                JOIN Recipe on {self.table}.RecipeId = Recipe.RecipeId
-                                JOIN Cost on {self.table}.RecipeId = Cost.RecipeId
-                                JOIN Servings on {self.table}.RecipeId = Servings.RecipeId
-                                JOIN {self.join} on {self.table}.RecipeId = Cuisine.RecipeId
-                                JOIN Health on {self.table}.RecipeId = Health.RecipeId
-                                JOIN User on Recipe.UserId = User.UserId 
-                                """ 
+        search_category =  self.select + """
+                                        FROM %s
+                                        JOIN %s on %s.RecipeId = %s.RecipeId
+                                        JOIN Recipe on %s.RecipeId = Recipe.RecipeId
+                                        JOIN Cost on %s.RecipeId = Cost.RecipeId
+                                        JOIN Servings on %s.RecipeId = Servings.RecipeId
+                                        JOIN Health on %s.RecipeId = Health.RecipeId
+                                        JOIN User on Recipe.UserId = User.UserId 
+                                        """ % (self.table, self.join_table, self.table, self.join_table,
+                                                self.table, self.table, self.table, self.table )
         return search_category
     
 
@@ -109,8 +110,8 @@ class query_read_recipes(db):
         try:
             with db() as cursor:
                 new_query = query()
-                recipes_query = query.main_selection + """ 
-                                WHERE %s = %s ORDER BY %s %s;""" % (search_by, search_value, order_by, direction) #SEARCH BY VALUE CAN BE USERID,MAKEPUBLIC, RECIPE ID#                    
+                recipes_query = new_query.main_selection() + f""" WHERE {search_by} = {search_value} 
+                                                                    ORDER BY {order_by} {direction};""" #% (search_by, search_value, order_by, direction) #SEARCH BY VALUE CAN BE USERID,MAKEPUBLIC, RECIPE ID#                    
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -120,14 +121,19 @@ class query_read_recipes(db):
 
     def query_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
+        join_table = []
+        if table == 'Cuisine':
+            join_table = 'Course'
+        else:
+            join_table ='Cuisine'
         try:
             with db() as cursor:
-                new_query = query_category(table, 'Course')
+                new_query = query_category(table, join_table)
                 recipes_query = new_query.category_selection() + f""" WHERE {search_by} = {search_value} AND {column} = '{category}' 
                                                                         ORDER BY {order_by} {direction};"""                                                                 
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
-                print(recipes_query)
+                #print(recipes_query)
                 return recipes
         finally:
             print("Query get mini recipes completed")
@@ -136,9 +142,10 @@ class query_read_recipes(db):
         """ GET ALL MINI RECIPES FOR GIVEN INGREDIENT """
         try:
             with db() as cursor:
-                recipes_query = query.search_ingredient + """ 
-                                WHERE %s = %s AND Ingredient.IngredientName LIKE '%s'
-                                ORDER BY %s %s;""" % (search_by, search_value, ingredient, order_by, direction)    
+                new_query = query()
+                recipes_query = new_query.search_ingredient() + f""" WHERE {search_by} = {search_value} 
+                                                                    AND Ingredient.IngredientName LIKE '{ingredient}'
+                                                                    ORDER BY {order_by} {direction};""" #% (search_by, search_value, ingredient, order_by, direction)    
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -149,8 +156,8 @@ class query_read_recipes(db):
         """ GET INGREDIENTS BASED ON GIVEN RECIPE ID """
         try:
             with db() as cursor:
-                recipes_query = """SELECT IngredientName, Quantity FROM Ingredient
-                                    WHERE Ingredient.RecipeId = %s;""" % (recipe_id)
+                recipes_query = f"""SELECT IngredientName, Quantity FROM Ingredient
+                                    WHERE Ingredient.RecipeId = {recipe_id};""" #% (recipe_id)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -161,8 +168,8 @@ class query_read_recipes(db):
         """ GET FULL METHOD BASED ON GIVEN RECIPE ID """
         try:
             with db() as cursor:
-                recipes_query = """SELECT StepNumber, StepDescription FROM Method
-                                    WHERE Method.RecipeId = %s;""" % (recipe_id)
+                recipes_query = f"""SELECT StepNumber, StepDescription FROM Method
+                                    WHERE Method.RecipeId = {recipe_id};""" #% (recipe_id)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -173,9 +180,10 @@ class query_read_recipes(db):
         """ QUERY USERS SAVED RECIPES BASED ON USER ID """
         try:
             with db() as cursor:
-                recipes_query = query.saved_recipes + """ 
-                                WHERE SavedRecipes.UserId = %s 
-                                ORDER BY %s %s;""" % (user_id, order_by, direction)
+                new_query = query()
+                recipes_query = new_query.saved_recipes() + f""" 
+                                WHERE SavedRecipes.UserId = {user_id} 
+                                ORDER BY {order_by} {direction};""" #% (user_id, order_by, direction)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -187,30 +195,14 @@ class query_read_recipes(db):
         """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
         try:
             with db() as cursor:
-                recipes_query = """ SELECT COUNT(%s) as Total,%s,Recipe.UserId
-                                    FROM %s
-                                    JOIN Recipe on %s.RecipeId = Recipe.RecipeId
-                                    WHERE UserId = %s 
-                                    GROUP BY %s;""" % (column, column,table, table, user_id, column)
+                recipes_query = f""" SELECT COUNT({column}) as Total,{column},Recipe.UserId
+                                    FROM {table}
+                                    JOIN Recipe on {table}.RecipeId = Recipe.RecipeId
+                                    WHERE UserId = {user_id} 
+                                    GROUP BY {column};""" #% (column, column,table, table, user_id, column)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
         finally:
             print("Query count Column based on UserId Completed")
-
-    def query_count_and_group_courses(self,user_id, cuisine):
-        try:
-            with db() as cursor:
-                recipes_query = """ SELECT COUNT(CourseName) as Total, CourseName, Recipe.UserId, 
-                                    CuisineName
-                                    FROM Course
-                                    JOIN Cuisine on Cuisine.RecipeId = Course.RecipeId
-                                    JOIN Recipe on Recipe.RecipeId = Course.RecipeId
-                                    WHERE UserId = %s AND CuisineName = '%s'
-                                    GROUP BY CourseName;""" % (user_id, cuisine)
-                cursor.execute(recipes_query)
-                recipes = [row for row in cursor]
-                return recipes
-        finally:
-            print("Query count Course based on Cuisine and UserId Completed")
-
+ 

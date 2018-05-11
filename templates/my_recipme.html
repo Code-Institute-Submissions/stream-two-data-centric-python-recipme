@@ -16,14 +16,14 @@
 <h3>Choose RecipMe by Cuisine</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
     {% for cuisine in cuisines %}
-        <button type="submit" id="{{cuisine['CuisineName']}}" name="CuisineName" value="{{cuisine['CuisineName']}}">{{cuisine['CuisineName']}}</button>
+        <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
     {% endfor %} 
 </form>
 <br>
 <h3>Choose RecipeMe by Course</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
     {% for course in courses %}
-    <button type="submit" id="{{course['CourseName']}}" name="CourseName" value="{{course['CourseName']}}">{{course['CourseName']}}</button>
+    <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
     {% endfor %}
 </form>
 <h3>OR</h3>

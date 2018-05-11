@@ -63,17 +63,8 @@ def invalid_login():
 def my_recipme(username):
     user_id = write_recipe.get_user_id(username)
     categories = find_recipe.get_cuisine_and_course_count(user_id)
+    print(categories)
     return render_template('my_recipme.html', username=username, cuisines=categories[0], courses=categories[1])
-""""
-@app.route('/my_recipme/<username>/courses', methods=['GET','POST'])
-def get_courses(username):
-    if request.method == 'POST':
-        cuisine = request.form['Cuisine']
-        user_id = write_recipe.get_user_id(username)
-        
-        print(courses)
-        return redirect('my_recipme/%s'% username)
-"""   
 
 ################ SEARCH ROUTES #################################
 
@@ -86,7 +77,7 @@ def all_myrecipme(username):
     count = len(recipes)
     categories = find_recipe.get_cuisine_and_course_count(user_id)
     return render_template('all_my_recipme.html', username=username, my_recipme=recipes, 
-                                                    cuisines=categories[0], courses=categories[1])
+                                                    cuisines=categories[0], courses=categories[1], count=count)
 
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
@@ -101,9 +92,7 @@ def ingredient_search(username):
         else:
             recipes = find_recipe.date_time_converter(result)
             count = len(recipes)
-
         categories = find_recipe.get_cuisine_and_course_count(user_id)
-        print(result)
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipes, count=count,
                             cuisines=categories[0], courses=categories[1])
@@ -114,17 +103,16 @@ def category_search(username):
         user_id = write_recipe.get_user_id(username)
         categories = find_recipe.get_cuisine_and_course_count(user_id)
         column = [key for key in request.form]
-        column_name = column[0]
-        #result = find_recipe.get_category_mini_recipes('User.UserId', user_id['UserId'], column_name, 
-                                                        #request.form[column_name], 'RecipeTitle', 'asc' )
-        query_recipe = query_read_recipes()
-        category_recipes = query_recipe.query_category_mini_recipes('Cuisine', 'User.UserId', user_id['UserId'],  column_name, request.form[column_name], 
-                                                                    'Recipe.RecipeTitle', 'asc') 
-        ##print(request.form[column_name])
-        #print(column_name)
-            
-        #print(category_recipes)
-        return render_template('category_search.html', username=username,cuisines=categories[0], courses=categories[1])
+        column_name = column[0] + 'Name'
+        results = find_recipe.get_category_mini_recipes(column[0], 'User.UserId', user_id['UserId'], 
+                                                        column_name, request.form[column[0]], 'RecipeTitle', 'asc')
+        recipes = find_recipe.date_time_converter(results)
+        count = len((recipes))
+        #print(results)
+        return render_template('category_search.html', username=username, cuisines=categories[0], 
+                                                        count=count,courses=categories[1], 
+                                                        category=request.form[column[0]], 
+                                                        category_item=column[0], my_recipme=recipes)
 
 ############### ADD RECIPE ROUTES #############################
 
