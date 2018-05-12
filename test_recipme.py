@@ -3,10 +3,11 @@ import pymysql
 import db
 import db_read
 import find_recipe
-import login_func
+import user_login
 import write_recipe
 import find_recipe
 import unittest
+import datetime
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
 class TestRecipme(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestRecipme(unittest.TestCase):
 
         recipe_id = 11
 
-        ingredients = find_recipe.get_ingredients_for_full_recipe(recipe_id)
+        ingredients = find_recipe.get().get_ingredients_for_full_recipe(recipe_id)
 
         self.assertEqual(type(ingredients), list)
         self.assertEqual(len(ingredients), 6)
@@ -32,25 +33,28 @@ class TestRecipme(unittest.TestCase):
 
         recipe_id = 11
 
-        method = find_recipe.get_method_for_full_recipe(recipe_id)
+        method = find_recipe.get().get_method_for_full_recipe(recipe_id)
 
         self.assertEqual(type(method), list)
         self.assertEqual(len(method), 5)
     
     def test_get_category_mini_recipes(self):
-        user_values = ["Dafydd","Archard","password"]
-        search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
+    
+        search_by = 'User.UserId' ## MakePublic, UserId ##
         direction = 'ASC'
         order_by = 'Calories'
-        category = "Lunch"
+        category = 'Lunch'
+        table = 'Course'
+        column = 'CourseName'
        
       
-        recipe = find_recipe.get_category_mini_recipes(search_by, 1, category, order_by, direction)
+        recipe = find_recipe.get().get_category_mini_recipes(table, search_by, 1, column, 
+                                                            category, order_by, direction)
         result = recipe[0]['RecipeTitle']
         
 
         self.assertEqual(type(recipe), list)
-        self.assertEqual(result, 'BEANS ON TOAST')
+        self.assertEqual(result, 'Chips')
 
     def test_get_recipes_by_ingredient(self):
         user_values = ["Dafydd","Archard","password"]
@@ -59,7 +63,7 @@ class TestRecipme(unittest.TestCase):
         order_by = 'Calories'
         ingredient = 'Eggs'
       
-        recipe = find_recipe.get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
+        recipe = find_recipe.get().get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
         result = recipe[0]['RecipeTitle']
         
 
@@ -71,7 +75,7 @@ class TestRecipme(unittest.TestCase):
         direction = 'ASC'
         order_by = 'Calories'
 
-        recipe = find_recipe.get_saved_recipes_for_user(user_id, order_by, direction)
+        recipe = find_recipe.get().get_saved_recipes_for_user(user_id, order_by, direction)
         author = recipe[0]['Author']
 
         # TESTS TO SEE THAT RETURNED USERNAME IS THE ORIGINAL AUTHOR, NOT THE
@@ -84,7 +88,7 @@ class TestRecipme(unittest.TestCase):
 
     def test_get_existing_user(self):
         user_values = {'Username': 'darchard', 'Password': 'password'}
-        user = login_func.get_existing_user(user_values)
+        user = user_login.login(user_values).get_existing_user()
         username = user[0]['Username']
         password = user[0]['Password']
 
@@ -126,8 +130,8 @@ class TestRecipme(unittest.TestCase):
         actual_user_values = {'Username': 'darchard', 'Password': 'password'}
         invalid_user_vales = {'Username': 'invalid', 'Password': 'invalid'}
 
-        successful = login_func.user_login(actual_user_values)
-        unsuccessful = login_func.user_login(invalid_user_vales)
+        successful = user_login.login(actual_user_values).user_login()
+        unsuccessful = user_login.login(invalid_user_vales).user_login()
 
         self.assertEqual(successful, True)
         self.assertEqual(unsuccessful, False)
@@ -138,7 +142,7 @@ class TestRecipme(unittest.TestCase):
     def test_get_user_id(self):
         username = 'darchard'
 
-        user_id = find_recipe.get_user_id(username)
+        user_id = find_recipe.get().get_user_id(username)
 
         self.assertEqual(type(user_id), dict)
         self.assertEqual(user_id['UserId'], 1)
@@ -147,7 +151,7 @@ class TestRecipme(unittest.TestCase):
         ingredient_list = [['Chicken Breasts', 'Wraps'], {'UserId': 1}, ['2', '4']]
         recipe_primary_key = 1
 
-        result = write_recipe.merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
+        result = write_recipe.create().merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
 
         self.assertEqual(result, [['Chicken Breasts', 1, 1, '2'], ['Wraps', 1, 1, '4']])
 
@@ -155,10 +159,26 @@ class TestRecipme(unittest.TestCase):
         method_list = [['1', '2'], ['Slice Cheese', 'Pour Wine']]
         recipe_primary_key = 1
 
-        result = write_recipe.merge_recipe_id_into_method(method_list, recipe_primary_key)
+        result = write_recipe.create().merge_recipe_id_into_method(method_list, recipe_primary_key)
 
         self.assertEqual(result, [['1', 'Slice Cheese', 1], ['2', 'Pour Wine', 1]])
 
+    def test_date_time_converter(self):
+        date = [{'Created': datetime.datetime(2018, 5, 7, 13, 26, 5)}]
+
+        result = find_recipe.get().date_time_converter(date)
+
+        self.assertEqual(result, [{'Created':'13:26:05 on 05.07.2018'}])
+
+    def test_get_all_column_group_for_user(self):
+        column = 'CourseName'
+        user_id = {'UserId': 11}
+        table = 'Course'
+
+        result = find_recipe.get().get_all_column_group_for_user(column, user_id, table)
+
+        self.assertEqual(result[0]['Total'], 1)
+        self.assertEqual(result[0]['CourseName'], 'Breakfast')
    
 class ExpectedFailureTestCase(unittest.TestCase):
     @unittest.expectedFailure
@@ -169,7 +189,7 @@ class ExpectedFailureTestCase(unittest.TestCase):
         order_by = 'Calories'
         search_value = 1
 
-        recipes = find_recipe.get_all_mini_recipes(search_by, search_value, order_by, direction)
+        recipes = find_recipe.get().get_all_mini_recipes(search_by, search_value, order_by, direction)
 
         self.assertEqual(type(recipes), list)
         self.assertEqual(len(recipes), 3)

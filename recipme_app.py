@@ -86,7 +86,7 @@ def ingredient_search(username):
 def category_search(username):
     if request.method == 'POST':
         recipe_info = view_var.view_var(username).var_cat_search(request.form)
-        print(recipe_info)
+        print(request.form)
         return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
                                                         count=recipe_info[1], cuisines=recipe_info[2][0], 
                                                         courses=recipe_info[2][1], category=recipe_info[3], 
@@ -104,11 +104,11 @@ def add_recipe(username):
 def recipe_created(username):
     if request.method == 'POST':
         recipe = request.form
-        user_id = find_recipe.get_user_id(username)
+        user_id = find_recipe.get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
         write_recipe.create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
-        
+
         return redirect('my_recipme/%s'% username)
     
 if __name__ == '__main__':
