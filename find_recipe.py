@@ -24,12 +24,11 @@ class get():
         return user_id
         
     def get_all_mini_recipes(self, search_by, search_value, order_by, direction):
-        """ GET ALL MINI RECIPES THAT ARE DECLARED PUBLIC """ 
+        """ GET MINI RECIPES BY RECIPE ID OR PUBLIC """ 
         query_recipe = db_read.query_read_recipes()
         recipe = query_recipe.query_all_mini_recipes(search_by, search_value, order_by, direction)
         #print(recipe)
         return recipe
-
 
     def get_mini_user_recipes(self, user_values, search_by, order_by, direction):
         """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """

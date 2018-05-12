@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Full RecipMe</h1>
+<h2>{{ full_recipe[1][0]['RecipeTitle']}}</h2>
+<p>Recipe created by: <strong>{{ 'username' }}</strong> at {{ full_recipe[1][0]['Created'] }}</p>
+<h3> Recipe Stats </h3>
+<p><strong>Cuisine</strong>:{{ full_recipe[1][0]['CuisineName'] }}.</p>
+<p><strong>Course</strong>: {{ full_recipe[1][0] ['CourseName'] }}.</p>
+<p><strong>Total cooking time</strong>: {{ full_recipe[1][0]['CookingTimeMins']}} minutes.</p>
+<p><strong>Cost</strong>: £{{ full_recipe[1][0]['Price'] }}.</p>
+<p><strong>Servings</strong>: {{ full_recipe[1][0]['Servings'] }}.</p>
+<p><strong>Estimated Calories</strong>: {{full_recipe[1][0]['Calories']}}.</p>
+<hr>
+<h2>Ingredients</h2>
+<ul>
+    {% if full_recipe[2] == [] %}
+    <p>No ingredients for this recipe yet</p>
+    {% else %}
+    {% for ingredient in full_recipe[2] %}
+    <li>{{ ingredient['Quantity']}} {{ ingredient['IngredientName']}}</li>
+    {% endfor %}
+    {% endif %}
+</ul>
+<hr>
+<h2>Method</h2>
+<ol>
+    {% if full_recipe[3] == [] %}
+    <p>No method for this recipe yet</p>
+    {% else %}
+    {% for step in full_recipe[3] %}
+    <li>{{ step['StepDescription']}}</li>
+    {% endfor %}
+    {% endif %}
+</ol>
+<a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
+
+{% endblock%}

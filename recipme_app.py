@@ -86,11 +86,25 @@ def ingredient_search(username):
 def category_search(username):
     if request.method == 'POST':
         recipe_info = view_var.view_var(username).var_cat_search(request.form)
-        print(request.form)
         return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
                                                         count=recipe_info[1], cuisines=recipe_info[2][0], 
                                                         courses=recipe_info[2][1], category=recipe_info[3], 
-                                                        category_item=recipe_info[4], )
+                                                        category_item=recipe_info[4])
+                                                        
+############### FULL RECIPE VIEW ##############################
+@app.route('/my_recipme/<username>/redirect', methods=['GET', 'POST'])
+def full_redirect(username):
+    if request.method == 'POST':
+        recipe_id = request.form['RecipeId']
+        full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+        title = full_recipe[1][0]['RecipeTitle']
+        
+        return redirect('/my_recipme/%s/%s/%s'% (username, title, recipe_id))
+
+@app.route('/my_recipme/<username>/<title>/<recipe_id>')
+def full_recipe(username, title, recipe_id):
+    full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+    return render_template('full_recipe_partial.html', title=title, username=username, full_recipe=full_recipe)
 
 ############### ADD RECIPE ROUTES #############################
 

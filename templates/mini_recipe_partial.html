@@ -10,15 +10,12 @@
 <p><strong>Total cooking time</strong>: {{ recipe['CookingTimeMins']}} minutes.</p>
 <p><strong>Cost</strong>: £{{ recipe['Price'] }}.</p>
 <p><strong>Servings</strong>: {{ recipe['Servings'] }}.</p>
-<p><strong>Estimated Calories</strong>: {{ 'Calories' }}.</p>
-{% if recipe['Rating'] == "" %}
-<p><strong>Overall Rating: unrated </strong></p>
-{% else %}
-<p><strong>Overall Rating: {{ recipe['Rating'] }}</strong></p>
-{% endif %}
+<p><strong>Estimated Calories</strong>: {{ recipe['Calories'] }}.</p>
 <h3>RecipMe Author</h3>
 <p>Recipe created by: <strong>{{ recipe['Author'] }}</strong> at {{ recipe['Created'] }}.</p>
-<button>Full RecipMe</button>
+<form action = "{{ url_for('full_redirect', username=username)}}" method='POST'>
+    <button type='submit' name='RecipeId' value="{{ recipe['RecipeId']}}">Full RecipMe</button>
+</form>
 <hr>
 {%endfor%}
 {% endblock mini_recipe %}

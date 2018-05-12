@@ -41,11 +41,19 @@ class view_var():
         results = find_recipe.get().get_category_mini_recipes(column[0], 'User.UserId', user_id['UserId'], 
                                                         column_name, form[column[0]], 
                                                         'RecipeTitle', 'asc')
-        print(results)
         recipes = find_recipe.get().date_time_converter(results)
         count = len((recipes))
         categories = find_recipe.get().get_cuisine_and_course_count(user_id)
         return recipes, count, categories, form[column[0]], column[0]
+
+    def var_full_recipe(self, recipe_id):
+        username = [{'Username':self.username}]
+        result = find_recipe.get().get_all_mini_recipes('Recipe.RecipeId', recipe_id, 
+                                                       'RecipeTitle', 'asc')
+        recipe = find_recipe.get().date_time_converter(result)
+        ingredients = find_recipe.get().get_ingredients_for_full_recipe(recipe_id)
+        method = find_recipe.get().get_method_for_full_recipe(recipe_id)
+        return username, recipe, ingredients, method
 
     
         
