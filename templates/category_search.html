@@ -1,10 +1,10 @@
 
 {% include 'my_recipme.html' %}
-<h2>You searched for RecipMe's from the {{ category[1] }} {{ category[0]}} category.</h2>
+<h2>You searched for RecipMe's from the {{ category }} {{ category_item }} category.</h2>
 {% if count == 1 %}
-<p> Found {{ count }} RecipMe that are in the {{ category }} {{ category_item }} category.</p>
+<p> Found {{ count }} RecipMe.</p>
 {% else %}
-<p>Found {{ count }} RecipeMe's that are in the {{ category }} {{ category_item }} category.</p>
+<p>Found {{ count }} RecipeMe's.</p>
 {% endif %}
 {% include 'mini_recipe_partial.html' %}
 {% block mini_recipe %}

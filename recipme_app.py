@@ -1,10 +1,11 @@
 import os
 import db_create
-from db_read import user_verify, query_read_recipes
-from db import db
 import write_recipe
-import login_func
+import user_login
+import view_var
 import find_recipe
+from db import db
+from db_read import user_verify, query_read_recipes
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -26,11 +27,9 @@ def index():
 def signup():
     if request.method == 'POST':
         user_values = request.form
-        username = user_values['Username']
-        new_user = login_func.sign_up(user_values)
-        #print(user_values)
+        new_user = user_login.login(user_values).sign_up()
         if new_user == True:
-            return redirect('my_recipme/%s'% username)
+            return redirect('my_recipme/%s'% user_values['Username'])
         else:
             return redirect('user_taken') 
 
@@ -43,11 +42,10 @@ def user_taken():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_values = request.form
-        username = user_values['Username']
-        returning_user = login_func.user_login(user_values)
+        user_values= request.form
+        returning_user = user_login.login(user_values).user_login()
         if returning_user == True:
-            return redirect('my_recipme/%s'% username)
+            return redirect('my_recipme/%s'% user_values['Username'])
         else:
             return redirect('invalid_login')
 
@@ -61,58 +59,38 @@ def invalid_login():
 """ USER MY RECIPME MAIN PAGE, POPULATE CUISINES """
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    user_id = write_recipe.get_user_id(username)
-    categories = find_recipe.get_cuisine_and_course_count(user_id)
-    print(categories)
-    return render_template('my_recipme.html', username=username, cuisines=categories[0], courses=categories[1])
+    recipe_info = view_var.view_var(username).var_myrecipme()
+    return render_template('my_recipme.html', username=username, cuisines=recipe_info[0], courses=recipe_info[1])
 
 ################ SEARCH ROUTES #################################
 
 """ GET ALL RECIPES FOR A GIVEN USER """
 @app.route('/my_recipme/<username>/all_myrecipme')
 def all_myrecipme(username):
-    user_id = write_recipe.get_user_id(username)
-    result = find_recipe.get_mini_user_recipes(username, 'User.UserId', 'RecipeTitle', 'asc' )        
-    recipes = find_recipe.date_time_converter(result)
-    count = len(recipes)
-    categories = find_recipe.get_cuisine_and_course_count(user_id)
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipes, 
-                                                    cuisines=categories[0], courses=categories[1], count=count)
+    recipe_info = view_var.view_var(username).var_all_myrecipme()
+    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
+                                                    cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
+                                                    count=recipe_info[1])
 
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
     if request.method == 'POST':
         ingredient = request.form['Ingredient']
-        user_id = write_recipe.get_user_id(username)
-        result = find_recipe.get_recipes_by_ingredient('User.UserId', user_id['UserId'], ingredient, 'RecipeTitle', 'asc')
-        recipes = []
-        count = 0
-        if result == []:
-            count = 0
-        else:
-            recipes = find_recipe.date_time_converter(result)
-            count = len(recipes)
-        categories = find_recipe.get_cuisine_and_course_count(user_id)
+        recipe_info = view_var.view_var(username).var_ing_search(ingredient)
+        
     return render_template('ingredient_search.html', username=username, 
-                            ingredient=ingredient, my_recipme=recipes, count=count,
-                            cuisines=categories[0], courses=categories[1])
+                            ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
+                            cuisines=recipe_info[2][0], courses=recipe_info[2][1])
 
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
 def category_search(username):
     if request.method == 'POST':
-        user_id = write_recipe.get_user_id(username)
-        categories = find_recipe.get_cuisine_and_course_count(user_id)
-        column = [key for key in request.form]
-        column_name = column[0] + 'Name'
-        results = find_recipe.get_category_mini_recipes(column[0], 'User.UserId', user_id['UserId'], 
-                                                        column_name, request.form[column[0]], 'RecipeTitle', 'asc')
-        recipes = find_recipe.date_time_converter(results)
-        count = len((recipes))
-        #print(results)
-        return render_template('category_search.html', username=username, cuisines=categories[0], 
-                                                        count=count,courses=categories[1], 
-                                                        category=request.form[column[0]], 
-                                                        category_item=column[0], my_recipme=recipes)
+        recipe_info = view_var.view_var(username).var_cat_search(request.form)
+        print(recipe_info)
+        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
+                                                        count=recipe_info[1], cuisines=recipe_info[2][0], 
+                                                        courses=recipe_info[2][1], category=recipe_info[3], 
+                                                        category_item=recipe_info[4], )
 
 ############### ADD RECIPE ROUTES #############################
 
@@ -126,11 +104,11 @@ def add_recipe(username):
 def recipe_created(username):
     if request.method == 'POST':
         recipe = request.form
-        user_id = write_recipe.get_user_id(username)
+        user_id = find_recipe.get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
-        write_recipe.write_full_recipe(recipe, user_id, ingredient_list, method_list)
-    
+        write_recipe.create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
+        
         return redirect('my_recipme/%s'% username)
     
 if __name__ == '__main__':

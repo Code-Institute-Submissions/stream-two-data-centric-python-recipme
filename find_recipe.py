@@ -1,56 +1,28 @@
 import os
 import pymysql
-import unittest
 import db_read
 import write_recipe
 import datetime
-import json
 from db_read import query_read_recipes
-  
-#### TO COME FROM FORM ###
-# #
-"""
-user_values = ["darchard"]
-search_by = 'Recipe.MakePublic' ## MakePublic, UserId ##
-direction = 'ASC'
-order_by = 'Calories'
-course = "Lunch"
-cuisine = "British"
-recipe_id = 1
-ingredient = 'Butter'
-"""
-###########################
 
 ########################## DATE TIME CONVERSION ###############################
 """"""""""""""""""""""""""""""""""""
 """WRITE A TEST FOR THIS FUNCTION"""
 """"""""""""""""""""""""""""""""""""
 def date_time_converter(recipes):
-   # print(recipes)
-    
-    
+    """ CONVERT DATETIME TO STRING """
     for i in recipes:
-        print(i['Created'])
         i['Created'] = i['Created'].strftime('%H:%M:%S on %m.%d.%Y')
-        print(i['Created'])
-        
-        #recipe['Created'] = recipe['Created'].strftime('%H:%M:%S on %m.%d.%Y')
-        #recipe = k.strftime('%H:%M:%S on %m.%d.%Y')
-        #print(recipes)
     return recipes
-"""
-def datetime_converter(my_recipme):
-    print('here')
-    if isinstance(my_recipme, datetime.datetime):
-       
-        return my_recipme.strftime('%m/%d/%Y')
 
-def convert_to_json(data):
-  
-    data_to_json = json.dumps(data, default = datetime_converter)
-    return data_to_json
-""" 
 ############################################################################
+
+def get_user_id(username):
+    """ GET USER ID FROM USERNAME """
+    new_read_query = query_read_recipes()
+    user = new_read_query.query_user_id(username)
+    user_id = user[0]
+    return user_id
     
 def get_all_mini_recipes(search_by, search_value, order_by, direction):
     """ GET ALL MINI RECIPES THAT ARE DECLARED PUBLIC """ 
@@ -62,7 +34,7 @@ def get_all_mini_recipes(search_by, search_value, order_by, direction):
 
 def get_mini_user_recipes(user_values, search_by, order_by, direction):
     """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
-    user_id = write_recipe.get_user_id(user_values)
+    user_id = get_user_id(user_values)
     query_recipe = db_read.query_read_recipes()
     recipe = query_recipe.query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
     #print(user_id)
@@ -115,20 +87,5 @@ def get_cuisine_and_course_count(user_id):
     courses = get_all_column_group_for_user('CourseName', user_id, 'Course')
     return cuisines, courses
 
-"""
-def get_all_courses_for_cuisine(user_id, cuisine):
-    course_query = query_read_recipes()
-    courses = course_query.query_count_and_group_courses(user_id, cuisine)
-    return courses
-"""
+################################# CLASS VARIABLES FOR EACH VIEW ####################################
 
-
-##get_user_id(user_values)
-#get_mini_recipe_for_user(user_values)
-#get_all_mini_recipes(search_by, recipe_id, order_by, direction)
-#get_mini_user_recipes(user_values, search_by, order_by, direction)
-#get_method_for_full_recipe(recipe_id)
-#get_ingredients_for_full_recipe(recipe_id)
-#get_filtered_mini_recipes(search_by, 1, course, cuisine, order_by, direction)
-#get_recipes_by_ingredient(search_by,1, ingredient, order_by, direction)
-#get_saved_recipes_for_user(11, order_by, direction)

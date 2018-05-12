@@ -5,6 +5,7 @@ import db_read
 import find_recipe
 import login_func
 import write_recipe
+import find_recipe
 import unittest
 from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
 
@@ -137,7 +138,7 @@ class TestRecipme(unittest.TestCase):
     def test_get_user_id(self):
         username = 'darchard'
 
-        user_id = write_recipe.get_user_id(username)
+        user_id = find_recipe.get_user_id(username)
 
         self.assertEqual(type(user_id), dict)
         self.assertEqual(user_id['UserId'], 1)
