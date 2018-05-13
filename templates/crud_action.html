@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>SUCCESS!</h1>
+{% if action == 'create' %}
+<h2>Recipe Added</h2>
+<p> You have just added another tasty meal to your cookbook!</p>
+<p>Click the link below to head back to {{ username }} RecipMe home</p>
+{% elif action == 'delete' %}
+<h2>Recipe Deleted</h2>
+<p> You have just removed a meal from your cookbook!</p>
+<p>Click the link below to head back to {{ username }} RecipMe home</p>
+
+{% endif %}
+<a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
+{% endblock %}

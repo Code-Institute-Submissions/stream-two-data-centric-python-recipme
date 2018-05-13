@@ -1,11 +1,12 @@
 import os
 import db_create
 import write_recipe
+import find_recipe
 import user_login
 import view_var
-import find_recipe
 from db import db
 from db_read import user_verify, query_read_recipes
+from db_update_delete import query_delete_recipe
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -104,7 +105,9 @@ def full_redirect(username):
 @app.route('/my_recipme/<username>/<title>/<recipe_id>')
 def full_recipe(username, title, recipe_id):
     full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
-    return render_template('full_recipe_partial.html', title=title, username=username, full_recipe=full_recipe)
+    print(full_recipe)
+    return render_template('full_recipe_partial.html', title=title, username=username, 
+                                                        full_recipe=full_recipe, recipe_id=recipe_id)
 
 ############### ADD RECIPE ROUTES #############################
 
@@ -114,16 +117,31 @@ def add_recipe(username):
     return render_template('add_recipe.html',username=username)
 
 """ RECIPE FORM SUBMISSION AND REDIRECT TO USER MY RECIPME PAGE """
-@app.route('/my_recipeme/<username>/recipe_created', methods=['GET', 'POST'])
-def recipe_created(username):
+@app.route('/my_recipme/<username>/create_recipe', methods=['GET', 'POST'])
+def creating_recipe(username):
     if request.method == 'POST':
         recipe = request.form
         user_id = find_recipe.get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
         write_recipe.create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
+        print(recipe)
+        return redirect('my_recipme/%s/%s'% (username, 'create'))
 
-        return redirect('my_recipme/%s'% username)
-    
+@app.route('/my_recipme/<username>/<action>')
+def recipe_action(username, action):
+    return render_template('crud_action.html', username=username, action=action)
+
+############## DELETE RECIPE ROUTES ##########################
+
+@app.route('/my_recipme/<username>/delete_recipe', methods=['GET', 'POST'])
+def delete_recipe(username):
+    if request.method == 'POST':
+        print(request.form['RecipeId'])
+        query_delete_recipe(request.form['RecipeId']).delete()
+
+        return redirect('my_recipme/%s/%s'%(username, 'delete'))
+
+
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port = os.getenv('PORT'), debug=True)

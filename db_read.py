@@ -1,6 +1,4 @@
-import os
 import pymysql
-import myenviron
 from db import db
 
 class user_verify(db):

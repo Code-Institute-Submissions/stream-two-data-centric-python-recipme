@@ -33,5 +33,14 @@
     {% endif %}
 </ol>
 <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
+<br>
+{% if username == full_recipe[0][0]['Username'] %}
+<a href="">Edit Recipe</a>
+<br>
+<form action="{{ url_for('delete_recipe', username=username)}}" method='POST'>
+    <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>
+</form>
+
+{% endif %}
 
 {% endblock%}
