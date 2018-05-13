@@ -11,6 +11,9 @@
 <p><strong>Servings</strong>: {{ full_recipe[1][0]['Servings'] }}.</p>
 <p><strong>Estimated Calories</strong>: {{full_recipe[1][0]['Calories']}}.</p>
 <hr>
+<h2>Description</h2>
+<p>{{ full_recipe[1][0]['RecipeDescription']}}</p>
+<hr>
 <h2>Ingredients</h2>
 <ul>
     {% if full_recipe[2] == [] %}
@@ -35,7 +38,9 @@
 <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
 <br>
 {% if username == full_recipe[0][0]['Username'] %}
-<a href="">Edit Recipe</a>
+<form action="{{ url_for('update_recipe', username=username)}}" method='POST'>
+    <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Edit Recipe</button>
+</form>
 <br>
 <form action="{{ url_for('delete_recipe', username=username)}}" method='POST'>
     <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>

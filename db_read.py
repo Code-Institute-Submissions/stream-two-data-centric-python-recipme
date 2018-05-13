@@ -1,3 +1,4 @@
+
 import pymysql
 from db import db
 
@@ -25,7 +26,7 @@ class query():
         
         self.select = """ SELECT RecipeTitle, Recipe.RecipeId as RecipeId, RecipeDescription, 
                         CookingTimeMins, Created, ImageURL, Price, Servings, CuisineName, 
-                        Calories, CourseName, User.Username as Author, Recipe.UserId """
+                        Calories, CourseName, User.Username as Author, Recipe.UserId, MakePublic """
     
     def main_selection(self) :
         main_selection = self.select + """

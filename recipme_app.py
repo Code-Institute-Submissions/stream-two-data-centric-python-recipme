@@ -109,7 +109,7 @@ def full_recipe(username, title, recipe_id):
     return render_template('full_recipe_partial.html', title=title, username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
-############### ADD RECIPE ROUTES #############################
+############### CREATE RECIPE ROUTES #############################
 
 """ ADD RECIPE FOR GIVEN USER"""
 @app.route('/my_recipme/<username>/add_recipe')
@@ -132,7 +132,17 @@ def creating_recipe(username):
 def recipe_action(username, action):
     return render_template('crud_action.html', username=username, action=action)
 
-############## DELETE RECIPE ROUTES ##########################
+############## UPDATE RECIPE ROUTE #########################
+@app.route('/my_recipme/<username>/update_recipe', methods=['GET', 'POST'])
+def update_recipe(username):
+    if request.method == 'POST':
+        recipe_id = request.form['RecipeId']
+        full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+        title = full_recipe[1][0]['RecipeTitle']
+        print(full_recipe)
+    return render_template('update_recipe.html', username=username, full_recipe=full_recipe, title=title)
+
+############## DELETE RECIPE ROUTE ##########################
 
 @app.route('/my_recipme/<username>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(username):
@@ -144,4 +154,4 @@ def delete_recipe(username):
 
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP'), port = os.getenv('PORT'), debug=True)
+    app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)

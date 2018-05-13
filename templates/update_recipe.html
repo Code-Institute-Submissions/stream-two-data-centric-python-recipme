@@ -1,69 +1,86 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1><a href="{{ url_for('my_recipme', username=username)}}">My RecipMe.</a></h1>
-<h2>Go ahead and create a new RecipMe</p>
+<h2>Go ahead and update your {{ title }} RecipMe</p>
 <br>
-<form action="{{ url_for('creating_recipe', username=username) }}" method='POST'>
+<form action="" method='POST'>
     <fieldset>
         <legend>Main Details</legend>
         <label>Recipe Title </label>
         <br>
-        <input type='text' id='RecipeTitle' placeholder='Recipe Title' name='RecipeTitle' maxlength='150'required>
+        <input type='text' id='RecipeTitle' placeholder='Recipe Title' name='RecipeTitle' value="{{ full_recipe[1][0]['RecipeTitle']}}" maxlength='150'required>
         <p id='recipe-title-counter'></p>
         <br>
         <label>Brief Description:</label> 
         <br>
-        <textarea id='RecipeDescription' placeholder='Description' name='RecipeDescription' maxlength='250' required></textarea>
+        <textarea id='RecipeDescription' placeholder='Description' name='RecipeDescription' maxlength='250' required>{{ full_recipe[1][0]['RecipeDescription'] }}</textarea>
         <p id='recipe-description-counter'></p>
         <br>
         <label>Total Cooking Time in minutes:</label>
         <br>
-        <input type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' min='0' max='1440' required> mins
+        <input type='number' id='CookingTime' value="{{ full_recipe[1][0]['CookingTimeMins']}}" step ='1' name='CookingTimeMins' min='0' max='1440' required> mins
         <br>
         <label>Make Recipe Public:</label>
         <br>
+        {% if full_recipe[1][0]['MakePublic'] == 1 %}
         <input type='radio' id='MakePublicYes' name='MakePublic' value='1'required checked> Yes
         <input type='radio' id='MakePublicNo' name='MakePublic' value='0' required> No
+        {% elif full_recipe[1][0]['MakePublic'] == 0 %}
+        <input type='radio' id='MakePublicYes' name='MakePublic' value='1'required > Yes
+        <input type='radio' id='MakePublicNo' name='MakePublic' value='0' required checked> No
+        {% endif %}
         <br>
     </fieldset>
     <fieldset>
         <legend>Stats</legend>
         <label>Cuisine</label>
         <br>
-        <input type='text' id='Cuisine' placeholder='Cuisine' name='CuisineName' maxlength='160' required>
+        <input type='text' id='Cuisine' placeholder='Cuisine' name='CuisineName' value="{{ full_recipe[1][0]['CuisineName'] }}" maxlength='160' required>
         <p id='cuisine-description-counter'></p>
         <br>
         <label>Course</label>
         <br>
-        <input type='text' id='Course' placeholder='Course' name='CourseName' maxlength='160' required>
+        <input type='text' id='Course' placeholder='Course' name='CourseName' value="{{ full_recipe[1][0] ['CourseName'] }}" maxlength='160' required>
         <p id='course-description-counter'></p>
         <br>
         <label>Calories</label>
         <br>
-        <input type='number' id='Calories' placeholder='Number of Calories' value='1' name='Calories' min='0' max='20000' required>
+        <input type='number' id='Calories' placeholder='Number of Calories' value="{{full_recipe[1][0]['Calories']}}" name='Calories' min='0' max='20000' required>
         <br>
         <label>Cost</label>
         <br>
         <label>£</label>
-        <input type='number' id='Cost' placeholder='Total Cost to Nearest Pound' value='1' name='Cost' min='0' max='10000' required>
+        <input type='number' id='Cost' placeholder='Total Cost to Nearest Pound' value="{{ full_recipe[1][0]['Price'] }}" name='Cost' min='0' max='10000' required>
         <br>
         <label>Total Servings</label>
         <br>
-        <input type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
+        <input type='number' id='Servings' placeholder='Total Servings' value="{{ full_recipe[1][0]['Servings'] }}" name='Servings' min='0' max='1000' required>
         <br>
     </fieldset>
     <fieldset id='ingredients'>
         <legend>Ingredients</legend>
         <button type='button' id='add-ingredient'>Add Ingredient</button><button type='button' id='remove-ingredient'>Remove Ingredient</button>
         <br>
+        {% for ingredient in full_recipe[2] %}
+        <input id='Quantity-{{ loop.index }}' name='Quantity' placeholder='Quantity' type='text' value="{{ ingredient['Quantity'] }}"required>
+        <input id='Ingredient-{{ loop.index }}' name='Ingredient' placeholder='Ingredient' type='text' value="{{ ingredient['IngredientName'] }}"required>
+        <br id='br-Ingredient-{{ loop.index }}'>
+        {% endfor %}
+        
         <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
     </fieldset>
     <fieldset id = 'method'>
         <legend>Method</legend>
         <button type='button' id='add-step'>Add Step</button><button type='button' id='remove-step'>Remove Step</button>
         <br>
+        {% for method in full_recipe[3] %}
+        <input id='s-{{ loop.index }}' min='{{ loop.index }}' max='{{ loop.index }}' name='StepNumber' type='number' value='{{ loop.index }}'required>
+        <input id='Step-{{ loop.index }}' name='Step' placeholder='Step' type='text' value="{{ method['StepDescription'] }}"required>
+        <br id='br-Step-{{ loop.index }}'>
+        {% endfor %}
+        
     </fieldset>
-    <input type='submit' value='Add Recipe'> 
+    <input type='submit' value='Update Recipe'> 
 </form>
 <script>
 
@@ -80,7 +97,6 @@ const removeStepButton = document.getElementById("remove-step");
 let ingredientCounter = 1;
 let methodCounter = 1;
 // --------------------------------------------------------------//
-
 
 // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
 const characterCounter = (input, counter, count) => {
@@ -141,9 +157,6 @@ class createElement {
     }
 
 }
-
-
-
 
 // ----------------- ADD INGREDIENT TEXT FIELD ON CLICK ------------- //
 const addAnIngredient = (button, parent) => {
@@ -237,9 +250,6 @@ const removeStep = (button, parent) => {
 
 };
 
-
-
-
 // WRITE A LOOP FOR THIS //
 //totalCharacters("recipe-title-counter",150);
 //totalCharacters("recipe-description-counter",250);
@@ -255,7 +265,7 @@ addAnIngredient(addIngredientButton, ingredients);
 removeIngredient(removeIngredientButton, ingredients);
 addStep(addStepButton, method);
 removeStep(removeStepButton, method);
-    
+        
 </script>
 
 {% endblock %}
