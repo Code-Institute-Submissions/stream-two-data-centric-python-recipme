@@ -142,6 +142,12 @@ def update_recipe(username):
         print(full_recipe)
     return render_template('update_recipe.html', username=username, full_recipe=full_recipe, title=title)
 
+@app.route('/my_recipme/<username>/updating_recipe', methods=['GET', 'POST'])
+def updating_recipe(username):
+    if request.method == 'POST':
+        print(request.form)
+        return redirect('my_recipme/%s/%s'% (username, 'update'))
+
 ############## DELETE RECIPE ROUTE ##########################
 
 @app.route('/my_recipme/<username>/delete_recipe', methods=['GET', 'POST'])

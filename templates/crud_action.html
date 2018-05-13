@@ -4,12 +4,13 @@
 {% if action == 'create' %}
 <h2>Recipe Added</h2>
 <p> You have just added another tasty meal to your cookbook!</p>
-<p>Click the link below to head back to {{ username }} RecipMe home</p>
 {% elif action == 'delete' %}
 <h2>Recipe Deleted</h2>
 <p> You have just removed a meal from your cookbook!</p>
-<p>Click the link below to head back to {{ username }} RecipMe home</p>
-
+{% elif action == 'update' %}
+<h2>Recipe Updated</h2>
+<p> You have just updated a meal in your cookbook!</p>
 {% endif %}
+<p>Click the link below to head back to {{ username }} RecipMe home</p>
 <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
 {% endblock %}
