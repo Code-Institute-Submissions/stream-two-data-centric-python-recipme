@@ -1,6 +1,6 @@
 import pymysql
 from db import Db
-from db_create import Query
+from db_create import Query, QueryCreateRecipe
 
 class QueryDeleteRecipe():
     
@@ -16,11 +16,12 @@ class QueryDeleteRecipe():
         finally:
             print("Query Delete Recipe Completed")
 
-class QueryUpdateRecipe():
+class QueryUpdateRecipe(QueryCreateRecipe):
 
-    def __init__(self, recipe_id):
-        self.recipe_id = recipe_id
+    def __init__(self, recipe, user_id):
+        super().__init__()
+    
+        
 
-    def print_query(self):
-        new_query = Query()
-        print(new_query.recipe_query)
+    #def print_query(self):
+        

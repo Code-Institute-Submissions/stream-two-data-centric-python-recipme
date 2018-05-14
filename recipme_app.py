@@ -6,7 +6,7 @@ import user_login
 import view_var
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
-from db_update_delete import QueryDeleteRecipe
+from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -146,6 +146,8 @@ def update_recipe(username):
 def updating_recipe(username):
     if request.method == 'POST':
         print(request.form)
+        
+      
         return redirect('my_recipme/%s/%s'% (username, 'update'))
 
 ############## DELETE RECIPE ROUTE ##########################
