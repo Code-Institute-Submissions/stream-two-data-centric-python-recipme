@@ -1,9 +1,9 @@
 import os
 #import pymysql
 import myenviron
-from db import db
+from db import Db
 
-class query_create_user(db):
+class QueryCreateUser():
     
     def __init__(self, user_values):
         self.username = user_values['Username'].lower()
@@ -15,13 +15,13 @@ class query_create_user(db):
     def create_user(self):
         query = """INSERT INTO User (`Username`,`First`,`Last`,`Password` ) VALUES (%s, %s, %s, %s);"""
         try:
-            with db(commit=True) as cursor:
+            with Db(commit=True) as cursor:
                 cursor.execute(query, (self.username, self.first, self.last, self.password))
-                #db.connection.commit()
+                #Db.connection.commit()
         finally: 
             print('New User Created')
 
-class create_query(db):
+class Query():
     
     recipe_query = """ INSERT INTO Recipe (`RecipeTitle`, 
                                         `RecipeDescription`, 
@@ -54,7 +54,7 @@ class create_query(db):
 
 
 
-class query_create_recipes(db):
+class QueryCreateRecipe():
 
     def __init__(self,recipe, user_id):
         self.recipe_title = recipe['RecipeTitle']
@@ -74,29 +74,29 @@ class query_create_recipes(db):
                                 self.cooking_time, self.make_public,self.user_id) 
                                        
         try:
-            with db(commit=True) as cursor:
+            with Db(commit=True) as cursor:
                 print(recipe_values)
-                cursor.execute(create_query.recipe_query, recipe_values)
+                cursor.execute(Query.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
         finally:
             print("Query create recipe completed")
             return recipe_primary_key
            
     def create_stats(self, recipe_primary_key):
-        stat_queries = [[create_query.cuisine_query,(self.cuisine_name, recipe_primary_key)],
-                        [create_query.course_query,(self.course_name, recipe_primary_key)],
-                        [create_query.calories_query,(self.calories, recipe_primary_key)],
-                        [create_query.cost_query,(self.cost, recipe_primary_key)],
-                        [create_query.servings_query,(self.servings, recipe_primary_key)]]
+        stat_queries = [[Query.cuisine_query,(self.cuisine_name, recipe_primary_key)],
+                        [Query.course_query,(self.course_name, recipe_primary_key)],
+                        [Query.calories_query,(self.calories, recipe_primary_key)],
+                        [Query.cost_query,(self.cost, recipe_primary_key)],
+                        [Query.servings_query,(self.servings, recipe_primary_key)]]
         try:
-            with db(commit=True) as cursor:
+            with Db(commit=True) as cursor:
                 for stat in stat_queries:
                     cursor.execute(stat[0], stat[1])
         finally:
             print("Query create recipe completed")
     
 
-class query_create_method_items(db):
+class QueryCreateMethodItems():
     
     def __init__(self, prepped_ingredients, prepped_method):
         self.ingredients = prepped_ingredients
@@ -104,9 +104,9 @@ class query_create_method_items(db):
 
     def create_ingredients_and_method(self):
         try:
-            with db(commit=True) as cursor:
-                cursor.executemany(create_query.ingredients_query, self.ingredients)
-                cursor.executemany(create_query.method_query,self.method)
+            with Db(commit=True) as cursor:
+                cursor.executemany(Query.ingredients_query, self.ingredients)
+                cursor.executemany(Query.method_query,self.method)
         finally:
             print("Query create recipe completed")
         

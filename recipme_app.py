@@ -4,9 +4,9 @@ import write_recipe
 import find_recipe
 import user_login
 import view_var
-from db import db
-from db_read import user_verify, query_read_recipes
-from db_update_delete import query_delete_recipe
+from db import Db
+from db_read import UserVerify, QueryReadRecipes
+from db_update_delete import QueryDeleteRecipe
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -28,7 +28,7 @@ def index():
 def signup():
     if request.method == 'POST':
         user_values = request.form
-        new_user = user_login.login(user_values).sign_up()
+        new_user = user_login.LogIn(user_values).sign_up()
         if new_user == True:
             return redirect('my_recipme/%s'% user_values['Username'])
         else:
@@ -44,7 +44,7 @@ def user_taken():
 def login():
     if request.method == 'POST':
         user_values= request.form
-        returning_user = user_login.login(user_values).user_login()
+        returning_user = user_login.LogIn(user_values).user_login()
         if returning_user == True:
             return redirect('my_recipme/%s'% user_values['Username'])
         else:
@@ -60,7 +60,7 @@ def invalid_login():
 """ USER MY RECIPME MAIN PAGE, POPULATE CUISINES """
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    recipe_info = view_var.view_var(username).var_myrecipme()
+    recipe_info = view_var.ViewVariables(username).var_myrecipme()
     return render_template('my_recipme.html', username=username, cuisines=recipe_info[0], courses=recipe_info[1])
 
 ################ SEARCH ROUTES #################################
@@ -68,7 +68,7 @@ def my_recipme(username):
 """ GET ALL RECIPES FOR A GIVEN USER """
 @app.route('/my_recipme/<username>/all_myrecipme')
 def all_myrecipme(username):
-    recipe_info = view_var.view_var(username).var_all_myrecipme()
+    recipe_info = view_var.ViewVariables(username).var_all_myrecipme()
     return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
                                                     cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
                                                     count=recipe_info[1])
@@ -77,7 +77,7 @@ def all_myrecipme(username):
 def ingredient_search(username):
     if request.method == 'POST':
         ingredient = request.form['Ingredient']
-        recipe_info = view_var.view_var(username).var_ing_search(ingredient)
+        recipe_info = view_var.ViewVariables(username).var_ing_search(ingredient)
         
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
@@ -86,7 +86,7 @@ def ingredient_search(username):
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
 def category_search(username):
     if request.method == 'POST':
-        recipe_info = view_var.view_var(username).var_cat_search(request.form)
+        recipe_info = view_var.ViewVariables(username).var_cat_search(request.form)
         return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
                                                         count=recipe_info[1], cuisines=recipe_info[2][0], 
                                                         courses=recipe_info[2][1], category=recipe_info[3], 
@@ -97,14 +97,14 @@ def category_search(username):
 def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
-        full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+        full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
         title = full_recipe[1][0]['RecipeTitle']
         
         return redirect('/my_recipme/%s/%s/%s'% (username, title, recipe_id))
 
 @app.route('/my_recipme/<username>/<title>/<recipe_id>')
 def full_recipe(username, title, recipe_id):
-    full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+    full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
     print(full_recipe)
     return render_template('full_recipe_partial.html', title=title, username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
@@ -124,7 +124,7 @@ def creating_recipe(username):
         user_id = find_recipe.get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
-        write_recipe.create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
+        write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
         print(recipe)
         return redirect('my_recipme/%s/%s'% (username, 'create'))
 
@@ -137,7 +137,7 @@ def recipe_action(username, action):
 def update_recipe(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
-        full_recipe = view_var.view_var(username).var_full_recipe(recipe_id)
+        full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
         title = full_recipe[1][0]['RecipeTitle']
         print(full_recipe)
     return render_template('update_recipe.html', username=username, full_recipe=full_recipe, title=title)
@@ -154,7 +154,7 @@ def updating_recipe(username):
 def delete_recipe(username):
     if request.method == 'POST':
         print(request.form['RecipeId'])
-        query_delete_recipe(request.form['RecipeId']).delete()
+        QueryDeleteRecipe(request.form['RecipeId']).delete()
 
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
 

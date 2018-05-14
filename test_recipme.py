@@ -2,19 +2,18 @@ import os
 import pymysql
 import db
 import db_read
-import find_recipe
 import user_login
 import write_recipe
 import find_recipe
 import unittest
 import datetime
-from myenviron import ROOT_USERNAME, ROOT_PASSWORD, REMOTE_USER, REMOTE_PASSWORD, REMOTE_HOST, DATABASE_NAME
+
 
 class TestRecipme(unittest.TestCase):
     ########################## READ DB TESTS ################################
     def test_query_user(self):
         user_values = {'Username': 'test', 'Password': 'test'}
-        query = db_read.user_verify(user_values)
+        query = db_read.UserVerify(user_values)
         result = query.query_user()
 
         self.assertEqual(type(result), list)
@@ -88,7 +87,7 @@ class TestRecipme(unittest.TestCase):
 
     def test_get_existing_user(self):
         user_values = {'Username': 'darchard', 'Password': 'password'}
-        user = user_login.login(user_values).get_existing_user()
+        user = user_login.LogIn(user_values).get_existing_user()
         username = user[0]['Username']
         password = user[0]['Password']
 
@@ -130,8 +129,8 @@ class TestRecipme(unittest.TestCase):
         actual_user_values = {'Username': 'darchard', 'Password': 'password'}
         invalid_user_vales = {'Username': 'invalid', 'Password': 'invalid'}
 
-        successful = user_login.login(actual_user_values).user_login()
-        unsuccessful = user_login.login(invalid_user_vales).user_login()
+        successful = user_login.LogIn(actual_user_values).user_login()
+        unsuccessful = user_login.LogIn(invalid_user_vales).user_login()
 
         self.assertEqual(successful, True)
         self.assertEqual(unsuccessful, False)
@@ -151,7 +150,7 @@ class TestRecipme(unittest.TestCase):
         ingredient_list = [['Chicken Breasts', 'Wraps'], {'UserId': 1}, ['2', '4']]
         recipe_primary_key = 1
 
-        result = write_recipe.create().merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
+        result = write_recipe.Create().merge_recipe_id_into_ingredients(ingredient_list, recipe_primary_key)
 
         self.assertEqual(result, [['Chicken Breasts', 1, 1, '2'], ['Wraps', 1, 1, '4']])
 
@@ -159,7 +158,7 @@ class TestRecipme(unittest.TestCase):
         method_list = [['1', '2'], ['Slice Cheese', 'Pour Wine']]
         recipe_primary_key = 1
 
-        result = write_recipe.create().merge_recipe_id_into_method(method_list, recipe_primary_key)
+        result = write_recipe.Create().merge_recipe_id_into_method(method_list, recipe_primary_key)
 
         self.assertEqual(result, [['1', 'Slice Cheese', 1], ['2', 'Pour Wine', 1]])
 

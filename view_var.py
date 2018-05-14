@@ -2,7 +2,7 @@ import find_recipe
 import write_recipe
 
 
-class view_var():
+class ViewVariables():
     
     def __init__(self, username):
         self.username = username

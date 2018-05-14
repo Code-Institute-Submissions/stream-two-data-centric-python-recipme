@@ -1,13 +1,13 @@
 import os
 import db_create
-from db_read import user_verify, query_read_recipes
+from db_read import UserVerify, QueryReadRecipes
 
 ###################################################################################
 ############################## CREATE RECIPE CLASS ############################
 ###################################################################################
 
 ############### CONVERT THE FORM DATA STRINGS TO INTEGERS ###################
-class create():
+class Create():
     def convert_numeric_strings_to_int(self, recipe):
         for key in recipe:
             is_value_number = recipe[key].isnumeric()
@@ -46,19 +46,19 @@ class create():
 
     ####################### WRITE INGREDIENTS TO INGREDIENTS TABLE ######################
     def prep_method_and_ingredients(self,ingredient_list, method_list, recipe_primary_key):
-        prepped_ingredients = create.merge_recipe_id_into_ingredients(self, ingredient_list, recipe_primary_key)
-        prepped_method = create.merge_recipe_id_into_method(self, method_list, recipe_primary_key)
+        prepped_ingredients = Create.merge_recipe_id_into_ingredients(self, ingredient_list, recipe_primary_key)
+        prepped_method = Create.merge_recipe_id_into_method(self, method_list, recipe_primary_key)
         
         return prepped_ingredients, prepped_method
 
     def write_ingredients_and_method(self,prepped_ingredients, prepped_method):
-        new_ingredient = db_create.query_create_method_items(prepped_ingredients, prepped_method)
+        new_ingredient = db_create.QueryCreateMethodItems(prepped_ingredients, prepped_method)
         new_ingredient.create_ingredients_and_method()
         
         return True
 
     def write_recipe_and_stats(self,recipe, user_id):
-        new_recipe = db_create.query_create_recipes(recipe, user_id)
+        new_recipe = db_create.QueryCreateRecipe(recipe, user_id)
         recipe_primary_key = new_recipe.create_recipe()
         new_recipe.create_stats(recipe_primary_key)
 
@@ -66,9 +66,9 @@ class create():
 
     def write_full_recipe(self,recipe, user_id, ingredient_list, method_list):
         user_id = user_id
-        recipe_primary_key = create.write_recipe_and_stats(self, recipe, user_id)
-        prep = create.prep_method_and_ingredients(self, ingredient_list, method_list,recipe_primary_key)
-        create.write_ingredients_and_method(self, prep[0], prep[1])
+        recipe_primary_key = Create.write_recipe_and_stats(self, recipe, user_id)
+        prep = Create.prep_method_and_ingredients(self, ingredient_list, method_list,recipe_primary_key)
+        Create.write_ingredients_and_method(self, prep[0], prep[1])
 
         return True
 

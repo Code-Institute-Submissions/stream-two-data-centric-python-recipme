@@ -1,7 +1,8 @@
 import pymysql
-from db import db
+from db import Db
+from db_create import Query
 
-class query_delete_recipe(db):
+class QueryDeleteRecipe():
     
     def __init__(self, recipe_id):
         self.recipe_id = recipe_id
@@ -10,7 +11,16 @@ class query_delete_recipe(db):
     
     def delete(self):
         try:
-            with db(commit=True) as cursor:            
+            with Db(commit=True) as cursor:            
                 cursor.execute(self.query)
         finally:
             print("Query Delete Recipe Completed")
+
+class QueryUpdateRecipe():
+
+    def __init__(self, recipe_id):
+        self.recipe_id = recipe_id
+
+    def print_query(self):
+        new_query = Query()
+        print(new_query.recipe_query)

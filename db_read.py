@@ -1,8 +1,7 @@
-
 import pymysql
-from db import db
+from db import Db
 
-class user_verify(db):
+class UserVerify():
     
     def __init__(self, user_values):
         self.username = user_values['Username']
@@ -11,7 +10,7 @@ class user_verify(db):
     def query_user(self):
         """ GET USER BASED ON USER INFO """
         try: 
-            with db() as cursor:
+            with Db() as cursor:
                 query = """SELECT `Username`,`First`,`Last`,`Password`, `UserId` FROM User
                             WHERE Username = %s;"""
                 cursor.execute(query, (self.username))
@@ -20,7 +19,7 @@ class user_verify(db):
         finally:
             print("Query Username and Password completed")
 
-class query():
+class Query():
     
     def __init__(self):
         
@@ -68,7 +67,7 @@ class query():
                                         """
         return saved_recipes
 
-class query_category(query):
+class QueryCategory(Query):
     """ QUERIES FOR CUISINE OR COURSE CATEGORY """
     def __init__(self, table, join_table):
         super().__init__()
@@ -89,12 +88,12 @@ class query_category(query):
         return search_category
     
 
-class query_read_recipes(db):
+class QueryReadRecipes():
 
     def query_user_id(self, username):
         """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 get_id_query = """SELECT UserId FROM User
                                     WHERE Username = '%s';""" % (username)                  
                 cursor.execute(get_id_query)
@@ -107,11 +106,11 @@ class query_read_recipes(db):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
             GIVEN USER SELECTION, PUBLIC AND USER SPECIFIC  """
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 condition = """ WHERE %s = %s 
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         order_by, direction) 
-                new_query = query()
+                new_query = Query()
                 recipes_query = new_query.main_selection() + condition          
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
@@ -129,12 +128,12 @@ class query_read_recipes(db):
         else:
             join_table ='Cuisine'
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 condition = """ WHERE %s = %s AND %s = '%s' 
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         column, category,
                                                         order_by, direction)                                                           
-                new_query = query_category(table, join_table)
+                new_query = QueryCategory(table, join_table)
                 recipes_query = new_query.category_selection() + condition
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
@@ -145,13 +144,13 @@ class query_read_recipes(db):
     def query_search_ingredient(self, search_by, search_value, ingredient, order_by, direction):
         """ GET ALL MINI RECIPES FOR GIVEN INGREDIENT """
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 condition = """ WHERE %s = %s 
                                 AND Ingredient.IngredientName LIKE '%s'
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         ingredient, order_by, direction)
                                                                        
-                new_query = query()
+                new_query = Query()
                 recipes_query = new_query.search_ingredient() + condition
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
@@ -162,7 +161,7 @@ class query_read_recipes(db):
     def query_ingredients_for_full_recipe(self, recipe_id):
         """ GET INGREDIENTS BASED ON GIVEN RECIPE ID """
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 recipes_query = """SELECT IngredientName, Quantity FROM Ingredient
                                     WHERE Ingredient.RecipeId = %s;""" % (recipe_id)
                 cursor.execute(recipes_query)
@@ -174,7 +173,7 @@ class query_read_recipes(db):
     def query_method_for_full_recipe(self, recipe_id):
         """ GET FULL METHOD BASED ON GIVEN RECIPE ID """
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 recipes_query = """SELECT StepNumber, StepDescription FROM Method
                                     WHERE Method.RecipeId = %s;""" % (recipe_id)
                 cursor.execute(recipes_query)
@@ -186,8 +185,8 @@ class query_read_recipes(db):
     def query_users_saved_recipes(self, user_id, order_by, direction):
         """ QUERY USERS SAVED RECIPES BASED ON USER ID """
         try:
-            with db() as cursor:
-                new_query = query()
+            with Db() as cursor:
+                new_query = Query()
                 recipes_query = new_query.saved_recipes() + """ 
                                 WHERE SavedRecipes.UserId = %s 
                                 ORDER BY {order_by} {direction};""" % (user_id, order_by, direction)
@@ -201,7 +200,7 @@ class query_read_recipes(db):
         """ QUERY THE COUNT OF A SPECIFIC COLUMN AND GROUP BY THAT COLUMN """
         """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
         try:
-            with db() as cursor:
+            with Db() as cursor:
                 recipes_query = """ SELECT COUNT(%s) as Total,%s,Recipe.UserId
                                     FROM %s
                                     JOIN Recipe on %s.RecipeId = Recipe.RecipeId
