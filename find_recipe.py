@@ -7,7 +7,7 @@ from db_read import QueryReadRecipes
 
 ########################## DATE TIME CONVERSION ###############################
 
-class get():
+class Get():
     def date_time_converter(self, recipes):
         """ CONVERT DATETIME TO STRING """
         for i in recipes:
@@ -32,7 +32,7 @@ class get():
 
     def get_mini_user_recipes(self, user_values, search_by, order_by, direction):
         """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
-        user_id = get.get_user_id(self, user_values)
+        user_id = Get.get_user_id(self, user_values)
         query_recipe = db_read.QueryReadRecipes()
         recipe = query_recipe.query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
         #print(user_id)
@@ -80,8 +80,8 @@ class get():
         return column
 
     def get_cuisine_and_course_count(self, user_id):
-        cuisines = get.get_all_column_group_for_user(self, 'CuisineName', user_id, 'Cuisine')
-        courses = get.get_all_column_group_for_user(self, 'CourseName', user_id, 'Course')
+        cuisines = Get.get_all_column_group_for_user(self, 'CuisineName', user_id, 'Cuisine')
+        courses = Get.get_all_column_group_for_user(self, 'CourseName', user_id, 'Course')
         return cuisines, courses
 
     ################################# CLASS VARIABLES FOR EACH VIEW ####################################

@@ -84,7 +84,7 @@ class QueryCategory(Query):
                                         JOIN Health on %s.RecipeId = Health.RecipeId
                                         JOIN User on Recipe.UserId = User.UserId 
                                         """ % (self.table, self.join_table, self.table, self.join_table,
-                                                self.table, self.table, self.table, self.table )
+                                                self.table, self.table, self.table, self.table)
         return search_category
     
 

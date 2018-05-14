@@ -21,7 +21,7 @@ class QueryCreateUser():
         finally: 
             print('New User Created')
 
-class Query():
+class CreateQuery():
     
     recipe_query = """ INSERT INTO Recipe (`RecipeTitle`, 
                                         `RecipeDescription`, 
@@ -30,30 +30,18 @@ class Query():
                                         `UserId`) 
                     VALUES (%s, %s, %s, %s, %s); """
 
-    
-    cuisine_query = """ INSERT INTO Cuisine (`CuisineName`, `RecipeId`) 
-                    VALUES (%s, %s); """
-
-    course_query = """ INSERT INTO Course (`CourseName`, `RecipeId`) 
-                    VALUES (%s, %s); """
-    
-    calories_query = """ INSERT INTO Health (`Calories`, `RecipeId`) 
-                    VALUES (%s, %s); """
-
-    cost_query = """ INSERT INTO Cost (`Price`, `RecipeId`) 
-                    VALUES (%s, %s); """
-
-    servings_query = """ INSERT INTO Servings (`Servings`, `RecipeId`) 
-                    VALUES (%s, %s); """
-
     ingredients_query = """ INSERT INTO Ingredient (`IngredientName`, `UserId`, `RecipeId`, `Quantity`)
                     VALUES (%s, %s, %s, %s); """
     
     method_query = """ INSERT INTO Method (`StepNumber`, `StepDescription`, `RecipeId`)
                     VALUES (%s, %s, %s); """
 
-
-
+    def single_column_query(self, table, column, column_value, recipe_id):
+        query = """ INSERT INTO %s (`%s`, `RecipeId`)
+                    VALUES ('%s', %s); """ % (table, column, column_value, recipe_id)
+        return query
+  
+   
 class QueryCreateRecipe():
 
     def __init__(self,recipe, user_id):
@@ -76,24 +64,29 @@ class QueryCreateRecipe():
         try:
             with Db(commit=True) as cursor:
                 print(recipe_values)
-                cursor.execute(Query.recipe_query, recipe_values)
+                cursor.execute(CreateQuery.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
         finally:
             print("Query create recipe completed")
             return recipe_primary_key
            
     def create_stats(self, recipe_primary_key):
-        stat_queries = [[Query.cuisine_query,(self.cuisine_name, recipe_primary_key)],
-                        [Query.course_query,(self.course_name, recipe_primary_key)],
-                        [Query.calories_query,(self.calories, recipe_primary_key)],
-                        [Query.cost_query,(self.cost, recipe_primary_key)],
-                        [Query.servings_query,(self.servings, recipe_primary_key)]]
+        stat_queries = [[CreateQuery.single_column_query(self,'Cuisine','CuisineName', 
+                                                        self.cuisine_name, recipe_primary_key)],
+                        [CreateQuery.single_column_query(self,'Course','CourseName', 
+                                                        self.course_name, recipe_primary_key)],
+                        [CreateQuery.single_column_query(self,'Health','Calories', 
+                                                        self.calories, recipe_primary_key)],
+                        [CreateQuery.single_column_query(self,'Cost','Price', 
+                                                        self.cost, recipe_primary_key)],
+                        [CreateQuery.single_column_query(self,'Servings','Servings', 
+                                                        self.servings, recipe_primary_key)]]
         try:
             with Db(commit=True) as cursor:
                 for stat in stat_queries:
-                    cursor.execute(stat[0], stat[1])
+                    cursor.execute(stat[0])
         finally:
-            print("Query create recipe completed")
+            print("Query create stats completed")
     
 
 class QueryCreateMethodItems():
@@ -105,8 +98,8 @@ class QueryCreateMethodItems():
     def create_ingredients_and_method(self):
         try:
             with Db(commit=True) as cursor:
-                cursor.executemany(Query.ingredients_query, self.ingredients)
-                cursor.executemany(Query.method_query,self.method)
+                cursor.executemany(CreateQuery.ingredients_query, self.ingredients)
+                cursor.executemany(CreateQuery.method_query,self.method)
         finally:
             print("Query create recipe completed")
         

@@ -36,7 +36,7 @@ CREATE TABLE `Recipe`
 (
     `RecipeId` INT NOT NULL AUTO_INCREMENT,
     `RecipeTitle` NVARCHAR(160) NOT NULL,
-    `Created` DATETIME NOT NULL DEFAULT NOW(),
+    `Created` DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     `ImageURL` NVARCHAR(500) DEFAULT 'NONE',
     `RecipeDescription` NVARCHAR (500) NOT NULL,
     `CookingTimeMins` INT NOT NULL,

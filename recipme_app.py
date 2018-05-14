@@ -121,7 +121,7 @@ def add_recipe(username):
 def creating_recipe(username):
     if request.method == 'POST':
         recipe = request.form
-        user_id = find_recipe.get().get_user_id(username)
+        user_id = find_recipe.Get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
         write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
@@ -132,22 +132,22 @@ def creating_recipe(username):
 def recipe_action(username, action):
     return render_template('crud_action.html', username=username, action=action)
 
-############## UPDATE RECIPE ROUTE #########################
-@app.route('/my_recipme/<username>/update_recipe', methods=['GET', 'POST'])
-def update_recipe(username):
-    if request.method == 'POST':
-        recipe_id = request.form['RecipeId']
-        full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
-        title = full_recipe[1][0]['RecipeTitle']
-        print(full_recipe)
-    return render_template('update_recipe.html', username=username, full_recipe=full_recipe, title=title)
+############## UPDATE RECIPE ROUTES #########################
+    
+@app.route('/my_recipme/<username>/edit_recipe/<recipe_id>', methods=['GET', 'POST'])
+def edit_recipe(username, recipe_id):
+    full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
+    title = full_recipe[1][0]['RecipeTitle']
+    return render_template('edit_recipe.html', username=username, 
+                            full_recipe=full_recipe, title=title, recipe_id=recipe_id)
 
-@app.route('/my_recipme/<username>/updating_recipe', methods=['GET', 'POST'])
-def updating_recipe(username):
+@app.route('/my_recipme/<username>/updating_recipe/<recipe_id>', methods=['GET', 'POST'])
+def updating_recipe(username, recipe_id):
     if request.method == 'POST':
-        print(request.form)
-        
-      
+        recipe = request.form
+        user_id = find_recipe.Get().get_user_id(username)
+        QueryUpdateRecipe(recipe, user_id, recipe_id).update_recipe()
+        QueryUpdateRecipe(recipe, user_id, recipe_id).update_stats()
         return redirect('my_recipme/%s/%s'% (username, 'update'))
 
 ############## DELETE RECIPE ROUTE ##########################
@@ -155,7 +155,6 @@ def updating_recipe(username):
 @app.route('/my_recipme/<username>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(username):
     if request.method == 'POST':
-        print(request.form['RecipeId'])
         QueryDeleteRecipe(request.form['RecipeId']).delete()
 
         return redirect('my_recipme/%s/%s'%(username, 'delete'))

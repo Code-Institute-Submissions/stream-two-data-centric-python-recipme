@@ -38,7 +38,7 @@
 <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
 <br>
 {% if username == full_recipe[0][0]['Username'] %}
-<form action="{{ url_for('update_recipe', username=username)}}" method='POST'>
+<form action="{{ url_for('edit_recipe', username=username, recipe_id=recipe_id)}}" method='POST'>
     <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Edit Recipe</button>
 </form>
 <br>
