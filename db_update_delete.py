@@ -4,17 +4,22 @@ from db_create import QueryCreateRecipe, QueryCreateMethodItems
 
 class QueryDeleteRecipe():
     
-    def __init__(self, recipe_id):
+    def __init__(self, recipe_id, table):
         self.recipe_id = recipe_id
-        self.query = """ DELETE FROM Recipe 
-                            WHERE RecipeId = %s""" % (self.recipe_id)    
+        self.table = table
+         
+               
     
     def delete(self):
         try:
             with Db(commit=True) as cursor:            
-                cursor.execute(self.query)
+                cursor.execute(""" DELETE FROM %s 
+                                    WHERE RecipeId = %s; 
+                                """ % (self.table, self.recipe_id))
         finally:
             print("Query Delete Recipe Completed")
+
+    
 
 class UpdateQuery():
     
@@ -25,17 +30,7 @@ class UpdateQuery():
                         MakePublic = %s
                         WHERE RecipeId = %s;
                     """
-    ingredients_query = """ UPDATE Ingredient SET
-                            IngredientName = %s,
-                            Quantity = %s
-                            WHERE RecipeId = %s;
-                        """
 
-    method_query = """ UPDATE Method SET
-                        StepNumber = %s, 
-                        StepDescription = %s
-                        WHERE RecipeId = %s;
-                    """
     def single_column_query(self, table, column, column_value, recipe_id):
         query = """ UPDATE %s SET
                     %s = '%s'
@@ -77,15 +72,5 @@ class QueryUpdateRecipe(QueryCreateRecipe):
         finally:
             print("Query Update stats completed")
      
-class QueryUpdateMethodItems(QueryCreateMethodItems):
 
-    def __init__(self, prepped_ingredients, prepped_method):
-        super().__init__(prepped_ingredients, prepped_method)
-       
-    def update_ingredients_and_method(self):
-        try:
-            with Db(commit=True) as cursor:
-                cursor.executemany(UpdateQuery.ingredients_query, self.ingredients)
-                cursor.executemany(UpdateQuery.method_query, self.method)
-        finally:
-            print("Query Update Recipe completed")
+ 

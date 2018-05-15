@@ -63,7 +63,7 @@
         <br>
         {% for ingredient in full_recipe[2] %}
         <input id='Quantity-{{ loop.index }}' name='Quantity' placeholder='Quantity' type='text' value="{{ ingredient['Quantity'] }}"required>
-        <input id='Ingredient-{{ loop.index }}' name='Ingredient' placeholder='Ingredient' type='text' value="{{ ingredient['IngredientName'] }}"required>
+        <input class='ingredient' id='Ingredient-{{ loop.index }}' name='Ingredient' placeholder='Ingredient' type='text' value="{{ ingredient['IngredientName'] }}"required>
         <br id='br-Ingredient-{{ loop.index }}'>
         {% endfor %}
         
@@ -75,7 +75,7 @@
         <br>
         {% for method in full_recipe[3] %}
         <input id='s-{{ loop.index }}' min='{{ loop.index }}' max='{{ loop.index }}' name='StepNumber' type='number' value='{{ loop.index }}'required>
-        <input id='Step-{{ loop.index }}' name='Step' placeholder='Step' type='text' value="{{ method['StepDescription'] }}"required>
+        <input class='method' id='Step-{{ loop.index }}' name='Step' placeholder='Step' type='text' value="{{ method['StepDescription'] }}"required>
         <br id='br-Step-{{ loop.index }}'>
         {% endfor %}
         
@@ -96,8 +96,27 @@ const removeStepButton = document.getElementById("remove-step");
 
 let ingredientCounter = 1;
 let methodCounter = 1;
-// --------------------------------------------------------------//
 
+// --------------------------------------------------------------//
+// --------------- ONLY APPLICABLE TO EDIT RECIPES -------------- //
+
+const setIngredientCounter = () => {
+
+    numberOfIngredients = document.getElementsByClassName('ingredient');
+    ingredientCounter = numberOfIngredients.length + 1;
+    
+};
+
+const setMethodCounter = () => {
+
+    numberOfMethods = document.getElementsByClassName('method');
+    methodCounter = numberOfMethods.length + 1;
+
+};
+
+
+setIngredientCounter();
+setMethodCounter();
 // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
 const characterCounter = (input, counter, count) => {
     document.getElementById(input).onkeyup = function() {

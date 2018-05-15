@@ -6,7 +6,7 @@ import user_login
 import view_var
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
-from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe, QueryUpdateMethodItems
+from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -18,12 +18,12 @@ app = Flask(__name__)
 
 ################################# LOGIN ROUTES #####################################
 
-""" LANDING PAGE """
+# LANDING PAGE #
 @app.route('/', methods=['GET','POST'])
 def index():
     return render_template('index.html')
 
-""" SIGN UP ROUTE """
+# SIGN UP ROUTE #
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -34,12 +34,12 @@ def signup():
         else:
             return redirect('user_taken') 
 
-""" IF USER ALEADY EXISTS CALL THIS ROUTE """
+# IF USER ALEADY EXISTS CALL THIS ROUTE #
 @app.route('/user_taken', methods=['GET', 'POST'])
 def user_taken():    
     return render_template('user_taken.html')
 
-""" LOGIN ROUTE """
+# LOGIN ROUTE #
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -50,14 +50,14 @@ def login():
         else:
             return redirect('invalid_login')
 
-""" IF LOGIN IS INVALID CALL THIS ROUTE """ 
+# IF LOGIN IS INVALID CALL THIS ROUTE # 
 @app.route('/invalid_login', methods=['GET', 'POST'])
 def invalid_login():
     return render_template('invalid_login.html')
 
 ################ MAIN MY RECIPME ROUTE ##########################
 
-""" USER MY RECIPME MAIN PAGE, POPULATE CUISINES """
+# USER MY RECIPME MAIN PAGE, POPULATE CUISINES #
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
     recipe_info = view_var.ViewVariables(username).var_myrecipme()
@@ -65,14 +65,14 @@ def my_recipme(username):
 
 ################ SEARCH ROUTES #################################
 
-""" GET ALL RECIPES FOR A GIVEN USER """
+# GET ALL RECIPES FOR A GIVEN USER #
 @app.route('/my_recipme/<username>/all_myrecipme')
 def all_myrecipme(username):
     recipe_info = view_var.ViewVariables(username).var_all_myrecipme()
     return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
                                                     cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
                                                     count=recipe_info[1])
-
+# GET ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
     if request.method == 'POST':
@@ -83,6 +83,7 @@ def ingredient_search(username):
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0], courses=recipe_info[2][1])
 
+# GET ALL RECIPES FOR A GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
 def category_search(username):
     if request.method == 'POST':
@@ -105,7 +106,6 @@ def full_redirect(username):
 @app.route('/my_recipme/<username>/<title>/<recipe_id>')
 def full_recipe(username, title, recipe_id):
     full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
-    print(full_recipe)
     return render_template('full_recipe_partial.html', title=title, username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
@@ -123,9 +123,9 @@ def creating_recipe(username):
         recipe = request.form
         user_id = find_recipe.Get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
-        ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity')]
+        ingredient_list = [request.form.getlist('Ingredient'),user_id,
+                            request.form.getlist('Quantity')]
         write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
-        print(recipe)
         return redirect('my_recipme/%s/%s'% (username, 'create'))
 
 @app.route('/my_recipme/<username>/<action>')
@@ -146,29 +146,23 @@ def updating_recipe(username, recipe_id):
     if request.method == 'POST':
         recipe = request.form
         user_id = find_recipe.Get().get_user_id(username)
-        QueryUpdateRecipe(recipe, user_id, recipe_id).update_recipe()
-        QueryUpdateRecipe(recipe, user_id, recipe_id).update_stats()
-
         method_list = [request.form.getlist('StepNumber'),
-                        request.form.getlist('Step'), recipe_id]
-        ingredient_list = [request.form.getlist('Ingredient'),
-                            request.form.getlist('Quantity'), 
-                            recipe_id]
-        prepped_ingredients = write_recipe.Update().merge_recipe_id_into_ingredients(ingredient_list)
-        prepped_method = write_recipe.Create().merge_recipe_id_into_method(method_list, int(recipe_id))
-        recipe = QueryUpdateMethodItems(prepped_ingredients, prepped_method)
+                        request.form.getlist('Step')]
+        ingredient_list = [request.form.getlist('Ingredient'),user_id,
+                            request.form.getlist('Quantity')]
+        write_recipe.Update().update_recipe_and_stats(recipe, user_id, recipe_id)
+        write_recipe.Update().update_ingredients_and_method(recipe_id, ingredient_list, 
+                                                            method_list)
 
-        recipe.update_ingredients_and_method()
-        
-        #print(method_list, ingredient_list)
         return redirect('my_recipme/%s/%s'% (username, 'update'))
-
+        
 ############## DELETE RECIPE ROUTE ##########################
 
 @app.route('/my_recipme/<username>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(username):
     if request.method == 'POST':
-        QueryDeleteRecipe(request.form['RecipeId']).delete()
+        table = 'Recipe'
+        QueryDeleteRecipe(request.form['RecipeId'],table).delete()
 
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
 

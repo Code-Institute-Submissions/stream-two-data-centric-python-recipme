@@ -1,6 +1,7 @@
 import os
 import db_create
 from db_read import UserVerify, QueryReadRecipes
+from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 
 ###################################################################################
 ############################## CREATE RECIPE CLASS ############################
@@ -77,17 +78,19 @@ class Create():
 
 class Update():
     
-    def merge_recipe_id_into_ingredients(self, ingredient_list):
-        ## ADD RECIPE ID INTO INGEDIENTS LIST AND SPLIT INTO SUBLIST ENTRIES ##
-        ingredients = []
+    def update_recipe_and_stats(self, recipe, user_id, recipe_id):
+        QueryUpdateRecipe(recipe, user_id, recipe_id).update_recipe()
+        QueryUpdateRecipe(recipe, user_id, recipe_id).update_stats()
 
-        for i in range(0, len(ingredient_list[0])):
-            ingredients.append(ingredient_list[0][i])
-            ingredients.append(ingredient_list[1][i])
-            ingredients.append(int(ingredient_list[2]))
+        return True
 
-        ingredients_split = [ingredients[i: i+3] for i in range(0, len(ingredients), 3)]
-
-        return ingredients_split
-
-        ## FOR METHOD USE CREATE CLASS MERGE RECIPE ID INTO METHOD ##
+    def update_ingredients_and_method(self, recipe_id, ingredient_list, method_list):
+        QueryDeleteRecipe(recipe_id,'Ingredient').delete()
+        QueryDeleteRecipe(recipe_id,'Method').delete()
+        prepped_ing = Create().merge_recipe_id_into_ingredients(ingredient_list, 
+                                                                int(recipe_id))
+        prepped_method = Create().merge_recipe_id_into_method(method_list, 
+                                                            int(recipe_id))
+        Create().write_ingredients_and_method(prepped_ing, prepped_method)
+        
+        return True
