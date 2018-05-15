@@ -1,6 +1,6 @@
 import pymysql
 from db import Db
-from db_create import QueryCreateRecipe
+from db_create import QueryCreateRecipe, QueryCreateMethodItems
 
 class QueryDeleteRecipe():
     
@@ -25,6 +25,17 @@ class UpdateQuery():
                         MakePublic = %s
                         WHERE RecipeId = %s;
                     """
+    ingredients_query = """ UPDATE Ingredient SET
+                            IngredientName = %s,
+                            Quantity = %s
+                            WHERE RecipeId = %s;
+                        """
+
+    method_query = """ UPDATE Method SET
+                        StepNumber = %s, 
+                        StepDescription = %s
+                        WHERE RecipeId = %s;
+                    """
     def single_column_query(self, table, column, column_value, recipe_id):
         query = """ UPDATE %s SET
                     %s = '%s'
@@ -43,7 +54,7 @@ class QueryUpdateRecipe(QueryCreateRecipe):
                             self.cooking_time, self.make_public, self.recipe_id)
         try:
             with Db(commit=True) as cursor:
-                print(recipe_values)
+                #print(recipe_values)
                 cursor.execute(UpdateQuery.recipe_query, recipe_values)
         finally:
             print("Query Update Recipe completed")
@@ -66,7 +77,15 @@ class QueryUpdateRecipe(QueryCreateRecipe):
         finally:
             print("Query Update stats completed")
      
+class QueryUpdateMethodItems(QueryCreateMethodItems):
+
+    def __init__(self, prepped_ingredients, prepped_method):
+        super().__init__(prepped_ingredients, prepped_method)
        
-        
-    
-        
+    def update_ingredients_and_method(self):
+        try:
+            with Db(commit=True) as cursor:
+                cursor.executemany(UpdateQuery.ingredients_query, self.ingredients)
+                cursor.executemany(UpdateQuery.method_query, self.method)
+        finally:
+            print("Query Update Recipe completed")

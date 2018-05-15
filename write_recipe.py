@@ -8,6 +8,7 @@ from db_read import UserVerify, QueryReadRecipes
 
 ############### CONVERT THE FORM DATA STRINGS TO INTEGERS ###################
 class Create():
+
     def convert_numeric_strings_to_int(self, recipe):
         for key in recipe:
             is_value_number = recipe[key].isnumeric()
@@ -18,7 +19,8 @@ class Create():
     #################### ADD RECIPE ID TO LIST READY FOR WRITING TO TABLE ############
 
     def merge_recipe_id_into_ingredients(self,ingredient_list, recipe_primary_key):
-        ingredients = [] ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
+        ingredients = [] 
+        ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
 
         for i in range(0, len(ingredient_list[0])):
             ingredients.append(ingredient_list[0][i])
@@ -31,15 +33,15 @@ class Create():
         return ingredients_split
 
     def merge_recipe_id_into_method(self,method_item, recipe_primary_key):
-        method = [] ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
-
+        method = [] 
+        ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
         for i in range(0, len(method_item[0])):
             method.append(method_item[0][i])
             method.append(method_item[1][i])
             method.append(recipe_primary_key)
         # SPLIT LIST INTO SUBLISTS FOR FIELD ENTRY #
         method_split = [method[i: i+3] for i in range(0, len(method), 3)]
-
+        #print(method_split)
         return method_split
 
     ###################### WRITE DETAILS TO RECIPE TABLE AND STATS TABLES ################
@@ -73,3 +75,19 @@ class Create():
         return True
 
 
+class Update():
+    
+    def merge_recipe_id_into_ingredients(self, ingredient_list):
+        ## ADD RECIPE ID INTO INGEDIENTS LIST AND SPLIT INTO SUBLIST ENTRIES ##
+        ingredients = []
+
+        for i in range(0, len(ingredient_list[0])):
+            ingredients.append(ingredient_list[0][i])
+            ingredients.append(ingredient_list[1][i])
+            ingredients.append(int(ingredient_list[2]))
+
+        ingredients_split = [ingredients[i: i+3] for i in range(0, len(ingredients), 3)]
+
+        return ingredients_split
+
+        ## FOR METHOD USE CREATE CLASS MERGE RECIPE ID INTO METHOD ##

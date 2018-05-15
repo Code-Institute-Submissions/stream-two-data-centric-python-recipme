@@ -162,7 +162,7 @@ class QueryReadRecipes():
         """ GET INGREDIENTS BASED ON GIVEN RECIPE ID """
         try:
             with Db() as cursor:
-                recipes_query = """SELECT IngredientName, Quantity FROM Ingredient
+                recipes_query = """SELECT IngredientName, Quantity, IngredientId FROM Ingredient
                                     WHERE Ingredient.RecipeId = %s;""" % (recipe_id)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
@@ -174,7 +174,7 @@ class QueryReadRecipes():
         """ GET FULL METHOD BASED ON GIVEN RECIPE ID """
         try:
             with Db() as cursor:
-                recipes_query = """SELECT StepNumber, StepDescription FROM Method
+                recipes_query = """SELECT StepNumber, StepDescription, MethodId FROM Method
                                     WHERE Method.RecipeId = %s;""" % (recipe_id)
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]

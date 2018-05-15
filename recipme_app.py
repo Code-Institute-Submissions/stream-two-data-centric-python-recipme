@@ -6,7 +6,7 @@ import user_login
 import view_var
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
-from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
+from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe, QueryUpdateMethodItems
 from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
@@ -123,7 +123,7 @@ def creating_recipe(username):
         recipe = request.form
         user_id = find_recipe.Get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
-        ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity') ]
+        ingredient_list = [request.form.getlist('Ingredient'),user_id,request.form.getlist('Quantity')]
         write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
         print(recipe)
         return redirect('my_recipme/%s/%s'% (username, 'create'))
@@ -148,6 +148,19 @@ def updating_recipe(username, recipe_id):
         user_id = find_recipe.Get().get_user_id(username)
         QueryUpdateRecipe(recipe, user_id, recipe_id).update_recipe()
         QueryUpdateRecipe(recipe, user_id, recipe_id).update_stats()
+
+        method_list = [request.form.getlist('StepNumber'),
+                        request.form.getlist('Step'), recipe_id]
+        ingredient_list = [request.form.getlist('Ingredient'),
+                            request.form.getlist('Quantity'), 
+                            recipe_id]
+        prepped_ingredients = write_recipe.Update().merge_recipe_id_into_ingredients(ingredient_list)
+        prepped_method = write_recipe.Create().merge_recipe_id_into_method(method_list, int(recipe_id))
+        recipe = QueryUpdateMethodItems(prepped_ingredients, prepped_method)
+
+        recipe.update_ingredients_and_method()
+        
+        #print(method_list, ingredient_list)
         return redirect('my_recipme/%s/%s'% (username, 'update'))
 
 ############## DELETE RECIPE ROUTE ##########################
