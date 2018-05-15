@@ -114,21 +114,18 @@ const setMethodCounter = () => {
 
 };
 
-
 setIngredientCounter();
 setMethodCounter();
+
+//------------------------------------------------------------------//
 // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
+
 const characterCounter = (input, counter, count) => {
     document.getElementById(input).onkeyup = function() {
 
         document.getElementById(counter).innerHTML = "Characters remaining:"+ (count-this.value.length);
     };
 };
-/*
-const totalCharacters = (counter, count) => {
-
-    document.getElementById(counter).innerHTML = "Characters remaining:"+ count;
-};*/
 
 // ------------------- CREATE INPUT TEXT FIELD -------------------- //
 

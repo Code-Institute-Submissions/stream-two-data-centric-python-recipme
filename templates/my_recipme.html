@@ -9,22 +9,66 @@
 <div></div>
 <a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
 <br> 
-<a href="{{ url_for('all_myrecipme', username=username)}}"> Get All My RecipeMe's</a>
-<br>
 <a href="{{ url_for('index')}}">Log Out</a>
 <br>
+<h3>View All MyRecipMe's</h3>
+<form action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
+    <button type='submit'>All MyRecipMe's</button> 
+    <select name="SortBy">
+        <option value="RecipeTitle">Sort By:</option>
+        <option value="RecipeTitle">Alphabetical</option>
+        <option value="CookingTimeMins">Cooking Time</option>
+        <option value="Created">Created Date</option>
+        <option value="Price">Cost</option>
+        <option value="Servings">Servings</option>
+        <option value="Calories">Calories</option>
+    </select>
+    <select name="Direction">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+</form>
 <h3>Choose RecipMe by Cuisine</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
     {% for cuisine in cuisines %}
         <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
-    {% endfor %} 
+    {% endfor %}
+    <br>
+    <br>
+    <select name="SortBy">
+        <option value="RecipeTitle">Sort By:</option>
+        <option value="RecipeTitle">Alphabetical</option>
+        <option value="CookingTimeMins">Cooking Time</option>
+        <option value="Created">Created Date</option>
+        <option value="Price">Cost</option>
+        <option value="Servings">Servings</option>
+        <option value="Calories">Calories</option>
+    </select>
+    <select name="Direction">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
 </form>
-<br>
 <h3>Choose RecipeMe by Course</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
     {% for course in courses %}
     <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
     {% endfor %}
+    <br>
+    <br>
+    <select name="SortBy">
+        <option value="RecipeTitle">Sort By:</option>
+        <option value="RecipeTitle">Alphabetical</option>
+        <option value="CookingTimeMins">Cooking Time</option>
+        <option value="Created">Created Date</option>
+        <option value="Price">Cost</option>
+        <option value="Servings">Servings</option>
+        <option value="Calories">Calories</option>
+    </select>
+    <select name="Direction">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
 </form>
 <h3>OR</h3>
 <h3>Search by Ingredient.</h3>
@@ -32,6 +76,19 @@
 <form action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
     <input type='text' placeholder='Ingredient' name='Ingredient' required maxlength="50">
     <input type='submit' value='Search MyRecipMe'>
+    <select name="SortBy">
+        <option value="RecipeTitle">Sort By:</option>
+        <option value="RecipeTitle">Alphabetical</option>
+        <option value="CookingTimeMins">Cooking Time</option>
+        <option value="Created">Created Date</option>
+        <option value="Price">Cost</option>
+        <option value="Servings">Servings</option>
+        <option value="Calories">Calories</option>
+    </select>
+    <select name="Direction">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
 </form>
 
 <p> IMAGE OF FOOD HERE </p>

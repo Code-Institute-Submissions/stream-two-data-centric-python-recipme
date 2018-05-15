@@ -1,6 +1,10 @@
 import pymysql
 from db import Db
 
+#################### CLASSES FOR READING THE MYSQL DB #########################
+
+################### CLASS FOR USER VERIFICATION BASED ON USER #################
+
 class UserVerify():
     
     def __init__(self, user_values):
@@ -18,6 +22,9 @@ class UserVerify():
                 return from_db
         finally:
             print("Query Username and Password completed")
+
+################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
+    ## USED FOR USER ALL RECIPES SELECTION, INGREDIENT SEARCH AND SAVED RECIPES ##
 
 class Query():
     
@@ -67,6 +74,9 @@ class Query():
                                         """
         return saved_recipes
 
+########################## CLASS FOR COURSE OR CUISINE CATEGORY SEARCH TABLE SELECTIONS ################################
+                            ## RE-USABLE FUNCTIONS BASED ON CATEGORY SELECTION ##
+
 class QueryCategory(Query):
     """ QUERIES FOR CUISINE OR COURSE CATEGORY """
     def __init__(self, table, join_table):
@@ -87,6 +97,7 @@ class QueryCategory(Query):
                                                 self.table, self.table, self.table, self.table)
         return search_category
     
+########################### CLASS TO EXECUTE READ QUERIES ###############################
 
 class QueryReadRecipes():
 
@@ -104,7 +115,7 @@ class QueryReadRecipes():
 
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
-            GIVEN USER SELECTION, PUBLIC AND USER SPECIFIC  """
+                    GIVEN USER SELECTION, PUBLIC AND USER SPECIFIC  """
         try:
             with Db() as cursor:
                 condition = """ WHERE %s = %s 
@@ -121,7 +132,7 @@ class QueryReadRecipes():
 
     def query_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, 
-        SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
+            SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
         join_table = []
         if table == 'Cuisine':
             join_table = 'Course'

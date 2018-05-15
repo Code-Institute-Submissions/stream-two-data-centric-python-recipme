@@ -65,25 +65,28 @@ def my_recipme(username):
 
 ################ SEARCH ROUTES #################################
 
-# GET ALL RECIPES FOR A GIVEN USER #
-@app.route('/my_recipme/<username>/all_myrecipme')
+# ALL RECIPES FOR A GIVEN USER #
+@app.route('/my_recipme/<username>/all_myrecipme', methods=['GET', 'POST'])
 def all_myrecipme(username):
-    recipe_info = view_var.ViewVariables(username).var_all_myrecipme()
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
-                                                    cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
-                                                    count=recipe_info[1])
-# GET ALL RECIPES FOR A GIVEN INGREDIENT #
+    if request.method == 'POST':
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+        recipe_info = view_var.ViewVariables(username).var_all_myrecipme(order_by, direction)
+        return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
+                                                        cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
+                                                        count=recipe_info[1])
+# ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
     if request.method == 'POST':
+        order_by, direction = request.form['SortBy'], request.form['Direction']
         ingredient = request.form['Ingredient']
-        recipe_info = view_var.ViewVariables(username).var_ing_search(ingredient)
+        recipe_info = view_var.ViewVariables(username).var_ing_search(ingredient, order_by, direction)
         
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0], courses=recipe_info[2][1])
-
-# GET ALL RECIPES FOR A GIVEN CATEGORY #
+                            
+# ALL RECIPES FOR A GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
 def category_search(username):
     if request.method == 'POST':
@@ -94,6 +97,7 @@ def category_search(username):
                                                         category_item=recipe_info[4])
                                                         
 ############### FULL RECIPE VIEW ##############################
+
 @app.route('/my_recipme/<username>/redirect', methods=['GET', 'POST'])
 def full_redirect(username):
     if request.method == 'POST':
@@ -111,12 +115,12 @@ def full_recipe(username, title, recipe_id):
 
 ############### CREATE RECIPE ROUTES #############################
 
-""" ADD RECIPE FOR GIVEN USER"""
+## ADD RECIPE FOR GIVEN USER##
 @app.route('/my_recipme/<username>/add_recipe')
 def add_recipe(username):  
     return render_template('add_recipe.html',username=username)
 
-""" RECIPE FORM SUBMISSION AND REDIRECT TO USER MY RECIPME PAGE """
+## RECIPE FORM SUBMISSION AND REDIRECT TO USER MY RECIPME PAGE ##
 @app.route('/my_recipme/<username>/create_recipe', methods=['GET', 'POST'])
 def creating_recipe(username):
     if request.method == 'POST':

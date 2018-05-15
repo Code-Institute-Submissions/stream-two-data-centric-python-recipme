@@ -5,7 +5,7 @@ import write_recipe
 import datetime
 from db_read import QueryReadRecipes
 
-########################## DATE TIME CONVERSION ###############################
+############# CLASSES WITH LOGIC TO RETRIEVE DATA FROM THE DB #################
 
 class Get():
     def date_time_converter(self, recipes):
@@ -13,8 +13,6 @@ class Get():
         for i in recipes:
             i['Created'] = i['Created'].strftime('%H:%M:%S on %m.%d.%Y')
         return recipes
-
-    ############################################################################
 
     def get_user_id(self, username):
         """ GET USER ID FROM USERNAME """
@@ -84,5 +82,5 @@ class Get():
         courses = Get.get_all_column_group_for_user(self, 'CourseName', user_id, 'Course')
         return cuisines, courses
 
-    ################################# CLASS VARIABLES FOR EACH VIEW ####################################
+
 

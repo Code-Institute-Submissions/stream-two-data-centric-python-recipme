@@ -1,8 +1,9 @@
 import os
-#import pymysql
 import myenviron
 from db import Db
 
+######################## CLASS FOR SQL QUERY FOR USER CREATION #########################
+ 
 class QueryCreateUser():
     
     def __init__(self, user_values):
@@ -20,6 +21,9 @@ class QueryCreateUser():
                 #Db.connection.commit()
         finally: 
             print('New User Created')
+
+######################## CLASS FOR SQL QUERY SELECTIONS FOR RECIPE TABLE CREATION, #######################
+###############################      INGREDIENTS, METHOD AND STATS            #########################
 
 class CreateQuery():
     
@@ -40,8 +44,9 @@ class CreateQuery():
         query = """ INSERT INTO %s (`%s`, `RecipeId`)
                     VALUES ('%s', %s); """ % (table, column, column_value, recipe_id)
         return query
-  
-   
+
+###################### CLASS TO EXECUTE THE SQL QUERY FOR RECIPE TABLE, AND STATS #########################
+
 class QueryCreateRecipe():
 
     def __init__(self,recipe, user_id):
@@ -87,7 +92,9 @@ class QueryCreateRecipe():
                     cursor.execute(stat[0])
         finally:
             print("Query create stats completed")
-    
+
+###################### CLASS TO EXECUTE THE SQL QUERY FOR METHOD, #########################
+###########################       AND INGREDIENTS          ################################
 
 class QueryCreateMethodItems():
     

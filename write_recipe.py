@@ -3,26 +3,22 @@ import db_create
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 
-###################################################################################
-############################## CREATE RECIPE CLASS ############################
-###################################################################################
+################# CLASSES WITH LOGIC FOR PREPPING OR WRITING DATA TO DB ####################
 
-############### CONVERT THE FORM DATA STRINGS TO INTEGERS ###################
 class Create():
 
     def convert_numeric_strings_to_int(self, recipe):
+        """CONVERT THE FORM DATA STRINGS TO INTEGERS """
         for key in recipe:
             is_value_number = recipe[key].isnumeric()
             if is_value_number:
                 recipe[key] = int(recipe[key])
         return recipe
 
-    #################### ADD RECIPE ID TO LIST READY FOR WRITING TO TABLE ############
-
     def merge_recipe_id_into_ingredients(self,ingredient_list, recipe_primary_key):
+        """ ADD RECIPE ID TO LIST READY FOR WRITING TO TABLE """
         ingredients = [] 
-        ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
-
+    
         for i in range(0, len(ingredient_list[0])):
             ingredients.append(ingredient_list[0][i])
             ingredients.append(ingredient_list[1]['UserId'])
@@ -34,21 +30,20 @@ class Create():
         return ingredients_split
 
     def merge_recipe_id_into_method(self,method_item, recipe_primary_key):
+        """ ADD RECIPE ID TO LIST READY FOR WRITING TO TABLE """
         method = [] 
-        ## MAKE LIST OF ALL INGREDIENTS INCLUDING RECIPE ID FOR EACH FIELD ##
+
         for i in range(0, len(method_item[0])):
             method.append(method_item[0][i])
             method.append(method_item[1][i])
             method.append(recipe_primary_key)
         # SPLIT LIST INTO SUBLISTS FOR FIELD ENTRY #
         method_split = [method[i: i+3] for i in range(0, len(method), 3)]
-        #print(method_split)
+       
         return method_split
 
-    ###################### WRITE DETAILS TO RECIPE TABLE AND STATS TABLES ################
-
-    ####################### WRITE INGREDIENTS TO INGREDIENTS TABLE ######################
     def prep_method_and_ingredients(self,ingredient_list, method_list, recipe_primary_key):
+        """PREP METHOD AND INGREDIENTS BY MERGING RECIPE ID INTO LIST """
         prepped_ingredients = Create.merge_recipe_id_into_ingredients(self, ingredient_list, recipe_primary_key)
         prepped_method = Create.merge_recipe_id_into_method(self, method_list, recipe_primary_key)
         
@@ -75,6 +70,7 @@ class Create():
 
         return True
 
+###################### CLASS FOR UPDATING FIELDS #############################
 
 class Update():
     
@@ -92,5 +88,5 @@ class Update():
         prepped_method = Create().merge_recipe_id_into_method(method_list, 
                                                             int(recipe_id))
         Create().write_ingredients_and_method(prepped_ing, prepped_method)
-        
+
         return True

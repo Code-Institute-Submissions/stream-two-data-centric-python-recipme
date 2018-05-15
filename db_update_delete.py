@@ -2,14 +2,14 @@ import pymysql
 from db import Db
 from db_create import QueryCreateRecipe, QueryCreateMethodItems
 
+####################### CLASS FOR SQL QUERY TO DELETE RECIPE BASED ON RECIPE ID #########################
+
 class QueryDeleteRecipe():
     
     def __init__(self, recipe_id, table):
         self.recipe_id = recipe_id
         self.table = table
          
-               
-    
     def delete(self):
         try:
             with Db(commit=True) as cursor:            
@@ -19,7 +19,8 @@ class QueryDeleteRecipe():
         finally:
             print("Query Delete Recipe Completed")
 
-    
+###################### CLASS FOR SQL UPDATE QUERIES, INCLUDING RECIPE TABLE,##################
+####################### AND RE-USABLE SINGEL COLUMN QUERY FOR STATS ##########################
 
 class UpdateQuery():
     
@@ -38,6 +39,8 @@ class UpdateQuery():
                 """ % (table, column, column_value, recipe_id)
         return query
 
+###################### CLASS FOR EXECUTING UPDATE QUERIES TO RECIPE TABLE AND STATS TABLES ###############
+
 class QueryUpdateRecipe(QueryCreateRecipe):
 
     def __init__(self, recipe, user_id, recipe_id):
@@ -49,7 +52,6 @@ class QueryUpdateRecipe(QueryCreateRecipe):
                             self.cooking_time, self.make_public, self.recipe_id)
         try:
             with Db(commit=True) as cursor:
-                #print(recipe_values)
                 cursor.execute(UpdateQuery.recipe_query, recipe_values)
         finally:
             print("Query Update Recipe completed")
