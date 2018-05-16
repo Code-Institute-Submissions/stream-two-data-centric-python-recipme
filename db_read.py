@@ -157,7 +157,8 @@ class QueryReadRecipes():
         try:
             with Db() as cursor:
                 condition = """ WHERE %s = %s 
-                                AND Ingredient.IngredientName LIKE '%s'
+                                AND MATCH(Ingredient.IngredientName) 
+                                AGAINST ('%s' IN NATURAL LANGUAGE MODE)
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         ingredient, order_by, direction)
                                                                        
