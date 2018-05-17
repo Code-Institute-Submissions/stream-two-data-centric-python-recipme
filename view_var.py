@@ -22,52 +22,50 @@ class ViewVariables():
         return user
         
 ## GET CATEGORY GROUPINGS OF COURSE AND CUISINE FOR MY_RECIPME PAGE ##
-    def var_myrecipme(self):
+    def groupings(self):
         public = ViewVariables(self.username).public_recipe_groupings()
         user = ViewVariables(self.username).user_recipe_groupings()
         return user, public
 
 ## RETURN ALL RECIPES FOR GIVEN USER, COUNT AND CATEGORIES AGAIN ##
     def var_all_myrecipme(self, order_by, direction):
-        user_id = find_recipe.Get().get_user_id(self.username)['UserId']
         result = find_recipe.Get().get_mini_user_recipes(self.username, 'User.UserId', order_by, direction)        
         recipes = find_recipe.Get().date_time_converter(result)
         count = len(recipes)
-        for_user = True
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
-        return recipes, count, categories
+        groupings = ViewVariables(self.username).groupings()
+
+        return recipes, count, groupings
 
 ## RETURN ALL RECIPES FOR GIVEN INGREDIENT SEARCH ##
-    def var_ing_search(self, ingredient, order_by, direction):
+    def var_ing_search(self, form, search_by, search_value, ingredient):
         recipes = []
         count = 0
-        user_id = find_recipe.Get().get_user_id(self.username)['UserId']
-        result = find_recipe.Get().get_recipes_by_ingredient('User.UserId', user_id, 
+        order_by, direction = form['SortBy'], form['Direction']
+        result = find_recipe.Get().get_recipes_by_ingredient(search_by, search_value, 
                                                         ingredient, order_by, direction)
         if result == []:
             count = 0
         else:
             recipes = find_recipe.Get().date_time_converter(result)
             count = len(recipes)
-        for_user = True
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
-        return recipes, count, categories
+        groupings = ViewVariables(self.username).groupings()
+        print(search_by)
+        return recipes, count, groupings
 
-## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY ##
-    def var_cat_search(self, form):
+## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
+    def var_cat_search(self, form, search_by, search_value):
         order_by, direction = form['SortBy'], form['Direction']
-        user_id = find_recipe.Get().get_user_id(self.username)['UserId']
+        #user_id = find_recipe.Get().get_user_id(self.username)['UserId']
         column = [key for key in form]
         column_name = column[0] + 'Name'
-        results = find_recipe.Get().get_category_mini_recipes(column[0], 'User.UserId', user_id, 
+        results = find_recipe.Get().get_category_mini_recipes(column[0], search_by, search_value, 
                                                         column_name, form[column[0]], 
                                                         order_by, direction)
         recipes = find_recipe.Get().date_time_converter(results)
         count = len((recipes))
-        for_user = True
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
-       
-        return recipes, count, categories, form[column[0]], column[0]
+        groupings = ViewVariables(self.username).groupings()
+
+        return recipes, count, groupings, form[column[0]], column[0]
 
 ## RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ##
     def var_full_recipe(self, recipe_id):
@@ -77,10 +75,19 @@ class ViewVariables():
         recipe = find_recipe.Get().date_time_converter(result)
         ingredients = find_recipe.Get().get_ingredients_for_full_recipe(recipe_id)
         method = find_recipe.Get().get_method_for_full_recipe(recipe_id)
+
         return username, recipe, ingredients, method
 
 
+## RETURN ALL PUBLIC RECIPES ##
 
+    def var_all_public(self, order_by, direction):
+        result = find_recipe.Get().get_all_mini_recipes('MakePublic', 1, order_by, direction)
+        recipes = find_recipe.Get().date_time_converter(result)
+        count = len(recipes)
+        groupings = ViewVariables(self.username).groupings()
+
+        return recipes, count, groupings
     
         
 

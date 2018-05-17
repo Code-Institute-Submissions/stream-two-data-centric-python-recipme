@@ -3,7 +3,7 @@ import db_create
 import write_recipe
 import find_recipe
 import user_login
-import view_var
+from view_var import ViewVariables
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
@@ -60,10 +60,12 @@ def invalid_login():
 # USER MY RECIPME MAIN PAGE, POPULATE CUISINES #
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    recipe_groups = view_var.ViewVariables(username).var_myrecipme()
+    recipe_groups = ViewVariables(username).groupings()
     
-    return render_template('my_recipme.html', username=username, cuisines=recipe_groups[0][0], courses=recipe_groups[0][1],
-                             public_cuisines=recipe_groups[1][0], public_courses=recipe_groups[1][1])
+   
+    return render_template('my_recipme.html', username=username, cuisines=recipe_groups[0][0], 
+                            courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
+                            public_courses=recipe_groups[1][1])
 
 ################ SEARCH ROUTES #################################
 ################ USER SPECIFIC ROUTES ##########################
@@ -73,55 +75,90 @@ def my_recipme(username):
 def all_myrecipme(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
-        recipe_info = view_var.ViewVariables(username).var_all_myrecipme(order_by, direction)
+        recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
         return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
-                                                        cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
-                                                        count=recipe_info[1])
+                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+
+# ALL RECIPES FOR A GIVEN CATEGORY #
+@app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
+def category_search(username):
+    if request.method == 'POST':
+        user_id = find_recipe.Get().get_user_id(username)['UserId']
+        recipe_info = ViewVariables(username).var_cat_search(request.form, 'User.UserId', user_id)
+        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
+                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                                category=recipe_info[3], category_item=recipe_info[4])
+
     
 # ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
     if request.method == 'POST':
-        order_by, direction = request.form['SortBy'], request.form['Direction']
         ingredient = request.form['Ingredient']
-        recipe_info = view_var.ViewVariables(username).var_ing_search(ingredient, order_by, direction)
-        
+        user_id = find_recipe.Get().get_user_id(username)['UserId']
+        recipe_info = ViewVariables(username).var_ing_search(request.form,'User.UserId',user_id, ingredient)
+       
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
-                            cuisines=recipe_info[2][0], courses=recipe_info[2][1])
+                            cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
                             
-# ALL RECIPES FOR A GIVEN CATEGORY #
-@app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
-def category_search(username):
-    if request.method == 'POST':
-        recipe_info = view_var.ViewVariables(username).var_cat_search(request.form)
-        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
-                                                        count=recipe_info[1], cuisines=recipe_info[2][0], 
-                                                        courses=recipe_info[2][1], category=recipe_info[3], 
-                                                        category_item=recipe_info[4])
+
+
+
 
 ############### PUBLIC SEARCH ROUTES ##########################
 
 # ALL PUBLIC RECIPES #                                       
-@app.route('/my_recipme/<username>/all_public')
+@app.route('/my_recipme/<username>/all_public', methods=['GET', 'POST'])
 def all_public(username):
     if request.method == 'POST':
-        return
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+        recipe_info = ViewVariables(username).var_all_public(order_by, direction)
+        return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
+                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
 
+# ALL PUBLIC RECIPES FOR GIVEN CATEGORY #
+@app.route('/my_recipme/<username>/category_public', methods=['GET', 'POST'])
+def category_public(username):
+    if request.method == 'POST':
+        recipe_info = ViewVariables(username).var_cat_search(request.form, 'MakePublic', 1)
+        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
+                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                                category=recipe_info[3], category_item=recipe_info[4])
+
+# ALL PUBLIC RECIPES FOR A GIVEN INGREDIENT #
+@app.route('/my_recipme/<username>/search_public', methods=['GET','POST'])
+def ingredient_search_public(username):
+    if request.method == 'POST':
+        ingredient = request.form['Ingredient']
+        """ VALUE OF 1 IN SEARCH FUNCTION REPRESENTS MAKE PUBLIC VALUE OF 'YES' IN DB """
+        recipe_info = ViewVariables(username).var_ing_search(request.form, 'MakePublic', 1, ingredient)
+        print('here')
+        
+    return render_template('ingredient_search.html', username=username, 
+                            ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
+                            cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+    
 ############### FULL RECIPE VIEW ##############################
 
 @app.route('/my_recipme/<username>/redirect', methods=['GET', 'POST'])
 def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
-        full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
+        full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
         title = full_recipe[1][0]['RecipeTitle']
         
         return redirect('/my_recipme/%s/%s/%s'% (username, title, recipe_id))
 
 @app.route('/my_recipme/<username>/<title>/<recipe_id>')
 def full_recipe(username, title, recipe_id):
-    full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
+    full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
     return render_template('full_recipe_partial.html', title=title, username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
@@ -152,7 +189,7 @@ def recipe_action(username, action):
     
 @app.route('/my_recipme/<username>/edit_recipe/<recipe_id>', methods=['GET', 'POST'])
 def edit_recipe(username, recipe_id):
-    full_recipe = view_var.ViewVariables(username).var_full_recipe(recipe_id)
+    full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
     title = full_recipe[1][0]['RecipeTitle']
     return render_template('edit_recipe.html', username=username, 
                             full_recipe=full_recipe, title=title, recipe_id=recipe_id)

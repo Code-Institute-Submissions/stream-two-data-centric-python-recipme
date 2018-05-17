@@ -82,7 +82,7 @@ CREATE TABLE `Health`
 CREATE TABLE `Ingredient`
 (
     `IngredientId` INT NOT NULL AUTO_INCREMENT,
-    `UserId` INT NOT NULL,St
+    `UserId` INT NOT NULL,
     `RecipeId` INT NOT NULL,
     `IngredientName` NVARCHAR(200) NOT NULL,
     `Quantity` NVARCHAR(200) NOT NULL,
@@ -163,6 +163,7 @@ ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientRecipeId`
     FOREIGN KEY (`RecipeId`) REFERENCES `Recipe`(`RecipeId`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_IngredientRecipeId` ON `Ingredient`(`RecipeId`);
+CREATE FULLTEXT INDEX Ingredients ON Ingredient (IngredientName);
 
 
 ALTER TABLE `Ingredient` ADD CONSTRAINT `FK_IngredientUserId`

@@ -93,7 +93,7 @@
 <hr>
 <!-------------------------------------------------------------------------------------->
 <h3>View All Public RecipeMe's</h3>
-<form action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
+<form action="{{ url_for('all_public', username=username)}}", method='POST'>
     <button type='submit'>All Public RecipMe's</button> 
     <select name="SortBy">
         <option value="RecipeTitle">Sort By:</option>
@@ -110,7 +110,7 @@
     </select>
 </form>
 <h3>Choose RecipMe by Cuisine</h3>
-<form action="{{ url_for('category_search', username=username)}}" method='POST'>
+<form action="{{ url_for('category_public', username=username)}}" method='POST'>
     {% for cuisine in public_cuisines %}
         <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
     {% endfor %}
@@ -131,7 +131,7 @@
     </select>
 </form>
 <h3>Choose RecipeMe by Course</h3>
-<form action="{{ url_for('category_search', username=username)}}" method='POST'>
+<form action="{{ url_for('category_public', username=username)}}" method='POST'>
     {% for course in public_courses %}
     <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
     {% endfor %}
@@ -154,7 +154,7 @@
 <h3>OR</h3>
 <h3>Search by Ingredient.</h3>
 
-<form action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+<form action = "{{ url_for('ingredient_search_public', username=username)}}" method='POST'>
     <input type='text' placeholder='Ingredient' name='Ingredient' required maxlength="50">
     <input type='submit' value='Search MyRecipMe'>
     <select name="SortBy">
