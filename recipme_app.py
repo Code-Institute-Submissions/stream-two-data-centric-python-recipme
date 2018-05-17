@@ -106,9 +106,6 @@ def ingredient_search(username):
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
                             
 
-
-
-
 ############### PUBLIC SEARCH ROUTES ##########################
 
 # ALL PUBLIC RECIPES #                                       
@@ -152,14 +149,15 @@ def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
         full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-        title = full_recipe[1][0]['RecipeTitle']
+        #title = full_recipe[1][0]['RecipeTitle']
         
-        return redirect('/my_recipme/%s/%s/%s'% (username, title, recipe_id))
+        return redirect('/my_recipme/%s/%s'% (username, recipe_id))
 
-@app.route('/my_recipme/<username>/<title>/<recipe_id>')
-def full_recipe(username, title, recipe_id):
+@app.route('/my_recipme/<username>/<recipe_id>')
+def full_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-    return render_template('full_recipe_partial.html', title=title, username=username, 
+    print(full_recipe)
+    return render_template('full_recipe_partial.html', username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
 ############### CREATE RECIPE ROUTES #############################
@@ -220,8 +218,12 @@ def delete_recipe(username):
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
 
 
-###################### PUBLIC RECIPE VIEWS #############################
-########################################################################
+@app.route('/my_recipme/<username>/save_recipe/<recipe_id>', methods=['GET','POST'])
+def save_recipe(username, recipe_id):
+    if request.method == 'POST':
+        print(request.form)
+
+        return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
 
 if __name__ == '__main__':

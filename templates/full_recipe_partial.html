@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Full RecipMe</h1>
 <h2>{{ full_recipe[1][0]['RecipeTitle']}}</h2>
-<p>Recipe created by: <strong>{{ 'username' }}</strong> at {{ full_recipe[1][0]['Created'] }}</p>
+<p>Recipe created by: <strong>{{ full_recipe[1][0] ['Author'] }}</strong> at {{ full_recipe[1][0]['Created'] }}</p>
 <h3> Recipe Stats </h3>
 <p><strong>Cuisine</strong>:{{ full_recipe[1][0]['CuisineName'] }}.</p>
 <p><strong>Course</strong>: {{ full_recipe[1][0] ['CourseName'] }}.</p>
@@ -37,14 +37,44 @@
 </ol>
 <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
 <br>
-{% if username == full_recipe[0][0]['Username'] %}
+{% if username == full_recipe[1][0] ['Author'] %}
 <form action="{{ url_for('edit_recipe', username=username, recipe_id=recipe_id)}}" method='POST'>
     <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Edit Recipe</button>
 </form>
 <br>
-<form action="{{ url_for('delete_recipe', username=username)}}" method='POST'>
+<form action="{{ url_for('delete_recipe', username=username) }}" method='POST'>
     <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>
 </form>
+{% else %}
+<form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
+    <label>Save Recipe</label>
+    <br>
+    <br>
+    <input type='radio' name='Saved' value='1'> Yes
+    <input type='radio' name='Saved' value='0' checked> No
+    <br>
+    <br>
+    <input type='submit' value='submit'>
+</form>
+<br>
+<form>
+    <fieldset>
+        <label>Leave a comment</label>
+        <br>
+        <textarea placeholder='Comments' name='Comments' maxlength='250' required></textarea>
+    </fieldset>
+    <fieldset>
+        <label>Rate this RecipMe.</label>
+        <br>
+        <input type='checkbox' value='1'>1
+        <input type='checkbox' value='2'>2
+        <input type='checkbox' value='3'>3
+        <input type='checkbox' value='4'>4
+        <input type='checkbox' value='5' checked>5
+    </fieldset>
+    <input type='submit' value='Submit'>
+</form>
+<form></form>
 
 {% endif %}
 

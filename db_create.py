@@ -110,3 +110,18 @@ class QueryCreateMethodItems():
         finally:
             print("Query create recipe completed")
         
+class QuerySaveRecipe():
+    
+    def __init__(self, user_id, recipe_id):
+        self.user_id = user_id
+        self.recipe_id = recipe_id
+
+    def save_recipe(self):
+        try:
+            with Db(commit=True) as cursor:
+                print(self.user_id)
+                print(self.recipe_id)
+        finally:
+            print("Query create recipe completed")
+        
+        
