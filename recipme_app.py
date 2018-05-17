@@ -55,18 +55,18 @@ def login():
 def invalid_login():
     return render_template('invalid_login.html')
 
-################ MAIN MY RECIPME ROUTE ##########################
+################ MAIN MY RECIPME ROUTE ##########################       
 
 # USER MY RECIPME MAIN PAGE, POPULATE CUISINES #
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    my_recipe_info = view_var.ViewVariables(username).var_myrecipme()
-    public_recipe_info = view_var.ViewVariables(username).var_public_recipe()
-    print(public_recipe_info)
-    return render_template('my_recipme.html', username=username, cuisines=my_recipe_info[0], courses=my_recipe_info[1],
-                            public_cuisines=public_recipe_info[0], public_course=public_recipe_info[1])
+    recipe_groups = view_var.ViewVariables(username).var_myrecipme()
+    
+    return render_template('my_recipme.html', username=username, cuisines=recipe_groups[0][0], courses=recipe_groups[0][1],
+                             public_cuisines=recipe_groups[1][0], public_courses=recipe_groups[1][1])
 
 ################ SEARCH ROUTES #################################
+################ USER SPECIFIC ROUTES ##########################
 
 # ALL RECIPES FOR A GIVEN USER #
 @app.route('/my_recipme/<username>/all_myrecipme', methods=['GET', 'POST'])
@@ -77,6 +77,7 @@ def all_myrecipme(username):
         return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
                                                         cuisines=recipe_info[2][0], courses=recipe_info[2][1], 
                                                         count=recipe_info[1])
+    
 # ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
@@ -98,7 +99,15 @@ def category_search(username):
                                                         count=recipe_info[1], cuisines=recipe_info[2][0], 
                                                         courses=recipe_info[2][1], category=recipe_info[3], 
                                                         category_item=recipe_info[4])
-                                                        
+
+############### PUBLIC SEARCH ROUTES ##########################
+
+# ALL PUBLIC RECIPES #                                       
+@app.route('/my_recipme/<username>/all_public')
+def all_public(username):
+    if request.method == 'POST':
+        return
+
 ############### FULL RECIPE VIEW ##############################
 
 @app.route('/my_recipme/<username>/redirect', methods=['GET', 'POST'])
