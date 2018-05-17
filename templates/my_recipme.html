@@ -91,6 +91,7 @@
     </select>
 </form>
 <hr>
+<!-------------------------------------------------------------------------------------->
 <h3>View All Public RecipeMe's</h3>
 <form action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
     <button type='submit'>All Public RecipMe's</button> 
@@ -110,7 +111,7 @@
 </form>
 <h3>Choose RecipMe by Cuisine</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
-    {% for cuisine in cuisines %}
+    {% for cuisine in public_cuisines %}
         <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
     {% endfor %}
     <br>
@@ -131,7 +132,7 @@
 </form>
 <h3>Choose RecipeMe by Course</h3>
 <form action="{{ url_for('category_search', username=username)}}" method='POST'>
-    {% for course in courses %}
+    {% for course in public_courses %}
     <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
     {% endfor %}
     <br>

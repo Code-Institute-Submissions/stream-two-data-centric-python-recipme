@@ -60,8 +60,11 @@ def invalid_login():
 # USER MY RECIPME MAIN PAGE, POPULATE CUISINES #
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
-    recipe_info = view_var.ViewVariables(username).var_myrecipme()
-    return render_template('my_recipme.html', username=username, cuisines=recipe_info[0], courses=recipe_info[1])
+    my_recipe_info = view_var.ViewVariables(username).var_myrecipme()
+    public_recipe_info = view_var.ViewVariables(username).var_public_recipe()
+    print(public_recipe_info)
+    return render_template('my_recipme.html', username=username, cuisines=my_recipe_info[0], courses=my_recipe_info[1],
+                            public_cuisines=public_recipe_info[0], public_course=public_recipe_info[1])
 
 ################ SEARCH ROUTES #################################
 
@@ -169,6 +172,10 @@ def delete_recipe(username):
         QueryDeleteRecipe(request.form['RecipeId'],table).delete()
 
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
+
+
+###################### PUBLIC RECIPE VIEWS #############################
+########################################################################
 
 
 if __name__ == '__main__':

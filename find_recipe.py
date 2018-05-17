@@ -72,14 +72,17 @@ class Get():
     # print(saved_recipes)
         return saved_recipes
 
-    def get_all_column_group_for_user(self, column, user_id, table):
+    def get_all_column_group(self, column, value, table, for_user):
         column_query = QueryReadRecipes()
-        column = column_query.query_count_and_group_column(column, user_id['UserId'], table)
+        if for_user == True:
+            column = column_query.query_count_and_group_column(column, value, table)
+        else:
+            column = column_query.query_count_and_group_column_public(column, value, table)
         return column
 
-    def get_cuisine_and_course_count(self, user_id):
-        cuisines = Get.get_all_column_group_for_user(self, 'CuisineName', user_id, 'Cuisine')
-        courses = Get.get_all_column_group_for_user(self, 'CourseName', user_id, 'Course')
+    def get_cuisine_and_course_count(self, value, for_user):
+        cuisines = Get.get_all_column_group(self, 'CuisineName', value, 'Cuisine',for_user)
+        courses = Get.get_all_column_group(self, 'CourseName', value, 'Course', for_user)
         return cuisines, courses
 
 

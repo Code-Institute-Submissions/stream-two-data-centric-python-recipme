@@ -10,8 +10,17 @@ class ViewVariables():
 
 ## GET CATEGORY GROUPINGS OF COURSE AND CUISINE FOR MY_RECIPME PAGE ##
     def var_myrecipme(self):
-        user_id = find_recipe.Get().get_user_id(self.username)
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id)
+        user_id = find_recipe.Get().get_user_id(self.username)['UserId']
+        for_user = True
+        print(user_id)
+        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
+        return categories
+
+## GET PUBLIC RECIPE CATEGORY GROUPINGS s##
+    def var_public_recipe(self):
+        make_public = 1
+        for_user = False
+        categories = find_recipe.Get().get_cuisine_and_course_count(make_public, for_user)
         return categories
 
 ## RETURN ALL RECIPES FOR GIVEN USER, COUNT AND CATEGORIES AGAIN ##
@@ -20,7 +29,8 @@ class ViewVariables():
         result = find_recipe.Get().get_mini_user_recipes(self.username, 'User.UserId', order_by, direction)        
         recipes = find_recipe.Get().date_time_converter(result)
         count = len(recipes)
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id)
+        for_user = True
+        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
         return recipes, count, categories
 
 ## RETURN ALL RECIPES FOR GIVEN INGREDIENT SEARCH ##
@@ -35,7 +45,8 @@ class ViewVariables():
         else:
             recipes = find_recipe.Get().date_time_converter(result)
             count = len(recipes)
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id)
+        for_user = True
+        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
         return recipes, count, categories
 
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY ##
@@ -49,7 +60,8 @@ class ViewVariables():
                                                         order_by, direction)
         recipes = find_recipe.Get().date_time_converter(results)
         count = len((recipes))
-        categories = find_recipe.Get().get_cuisine_and_course_count(user_id)
+        for_user = True
+        categories = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
        
         return recipes, count, categories, form[column[0]], column[0]
 
@@ -62,6 +74,8 @@ class ViewVariables():
         ingredients = find_recipe.Get().get_ingredients_for_full_recipe(recipe_id)
         method = find_recipe.Get().get_method_for_full_recipe(recipe_id)
         return username, recipe, ingredients, method
+
+
 
     
         

@@ -211,11 +211,11 @@ class QueryReadRecipes():
     def query_count_and_group_column(self, column, user_id, table):
         """ QUERY THE COUNT OF A SPECIFIC COLUMN AND GROUP BY THAT COLUMN """
         """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
-        try:
+        try: 
             with Db() as cursor:
-                recipes_query = """ SELECT COUNT(%s) as Total,%s,Recipe.UserId
+                recipes_query = """ SELECT COUNT(%s) as Total,%s
                                     FROM %s
-                                    JOIN Recipe on %s.RecipeId = Recipe.RecipeId
+                                    JOIN Recipe on Recipe.RecipeId = %s.RecipeId
                                     WHERE UserId = %s 
                                     GROUP BY %s;""" % (column, column, table, 
                                                         table, user_id, column)
@@ -225,3 +225,17 @@ class QueryReadRecipes():
         finally:
             print("Query count Column based on UserId Completed")
  
+    def query_count_and_group_column_public(self, column, value, table):
+        try: 
+            with Db() as cursor:
+                recipes_query = """ SELECT COUNT(%s) as Total, %s
+                                    FROM Recipe
+                                    JOIN %s on Recipe.RecipeId = %s.RecipeId
+                                    WHERE MakePublic = %s 
+                                    GROUP BY %s;""" % (column, column, table, 
+                                                        table, value, column)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        finally:
+            print("Query count Column based on UserId Completed")
