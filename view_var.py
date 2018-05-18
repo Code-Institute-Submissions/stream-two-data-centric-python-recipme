@@ -75,8 +75,11 @@ class ViewVariables():
         recipe = find_recipe.Get().date_time_converter(result)
         ingredients = find_recipe.Get().get_ingredients_for_full_recipe(recipe_id)
         method = find_recipe.Get().get_method_for_full_recipe(recipe_id)
+        user_id = find_recipe.Get().get_user_id(username[0]['Username'])['UserId']
+        print(username[0]['Username'])
+        is_saved = find_recipe.Get().get_is_recipe_saved(user_id, recipe_id)
 
-        return username, recipe, ingredients, method
+        return username, recipe, ingredients, method, is_saved
 
 
 ## RETURN ALL PUBLIC RECIPES ##
@@ -89,5 +92,3 @@ class ViewVariables():
 
         return recipes, count, groupings
     
-        
-

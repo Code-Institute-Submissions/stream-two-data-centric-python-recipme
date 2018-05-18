@@ -195,7 +195,7 @@ class QueryReadRecipes():
             print("Query get method completed")
     
     def query_users_saved_recipes(self, user_id, order_by, direction):
-        """ QUERY USERS SAVED RECIPES BASED ON USER ID """
+        """ QUERY USERS SAVED RECIPES BASED ON USER ID, GET MINI RECIPES INFO BACK """
         try:
             with Db() as cursor:
                 new_query = Query()
@@ -206,7 +206,20 @@ class QueryReadRecipes():
                 recipes = [row for row in cursor]
                 return recipes
         finally:
-            print("Query get method completed")    
+            print("Query get method completed")
+
+    def query_is_recipe_saved(self, user_id, recipe_id):
+        """ QUERY IF A USER HAS SAVED A RECIPE """
+        try:
+            with Db() as cursor:
+                recipes_query = """ SELECT * FROM SavedRecipes 
+                                    WHERE UserId = %s 
+                                    AND RecipeId = %s """ % (user_id, recipe_id)
+                cursor.execute(recipes_query)
+                recipes = [row for row in cursor]
+                return recipes
+        finally:
+            print("Query is Recipe Saved Complete")
     
     def query_count_and_group_column(self, column, user_id, table):
         """ QUERY THE COUNT OF A SPECIFIC COLUMN AND GROUP BY THAT COLUMN """

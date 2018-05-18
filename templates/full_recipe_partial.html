@@ -46,12 +46,23 @@
     <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>
 </form>
 {% else %}
+<br>
+{% if full_recipe[4] == False %}
 <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-    <label>Save Recipe</label>
+    <label>Save this Recipe?</label>
     <br>
     <br>
-    <input type='radio' name='Saved' value='1'> Yes
-    <input type='radio' name='Saved' value='0' checked> No
+    <input type='radio' name='Saved' value='1'> Save
+    <br>
+    <br>
+    <input type='submit' value='submit'>
+</form>
+{% elif full_recipe[4] == True %}
+<form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
+    <label>Remove this Recipe?</label>
+    <br>
+    <br>
+    <input type='radio' name='Saved' value='0'> Un-save
     <br>
     <br>
     <input type='submit' value='submit'>
@@ -75,7 +86,7 @@
     <input type='submit' value='Submit'>
 </form>
 <form></form>
-
+{% endif %}
 {% endif %}
 
 {% endblock%}

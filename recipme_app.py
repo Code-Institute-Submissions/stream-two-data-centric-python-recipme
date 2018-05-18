@@ -156,7 +156,7 @@ def full_redirect(username):
 @app.route('/my_recipme/<username>/<recipe_id>')
 def full_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-    #print(full_recipe)
+    print(full_recipe[4])
     return render_template('full_recipe_partial.html', username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
