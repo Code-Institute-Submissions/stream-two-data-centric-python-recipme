@@ -1,5 +1,6 @@
 import find_recipe
 import write_recipe
+from db_update_delete import QueryDeleteRecipe
 
 ############## CLASS TO RETURN VARIABLES FOR VIEW FUNCTIONS, CALLED FROM WITHIN VIEW FUNCTIONS ##################
 
@@ -92,3 +93,13 @@ class ViewVariables():
 
         return recipes, count, groupings
     
+class ViewFunc():
+
+    def save_or_unsave_recipe(self, saved, username, recipe_id):
+        user_id = find_recipe.Get().get_user_id(username)['UserId']
+        if saved == 1:
+            write_recipe.Create().write_saved_recipe(user_id, recipe_id)
+        elif saved == 0:
+            QueryDeleteRecipe(recipe_id, 'SavedRecipes').delete_saved_recipe(user_id)
+
+        return True

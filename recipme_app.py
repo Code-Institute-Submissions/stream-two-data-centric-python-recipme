@@ -3,7 +3,7 @@ import db_create
 import write_recipe
 import find_recipe
 import user_login
-from view_var import ViewVariables
+from view_var import ViewVariables, ViewFunc
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
@@ -149,14 +149,13 @@ def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
         full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-        #title = full_recipe[1][0]['RecipeTitle']
-        
+   
         return redirect('/my_recipme/%s/%s'% (username, recipe_id))
 
 @app.route('/my_recipme/<username>/<recipe_id>')
 def full_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-    print(full_recipe[4])
+
     return render_template('full_recipe_partial.html', username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
@@ -221,11 +220,8 @@ def delete_recipe(username):
 @app.route('/my_recipme/<username>/save_recipe/<recipe_id>', methods=['GET','POST'])
 def save_recipe(username, recipe_id):
     if request.method == 'POST':
-        save = int(request.form['Saved'])
-       
-        if save == 1:
-            write_recipe.Create().write_saved_recipe(username, recipe_id)
-            print(save)
+        saved = int(request.form['Saved'])
+        ViewFunc().save_or_unsave_recipe(saved, username, recipe_id)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
 

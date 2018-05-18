@@ -16,14 +16,12 @@ class Get():
 
     def get_user_id(self, username):
         """ GET USER ID FROM USERNAME """
-        #new_read_query = QueryReadRecipes()
         user = QueryReadRecipes().query_user_id(username)
         user_id = user[0]
         return user_id
         
     def get_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET MINI RECIPES BY RECIPE ID OR PUBLIC """ 
-        #query_recipe = QueryReadRecipes()
         recipe = QueryReadRecipes().query_all_mini_recipes(search_by, search_value, order_by, direction)
         #print(recipe)
         return recipe
@@ -31,7 +29,6 @@ class Get():
     def get_mini_user_recipes(self, user_values, search_by, order_by, direction):
         """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
         user_id = Get.get_user_id(self, user_values)
-        #query_recipe = QueryReadRecipes()
         recipe = QueryReadRecipes().query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
         #print(user_id)
         return recipe
@@ -39,35 +36,30 @@ class Get():
 
     def get_ingredients_for_full_recipe(self, recipe_id):
         """ GETS ALL THE INGREDIENTS FOR DISPLAY ON THE FULL RECIPE PAGE"""
-        #query_recipe = QueryReadRecipes()
         ingredients = QueryReadRecipes().query_ingredients_for_full_recipe(recipe_id)
         #print(ingredients)
         return ingredients
 
     def get_method_for_full_recipe(self, recipe_id):
         """ GETS THE METHOD FOR DISPLAY ON THE FULL RECIPE PAGE """
-        #query_recipe = QueryReadRecipes()
         method = QueryReadRecipes().query_method_for_full_recipe(recipe_id)
         #print(method)
         return method
 
     def get_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
         """ GETS A FILTERED SET OF RECIPES SET BY CUISINE AND COURSE """
-        #query_recipe = QueryReadRecipes()
         category_recipes = QueryReadRecipes().query_category_mini_recipes(table, search_by, search_value, column, category, order_by, direction)
         #print(category_recipes)
         return category_recipes
 
     def get_recipes_by_ingredient(self, search_by, search_value, ingredient, order_by, direction):
         """ GETS A SET OF RECIPES FILTERED BY AN INGREDIENTS SEARCH """
-        #query_recipe = QueryReadRecipes()
         search_recipe = QueryReadRecipes().query_search_ingredient(search_by, search_value, ingredient, order_by, direction)
         #print(search_recipe)
         return search_recipe
 
     def get_saved_recipes_for_user(self, user_id, order_by, direction):
         """ GET ALL THE SAVED RECIPES FOR A GIVEN USER """
-        #query_recipe = QueryReadRecipes()
         saved_recipes = QueryReadRecipes().query_users_saved_recipes(user_id, order_by, direction)
     # print(saved_recipes)
         return saved_recipes

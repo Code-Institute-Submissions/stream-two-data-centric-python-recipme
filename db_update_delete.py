@@ -18,6 +18,15 @@ class QueryDeleteRecipe():
                                 """ % (self.table, self.recipe_id))
         finally:
             print("Query Delete Recipe Completed")
+    
+    def delete_saved_recipe(self, user_id):
+        try:
+            with Db(commit=True) as cursor:
+                cursor.execute(""" DELETE FROM %s
+                                    WHERE UserId = %s
+                                    AND RecipeId = %s;""" % (self.table, user_id, self.recipe_id))
+        finally:
+            print("Query Delete Saved Recipe from Saved Completed")
 
 ###################### CLASS FOR SQL UPDATE QUERIES, INCLUDING RECIPE TABLE,##################
 ####################### AND RE-USABLE SINGEL COLUMN QUERY FOR STATS ##########################

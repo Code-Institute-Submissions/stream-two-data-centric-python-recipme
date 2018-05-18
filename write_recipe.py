@@ -71,8 +71,7 @@ class Create():
 
         return True
 
-    def write_saved_recipe(self, username, recipe_id):
-         user_id = find_recipe.Get().get_user_id(username)['UserId']
+    def write_saved_recipe(self, user_id, recipe_id):
          db_create.QuerySaveRecipe(user_id, recipe_id).save_recipe()
 
          return True

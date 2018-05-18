@@ -52,19 +52,14 @@ class TestRecipme(unittest.TestCase):
         self.assertEqual(type(recipe), list)
         self.assertEqual(result, 'Poached Eggs with Asparagus')
 
-    def test_get_saved_recipes_for_user(self):
-        user_id = 11
-        direction = 'ASC'
-        order_by = 'Calories'
+    def test_is_recipe_saved(self):
+        user_id = 1
+        recipe_id = 1111
+    
+        recipe = find_recipe.Get().get_is_recipe_saved(user_id, recipe_id)
 
-        recipe = find_recipe.Get().get_saved_recipes_for_user(user_id, order_by, direction)
-        author = recipe[0]['Author']
-
-        # TESTS TO SEE THAT RETURNED USERNAME IS THE ORIGINAL AUTHOR, NOT THE
-        # USERNAME FROM GIVEN ID
-
-        self.assertEqual(type(recipe), list)
-        self.assertEqual(author, 'fulph')
+        self.assertEqual(recipe, True)
+        
 
     ############################ LOGIN/SIGNUP TESTS ##################################
 
