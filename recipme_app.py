@@ -156,7 +156,7 @@ def full_redirect(username):
 @app.route('/my_recipme/<username>/<recipe_id>')
 def full_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-    print(full_recipe)
+    #print(full_recipe)
     return render_template('full_recipe_partial.html', username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
@@ -217,12 +217,15 @@ def delete_recipe(username):
 
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
 
-
+############# SAVED RECIPE ROUTE ############################
 @app.route('/my_recipme/<username>/save_recipe/<recipe_id>', methods=['GET','POST'])
 def save_recipe(username, recipe_id):
     if request.method == 'POST':
-        print(request.form)
-
+        save = int(request.form['Saved'])
+       
+        if save == 1:
+            write_recipe.Create().write_saved_recipe(username, recipe_id)
+            print(save)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
 

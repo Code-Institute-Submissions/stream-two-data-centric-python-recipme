@@ -40,7 +40,7 @@ class CreateQuery():
     method_query = """ INSERT INTO Method (`StepNumber`, `StepDescription`, `RecipeId`)
                     VALUES (%s, %s, %s); """
 
-    def single_column_query(self, table, column, column_value, recipe_id):
+    def two_column_query(self, table, column, column_value, recipe_id):
         query = """ INSERT INTO %s (`%s`, `RecipeId`)
                     VALUES ('%s', %s); """ % (table, column, column_value, recipe_id)
         return query
@@ -76,15 +76,15 @@ class QueryCreateRecipe():
             return recipe_primary_key
            
     def create_stats(self, recipe_primary_key):
-        stat_queries = [[CreateQuery.single_column_query(self,'Cuisine','CuisineName', 
+        stat_queries = [[CreateQuery.two_column_query(self,'Cuisine','CuisineName', 
                                                         self.cuisine_name, recipe_primary_key)],
-                        [CreateQuery.single_column_query(self,'Course','CourseName', 
+                        [CreateQuery.two_column_query(self,'Course','CourseName', 
                                                         self.course_name, recipe_primary_key)],
-                        [CreateQuery.single_column_query(self,'Health','Calories', 
+                        [CreateQuery.two_column_query(self,'Health','Calories', 
                                                         self.calories, recipe_primary_key)],
-                        [CreateQuery.single_column_query(self,'Cost','Price', 
+                        [CreateQuery.two_column_query(self,'Cost','Price', 
                                                         self.cost, recipe_primary_key)],
-                        [CreateQuery.single_column_query(self,'Servings','Servings', 
+                        [CreateQuery.two_column_query(self,'Servings','Servings', 
                                                         self.servings, recipe_primary_key)]]
         try:
             with Db(commit=True) as cursor:
@@ -117,10 +117,12 @@ class QuerySaveRecipe():
         self.recipe_id = recipe_id
 
     def save_recipe(self):
+        save_recipe = CreateQuery.two_column_query(self,'SavedRecipes','UserId', 
+                                                        self.user_id, self.recipe_id)
         try:
             with Db(commit=True) as cursor:
-                print(self.user_id)
-                print(self.recipe_id)
+                cursor.execute(save_recipe)
+                print(save_recipe)
         finally:
             print("Query create recipe completed")
         

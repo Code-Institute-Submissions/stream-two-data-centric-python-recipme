@@ -1,5 +1,6 @@
 import os
 import db_create
+import find_recipe
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 
@@ -69,6 +70,12 @@ class Create():
         Create.write_ingredients_and_method(self, prep[0], prep[1])
 
         return True
+
+    def write_saved_recipe(self, username, recipe_id):
+         user_id = find_recipe.Get().get_user_id(username)['UserId']
+         db_create.QuerySaveRecipe(user_id, recipe_id).save_recipe()
+
+         return True
 
 ###################### CLASS FOR UPDATING FIELDS #############################
 
