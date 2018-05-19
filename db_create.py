@@ -40,6 +40,9 @@ class CreateQuery():
     method_query = """ INSERT INTO Method (`StepNumber`, `StepDescription`, `RecipeId`)
                     VALUES (%s, %s, %s); """
 
+    rate_query = """ INSERT INTO Rating (`Rating`, `Comments`, `RecipeId`, `UserId`)
+                    VALUES (%s, %s, %s, %s); """
+
     def two_column_query(self, table, column, column_value, recipe_id):
         query = """ INSERT INTO %s (`%s`, `RecipeId`)
                     VALUES ('%s', %s); """ % (table, column, column_value, recipe_id)
@@ -125,5 +128,24 @@ class QuerySaveRecipe():
                 print(save_recipe)
         finally:
             print("Query create recipe completed")
+
+class QueryRateRecipe(QuerySaveRecipe):
+    
+    def __init__(self,rating, comments, recipe_id, user_id):
+        super().__init__(user_id, recipe_id)
+        self.rating = rating
+        self.comments = comments
+        
+
+    def rate_recipe(self):
+        rating = (self.rating, self.comments, self.recipe_id, self.user_id)
+        
+        try:
+            with Db(commit=True) as cursor:
+                cursor.execute(CreateQuery.rate_query, rating)
+                print(rating)
+        finally:
+            print("Query create recipe completed")
+        
         
         

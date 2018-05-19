@@ -135,7 +135,7 @@ def ingredient_search_public(username):
         ingredient = request.form['Ingredient']
         """ VALUE OF 1 IN SEARCH FUNCTION REPRESENTS MAKE PUBLIC VALUE OF 'YES' IN DB """
         recipe_info = ViewVariables(username).var_ing_search(request.form, 'MakePublic', 1, ingredient)
-        print('here')
+        #print('here')
         
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
@@ -221,9 +221,18 @@ def delete_recipe(username):
 def save_recipe(username, recipe_id):
     if request.method == 'POST':
         saved = int(request.form['Saved'])
-        ViewFunc().save_or_unsave_recipe(saved, username, recipe_id)
+        ViewFunc().save_or_unsave_recipe(saved, username, int(recipe_id))
         return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
+
+########### RATE RECIPE ROUTE ##############################
+
+@app.route('/my_recipme/<username>/rate/<recipe_id>', methods=['GET', 'POST'])
+def rate_recipe(username, recipe_id):
+    if request.method == 'POST':
+        rating = request.form
+        ViewFunc().rate_recipe(rating, int(recipe_id), username)
+        return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)

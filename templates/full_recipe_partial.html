@@ -69,20 +69,20 @@
 </form>
 <br>
 {% endif %}
-<form>
+<form action=" {{ url_for('rate_recipe', username=username, recipe_id=recipe_id ) }}" method='POST'>
     <fieldset>
         <label>Leave a comment</label>
         <br>
-        <textarea placeholder='Comments' name='Comments' maxlength='250' required></textarea>
+        <textarea type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
     </fieldset>
     <fieldset>
         <label>Rate this RecipMe.</label>
         <br>
-        <input type='checkbox' value='1'>1
-        <input type='checkbox' value='2'>2
-        <input type='checkbox' value='3'>3
-        <input type='checkbox' value='4'>4
-        <input type='checkbox' value='5' checked>5
+        <input type='radio' value='1' name='Rating'>1
+        <input type='radio' value='2' name='Rating'>2
+        <input type='radio' value='3' name='Rating'>3
+        <input type='radio' value='4' name='Rating'>4
+        <input type='radio' value='5' name='Rating' checked>5
     </fieldset>
     <input type='submit' value='Submit'>
 </form>

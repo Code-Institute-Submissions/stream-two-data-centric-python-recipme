@@ -50,7 +50,7 @@ class ViewVariables():
             recipes = find_recipe.Get().date_time_converter(result)
             count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
-        print(search_by)
+
         return recipes, count, groupings
 
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
@@ -77,7 +77,6 @@ class ViewVariables():
         ingredients = find_recipe.Get().get_ingredients_for_full_recipe(recipe_id)
         method = find_recipe.Get().get_method_for_full_recipe(recipe_id)
         user_id = find_recipe.Get().get_user_id(username[0]['Username'])['UserId']
-        print(username[0]['Username'])
         is_saved = find_recipe.Get().get_is_recipe_saved(user_id, recipe_id)
 
         return username, recipe, ingredients, method, is_saved
@@ -93,7 +92,11 @@ class ViewVariables():
 
         return recipes, count, groupings
     
+################## CLASS HOLDING FUNCTIONS CALLED FROM VIEWS THAT DON'T RETURN VARIABLES ################
+
 class ViewFunc():
+
+## SAVE OR DELETE RECIPE FROM SAVED RECIPE TABLE ##
 
     def save_or_unsave_recipe(self, saved, username, recipe_id):
         user_id = find_recipe.Get().get_user_id(username)['UserId']
@@ -102,4 +105,13 @@ class ViewFunc():
         elif saved == 0:
             QueryDeleteRecipe(recipe_id, 'SavedRecipes').delete_saved_recipe(user_id)
 
+        return True
+
+## WRITE RECIPE RATING AND COMMENTS TO RATINGS TABLE ##
+     
+    def rate_recipe(self, form, recipe_id, username):
+        rating, comments = form['Rating'], form['Comments']
+        user_id = user_id = find_recipe.Get().get_user_id(username)['UserId']
+        write_recipe.Create().write_rating(rating, comments, recipe_id, user_id)
+        
         return True
