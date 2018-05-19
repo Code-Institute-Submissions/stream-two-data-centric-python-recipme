@@ -100,7 +100,7 @@ class ViewVariables():
         groupings = ViewVariables(self.username).groupings()
         ### INSERT RECIPE AUTHOR INTO RECIPE DICT ##
         for recipe in recipes:
-            author = QueryReadRecipes().query_username(int(recipe['UserId']))
+            author = Get().get_username(int(recipe['UserId']))
             recipe['Author'] = author[0]['Username']
         return recipes, count, groupings
         

@@ -15,7 +15,7 @@ class Get():
 
     def get_user_id(self, username):
         """ GET USER ID FROM USERNAME """
-        user = QueryReadRecipes().query_user_id(username)
+        user = QueryReadRecipes().query_username_or_id('UserId', 'Username', username)
         user_id = user[0]
         return user_id
         
@@ -91,7 +91,7 @@ class Get():
 
     def get_rating_and_comments(self, recipe_id):
         all_rating = QueryRating(recipe_id).query_rating_and_comments()
-        print(all_rating)
+        #print(all_rating)
         return all_rating
   
     def get_average_rating(self, all_rating):
@@ -104,6 +104,11 @@ class Get():
             average = {'Average': 0}
     
         return average
+
+    def get_username(self, user_id):
+        username = QueryReadRecipes().query_username_or_id('Username', 'UserId', user_id)
+        
+        return username
 """
     def get_search_rating_averages(self, results):
         ratings = [] 

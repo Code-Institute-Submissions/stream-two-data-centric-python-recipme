@@ -83,24 +83,24 @@ class QueryCategory(Query):
 ########################### CLASS TO EXECUTE READ QUERIES ###############################
 
 class QueryReadRecipes():
-
+"""
     def query_user_id(self, username):
-        """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
+        QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS
         try:
             with Db() as cursor:
-                get_id_query = """SELECT UserId FROM User
-                                    WHERE Username = '%s';""" % (username)                  
+                get_id_query = SELECT UserId FROM User
+                                    WHERE Username = '%s'; % (username)                  
                 cursor.execute(get_id_query)
                 user_id = [row for row in cursor]
                 return(user_id)
         finally:
             print("Query read user completed")
-
-    def query_username(self, user_id):
+"""
+    def query_username_or_id(self, select_column, search_column, value):
         try:
             with Db() as cursor:
-                get_id_query = """SELECT Username FROM User
-                                    WHERE UserId = '%s';""" % (user_id)                  
+                get_id_query = """SELECT %s FROM User
+                                    WHERE %s = '%s';""" % (select_column, search_column, value)                  
                 cursor.execute(get_id_query)
                 username = [row for row in cursor]
                 return(username)
