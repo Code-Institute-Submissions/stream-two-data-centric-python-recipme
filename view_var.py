@@ -2,6 +2,7 @@
 import write_recipe
 from find_recipe import Get
 from db_update_delete import QueryDeleteRecipe
+from db_read import QueryReadRecipes
 
 ############## CLASS TO RETURN VARIABLES FOR VIEW FUNCTIONS, CALLED FROM WITHIN VIEW FUNCTIONS ##################
 
@@ -96,9 +97,14 @@ class ViewVariables():
         result = Get().get_saved_recipes_for_user(user_id, order_by, direction)
         recipes = Get().date_time_converter(result)
         count = len(recipes)
-        groupings = ViewVariables(self.username).groupings()
 
-        return recipes, count, groupings
+        groupings = ViewVariables(self.username).groupings()
+        authors = []
+        for recipe in recipes:
+            author = QueryReadRecipes().query_username(int(recipe['UserId']))
+            authors.append(author)
+
+        return recipes, count, groupings, authors
         
 ################## CLASS HOLDING FUNCTIONS CALLED FROM VIEWS THAT DON'T RETURN VARIABLES ################
 

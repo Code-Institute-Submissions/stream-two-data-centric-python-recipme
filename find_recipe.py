@@ -25,9 +25,9 @@ class Get():
         #print(recipe)
         return recipe
 
-    def get_mini_user_recipes(self, user_values, search_by, order_by, direction):
+    def get_mini_user_recipes(self, username, search_by, order_by, direction):
         """ GET MINI RECIPES FOR DISPLAY ON USERS OWN FEED ONLY """
-        user_id = Get.get_user_id(self, user_values)
+        user_id = Get.get_user_id(self, username)
         recipe = QueryReadRecipes().query_all_mini_recipes(search_by, user_id['UserId'], order_by, direction)
         #print(user_id)
         return recipe

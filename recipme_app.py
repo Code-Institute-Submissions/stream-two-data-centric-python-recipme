@@ -111,6 +111,7 @@ def saved_search(username):
         order_by, direction = request.form['SortBy'], request.form['Direction']
         user_id = find_recipe.Get().get_user_id(username)['UserId']
         recipe_info = ViewVariables(username).var_saved_recipes(user_id, order_by, direction)
+        #result = find_recipe.Get().get_saved_recipes_for_user(user_id, order_by, direction)
         print(recipe_info)
                             
     return render_template('saved_recipe.html', username=username,
