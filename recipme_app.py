@@ -155,7 +155,7 @@ def full_redirect(username):
 @app.route('/my_recipme/<username>/<recipe_id>')
 def full_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-
+    
     return render_template('full_recipe_partial.html', username=username, 
                                                         full_recipe=full_recipe, recipe_id=recipe_id)
 
@@ -221,7 +221,7 @@ def delete_recipe(username):
 def save_recipe(username, recipe_id):
     if request.method == 'POST':
         saved = int(request.form['Saved'])
-        ViewFunc().save_or_unsave_recipe(saved, username, int(recipe_id))
+        ViewFunc().save_or_unsave_recipe(saved, username, recipe_id)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
 
@@ -231,7 +231,7 @@ def save_recipe(username, recipe_id):
 def rate_recipe(username, recipe_id):
     if request.method == 'POST':
         rating = request.form
-        ViewFunc().rate_recipe(rating, int(recipe_id), username)
+        ViewFunc().rate_recipe(rating, recipe_id, username)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
 if __name__ == '__main__':

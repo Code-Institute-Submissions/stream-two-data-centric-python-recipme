@@ -1,9 +1,8 @@
 import os
 import pymysql
-import db_read
 import write_recipe
 import datetime
-from db_read import QueryReadRecipes
+from db_read import QueryReadRecipes, QueryRating
 
 ############# CLASSES WITH LOGIC TO RETRIEVE DATA FROM THE DB #################
 
@@ -61,7 +60,7 @@ class Get():
     def get_saved_recipes_for_user(self, user_id, order_by, direction):
         """ GET ALL THE SAVED RECIPES FOR A GIVEN USER """
         saved_recipes = QueryReadRecipes().query_users_saved_recipes(user_id, order_by, direction)
-    # print(saved_recipes)
+    #   print(saved_recipes)
         return saved_recipes
 
     def get_is_recipe_saved(self, user_id, recipe_id):
@@ -74,7 +73,7 @@ class Get():
             return False
         
     def get_all_column_group(self, column, value, table, for_user):
-        column_query = QueryReadRecipes()
+        #column_query = QueryReadRecipes()
         if for_user == True:
             column = QueryReadRecipes().query_count_and_group_column(column, value, table)
         else:
@@ -86,5 +85,9 @@ class Get():
         courses = Get.get_all_column_group(self, 'CourseName', value, 'Course', for_user)
         return cuisines, courses
 
+    def get_rating_and_comments(self, recipe_id):
+        rating = QueryRating(recipe_id).query_rating_and_comments()
+
+        return rating
 
 

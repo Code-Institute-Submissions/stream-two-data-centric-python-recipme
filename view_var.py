@@ -1,5 +1,6 @@
-import find_recipe
+#import find_recipe
 import write_recipe
+from find_recipe import Get
 from db_update_delete import QueryDeleteRecipe
 
 ############## CLASS TO RETURN VARIABLES FOR VIEW FUNCTIONS, CALLED FROM WITHIN VIEW FUNCTIONS ##################
@@ -13,13 +14,13 @@ class ViewVariables():
     def public_recipe_groupings(self):
         make_public = 1
         for_user = False
-        public = find_recipe.Get().get_cuisine_and_course_count(make_public, for_user)
+        public = Get().get_cuisine_and_course_count(make_public, for_user)
         return public
 
     def user_recipe_groupings(self):
-        user_id = find_recipe.Get().get_user_id(self.username)['UserId']
+        user_id = Get().get_user_id(self.username)['UserId']
         for_user = True
-        user = find_recipe.Get().get_cuisine_and_course_count(user_id, for_user)
+        user = Get().get_cuisine_and_course_count(user_id, for_user)
         return user
         
 ## GET CATEGORY GROUPINGS OF COURSE AND CUISINE FOR MY_RECIPME PAGE ##
@@ -30,8 +31,8 @@ class ViewVariables():
 
 ## RETURN ALL RECIPES FOR GIVEN USER, COUNT AND CATEGORIES AGAIN ##
     def var_all_myrecipme(self, order_by, direction):
-        result = find_recipe.Get().get_mini_user_recipes(self.username, 'User.UserId', order_by, direction)        
-        recipes = find_recipe.Get().date_time_converter(result)
+        result = Get().get_mini_user_recipes(self.username, 'User.UserId', order_by, direction)        
+        recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
 
@@ -42,12 +43,12 @@ class ViewVariables():
         recipes = []
         count = 0
         order_by, direction = form['SortBy'], form['Direction']
-        result = find_recipe.Get().get_recipes_by_ingredient(search_by, search_value, 
+        result = Get().get_recipes_by_ingredient(search_by, search_value, 
                                                         ingredient, order_by, direction)
         if result == []:
             count = 0
         else:
-            recipes = find_recipe.Get().date_time_converter(result)
+            recipes = Get().date_time_converter(result)
             count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
 
@@ -56,13 +57,13 @@ class ViewVariables():
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
     def var_cat_search(self, form, search_by, search_value):
         order_by, direction = form['SortBy'], form['Direction']
-        #user_id = find_recipe.Get().get_user_id(self.username)['UserId']
+        #user_id = Get().get_user_id(self.username)['UserId']
         column = [key for key in form]
         column_name = column[0] + 'Name'
-        results = find_recipe.Get().get_category_mini_recipes(column[0], search_by, search_value, 
+        results = Get().get_category_mini_recipes(column[0], search_by, search_value, 
                                                         column_name, form[column[0]], 
                                                         order_by, direction)
-        recipes = find_recipe.Get().date_time_converter(results)
+        recipes = Get().date_time_converter(results)
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
 
@@ -71,22 +72,21 @@ class ViewVariables():
 ## RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ##
     def var_full_recipe(self, recipe_id):
         username = [{'Username':self.username}]
-        result = find_recipe.Get().get_all_mini_recipes('Recipe.RecipeId', recipe_id, 
+        result = Get().get_all_mini_recipes('Recipe.RecipeId', recipe_id, 
                                                        'RecipeTitle', 'asc')
-        recipe = find_recipe.Get().date_time_converter(result)
-        ingredients = find_recipe.Get().get_ingredients_for_full_recipe(recipe_id)
-        method = find_recipe.Get().get_method_for_full_recipe(recipe_id)
-        user_id = find_recipe.Get().get_user_id(username[0]['Username'])['UserId']
-        is_saved = find_recipe.Get().get_is_recipe_saved(user_id, recipe_id)
+        recipe = Get().date_time_converter(result)
+        ingredients = Get().get_ingredients_for_full_recipe(recipe_id)
+        method = Get().get_method_for_full_recipe(recipe_id)
+        user_id = Get().get_user_id(username[0]['Username'])['UserId']
+        is_saved = Get().get_is_recipe_saved(user_id, recipe_id)
+        rating = Get().get_rating_and_comments(recipe_id)
 
-        return username, recipe, ingredients, method, is_saved
-
+        return username, recipe, ingredients, method, is_saved, rating
 
 ## RETURN ALL PUBLIC RECIPES ##
-
     def var_all_public(self, order_by, direction):
-        result = find_recipe.Get().get_all_mini_recipes('MakePublic', 1, order_by, direction)
-        recipes = find_recipe.Get().date_time_converter(result)
+        result = Get().get_all_mini_recipes('MakePublic', 1, order_by, direction)
+        recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
 
@@ -97,9 +97,8 @@ class ViewVariables():
 class ViewFunc():
 
 ## SAVE OR DELETE RECIPE FROM SAVED RECIPE TABLE ##
-
     def save_or_unsave_recipe(self, saved, username, recipe_id):
-        user_id = find_recipe.Get().get_user_id(username)['UserId']
+        user_id = Get().get_user_id(username)['UserId']
         if saved == 1:
             write_recipe.Create().write_saved_recipe(user_id, recipe_id)
         elif saved == 0:
@@ -107,11 +106,10 @@ class ViewFunc():
 
         return True
 
-## WRITE RECIPE RATING AND COMMENTS TO RATINGS TABLE ##
-     
+## WRITE RECIPE RATING AND COMMENTS TO RATINGS TABLE ##    
     def rate_recipe(self, form, recipe_id, username):
         rating, comments = form['Rating'], form['Comments']
-        user_id = user_id = find_recipe.Get().get_user_id(username)['UserId']
+        user_id = user_id = Get().get_user_id(username)['UserId']
         write_recipe.Create().write_rating(rating, comments, recipe_id, user_id)
         
         return True

@@ -3,25 +3,6 @@ from db import Db
 
 #################### CLASSES FOR READING THE MYSQL DB #########################
 
-################### CLASS FOR USER VERIFICATION BASED ON USER #################
-
-class UserVerify():
-    
-    def __init__(self, user_values):
-        self.username = user_values['Username']
-        self.password = user_values['Password']
-      
-    def query_user(self):
-        """ GET USER BASED ON USER INFO """
-        try: 
-            with Db() as cursor:
-                query = """SELECT `Username`,`First`,`Last`,`Password`, `UserId` FROM User
-                            WHERE Username = %s;"""
-                cursor.execute(query, (self.username))
-                from_db = [result for result in cursor]
-                return from_db
-        finally:
-            print("Query Username and Password completed")
 
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
     ## USED FOR USER ALL RECIPES SELECTION, INGREDIENT SEARCH AND SAVED RECIPES ##
@@ -74,8 +55,9 @@ class Query():
                                         """
         return saved_recipes
 
-########################## CLASS FOR COURSE OR CUISINE CATEGORY SEARCH TABLE SELECTIONS ################################
-                            ## RE-USABLE FUNCTIONS BASED ON CATEGORY SELECTION ##
+
+########################## CLASS FOR COURSE OR CUISINE CATEGORY SEARCH  ################################
+                        ## RE-USABLE FUNCTIONS BASED ON CATEGORY SELECTION ##
 
 class QueryCategory(Query):
     """ QUERIES FOR CUISINE OR COURSE CATEGORY """
@@ -96,7 +78,7 @@ class QueryCategory(Query):
                                         """ % (self.table, self.join_table, self.table, self.join_table,
                                                 self.table, self.table, self.table, self.table)
         return search_category
-    
+
 ########################### CLASS TO EXECUTE READ QUERIES ###############################
 
 class QueryReadRecipes():
@@ -252,3 +234,45 @@ class QueryReadRecipes():
                 return recipes
         finally:
             print("Query count Column based on UserId Completed")
+
+
+################### CLASS FOR USER VERIFICATION BASED ON USER #################
+
+class UserVerify():
+    
+    def __init__(self, user_values):
+        self.username = user_values['Username']
+        self.password = user_values['Password']
+      
+    def query_user(self):
+        """ GET USER BASED ON USER INFO """
+        try: 
+            with Db() as cursor:
+                query = """SELECT `Username`,`First`,`Last`,`Password`, `UserId` FROM User
+                            WHERE Username = %s;"""
+                cursor.execute(query, (self.username))
+                from_db = [result for result in cursor]
+                return from_db
+        finally:
+            print('Query User Complete')
+
+
+######################## CLASS TO QUERY RATINGS TABLE ###################################################
+
+class QueryRating():
+
+    def __init__(self, recipe_id):
+        self.recipe_id = recipe_id
+
+    def query_rating_and_comments(self):
+        try: 
+            with Db() as cursor:
+                rating_query = """ SELECT Rating, Comments, Username FROM Rating
+                                    JOIN User on Rating.UserId = User.UserId
+                                    WHERE Rating.RecipeId = %s; """ 
+                cursor.execute(rating_query, self.recipe_id)
+                rating = [row for row in cursor]
+                return rating
+        finally:
+            print("Query Ratings based on RecipeId Completed")
+ 

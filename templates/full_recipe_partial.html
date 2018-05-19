@@ -86,6 +86,20 @@
     </fieldset>
     <input type='submit' value='Submit'>
 </form>
+{% if full_recipe[5] != [] %}
+<div>
+    <h3>User Comments</h3>
+    {% for rating in full_recipe[5] %}
+    <p><strong>Rating: </strong>{{ rating['Rating'] }}</p>
+    
+    <p><em>"{{ rating['Comments'] }}"</em></p>
+    <p>Rated by <strong>{{ rating['Username'] }}</strong>.</p>
+    <br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
 {% endif %}
 
 {% endblock%}
