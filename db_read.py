@@ -43,15 +43,16 @@ class Query():
 
 
     def saved_recipes(self):
+       
         saved_recipes = self.select + """
                                         FROM SavedRecipes
-                                        JOIN User on SavedRecipes.UserId = User.UserId
-                                        JOIN Recipe on SavedRecipes.RecipeId = Recipe.RecipeId
-                                        JOIN Cost on SavedRecipes.RecipeId = Cost.RecipeId
-                                        JOIN Servings on SavedRecipes.RecipeId = Servings.RecipeId
-                                        JOIN Cuisine on SavedRecipes.RecipeId = Cuisine.RecipeId
-                                        JOIN Health on SavedRecipes.RecipeId = Health.RecipeId
-                                        JOIN Course on SavedRecipes.RecipeId = Course.RecipeId
+                                        JOIN User on User.UserId = Recipe.UserId
+                                        JOIN Recipe on Recipe.RecipeId = SavedRecipes.RecipeId
+                                        JOIN Cost on Cost.RecipeId = SavedRecipes.RecipeId
+                                        JOIN Servings on Servings.RecipeId = SavedRecipes.RecipeId
+                                        JOIN Cuisine on Cuisine.RecipeId = SavedRecipes.RecipeId
+                                        JOIN Health on Health.RecipeId = SavedRecipes.RecipeId
+                                        JOIN Course on Course.RecipeId = SavedRecipes.RecipeId
                                         """
         return saved_recipes
 
@@ -83,17 +84,21 @@ class QueryCategory(Query):
 
 class QueryReadRecipes():
 
-    def query_user_id(self, username):
+    def query_user_id(self, select_column, where, value):
         """ QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS"""
         try:
             with Db() as cursor:
-                get_id_query = """SELECT UserId FROM User
-                                    WHERE Username = '%s';""" % (username)                  
+                get_id_query = """SELECT %s FROM User
+                                    WHERE %s = '%s';""" % (select_column, where, value)                  
                 cursor.execute(get_id_query)
                 user_id = [row for row in cursor]
                 return(user_id)
         finally:
             print("Query read user completed")
+
+    #def query_user_username(self, user_id):
+        
+        
 
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
@@ -103,8 +108,7 @@ class QueryReadRecipes():
                 condition = """ WHERE %s = %s 
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         order_by, direction) 
-                new_query = Query()
-                recipes_query = new_query.main_selection() + condition          
+                recipes_query = Query().main_selection() + condition          
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -180,11 +184,10 @@ class QueryReadRecipes():
         """ QUERY USERS SAVED RECIPES BASED ON USER ID, GET MINI RECIPES INFO BACK """
         try:
             with Db() as cursor:
-                new_query = Query()
-                recipes_query = new_query.saved_recipes() + """ 
+                recipes_query = Query().saved_recipes() + """ 
                                 WHERE SavedRecipes.UserId = %s 
-                                ORDER BY {order_by} {direction};""" % (user_id, order_by, direction)
-                cursor.execute(recipes_query)
+                                ORDER BY %s %s;"""
+                cursor.execute(recipes_query,(user_id, order_by, direction))
                 recipes = [row for row in cursor]
                 return recipes
         finally:

@@ -104,7 +104,19 @@ def ingredient_search(username):
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+
+@app.route('/my_recipme/<username>/saved_recipe', methods=['GET', 'POST'])
+def saved_search(username):
+    if request.method =='POST':
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+        user_id = find_recipe.Get().get_user_id(username)['UserId']
+        recipe_info = ViewVariables(username).var_saved_recipes(user_id, order_by, direction)
+        print(recipe_info)
                             
+    return render_template('saved_recipe.html', username=username,
+                           my_recipme=recipe_info[0], count=recipe_info[1],
+                            cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
+                           public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
 
 ############### PUBLIC SEARCH ROUTES ##########################
 

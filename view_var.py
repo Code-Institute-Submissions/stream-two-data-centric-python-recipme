@@ -57,7 +57,6 @@ class ViewVariables():
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
     def var_cat_search(self, form, search_by, search_value):
         order_by, direction = form['SortBy'], form['Direction']
-        #user_id = Get().get_user_id(self.username)['UserId']
         column = [key for key in form]
         column_name = column[0] + 'Name'
         results = Get().get_category_mini_recipes(column[0], search_by, search_value, 
@@ -66,8 +65,8 @@ class ViewVariables():
         recipes = Get().date_time_converter(results)
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
-
-        return recipes, count, groupings, form[column[0]], column[0]
+    
+        return recipes, count, groupings, form[column[0]], column[0], 
 
 ## RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ##
     def var_full_recipe(self, recipe_id):
@@ -79,9 +78,10 @@ class ViewVariables():
         method = Get().get_method_for_full_recipe(recipe_id)
         user_id = Get().get_user_id(username[0]['Username'])['UserId']
         is_saved = Get().get_is_recipe_saved(user_id, recipe_id)
-        rating = Get().get_rating_and_comments(recipe_id)
+        ratings = Get().get_rating_and_comments(recipe_id)
+        average = Get().get_average_rating(ratings)
 
-        return username, recipe, ingredients, method, is_saved, rating
+        return username, recipe, ingredients, method, is_saved, ratings, average
 
 ## RETURN ALL PUBLIC RECIPES ##
     def var_all_public(self, order_by, direction):
@@ -91,7 +91,15 @@ class ViewVariables():
         groupings = ViewVariables(self.username).groupings()
 
         return recipes, count, groupings
-    
+
+    def var_saved_recipes(self, user_id, order_by, direction):
+        result = Get().get_saved_recipes_for_user(user_id, order_by, direction)
+        recipes = Get().date_time_converter(result)
+        count = len(recipes)
+        groupings = ViewVariables(self.username).groupings()
+
+        return recipes, count, groupings
+        
 ################## CLASS HOLDING FUNCTIONS CALLED FROM VIEWS THAT DON'T RETURN VARIABLES ################
 
 class ViewFunc():

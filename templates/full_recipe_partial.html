@@ -89,6 +89,7 @@
 {% if full_recipe[5] != [] %}
 <div>
     <h3>User Comments</h3>
+    <p><strong>Average Rating: {{ full_recipe[6]['Average'] }}</strong></p>
     {% for rating in full_recipe[5] %}
     <p><strong>Rating: </strong>{{ rating['Rating'] }}</p>
     

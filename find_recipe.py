@@ -45,28 +45,30 @@ class Get():
         #print(method)
         return method
 
-    def get_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
+    def get_category_mini_recipes(self, table, search_by, search_value, 
+                                    column, category, order_by, direction):
         """ GETS A FILTERED SET OF RECIPES SET BY CUISINE AND COURSE """
-        category_recipes = QueryReadRecipes().query_category_mini_recipes(table, search_by, search_value, column, category, order_by, direction)
-        #print(category_recipes)
+        category_recipes = QueryReadRecipes().query_category_mini_recipes(table, search_by, search_value, 
+                                                                          column, category, order_by, direction)
+       
         return category_recipes
-
+        
     def get_recipes_by_ingredient(self, search_by, search_value, ingredient, order_by, direction):
         """ GETS A SET OF RECIPES FILTERED BY AN INGREDIENTS SEARCH """
-        search_recipe = QueryReadRecipes().query_search_ingredient(search_by, search_value, ingredient, order_by, direction)
+        search_recipe = QueryReadRecipes().query_search_ingredient(search_by, search_value, 
+                                                                    ingredient, order_by, direction)
         #print(search_recipe)
         return search_recipe
 
     def get_saved_recipes_for_user(self, user_id, order_by, direction):
         """ GET ALL THE SAVED RECIPES FOR A GIVEN USER """
         saved_recipes = QueryReadRecipes().query_users_saved_recipes(user_id, order_by, direction)
-    #   print(saved_recipes)
         return saved_recipes
 
     def get_is_recipe_saved(self, user_id, recipe_id):
         """ CHECKS TO SEE IF A RECIPE IS ALREADY SAVED BY USER """
         is_recipe_saved = QueryReadRecipes().query_is_recipe_saved(user_id, recipe_id)
-        print(is_recipe_saved)
+        #print(is_recipe_saved)
         if is_recipe_saved != []:
             return True
         else:
@@ -85,9 +87,33 @@ class Get():
         courses = Get.get_all_column_group(self, 'CourseName', value, 'Course', for_user)
         return cuisines, courses
 
+# WRITE TESTS FOR BELOW #
+
     def get_rating_and_comments(self, recipe_id):
-        rating = QueryRating(recipe_id).query_rating_and_comments()
+        all_rating = QueryRating(recipe_id).query_rating_and_comments()
+        print(all_rating)
+        return all_rating
+  
+    def get_average_rating(self, all_rating):
+        total = 0
+        if all_rating != []:
+            for rating in all_rating:
+                total = total + rating['Rating']
+            average = {'Average': int(total/len(all_rating))}
+        else:
+            average = {'Average': 0}
+    
+        return average
+"""
+    def get_search_rating_averages(self, results):
+        ratings = [] 
+        for result in results:
+            ratings.append(Get.get_rating_and_comments(self, result['RecipeId']))
 
-        return rating
+        for rating in ratings:
+            averages = Get.get_average_rating(self, rating)
+            print(averages)
 
+        return averages
+"""       
 
