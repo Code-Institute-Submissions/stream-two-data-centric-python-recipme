@@ -97,14 +97,12 @@ class ViewVariables():
         result = Get().get_saved_recipes_for_user(user_id, order_by, direction)
         recipes = Get().date_time_converter(result)
         count = len(recipes)
-
         groupings = ViewVariables(self.username).groupings()
-        authors = []
+        ### INSERT RECIPE AUTHOR INTO RECIPE DICT ##
         for recipe in recipes:
             author = QueryReadRecipes().query_username(int(recipe['UserId']))
-            authors.append(author)
-
-        return recipes, count, groupings, authors
+            recipe['Author'] = author[0]['Username']
+        return recipes, count, groupings
         
 ################## CLASS HOLDING FUNCTIONS CALLED FROM VIEWS THAT DON'T RETURN VARIABLES ################
 
