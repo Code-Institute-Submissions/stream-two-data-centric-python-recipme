@@ -76,26 +76,21 @@ def get_results(results, offset=0, per_page=10):
     return results[offset: offset + per_page]
 
 # ALL RECIPES FOR A GIVEN USER #
-#@app.route('/my_recipme/<username>/all_myrecipme', defaults= {'page':1}, methods=['GET', 'POST'])
-#@app.route('/my_recipme/<username>/all_myrecipme/page/<int:page>')
-@app.route('/my_recipme/<username>/all_myrecipme', methods=['GET', 'POST'])
+
+@app.route('/my_recipme/<username>/my_recipme', methods=['GET', 'POST'])
 def all_myrecipme(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
-        username=username
-        return redirect('/paginate/%s/%s/%s' % (username, order_by, direction)) 
+        username=username   
+        return redirect('/my_recipme/all_my_recipme/%s/%s/%s' % (username, order_by, direction)) 
     
-
-@app.route('/paginate/<username>/<order_by>/<direction>')
-def paginate(username, order_by, direction):
-    #order_by, direction = request.form['SortBy'], request.form['Direction']
+@app.route('/my_recipme/all_my_recipme/<username>/<order_by>/<direction>')
+def all_myrecipme_paginate(username, order_by, direction):
     recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
     total = len(recipe_info[0])
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                            per_page_parameter='per_page')
+    page, per_page, offset = get_page_args(page_parameter='page',per_page_parameter='per_page')
     pagination_results = get_results(recipe_info[0] ,offset=offset, per_page=per_page)
-    pagination = Pagination(page=page, per_page=per_page, total=total,css_framework='bootstrap4')
-    print(per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0],
                             count=total, cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
