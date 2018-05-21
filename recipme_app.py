@@ -70,7 +70,6 @@ def my_recipme(username):
                             courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
                             public_courses=recipe_groups[1][1])
 
-################################################################
 ################ SEARCH ROUTES #################################
 ################ USER SPECIFIC ROUTES ##########################
 
@@ -95,8 +94,7 @@ def all_myrecipme_paginate(username, order_by, direction):
                             count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
-
-#######################################################################################
+    
 
 # ALL RECIPES FOR A GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
@@ -113,8 +111,8 @@ def category_search(username):
 @app.route('/my_recipme/<username>/category/search/<table>/<column>/<category>/<order_by>/<direction>')
 def category_paginate(username, table, column, category, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
-    recipe_info = ViewVariables(username).var_cat_search(table, column, category, 'User.UserId', 
-                                                            user_id, order_by, direction)
+    recipe_info = ViewVariables(username).var_cat_search(table, 'User.UserId', user_id, column, 
+                                                            category, order_by, direction)
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
@@ -124,9 +122,7 @@ def category_paginate(username, table, column, category, order_by, direction):
                                                     public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                                                     category=category, category_item=table, results=pagination_results, 
                                                     page=page, per_page=per_page, pagination=pagination)
-
-#######################################################################################
-
+    
 # ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
@@ -174,10 +170,7 @@ def saved_paginate(username, order_by, direction):
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
 
-
-#######################################################################################
-
-############### PUBLIC SEARCH ROUTES ##################################################
+############### PUBLIC SEARCH ROUTES ##########################
 
 # ALL PUBLIC RECIPES #                                       
 @app.route('/my_recipme/<username>/all_public', methods=['GET', 'POST'])
@@ -198,9 +191,8 @@ def public_paginate(username, order_by, direction):
                                 count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                                 public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                                 results=pagination_results, page=page, per_page=per_page, pagination=pagination)
-
-#######################################################################################
     
+
 # ALL PUBLIC RECIPES FOR GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category_public', methods=['GET', 'POST'])
 def category_public(username):
@@ -215,7 +207,7 @@ def category_public(username):
       
 @app.route('/my_recipme/<username>/category_public/search/<table>/<column>/<category>/<order_by>/<direction>')
 def category_public_paginate(username, table, column, category, order_by, direction):
-    recipe_info = ViewVariables(username).var_cat_search(table, column, category, 'MakePublic', 1, order_by, direction)
+    recipe_info = ViewVariables(username).var_cat_search(table, 'MakePublic', 1, column, category, order_by, direction)
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
@@ -226,8 +218,6 @@ def category_public_paginate(username, table, column, category, order_by, direct
                                                     category=category, category_item=table, results=pagination_results, 
                                                     page=page, per_page=per_page, pagination=pagination)
 
-#######################################################################################
-
 # ALL PUBLIC RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search_public', methods=['GET','POST'])
 def ingredient_search_public(username):
@@ -236,6 +226,7 @@ def ingredient_search_public(username):
         order_by, direction = request.form['SortBy'], request.form['Direction']
 
         return redirect('/my_recipme/%s/search/public/%s/%s/%s'% (username, ingredient, order_by, direction))
+
 
 @app.route('/my_recipme/<username>/search/public/<ingredient>/<order_by>/<direction>')
 def public_ingredient_paginate(username, ingredient, order_by, direction):
@@ -251,7 +242,7 @@ def public_ingredient_paginate(username, ingredient, order_by, direction):
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
 
-#######################################################################################
+
     
 ############### FULL RECIPE VIEW ##############################
 

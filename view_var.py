@@ -60,16 +60,17 @@ class ViewVariables():
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
     def var_cat_search(self, table, column, category, search_by, 
                         search_value, order_by, direction):
-   
+        #order_by, direction = form['SortBy'], form['Direction']
+        #column = [key for key in form]
+        #column_name = column[0] + 'Name'
         results = Get().get_category_mini_recipes(table, column, category, 
                                                     search_by, search_value, 
                                                         order_by, direction)
         recipes = Get().date_time_converter(results)
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
-        print(column)
-        print(table)
-        return recipes, count, groupings
+    
+        return recipes, count, groupings#, form[column[0]], column[0], 
 
 ## RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ##
     def var_full_recipe(self, recipe_id):
