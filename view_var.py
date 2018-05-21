@@ -32,7 +32,9 @@ class ViewVariables():
 
 ## RETURN ALL RECIPES FOR GIVEN USER, COUNT AND CATEGORIES AGAIN ##
     def var_all_myrecipme(self, order_by, direction):
-        result = Get().get_mini_user_recipes(self.username, 'User.UserId', order_by, direction)        
+        user_id = Get().get_user_id(self.username)
+        result = QueryReadRecipes().query_all_mini_recipes('User.UserId', user_id['UserId'], 
+                                                            order_by, direction)       
         recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()

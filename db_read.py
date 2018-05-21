@@ -1,7 +1,9 @@
 import pymysql
 from db import Db
+from math import ceil
 
 #################### CLASSES FOR READING THE MYSQL DB #########################
+
 
 
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
@@ -83,19 +85,7 @@ class QueryCategory(Query):
 ########################### CLASS TO EXECUTE READ QUERIES ###############################
 
 class QueryReadRecipes():
-"""
-    def query_user_id(self, username):
-        QUERY DB USER TABLE FOR USER ID BASED ON USER LOGIN DETAILS
-        try:
-            with Db() as cursor:
-                get_id_query = SELECT UserId FROM User
-                                    WHERE Username = '%s'; % (username)                  
-                cursor.execute(get_id_query)
-                user_id = [row for row in cursor]
-                return(user_id)
-        finally:
-            print("Query read user completed")
-"""
+
     def query_username_or_id(self, select_column, search_column, value):
         try:
             with Db() as cursor:
@@ -113,8 +103,8 @@ class QueryReadRecipes():
         try:
             with Db() as cursor:
                 condition = """ WHERE %s = %s 
-                                ORDER BY %s %s;""" % (search_by, search_value, 
-                                                        order_by, direction) 
+                                ORDER BY %s %s; """ % (search_by, search_value, 
+                                                     order_by, direction) 
 
                 recipes_query = Query().main_selection() + condition          
                 cursor.execute(recipes_query)

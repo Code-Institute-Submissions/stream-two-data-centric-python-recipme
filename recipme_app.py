@@ -8,6 +8,8 @@ from db import Db
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 from flask import Flask, redirect, render_template, request
+from flask_paginate import Pagination, get_page_args
+
 
 app = Flask(__name__)
 
@@ -70,15 +72,35 @@ def my_recipme(username):
 ################ SEARCH ROUTES #################################
 ################ USER SPECIFIC ROUTES ##########################
 
+def get_results(results, offset=0, per_page=10):
+    return results[offset: offset + per_page]
+
 # ALL RECIPES FOR A GIVEN USER #
+#@app.route('/my_recipme/<username>/all_myrecipme', defaults= {'page':1}, methods=['GET', 'POST'])
+#@app.route('/my_recipme/<username>/all_myrecipme/page/<int:page>')
 @app.route('/my_recipme/<username>/all_myrecipme', methods=['GET', 'POST'])
 def all_myrecipme(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
-        recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
-        return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
-                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
-                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+        username=username
+        return redirect('/paginate/%s/%s/%s' % (username, order_by, direction)) 
+    
+
+@app.route('/paginate/<username>/<order_by>/<direction>')
+def paginate(username, order_by, direction):
+    #order_by, direction = request.form['SortBy'], request.form['Direction']
+    recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
+    total = len(recipe_info[0])
+    page, per_page, offset = get_page_args(page_parameter='page',
+                                            per_page_parameter='per_page')
+    pagination_results = get_results(recipe_info[0] ,offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=total,css_framework='bootstrap4')
+    print(per_page)
+    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0],
+                            count=total, cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                            results=pagination_results, page=page, per_page=per_page, pagination=pagination)
+    
 
 # ALL RECIPES FOR A GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
