@@ -3,6 +3,16 @@
 <h1><a href="{{ url_for('my_recipme', username=username)}}">My RecipMe.</a></h1>
 <h2>Go ahead and create a new RecipMe</p>
 <br>
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endwith %}
+<form action="{{ url_for('upload_photo', username=username)}}"method='POST' enctype='multipart/form-data'>
+    <input type='file' name='File'>
+    <input type='submit'>
+</form>
+
 <form action="{{ url_for('creating_recipe', username=username) }}" method='POST'>
     <fieldset>
         <legend>Main Details</legend>
