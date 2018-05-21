@@ -1,7 +1,7 @@
 import os
 import db_create
 import write_recipe
-import find_recipe
+#import find_recipe
 import user_login
 from view_var import ViewVariables, ViewFunc
 from db import Db
@@ -9,6 +9,7 @@ from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
 from flask import Flask, redirect, render_template, request
 from flask_paginate import Pagination, get_page_args
+from find_recipe import Get
 
 
 app = Flask(__name__)
@@ -69,11 +70,10 @@ def my_recipme(username):
                             courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
                             public_courses=recipe_groups[1][1])
 
+################################################################
 ################ SEARCH ROUTES #################################
 ################ USER SPECIFIC ROUTES ##########################
 
-def get_results(results, offset=0, per_page=10):
-    return results[offset: offset + per_page]
 
 # ALL RECIPES FOR A GIVEN USER #
 
@@ -87,88 +87,171 @@ def all_myrecipme(username):
 @app.route('/my_recipme/all_my_recipme/<username>/<order_by>/<direction>')
 def all_myrecipme_paginate(username, order_by, direction):
     recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
-    total = len(recipe_info[0])
-    page, per_page, offset = get_page_args(page_parameter='page',per_page_parameter='per_page')
-    pagination_results = get_results(recipe_info[0] ,offset=offset, per_page=per_page)
-    pagination = Pagination(page=page, per_page=per_page, total=total)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+
     return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0],
-                            count=total, cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                            count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
-    
+
+#######################################################################################
 
 # ALL RECIPES FOR A GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category/search', methods=['GET','POST'])
 def category_search(username):
     if request.method == 'POST':
-        user_id = find_recipe.Get().get_user_id(username)['UserId']
-        recipe_info = ViewVariables(username).var_cat_search(request.form, 'User.UserId', user_id)
-        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
-                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
-                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
-                                category=recipe_info[3], category_item=recipe_info[4])
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+        keys = [key for key in request.form]
+        table, column = keys[0], keys[0] + 'Name'
+        category = request.form[table]
+       
+        return redirect ('/my_recipme/%s/category/search/%s/%s/%s/%s/%s' % (username, table, column, category,
+                                                                            order_by, direction))
 
-    
+@app.route('/my_recipme/<username>/category/search/<table>/<column>/<category>/<order_by>/<direction>')
+def category_paginate(username, table, column, category, order_by, direction):
+    user_id = Get().get_user_id(username)['UserId']
+    recipe_info = ViewVariables(username).var_cat_search(table, column, category, 'User.UserId', 
+                                                            user_id, order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+                                                            
+    return render_template('category_search.html', username=username, my_recipme=recipe_info[0], count=recipe_info[1], 
+                                                    cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                                    public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                                                    category=category, category_item=table, results=pagination_results, 
+                                                    page=page, per_page=per_page, pagination=pagination)
+
+#######################################################################################
+
 # ALL RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search', methods=['GET','POST'])
 def ingredient_search(username):
     if request.method == 'POST':
         ingredient = request.form['Ingredient']
-        user_id = find_recipe.Get().get_user_id(username)['UserId']
-        recipe_info = ViewVariables(username).var_ing_search(request.form,'User.UserId',user_id, ingredient)
-       
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+
+        return redirect('/my_recipme/%s/search/%s/%s/%s'% (username, ingredient, order_by, direction))
+  
+
+@app.route('/my_recipme/<username>/search/<ingredient>/<order_by>/<direction>')
+def ingredient_paginate(username, ingredient, order_by, direction):
+    user_id = Get().get_user_id(username)['UserId']
+    recipe_info = ViewVariables(username).var_ing_search('User.UserId', user_id, ingredient, order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
-                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                            results=pagination_results, page=page, per_page=per_page, pagination=pagination)
+
+################## ALL RECIPES SAVED BY USER ####################################                            
 
 @app.route('/my_recipme/<username>/saved_recipe', methods=['GET', 'POST'])
 def saved_search(username):
     if request.method =='POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
-        user_id = find_recipe.Get().get_user_id(username)['UserId']
-        recipe_info = ViewVariables(username).var_saved_recipes(user_id, order_by, direction)
-                            
-    return render_template('saved_recipe.html', username=username,
-                           my_recipme=recipe_info[0], count=recipe_info[1],
-                            cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
-                           public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
 
-############### PUBLIC SEARCH ROUTES ##########################
+        return redirect('/my_recipme/%s/saved_recipe/%s/%s' % (username, order_by, direction))                     
+
+@app.route('/my_recipme/<username>/saved_recipe/<order_by>/<direction>')
+def saved_paginate(username, order_by, direction):
+    user_id = Get().get_user_id(username)['UserId']
+    recipe_info = ViewVariables(username).var_saved_recipes(user_id, order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+
+    return render_template('saved_recipe.html', username=username,
+                            my_recipme=recipe_info[0], count=recipe_info[1],
+                            cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                            results=pagination_results, page=page, per_page=per_page, pagination=pagination)
+
+
+#######################################################################################
+
+############### PUBLIC SEARCH ROUTES ##################################################
 
 # ALL PUBLIC RECIPES #                                       
 @app.route('/my_recipme/<username>/all_public', methods=['GET', 'POST'])
 def all_public(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
-        recipe_info = ViewVariables(username).var_all_public(order_by, direction)
-        return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
-                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
-                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
 
+        return redirect ('/my_recipme/%s/all_public/%s/%s' % (username, order_by, direction))
+
+@app.route('/my_recipme/<username>/all_public/<order_by>/<direction>')
+def public_paginate(username, order_by, direction):
+    recipe_info = ViewVariables(username).var_all_public(order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+
+    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
+                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                                results=pagination_results, page=page, per_page=per_page, pagination=pagination)
+
+#######################################################################################
+    
 # ALL PUBLIC RECIPES FOR GIVEN CATEGORY #
 @app.route('/my_recipme/<username>/category_public', methods=['GET', 'POST'])
 def category_public(username):
     if request.method == 'POST':
-        recipe_info = ViewVariables(username).var_cat_search(request.form, 'MakePublic', 1)
-        return render_template('category_search.html', username=username, my_recipme=recipe_info[0], 
-                                count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
-                                public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
-                                category=recipe_info[3], category_item=recipe_info[4])
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+        keys = [key for key in request.form]
+        table, column = keys[0], keys[0] + 'Name'
+        category = request.form[table]
+       
+        return redirect ('/my_recipme/%s/category_public/search/%s/%s/%s/%s/%s' % (username, table, column, category,
+                                                                            order_by, direction))
+      
+@app.route('/my_recipme/<username>/category_public/search/<table>/<column>/<category>/<order_by>/<direction>')
+def category_public_paginate(username, table, column, category, order_by, direction):
+    recipe_info = ViewVariables(username).var_cat_search(table, column, category, 'MakePublic', 1, order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+                                                            
+    return render_template('category_search.html', username=username, my_recipme=recipe_info[0], count=recipe_info[1], 
+                                                    cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
+                                                    public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                                                    category=category, category_item=table, results=pagination_results, 
+                                                    page=page, per_page=per_page, pagination=pagination)
+
+#######################################################################################
 
 # ALL PUBLIC RECIPES FOR A GIVEN INGREDIENT #
 @app.route('/my_recipme/<username>/search_public', methods=['GET','POST'])
 def ingredient_search_public(username):
     if request.method == 'POST':
         ingredient = request.form['Ingredient']
-        """ VALUE OF 1 IN SEARCH FUNCTION REPRESENTS MAKE PUBLIC VALUE OF 'YES' IN DB """
-        recipe_info = ViewVariables(username).var_ing_search(request.form, 'MakePublic', 1, ingredient)
-        #print('here')
-        
+        order_by, direction = request.form['SortBy'], request.form['Direction']
+
+        return redirect('/my_recipme/%s/search/public/%s/%s/%s'% (username, ingredient, order_by, direction))
+
+@app.route('/my_recipme/<username>/search/public/<ingredient>/<order_by>/<direction>')
+def public_ingredient_paginate(username, ingredient, order_by, direction):
+    # VALUE OF 1 IN SEARCH FUNCTION REPRESENTS MAKE PUBLIC VALUE OF 'YES' #
+    recipe_info = ViewVariables(username).var_ing_search('MakePublic', 1, ingredient, order_by, direction)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
+
     return render_template('ingredient_search.html', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
-                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1])
+                            public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
+                            results=pagination_results, page=page, per_page=per_page, pagination=pagination)
+
+#######################################################################################
     
 ############### FULL RECIPE VIEW ##############################
 
@@ -199,7 +282,7 @@ def add_recipe(username):
 def creating_recipe(username):
     if request.method == 'POST':
         recipe = request.form
-        user_id = find_recipe.Get().get_user_id(username)
+        user_id = Get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,
                             request.form.getlist('Quantity')]
@@ -223,7 +306,7 @@ def edit_recipe(username, recipe_id):
 def updating_recipe(username, recipe_id):
     if request.method == 'POST':
         recipe = request.form
-        user_id = find_recipe.Get().get_user_id(username)
+        user_id = Get().get_user_id(username)
         method_list = [request.form.getlist('StepNumber'),
                         request.form.getlist('Step')]
         ingredient_list = [request.form.getlist('Ingredient'),user_id,

@@ -42,10 +42,10 @@ class ViewVariables():
         return recipes, count, groupings
 
 ## RETURN ALL RECIPES FOR GIVEN INGREDIENT SEARCH ##
-    def var_ing_search(self, form, search_by, search_value, ingredient):
+    def var_ing_search(self, search_by, search_value, ingredient, order_by, direction):
         recipes = []
         count = 0
-        order_by, direction = form['SortBy'], form['Direction']
+        #order_by, direction = form['SortBy'], form['Direction']
         result = Get().get_recipes_by_ingredient(search_by, search_value, 
                                                         ingredient, order_by, direction)
         if result == []:
@@ -58,18 +58,18 @@ class ViewVariables():
         return recipes, count, groupings
 
 ## RETURN ALL RECIPES FOR CHOSEN CUISINE OR COURSE CATEGORY, PUBLIC OR USER SPECIFIC ##
-    def var_cat_search(self, form, search_by, search_value):
-        order_by, direction = form['SortBy'], form['Direction']
-        column = [key for key in form]
-        column_name = column[0] + 'Name'
-        results = Get().get_category_mini_recipes(column[0], search_by, search_value, 
-                                                        column_name, form[column[0]], 
+    def var_cat_search(self, table, column, category, search_by, 
+                        search_value, order_by, direction):
+   
+        results = Get().get_category_mini_recipes(table, column, category, 
+                                                    search_by, search_value, 
                                                         order_by, direction)
         recipes = Get().date_time_converter(results)
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
-    
-        return recipes, count, groupings, form[column[0]], column[0], 
+        print(column)
+        print(table)
+        return recipes, count, groupings
 
 ## RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ##
     def var_full_recipe(self, recipe_id):

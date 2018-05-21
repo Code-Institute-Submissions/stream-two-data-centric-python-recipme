@@ -54,7 +54,7 @@ class TestRecipme(unittest.TestCase):
 
     def test_is_recipe_saved(self):
         user_id = 1
-        recipe_id = 1111
+        recipe_id = 11
     
         recipe = find_recipe.Get().get_is_recipe_saved(user_id, recipe_id)
 
@@ -157,7 +157,23 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(result[0]['Total'], 1)
         self.assertEqual(result[0]['CourseName'], 'Breakfast')
-   
+
+    def test_get_rating_and_comments(self):
+        recipe_id = 11
+        rating = find_recipe.Get().get_rating_and_comments(recipe_id)
+
+        self.assertEqual(type(rating), list)
+
+
+    def test_get_username(self):
+        user_id = 1
+        username = find_recipe.Get().get_username(user_id)
+
+        self.assertEqual(type(username), list)
+        self.assertEqual(type(username[0]['Username']), str)
+        self.assertEqual(username[0]['Username'], 'darchard')
+
+
 class ExpectedFailureTestCase(unittest.TestCase):
     @unittest.expectedFailure
     def test_get_mini_recipes(self):
