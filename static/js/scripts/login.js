@@ -26,22 +26,17 @@
         })
     }
 
-    const getRecipesData = () => 
+    const getRecipesData = () => {
 
         // RETRIEVE WORD FROM SERVER AS JSON //
-        getRequest(`/${username}/word`)
+        getRequest(`/`)
             .then((response) => {
 
                 let dataRequest = JSON.parse(response);
-                wordArray = dataRquest.guessWord;
-                createDashes(wordArray);
-                clearWinLoseMessage();
-                clearImage();
-                //console.log(wordArray);
-
+                data = dataRequest;
+            
             })
             .catch((error) => {
-
                 console.log(error);
             })
 
