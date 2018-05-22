@@ -9,7 +9,7 @@ from math import ceil
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
     ## USED FOR USER ALL RECIPES SELECTION, INGREDIENT SEARCH AND SAVED RECIPES ##
 
-class Query():
+class QuerySelections():
     
     def __init__(self):
         
@@ -62,7 +62,7 @@ class Query():
 ########################## CLASS FOR COURSE OR CUISINE CATEGORY SEARCH  ################################
                         ## RE-USABLE FUNCTIONS BASED ON CATEGORY SELECTION ##
 
-class QueryCategory(Query):
+class QueryCategory(QuerySelections):
     """ QUERIES FOR CUISINE OR COURSE CATEGORY """
     def __init__(self, table, join_table):
         super().__init__()
@@ -82,7 +82,7 @@ class QueryCategory(Query):
                                                 self.table, self.table, self.table, self.table)
         return search_category
 
-########################### CLASS TO EXECUTE READ QUERIES ###############################
+########################### CLASS TO EXECUTE QUERIES AND CALL SELECTIONS ###############################
 
 class QueryReadRecipes():
 
@@ -106,7 +106,7 @@ class QueryReadRecipes():
                                 ORDER BY %s %s; """ % (search_by, search_value, 
                                                      order_by, direction) 
 
-                recipes_query = Query().main_selection() + condition          
+                recipes_query = QuerySelections().main_selection() + condition          
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -114,7 +114,8 @@ class QueryReadRecipes():
             print("Query get mini recipes completed")
 
 
-    def query_category_mini_recipes(self, table, search_by, search_value, column, category, order_by, direction):
+    def query_category_mini_recipes(self, table, search_by, search_value, 
+                                    column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, 
             SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
         join_table = []
@@ -136,7 +137,8 @@ class QueryReadRecipes():
         finally:
             print("Query get mini recipes completed")
 
-    def query_search_ingredient(self, search_by, search_value, ingredient, order_by, direction):
+    def query_search_ingredient(self, search_by, search_value, 
+                                ingredient, order_by, direction):
         """ GET ALL MINI RECIPES FOR GIVEN INGREDIENT """
         try:
             with Db() as cursor:
@@ -145,9 +147,7 @@ class QueryReadRecipes():
                                 AGAINST ('%s' IN NATURAL LANGUAGE MODE)
                                 ORDER BY %s %s;""" % (search_by, search_value, 
                                                         ingredient, order_by, direction)
-                                                                       
-                new_query = Query()
-                recipes_query = new_query.search_ingredient() + condition
+                recipes_query = QuerySelections().search_ingredient() + condition
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
@@ -182,11 +182,10 @@ class QueryReadRecipes():
         """ QUERY USERS SAVED RECIPES BASED ON USER ID, GET MINI RECIPES INFO BACK """
         try:
             with Db() as cursor:
-                recipes_query = Query().saved_recipes() + """ 
+                recipes_query = QuerySelections().saved_recipes() + """ 
                                 WHERE SavedRecipes.UserId = %s 
                                 ORDER BY %s %s;""" % (user_id, order_by, direction)
                 cursor.execute(recipes_query)
-                print(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
         finally:
@@ -206,7 +205,7 @@ class QueryReadRecipes():
             print("Query is Recipe Saved Complete")
     
     def query_count_and_group_column(self, column, user_id, table):
-        """ QUERY THE COUNT OF A SPECIFIC COLUMN AND GROUP BY THAT COLUMN """
+        """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
         """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
         try: 
             with Db() as cursor:
@@ -223,6 +222,8 @@ class QueryReadRecipes():
             print("Query count Column based on UserId Completed")
  
     def query_count_and_group_column_public(self, column, value, table):
+        """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
+        """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
         try: 
             with Db() as cursor:
                 recipes_query = """ SELECT COUNT(%s) as Total, %s
@@ -278,3 +279,21 @@ class QueryRating():
         finally:
             print("Query Ratings based on RecipeId Completed")
  
+class QueryAllData():
+    
+    def __init__(self, table, column):
+        self.table = table
+        self.column = column
+
+    def get_total(self):
+        try: 
+            with Db() as cursor:
+                rating_query = """ SELECT COUNT(%s) as Total%s 
+                                    FROM %s; """ % (self.column, 
+                                                    self.table, self.table)
+                cursor.execute(rating_query)
+                rating = [row for row in cursor]
+                return rating
+        finally:
+            print("Query Ratings based on RecipeId Completed")        
+        

@@ -34,5 +34,15 @@
             <input type='submit' value='Login'>
         </fieldset>
     </form>
+    <div id='chart'>
+
+    </div>
 </body>
+{% endblock %}
+{% block js %}
+<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/d3.min.js')}}"></script>
+<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/crossfilter.min.js') }}"></script>
+<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/dc.min.js') }}"></script>
+<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/queue.min.js') }}"></script>
+<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/login.js') }}"></script>
 {% endblock %}

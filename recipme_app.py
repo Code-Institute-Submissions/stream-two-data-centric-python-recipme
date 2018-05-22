@@ -3,7 +3,7 @@ import uploads
 import db_create
 import write_recipe
 import user_login
-from view_var import ViewVariables, ViewFunc
+from view_var import ViewVariables, ViewFunc, Totals
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
@@ -28,6 +28,10 @@ app = Flask(__name__)
 # LANDING PAGE #
 @app.route('/', methods=['GET','POST'])
 def index():
+    total_recipes = Totals().var_total_recipes()
+    total_users = Totals().var_total_users()
+    print(total_recipes)
+    print(total_users)
     return render_template('index.html')
 
 # SIGN UP ROUTE #
@@ -79,7 +83,6 @@ def my_recipme(username):
 
 
 # ALL RECIPES FOR A GIVEN USER #
-
 @app.route('/my_recipme/<username>/my_recipme', methods=['GET', 'POST'])
 def all_myrecipme(username):
     if request.method == 'POST':
@@ -254,7 +257,7 @@ def public_ingredient_paginate(username, ingredient, order_by, direction):
 def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
-        full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
+        #full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
    
         return redirect('/my_recipme/%s/%s'% (username, recipe_id))
 
@@ -339,6 +342,7 @@ def rate_recipe(username, recipe_id):
         rating = request.form
         ViewFunc().rate_recipe(rating, recipe_id, username)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
+
 
 
 if __name__ == '__main__':

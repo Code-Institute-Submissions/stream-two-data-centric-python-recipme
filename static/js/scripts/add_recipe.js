@@ -58,7 +58,7 @@
          input.min = `${this.counter}`;
          input.max = `${this.counter}`;
          input.name = `StepNumber`;
-         input.value = 1;
+         input.value = `${this.counter}`;
          input.required = true;
 
          return input;
@@ -129,7 +129,7 @@
      button.addEventListener("click", (e) => {    
 
          if (methodCounter <= 25) {
-
+             
              //const stepNumber = new createElement();
              const step = new createElement("Step", methodCounter);
              const br = new createElement("Step", methodCounter);

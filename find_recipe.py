@@ -2,11 +2,12 @@ import os
 import pymysql
 import write_recipe
 import datetime
-from db_read import QueryReadRecipes, QueryRating
+from db_read import QueryReadRecipes, QueryRating, QueryAllData
 
 ############# CLASSES WITH LOGIC TO RETRIEVE DATA FROM THE DB #################
 
 class Get():
+    
     def date_time_converter(self, recipes):
         """ CONVERT DATETIME TO STRING """
         for i in recipes:
@@ -68,6 +69,7 @@ class Get():
             return False
         
     def get_all_column_group(self, column, value, table, for_user):
+        """ GET GROUP RESULTS FOR SPECIFIC COLUMN, FOR USER OR FOR PUBLIC RECIPES """
         if for_user == True:
             column = QueryReadRecipes().query_count_and_group_column(column, value, table)
         else:
@@ -76,19 +78,20 @@ class Get():
         return column
 
     def get_cuisine_and_course_count(self, value, for_user):
+        """ RETURN GROUPED CUISINE AND COURSE RESULTS"""
         cuisines = Get.get_all_column_group(self, 'CuisineName', value, 'Cuisine',for_user)
         courses = Get.get_all_column_group(self, 'CourseName', value, 'Course', for_user)
         
         return cuisines, courses
 
-# WRITE TESTS FOR BELOW #
-
     def get_rating_and_comments(self, recipe_id):
+        """ RETURN RATING AND COMMENTS FOR SPECIFIC RECIPE """
         all_rating = QueryRating(recipe_id).query_rating_and_comments()
        
         return all_rating
   
     def get_average_rating(self, all_rating):
+        """ GET AVAERAGE RATING FOR SPECIFIC RECIPE """ 
         total = 0
         if all_rating != []:
             for rating in all_rating:
@@ -100,11 +103,21 @@ class Get():
         return average
 
     def get_username(self, user_id):
+        """ RETURN USERNAME FROM SPECIFIC USER_ID """
         username = QueryReadRecipes().query_username_or_id('Username', 'UserId', user_id)
         
         return username
       
-################# FOR PAGINATION #############################
+#------------------ FOR PAGINATION ----------------------------#
     def get_results(self, results, offset=0, per_page=10):
         print(results[offset: offset + per_page])
         return results[offset: offset + per_page]
+
+#--------------------------------------------------------------#
+#------------------ FOR INDEX PAGE DATA DISPLAY ---------------#
+    def get_totals(self, table, column):
+        """ RETURN TOTAL NUMBER OF RECIPES IN DB """
+        results = QueryAllData(table, column).get_total()
+
+        return results
+
