@@ -7,16 +7,16 @@ from view_var import ViewVariables, ViewFunc
 from db import Db
 from db_read import UserVerify, QueryReadRecipes
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, send_from_directory
 from flask_paginate import Pagination, get_page_args
 from werkzeug.utils import secure_filename
 from find_recipe import Get
 
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = uploads.UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 5*1024*1024
-app.config['SECRET_KEY'] = 'Secrecy'
+#app.config['UPLOAD_FOLDER'] = uploads.UPLOAD_FOLDER
+#app.config['MAX_CONTENT_LENGTH'] = 5*1024*1024
+#app.config['SECRET_KEY'] = 'Secrecy'
 
 
 ###################################################################################
@@ -339,26 +339,6 @@ def rate_recipe(username, recipe_id):
         rating = request.form
         ViewFunc().rate_recipe(rating, recipe_id, username)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
-
-############# UPLOAD IMAGES ###############################
-
-@app.route('/my_recipme/<username>/add_recipe/upload', methods=['GET', 'POST'])
-def upload_photo(username):
-    if request.method == 'POST':
-        if 'File' not in request.files:
-            flash('No file selected')
-            return redirect('my_recipme/<username>/add_recipe')
-        file = request.files['File']
-        if file.filename == '':
-            flash('No selected file')
-            return redirect('my_recipme/<username>/add_recipe')
-        if file and uploads.Upload(file.filename).allowed_file():
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('crud_action.html', filename=file.filename)
-        else:
-            flash('Invalid file-type, please upload jpg, png or gif only')
-            return redirect('my_recipme/<username>/add_recipe')
 
 
 if __name__ == '__main__':

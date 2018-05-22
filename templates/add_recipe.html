@@ -8,11 +8,6 @@
 <p>{{ message }}</p>
 {% endfor %}
 {% endwith %}
-<form action="{{ url_for('upload_photo', username=username)}}"method='POST' enctype='multipart/form-data'>
-    <input type='file' name='File'>
-    <input type='submit'>
-</form>
-
 <form action="{{ url_for('creating_recipe', username=username) }}" method='POST'>
     <fieldset>
         <legend>Main Details</legend>
