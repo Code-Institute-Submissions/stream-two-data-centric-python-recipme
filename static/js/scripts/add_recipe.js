@@ -49,16 +49,16 @@
          return input;
      }
 
-     createStepNumber(counter) {
+     createStepNumber() {
 
          const input = document.createElement("input");
-         input.id = `s-${counter}`;
+         input.id = `s-${this.counter}`;
          input.class = "step-number";
          input.type = "number";
-         input.min = `${counter}`;
-         input.max = `${counter}`;
+         input.min = `${this.counter}`;
+         input.max = `${this.counter}`;
          input.name = `StepNumber`;
-         input.value = `${counter}`;
+         input.value = 1;
          input.required = true;
 
          return input;
@@ -86,11 +86,11 @@
 
              const quantity = new createElement("Quantity", ingredientCounter);
              const ingredient = new createElement("Ingredient", ingredientCounter);
-             const br = new createElement("Ingredient", ingredientCounter);
+             //const br = new createElement("Ingredient", ingredientCounter);
 
              parent.appendChild(quantity.createInput());
              parent.appendChild(ingredient.createInput());
-             parent.appendChild(br.createBr());
+             parent.appendChild(ingredient.createBr());
          }
          
          console.log(ingredientCounter);
@@ -130,11 +130,11 @@
 
          if (methodCounter <= 25) {
 
-             const stepNumber = new createElement();
+             //const stepNumber = new createElement();
              const step = new createElement("Step", methodCounter);
              const br = new createElement("Step", methodCounter);
 
-             parent.appendChild(stepNumber.createStepNumber(methodCounter));
+             parent.appendChild(step.createStepNumber());
              parent.appendChild(step.createInput());
              parent.appendChild(br.createBr());
          }
