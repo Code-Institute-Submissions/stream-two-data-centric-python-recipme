@@ -13,6 +13,7 @@
  // --------------------------------------------------------------//
 
 
+
  // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
  const characterCounter = (input, counter, count) => {
      document.getElementById(input).onkeyup = function() {
@@ -117,7 +118,7 @@
          }
          
          ingredientCounter -=1;
-         //console.log(`ingredient-${ingredientCounter-1}`)
+
      });
      
  };
@@ -163,19 +164,11 @@
          }
          
          methodCounter -=1;
-         //console.log(`ingredient-${ingredientCounter-1}`)
+        
      });
 
  };
 
-
-
-
- // WRITE A LOOP FOR THIS //
- //totalCharacters("recipe-title-counter",150);
- //totalCharacters("recipe-description-counter",250);
- //totalCharacters("cuisine-description-counter",160);
- //totalCharacters("course-description-counter",160);
 
  characterCounter("RecipeTitle","recipe-title-counter",150 );
  characterCounter("RecipeDescription","recipe-description-counter", 250);

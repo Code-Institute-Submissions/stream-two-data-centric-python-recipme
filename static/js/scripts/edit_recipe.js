@@ -181,11 +181,6 @@ const removeStep = (button, parent) => {
 
 };
 
-// WRITE A LOOP FOR THIS //
-//totalCharacters("recipe-title-counter",150);
-//totalCharacters("recipe-description-counter",250);
-//totalCharacters("cuisine-description-counter",160);
-//totalCharacters("course-description-counter",160);
 
 characterCounter("RecipeTitle","recipe-title-counter",150 );
 characterCounter("RecipeDescription","recipe-description-counter", 250);
