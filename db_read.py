@@ -259,7 +259,6 @@ class UserVerify():
         finally:
             print('Query User Complete')
 
-
 ######################## CLASS TO QUERY RATINGS TABLE ###################################################
 
 class QueryRating():
@@ -295,5 +294,32 @@ class QueryAllData():
                 rating = [row for row in cursor]
                 return rating
         finally:
-            print("Query Ratings based on RecipeId Completed")        
+            print("Query Total table results complete")
+
+    def get_total_public(self):
+        try:
+            with Db() as cursor:
+                query = """SELECT COUNT(%s) as Total%s
+                            FROM %s WHERE MakePublic = 1; """ % (self.column, 
+                                                                self.table, self.table)
+                cursor.execute(query)
+                result = [row for row in cursor]
+                return result
+        finally:
+            print("Query get total shared recipes complete")
+     
+
+class TotalCuisinesCourses():
+    
+    def get_all_cuisines_and_courses(self):
+        try:
+            with Db() as cursor:
+                query = """SELECT CuisineName, CourseName 
+                            FROM Course
+                            JOIN Cuisine on Course.RecipeId = Cuisine.RecipeId;"""
+                cursor.execute(query)
+                results = [row for row in cursor]
+                return results 
+        finally:
+            print("Query all cuisine and courses complete")  
         

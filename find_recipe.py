@@ -2,7 +2,7 @@ import os
 import pymysql
 import write_recipe
 import datetime
-from db_read import QueryReadRecipes, QueryRating, QueryAllData
+from db_read import QueryReadRecipes, QueryRating, QueryAllData, TotalCuisinesCourses
 
 ############# CLASSES WITH LOGIC TO RETRIEVE DATA FROM THE DB #################
 
@@ -115,9 +115,23 @@ class Get():
 
 #--------------------------------------------------------------#
 #------------------ FOR INDEX PAGE DATA DISPLAY ---------------#
-    def get_totals(self, table, column):
-        """ RETURN TOTAL NUMBER OF RECIPES IN DB """
-        results = QueryAllData(table, column).get_total()
+    def get_total_recipes(self):
+        total_recipes = QueryAllData('Recipe', 'RecipeTitle').get_total()
+        
+        return total_recipes
 
-        return results
+    def get_total_public(self):
+        total_public = QueryAllData('Recipe', 'RecipeTitle').get_total_public()
+
+        return total_public
+
+    def get_total_users(self):
+        total_users = QueryAllData('User', 'Username').get_total()
+
+        return total_users
+
+    def get_cuisines_courses(self):
+        cuisines_courses = TotalCuisinesCourses().get_all_cuisines_and_courses()
+
+        return cuisines_courses
 

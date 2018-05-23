@@ -1,43 +1,50 @@
 //------------------------- FUNCTION DECLARATIONS ------------------------//
 
-    //--------------------------- XHR EXPRESSIONS ----------------------------------------//
+//--------------------------- XHR EXPRESSIONS ----------------------------------------//
 
-    const getRequest = (url) => {
+const returnData = (data) => {
 
-        return new Promise((resolve, reject) => {
+    return data;
+};
 
-            const xhr = new XMLHttpRequest();
+const getRequest = (url) => {
 
-            xhr.open("GET", url, true)
-            xhr.onload = function() {
+    return new Promise((resolve, reject) => {
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open("GET", url, true)
+        xhr.onload = function() {
+    
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+
+                const response = xhr.responseText;
+                resolve(response)
+            
+            } else {
+                const error = xhr.responseText;
+                reject(error)
+            }
+        };
         
-                if (xhr.readyState == 4 && xhr.status == 200) { 
+        xhr.send()  
+    })
+}
 
-                    const response = xhr.responseText;
-                    resolve(response)
-                
-                } else {
-                    const error = xhr.responseText;
-                    reject(error)
-                }
-            };
-            
-            xhr.send()  
+const getRecipesData = (url) => {
+
+    // RETRIEVE WORD FROM SERVER AS JSON //
+    getRequest(url)
+        .then((response) => {
+
+            const dataRequest = JSON.parse(response);
+            console.log(dataRequest);
         })
-    }
+        .catch((error) => {
+            console.log(error);
+        })
 
-    const getRecipesData = () => {
+}
 
-        // RETRIEVE WORD FROM SERVER AS JSON //
-        getRequest(`/`)
-            .then((response) => {
+getRecipesData('/stats');
 
-                let dataRequest = JSON.parse(response);
-                data = dataRequest;
-            
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-    }

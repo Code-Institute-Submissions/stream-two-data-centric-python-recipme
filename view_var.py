@@ -2,7 +2,7 @@
 import write_recipe
 from find_recipe import Get
 from db_update_delete import QueryDeleteRecipe
-from db_read import QueryReadRecipes, QueryAllData
+from db_read import QueryReadRecipes, QueryAllData, TotalCuisinesCourses
 
 ############## CLASS TO RETURN VARIABLES FOR VIEW FUNCTIONS, CALLED FROM WITHIN VIEW FUNCTIONS ##################
 
@@ -137,19 +137,22 @@ class ViewFunc():
         
         return True
 
+################## CLASS RETURNING STATS FOR AJAX ################
+
 class Totals():
     
-    def var_total_recipes(self):
-        total_recipes = QueryAllData('Recipe', 'RecipeTitle').get_total()
-        
-        return total_recipes
+    def get_all_totals(self):
+        recipes = Get().get_total_recipes()
+        public = Get().get_total_public()
+        users = Get().get_total_users()
+        cuisines_courses = Get().get_cuisines_courses()
+        totals = [recipes[0], public[0], users[0], cuisines_courses]
+       
+        return totals
 
-    def var_total_users(self):
-        total_users = QueryAllData('User', 'Username').get_total()
 
-        return total_users
+    
 
-    #def var_total_public(self):
-        #total_public = Get().get_totals('MakePublic',)
+    
 
     

@@ -3,21 +3,16 @@ import uploads
 import db_create
 import write_recipe
 import user_login
-from view_var import ViewVariables, ViewFunc, Totals
+import json
 from db import Db
-from db_read import UserVerify, QueryReadRecipes
-from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
-from flask import Flask, redirect, render_template, request, flash, send_from_directory
-from flask_paginate import Pagination, get_page_args
-from werkzeug.utils import secure_filename
 from find_recipe import Get
-
+from db_read import UserVerify, QueryReadRecipes
+from view_var import ViewVariables, ViewFunc, Totals
+from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
+from flask import Flask, redirect, render_template, request, flash
+from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
-#app.config['UPLOAD_FOLDER'] = uploads.UPLOAD_FOLDER
-#app.config['MAX_CONTENT_LENGTH'] = 5*1024*1024
-#app.config['SECRET_KEY'] = 'Secrecy'
-
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -28,12 +23,16 @@ app = Flask(__name__)
 # LANDING PAGE #
 @app.route('/', methods=['GET','POST'])
 def index():
-    total_recipes = Totals().var_total_recipes()
-    total_users = Totals().var_total_users()
-    print(total_recipes)
-    print(total_users)
+    
     return render_template('index.html')
 
+@app.route('/stats', methods = ['GET', 'POST'])
+def stats():
+    stats = Totals().get_all_totals()
+    stats_json = json.dumps(stats)
+    #print(type(stats_json))
+    return stats_json
+    
 # SIGN UP ROUTE #
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -72,8 +71,6 @@ def invalid_login():
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
     recipe_groups = ViewVariables(username).groupings()
-    
-   
     return render_template('my_recipme.html', username=username, cuisines=recipe_groups[0][0], 
                             courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
                             public_courses=recipe_groups[1][1])
@@ -89,7 +86,8 @@ def all_myrecipme(username):
         order_by, direction = request.form['SortBy'], request.form['Direction']
         username=username   
         return redirect('/my_recipme/all_my_recipme/%s/%s/%s' % (username, order_by, direction)) 
-    
+
+# ALL RECIPES FOR A GIVEN USER PAGINATE #
 @app.route('/my_recipme/all_my_recipme/<username>/<order_by>/<direction>')
 def all_myrecipme_paginate(username, order_by, direction):
     recipe_info = ViewVariables(username).var_all_myrecipme(order_by, direction)
@@ -113,8 +111,8 @@ def category_search(username):
         category = request.form[table]
        
         return redirect ('/my_recipme/%s/category/search/%s/%s/%s/%s/%s' % (username, table, column, category,
-                                                                            order_by, direction))
-
+                                                                              order_by, direction))
+# ALL RECIPES FOR A GIVEN CATEGORY PAGINATE #
 @app.route('/my_recipme/<username>/category/search/<table>/<column>/<category>/<order_by>/<direction>')
 def category_paginate(username, table, column, category, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
@@ -139,7 +137,7 @@ def ingredient_search(username):
 
         return redirect('/my_recipme/%s/search/%s/%s/%s'% (username, ingredient, order_by, direction))
   
-
+# ALL RECIPES FOR A GIVEN INGREDIENT PAGINATE #
 @app.route('/my_recipme/<username>/search/<ingredient>/<order_by>/<direction>')
 def ingredient_paginate(username, ingredient, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
@@ -154,8 +152,7 @@ def ingredient_paginate(username, ingredient, order_by, direction):
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
 
-################## ALL RECIPES SAVED BY USER ####################################                            
-
+# ALL RECIPES SAVED BY USER #                            
 @app.route('/my_recipme/<username>/saved_recipe', methods=['GET', 'POST'])
 def saved_search(username):
     if request.method =='POST':
@@ -163,6 +160,7 @@ def saved_search(username):
 
         return redirect('/my_recipme/%s/saved_recipe/%s/%s' % (username, order_by, direction))                     
 
+# ALL RECIPES SAVED BY USER PAGINATE #
 @app.route('/my_recipme/<username>/saved_recipe/<order_by>/<direction>')
 def saved_paginate(username, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
@@ -179,7 +177,8 @@ def saved_paginate(username, order_by, direction):
 
 ############### PUBLIC SEARCH ROUTES ##########################
 
-# ALL PUBLIC RECIPES #                                       
+# ALL PUBLIC RECIPES #   
+                                    
 @app.route('/my_recipme/<username>/all_public', methods=['GET', 'POST'])
 def all_public(username):
     if request.method == 'POST':
@@ -187,6 +186,7 @@ def all_public(username):
 
         return redirect ('/my_recipme/%s/all_public/%s/%s' % (username, order_by, direction))
 
+# ALL PUBLIC RECIPES PAGINATE # 
 @app.route('/my_recipme/<username>/all_public/<order_by>/<direction>')
 def public_paginate(username, order_by, direction):
     recipe_info = ViewVariables(username).var_all_public(order_by, direction)
@@ -211,7 +211,8 @@ def category_public(username):
        
         return redirect ('/my_recipme/%s/category_public/search/%s/%s/%s/%s/%s' % (username, table, column, category,
                                                                             order_by, direction))
-      
+
+# ALL PUBLIC RECIPES FOR GIVEN CATEGORY PAGINATE #
 @app.route('/my_recipme/<username>/category_public/search/<table>/<column>/<category>/<order_by>/<direction>')
 def category_public_paginate(username, table, column, category, order_by, direction):
     recipe_info = ViewVariables(username).var_cat_search(table, 'MakePublic', 1, column, category, order_by, direction)
@@ -234,7 +235,7 @@ def ingredient_search_public(username):
 
         return redirect('/my_recipme/%s/search/public/%s/%s/%s'% (username, ingredient, order_by, direction))
 
-
+# ALL PUBLIC RECIPES FOR A GIVEN INGREDIENT PAGINATE #
 @app.route('/my_recipme/<username>/search/public/<ingredient>/<order_by>/<direction>')
 def public_ingredient_paginate(username, ingredient, order_by, direction):
     # VALUE OF 1 IN SEARCH FUNCTION REPRESENTS MAKE PUBLIC VALUE OF 'YES' #
@@ -248,17 +249,14 @@ def public_ingredient_paginate(username, ingredient, order_by, direction):
                             cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)
-
-
-    
+ 
 ############### FULL RECIPE VIEW ##############################
 
 @app.route('/my_recipme/<username>/redirect', methods=['GET', 'POST'])
 def full_redirect(username):
     if request.method == 'POST':
         recipe_id = request.form['RecipeId']
-        #full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
-   
+
         return redirect('/my_recipme/%s/%s'% (username, recipe_id))
 
 @app.route('/my_recipme/<username>/<recipe_id>')
@@ -287,12 +285,14 @@ def creating_recipe(username):
         write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
         return redirect('my_recipme/%s/%s'% (username, 'create'))
 
-@app.route('/my_recipme/<username>/<action>')
+## ROUTE TO SHOW SUCESSFUL UPLOAD/EDIT OF RECIPE ##
+@app.route('/my_recipme/edit/<username>/<action>')
 def recipe_action(username, action):
     return render_template('crud_action.html', username=username, action=action)
 
 ############## UPDATE RECIPE ROUTES #########################
-    
+
+# EDIT RECIPE VIEW #
 @app.route('/my_recipme/<username>/edit_recipe/<recipe_id>', methods=['GET', 'POST'])
 def edit_recipe(username, recipe_id):
     full_recipe = ViewVariables(username).var_full_recipe(recipe_id)
@@ -300,6 +300,7 @@ def edit_recipe(username, recipe_id):
     return render_template('edit_recipe.html', username=username, 
                             full_recipe=full_recipe, title=title, recipe_id=recipe_id)
 
+# UPDATING RECIPE, REDIRECT TO RECIPE CRUD ACTION VIEW #
 @app.route('/my_recipme/<username>/updating_recipe/<recipe_id>', methods=['GET', 'POST'])
 def updating_recipe(username, recipe_id):
     if request.method == 'POST':
@@ -313,7 +314,7 @@ def updating_recipe(username, recipe_id):
         write_recipe.Update().update_ingredients_and_method(recipe_id, ingredient_list, 
                                                             method_list)
 
-        return redirect('my_recipme/%s/%s'% (username, 'update'))
+    return redirect('/my_recipme/edit/%s/%s'% (username, 'update'))
         
 ############## DELETE RECIPE ROUTE ##########################
 
@@ -326,6 +327,7 @@ def delete_recipe(username):
         return redirect('my_recipme/%s/%s'%(username, 'delete'))
 
 ############# SAVED RECIPE ROUTE ############################
+
 @app.route('/my_recipme/<username>/save_recipe/<recipe_id>', methods=['GET','POST'])
 def save_recipe(username, recipe_id):
     if request.method == 'POST':
