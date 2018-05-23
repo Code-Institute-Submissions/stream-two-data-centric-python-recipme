@@ -2,7 +2,7 @@
 import write_recipe
 from find_recipe import Get
 from db_update_delete import QueryDeleteRecipe
-from db_read import QueryReadRecipes, QueryAllData, TotalCuisinesCourses
+from db_read import QueryReadRecipes, QueryAllData, TotalCuisinesCourses, QueryRating
 
 ############## CLASS TO RETURN VARIABLES FOR VIEW FUNCTIONS, CALLED FROM WITHIN VIEW FUNCTIONS ##################
 
@@ -49,8 +49,8 @@ class ViewVariables():
     def var_ing_search(self, search_by, search_value, ingredient, order_by, direction):
         recipes = []
         count = 0
-        result = Get().get_recipes_by_ingredient(search_by, search_value, 
-                                                        ingredient, order_by, direction)
+        result = QueryReadRecipes().query_search_ingredient(search_by, search_value, 
+                                                            ingredient, order_by, direction)
         if result == []:
             count = 0
         else:
@@ -65,8 +65,9 @@ class ViewVariables():
 
     def var_cat_search(self, table, search_by, search_value, 
                             column, category, order_by, direction):
-        results = Get().get_category_mini_recipes(table, search_by, search_value, 
-                                                column, category,order_by, direction)
+        query = QueryReadRecipes()
+        results = query.query_category_mini_recipes(table, search_by, search_value, 
+                                                    column, category, order_by, direction)
         recipes = Get().date_time_converter(results)
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
@@ -77,22 +78,23 @@ class ViewVariables():
 
     def var_full_recipe(self, recipe_id):
         username = [{'Username':self.username}]
-        result = Get().get_all_mini_recipes('Recipe.RecipeId', recipe_id, 
-                                                       'RecipeTitle', 'asc')
+        result = QueryReadRecipes().query_all_mini_recipes('Recipe.RecipeId', recipe_id, 
+                                                            'RecipeTitle', 'asc')
         recipe = Get().date_time_converter(result)
-        ingredients = Get().get_ingredients_for_full_recipe(recipe_id)
-        method = Get().get_method_for_full_recipe(recipe_id)
+        ingredients = QueryReadRecipes().query_ingredients_for_full_recipe(recipe_id)
+        method = QueryReadRecipes().query_method_for_full_recipe(recipe_id)
         user_id = Get().get_user_id(username[0]['Username'])['UserId']
         is_saved = Get().get_is_recipe_saved(user_id, recipe_id)
-        ratings = Get().get_rating_and_comments(recipe_id)
-        average = Get().get_average_rating(ratings)
+        ratings = QueryRating(recipe_id).query_rating_and_comments()
+        #average = Get().get_average_rating(ratings)
 
-        return username, recipe, ingredients, method, is_saved, ratings, average
+        return username, recipe, ingredients, method, is_saved, ratings#, average
 
 ##---------------- RETURN ALL PUBLIC RECIPES ----------------##
 
     def var_all_public(self, order_by, direction):
-        result = Get().get_all_mini_recipes('MakePublic', 1, order_by, direction)
+        result = QueryReadRecipes().query_all_mini_recipes('MakePublic', 1, 
+                                                            order_by, direction)
         recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
@@ -102,13 +104,15 @@ class ViewVariables():
 ##---------------- RETURN ALL SAVED RECIPES FOR GIVEN USER ----------------##
 
     def var_saved_recipes(self, user_id, order_by, direction):
-        result = Get().get_saved_recipes_for_user(user_id, order_by, direction)
+        result = QueryReadRecipes().query_users_saved_recipes(user_id, 
+                                                                order_by, direction)
         recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
         ### INSERT RECIPE AUTHOR INTO RECIPE DICT ##
         for recipe in recipes:
-            author = Get().get_username(int(recipe['UserId']))
+            author = QueryReadRecipes().query_username_or_id('Username', 'UserId', 
+                                                                int(recipe['UserId']))
             recipe['Author'] = author[0]['Username']
         return recipes, count, groupings
         
