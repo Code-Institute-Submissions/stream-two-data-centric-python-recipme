@@ -299,7 +299,7 @@ class QueryAllData():
     def get_total_public(self):
         try:
             with Db() as cursor:
-                query = """SELECT COUNT(%s) as Total%s
+                query = """SELECT COUNT(%s) as Public%s
                             FROM %s WHERE MakePublic = 1; """ % (self.column, 
                                                                 self.table, self.table)
                 cursor.execute(query)

@@ -30,7 +30,7 @@ def index():
 def stats():
     stats = Totals().get_all_totals()
     stats_json = json.dumps(stats)
-    #print(type(stats_json))
+    print(stats_json)
     return stats_json
     
 # SIGN UP ROUTE #

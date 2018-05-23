@@ -1,7 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
     <h1>Welcome to RecipMe</h1>
-    <h2>Sign Up</h2>
     <form action="{{ url_for('signup') }}"method='POST'>
         <fieldset>
             <legend>Sign Up</legend>
@@ -21,10 +20,9 @@
         </fieldset>
     </form>
     <br>
-    <h2>Login</h2>
     <form action="{{ url_for('login') }}" method='POST'>
         <fieldset>
-            <legend>Login Details</legend>
+            <legend>Login</legend>
             Username: <br>
             <input type='text' id='Username' placeholder='Username' name='Username'>
             <br>
@@ -34,15 +32,20 @@
             <input type='submit' value='Login'>
         </fieldset>
     </form>
-    <div id='chart'>
-
+    <div>
+        <h3>Total Cuisines</h3>
+        <div id='cuisine-chart'></div>
+    </div>
+    <div >
+        <h3>Total Courses</h3>
+        <div id='course-chart'></div>
     </div>
 </body>
 {% endblock %}
 {% block js %}
-<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/d3.min.js')}}"></script>
-<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/crossfilter.min.js') }}"></script>
-<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/dc.min.js') }}"></script>
-<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/queue.min.js') }}"></script>
-<script type='text/javascript' defer src="{{ url_for('static', filename='js/scripts/login.js') }}"></script>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.js"></script>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/scripts/login.js') }}"></script>
 {% endblock %}
