@@ -31,15 +31,15 @@
             </form>
         </div>
         <br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <span class='flash'>{{ messages[0] }}</span>
+        {% endif %}
+        {% endwith %}
         <br>
         <div>   
             <form action="{{ url_for('login') }}" method='POST'>
                 <fieldset class='login'>
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <p>{{ messages[0] }}</p>
-                    {% endif %}
-                    {% endwith %}
                     <!--<legend class='login__legend'>Login.</legend>-->
                 <!-- <label class='login__label'>Username</label> -->
                     <br>

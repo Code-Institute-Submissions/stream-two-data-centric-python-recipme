@@ -56,9 +56,9 @@ def signup():
                 return redirect('/') 
 
 # IF USER ALEADY EXISTS CALL THIS ROUTE #
-@app.route('/user_taken', methods=['GET', 'POST'])
-def user_taken():    
-    return render_template('user_taken.html')
+#@app.route('/user_taken', methods=['GET', 'POST'])
+#def user_taken():    
+    #eturn render_template('user_taken.html')
 
 # LOGIN ROUTE #
 @app.route('/login', methods=['GET', 'POST'])
@@ -77,12 +77,12 @@ def login():
                 return redirect('my_recipme/%s'% user_values['Username'])
             else:
                 flash('Check your details and try again.')
-                return redirect('invalid_login')
+                return redirect('/')
 
 # IF LOGIN IS INVALID CALL THIS ROUTE # 
-@app.route('/invalid_login', methods=['GET', 'POST'])
-def invalid_login():
-    return render_template('invalid_login.html')
+#@app.route('/invalid_login', methods=['GET', 'POST'])
+#def invalid_login():
+    #return render_template('invalid_login.html')
 
 ################ MAIN MY RECIPME ROUTE ##########################       
 

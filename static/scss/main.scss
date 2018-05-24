@@ -89,3 +89,10 @@
     @include signup-button;
     background-color:#ffd24e99;
 }
+
+.flash {
+
+    display: block;
+    position: relative;
+    z-index: 1;
+}

@@ -92,4 +92,9 @@ a {
   font-size: 1rem;
   background-color: #ffd24e99; }
 
+.flash {
+  display: block;
+  position: relative;
+  z-index: 1; }
+
 /*# sourceMappingURL=main.css.map */
