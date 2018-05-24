@@ -277,6 +277,8 @@ class QueryRating():
                 return rating
         finally:
             print("Query Ratings based on RecipeId Completed")
+
+######################## CLASS TO GET STATS ON ALL RECIPES  ###################################################
  
 class QueryAllData():
     

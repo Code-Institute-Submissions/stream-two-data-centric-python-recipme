@@ -1,46 +1,69 @@
 {% extends 'base.html'%}
 {% block content %}
-    <h1>Welcome to RecipMe</h1>
-    <form action="{{ url_for('signup') }}"method='POST'>
-        <fieldset>
-            <legend>Sign Up</legend>
-            Username: <br>
-            <input type='text' id='Username' placeholder='Username' name='Username' value=''>
-            <br>
-            First name: <br>
-            <input type='text' id='First' placeholder='First Name' name='First' value=''>
-            <br>
-            Last name: <br>
-            <input type='text' id='Last' placeholder='Last Name' name='Last' value=''>
-            <br>
-            Password: <br>
-            <input type='password' id='Password' placeholder='Password' name='Password' value=''>
-            <br>
-            <input type='submit' value='Sign Up'>
-        </fieldset>
-    </form>
-    <br>
-    <form action="{{ url_for('login') }}" method='POST'>
-        <fieldset>
-            <legend>Login</legend>
-            Username: <br>
-            <input type='text' id='Username' placeholder='Username' name='Username'>
-            <br>
-            Password: <br>
-            <input type='password' id='Password' placeholder='Password' name='Password'>
-            <br>
-            <input type='submit' value='Login'>
-        </fieldset>
-    </form>
-    <div>
-        <h3>Total Cuisines</h3>
-        <div id='cuisine-chart'></div>
+
+<div class='title-container'>
+    <h1 class='title'>Recipme.</h1>
+</div>
+<div class='background-image'>
+    <div class='forms-container'>
+        <div>
+            <form action="{{ url_for('signup') }}" method='POST'>
+                <fieldset class='signup'>
+                    <!--<legend class='signup__legend'>Sign Up.</legend>-->
+                    <!--<label class='signup__label'></label>-->
+                    <br>
+                    <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username'>
+                    <br>
+                    <!--<label class='signup__label'>First name</label> -->
+                    <br>
+                    <input class='signup__input' type='text' id='First' placeholder='First Name' name='First'>
+                    <br>
+                    <!--<label class='signup__label'>Last name</label> -->
+                    <br>
+                    <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last'>
+                    <br>
+                <!-- <label class='signup__label'>Password</label> -->
+                    <br>
+                    <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password'>
+                    <br>
+                    <input class='signup__button' type='submit' value='Sign Up'>
+                </fieldset>
+            </form>
+        </div>
+        <br>
+        <br>
+        <div>   
+            <form action="{{ url_for('login') }}" method='POST'>
+                <fieldset class='login'>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <p>{{ messages[0] }}</p>
+                    {% endif %}
+                    {% endwith %}
+                    <!--<legend class='login__legend'>Login.</legend>-->
+                <!-- <label class='login__label'>Username</label> -->
+                    <br>
+                    <input class='login__input' type='text' id='Username' placeholder='Username' name='Username'>
+                    <br>
+                    <!--<label class='login__label'>Password</label>--> 
+                    <br>
+                    <input class='login__input' type='password' id='Password' placeholder='Password' name='Password'>
+                    <br>
+                    <input class='login__button' type='submit' value='Login'>
+                </fieldset>
+            </form>
+        </div>
+        <!--
+        <div>
+            <h3>Total Cuisines</h3>
+            <div id='cuisine-chart'></div>
+        </div>
+        <div >
+            <h3>Total Courses</h3>
+            <div id='course-chart'></div>
+        </div>-->
     </div>
-    <div >
-        <h3>Total Courses</h3>
-        <div id='course-chart'></div>
-    </div>
-</body>
+</div>
 {% endblock %}
 {% block js %}
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>

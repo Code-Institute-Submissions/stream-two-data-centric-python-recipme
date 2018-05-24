@@ -13,6 +13,7 @@ from flask import Flask, redirect, render_template, request, flash
 from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
+app.secret_key = 'my_cat_called_sumo'
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -23,14 +24,13 @@ app = Flask(__name__)
 # LANDING PAGE #
 @app.route('/', methods=['GET','POST'])
 def index():
-    
     return render_template('index.html')
 
 @app.route('/stats', methods = ['GET', 'POST'])
 def stats():
     stats = Totals().get_all_totals()
     stats_json = json.dumps(stats)
-    print(stats_json)
+    #print(stats_json)
     return stats_json
     
 # SIGN UP ROUTE #
@@ -39,10 +39,21 @@ def signup():
     if request.method == 'POST':
         user_values = request.form
         new_user = user_login.LogIn(user_values).sign_up()
-        if new_user == True:
-            return redirect('my_recipme/%s'% user_values['Username'])
+        if user_values['Username'] == '':
+            flash('Please fill in all the fields.')
+            return redirect('/')
+        elif  user_values['First'] == '':
+            flash('Please fill in all the fields.')
+            return redirect('/')
+        elif user_values['Last'] == '':
+            flash('Please fill in all the fields.')
+            return redirect('/')
         else:
-            return redirect('user_taken') 
+            if new_user == True:
+                return redirect('my_recipme/%s'% user_values['Username'])
+            else:
+                flash('Username taken, please choose a unique username.')
+                return redirect('/') 
 
 # IF USER ALEADY EXISTS CALL THIS ROUTE #
 @app.route('/user_taken', methods=['GET', 'POST'])
@@ -55,10 +66,18 @@ def login():
     if request.method == 'POST':
         user_values= request.form
         returning_user = user_login.LogIn(user_values).user_login()
-        if returning_user == True:
-            return redirect('my_recipme/%s'% user_values['Username'])
+        if user_values['Username'] == '':
+            flash('Please fill in all the fields.')
+            return redirect('/')
+        elif user_values['Password'] == '':
+            flash('Please fill in all the fields.')
+            return redirect('/')
         else:
-            return redirect('invalid_login')
+            if returning_user == True:
+                return redirect('my_recipme/%s'% user_values['Username'])
+            else:
+                flash('Check your details and try again.')
+                return redirect('invalid_login')
 
 # IF LOGIN IS INVALID CALL THIS ROUTE # 
 @app.route('/invalid_login', methods=['GET', 'POST'])
