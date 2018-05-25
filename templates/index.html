@@ -6,53 +6,46 @@
 </div>
 <div class='background-image'>
     <div class='forms-container'>
-        <div>
-            <form action="{{ url_for('signup') }}" method='POST'>
-                <fieldset class='signup'>
-                    <!--<legend class='signup__legend'>Sign Up.</legend>-->
-                    <!--<label class='signup__label'></label>-->
-                    <br>
-                    <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username'>
-                    <br>
-                    <!--<label class='signup__label'>First name</label> -->
-                    <br>
-                    <input class='signup__input' type='text' id='First' placeholder='First Name' name='First'>
-                    <br>
-                    <!--<label class='signup__label'>Last name</label> -->
-                    <br>
-                    <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last'>
-                    <br>
+        <input id='signup-button' class='signup__button' type='submit' value='Sign Up'>
+        <form action="{{ url_for('signup') }}" method='POST'>
+            <fieldset id='signup' class='signup'>
+                <!--<legend class='signup__legend'>Sign Up.</legend>-->
+                <!--<label class='signup__label'></label>-->
+                <br>
+                <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' required>
+                <br>
+                <!--<label class='signup__label'>First name</label> -->
+                <br>
+                <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' required>
+                <br>
+                <!--<label class='signup__label'>Last name</label> -->
+                <br>
+                <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' required>
+                <br>
                 <!-- <label class='signup__label'>Password</label> -->
-                    <br>
-                    <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password'>
-                    <br>
-                    <input class='signup__button' type='submit' value='Sign Up'>
-                </fieldset>
-            </form>
-        </div>
+                <br>
+                <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                <br>
+                
+            </fieldset>
+        </form>
         <br>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <span class='flash'>{{ messages[0] }}</span>
-        {% endif %}
-        {% endwith %}
         <br>
-        <div>   
-            <form action="{{ url_for('login') }}" method='POST'>
-                <fieldset class='login'>
-                    <!--<legend class='login__legend'>Login.</legend>-->
-                <!-- <label class='login__label'>Username</label> -->
-                    <br>
-                    <input class='login__input' type='text' id='Username' placeholder='Username' name='Username'>
-                    <br>
-                    <!--<label class='login__label'>Password</label>--> 
-                    <br>
-                    <input class='login__input' type='password' id='Password' placeholder='Password' name='Password'>
-                    <br>
-                    <input class='login__button' type='submit' value='Login'>
-                </fieldset>
-            </form>
-        </div>
+        <input id='login-button' class='login__button' type='submit' value='Login'>
+        <form action="{{ url_for('login') }}" method='POST'>
+            <fieldset id='login'class='login'>
+                <!--<legend class='login__legend'>Login.</legend>-->
+            <!-- <label class='login__label'>Username</label> -->
+                <br>
+                <input class='login__input' type='text' id='Username' placeholder='Username' name='Username' required>
+                <br>
+                <!--<label class='login__label'>Password</label>--> 
+                <br>
+                <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                <br>
+            </fieldset>
+        </form>
+       
         <!--
         <div>
             <h3>Total Cuisines</h3>

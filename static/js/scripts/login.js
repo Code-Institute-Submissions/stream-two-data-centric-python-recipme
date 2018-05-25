@@ -86,3 +86,30 @@ const getRecipesData = (url) => {
 getRecipesData('/stats');
 
 //---------------------------------------------------------------------------//
+//---------------------------------------------------------------------------//
+
+//------------------------ BUTTON DROPDOWN ----------------------------------//
+
+//const formButton = document.getElementsByClassName('dropdown');
+const signUpButton = document.getElementById('signup-button');
+const logInButton = document.getElementById('login-button');
+
+const signUpForm = document.getElementById('signup');
+const logInForm = document.getElementById('login');
+
+
+
+logInButton.addEventListener('click', function() {
+    //console.log(logInForm);
+    logInForm.classList.toggle('show-login-form');
+    // this.nextElementSibling.style.display ='none';
+    
+});
+
+signUpButton.addEventListener('click', function() {
+    //console.log(logInForm);
+    signUpForm.classList.toggle('show-signup-form');
+    // this.nextElementSibling.style.display ='none';
+    
+});
+
