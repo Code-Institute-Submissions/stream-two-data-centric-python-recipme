@@ -1,62 +1,87 @@
 {% extends 'base.html'%}
 {% block content %}
+<body class='login-body'>
 
-<div class='title-container'>
-    <h1 class='title'>Recipme.</h1>
-</div>
-<div class='background-image'>
-    <div class='forms-container'>
-        <input id='signup-button' class='signup__button' type='submit' value='Sign Up'>
-        <form action="{{ url_for('signup') }}" method='POST'>
-            <fieldset id='signup' class='signup'>
-                <!--<legend class='signup__legend'>Sign Up.</legend>-->
-                <!--<label class='signup__label'></label>-->
-                <br>
-                <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' required>
-                <br>
-                <!--<label class='signup__label'>First name</label> -->
-                <br>
-                <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' required>
-                <br>
-                <!--<label class='signup__label'>Last name</label> -->
-                <br>
-                <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' required>
-                <br>
-                <!-- <label class='signup__label'>Password</label> -->
-                <br>
-                <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
-                <br>
-                
-            </fieldset>
-        </form>
-        <br>
-        <br>
-        <input id='login-button' class='login__button' type='submit' value='Login'>
-        <form action="{{ url_for('login') }}" method='POST'>
-            <fieldset id='login'class='login'>
-                <!--<legend class='login__legend'>Login.</legend>-->
-            <!-- <label class='login__label'>Username</label> -->
-                <br>
-                <input class='login__input' type='text' id='Username' placeholder='Username' name='Username' required>
-                <br>
-                <!--<label class='login__label'>Password</label>--> 
-                <br>
-                <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
-                <br>
-            </fieldset>
-        </form>
-       
-        <!--
-        <div>
-            <h3>Total Cuisines</h3>
-            <div id='cuisine-chart'></div>
+    <header id='header' class='header'>
+        <div class='title-container'>
+            <h1 class='title title--color'>Recipme.</h1>
         </div>
-        <div >
-            <h3>Total Courses</h3>
-            <div id='course-chart'></div>
-        </div>-->
+    </header>
+    <!--<hr>-->
+    <div class='content-wrapper'>
+        <section class='title-image-container title-image-container--color'>
+            <div class='title-image'>
+            </div>
+        </section>
+        <section>
+            <div id='sting' class='sting'>
+                <h2 class='sting__heading sting__heading--color'> Create. Cook. Share. </h2>
+                <!--<p class='info__text info__text--color'> Publish recipes, find recipes, <br> get feedback, give feedback. <br> <strong>Have fun!</strong>-->
+                </p>
+            </div>
+        </section>
+        
+        <section>
+            <div id='forms-container' class='signup-container forms-container--color forms-login-display'>
+                <input id='signup-button' class='signup__button dropdown signup__button--color' type='submit' value='Sign Up'>
+                <form action="{{ url_for('signup') }}" method='POST'>
+                    <fieldset id='signup' class='signup signup--color'>
+                        <br>
+                        <input class='signup__input signup__input--bg--color' type='text' id='Username' placeholder='Username' name='Username' required>
+                        <br>
+                        <br>
+                        <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' required>
+                        <br>
+                        <br>
+                        <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' required>
+                        <br>
+                        <br>
+                        <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                        <br>
+                    </fieldset>
+                </form>
+                <br>
+                <br>
+            </div>
+        </section>
+        <!--<hr>-->
+        <section class='join-us'>
+           <!-- <p class='join-us__text'><strong><span class='join-us__title'>Join us!</span></strong> -->
+                <button id='join-us-button' class='join-us__button' type='button'>Join Us!</button>
+            <p class='join-us__text'>
+                Contribute to our growing online cookbook. <br>Entirely created by you!
+                Create your own recipes, publish your favourites, browse the community, get feedback,
+                give feedback and most of all, have fun!
+            </p>
+        </section>
+        <div class='login-container'>
+            <input id='login-button' class='login__button  login__button--color dropdown' type='submit' value='Login'>
+            <form action="{{ url_for('login') }}" method='POST'>
+                <fieldset id='login'class='login'>
+                    <br>
+                    <input class='login__input' type='text' id='Username' placeholder='Username' name='Username' required>
+                    <br>
+                    <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                    <br>
+                </fieldset>
+            </form>
+        </div>
+        <div id='more-info-container' class='more-info'>
+            <button id='more-info' class='more-info-button more-info-button--color' type='button'>More info.</button>
+        </div>
+        <section id='stats' class='stats stats--color'>
+            <!--<p class='stat__stats'> <strong>We are growing!</strong></p> <br>-->
+            <p class='stat__stats'><span class='stat__value'>{{ stats[2]['TotalUser'] }}</span><br> Active Users.</p> <br> 
+            <p class='stat__stats'><span class='stat__value'>{{ stats[0]['TotalRecipe'] }}</span><br>Total Recipes.</p><br>
+            <p id='stat-scroll' class='stat__stats'><span class='stat__value'>{{ shared }}%</span><br>Of all Recipes are Shared!</p>
+            <h3 class='stats__label'>Our users favourite Courses.</h3>
+            <div id='course-chart'>
+            </div>
+            <h3 class='stats__label'>Our users favourite Cuisines.</h3>
+            <div id='cuisine-chart'></div>
+        </section>
     </div>
-</div>
+</body>
 {% endblock %}
 {% block js %}
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>

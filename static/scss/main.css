@@ -12,18 +12,72 @@ button, input {
 a {
   text-decoration: none; }
 
-.background-image {
-  background-image: url("../images/dull-1418280-pxhere.com-65percent.jpg");
+hr {
+  margin: 0; }
+
+p, h3, h4, h5, h6 {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  color: #1d3355; }
+
+.header {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  transition: top 0.3s ease-in-out; }
+
+.sticky {
+  top: -6rem; }
+
+.content-wrapper {
+  position: relative;
+  top: 4.1rem; }
+
+.title-image {
+  background-image: url("../images/bright-1418280-pxhere.com-65percent.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center;
-  height: 34rem; }
+  height: 15rem;
+  width: 80%;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75); }
 
-.forms-container {
+.title-image-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center; }
+
+.title-image-container--color {
+  background-color: #fff; }
+
+.sting {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.sting--style {
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26); }
+
+.sting__heading,
+.sting__text {
+  font-family: "Pacifico", cursive; }
+
+.sting__heading {
+  font-size: 1.3rem; }
+
+.sting__heading--color {
+  color: #1d3355; }
+
+.sting__text {
+  width: 18rem;
+  text-align: center;
+  font-size: 1rem; }
+
+.sting__text--color {
+  color: #1d3355; }
 
 .title-container {
   display: flex;
@@ -34,8 +88,31 @@ a {
   font-family: "Pacifico", cursive;
   font-size: 2rem;
   margin: 0;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.5rem; }
+
+.title--color {
   color: #1d3355; }
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
+  max-height: 20rem;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.forms-login-display {
+  max-height: 0rem;
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.forms-container--color {
+  background-color: #e7e9ca4d; }
 
 .login__label,
 .signup__label {
@@ -49,46 +126,42 @@ a {
 
 .signup, .login {
   border: 0;
-  border-radius: 12px;
   margin: 1rem;
   width: 15rem;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-content: center;
-  align-items: center; }
-
-.signup {
+  align-items: center;
   padding: 0;
   max-height: 0rem;
   overflow: hidden;
-  transition: max-height 0.4s ease-in-out; }
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
-.login {
-  padding: 0;
-  max-height: 0rem;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out; }
+.signup--color {
+  background-color: #e9ef8200; }
 
 .show-login-form {
+  padding: 0.5rem;
   max-height: 5rem;
-  transition: max-height 0.4s ease-in-out; }
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .show-signup-form {
+  padding: 0.5rem;
   max-height: 10rem;
-  transition: max-height 0.4s ease-in-out; }
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
 .login__input {
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  border: 0.5px solid black;
+  border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
   font-size: 1rem;
-  width: 11rem; }
+  width: 11rem;
+  color: #1d3355;
+  background-color: #e9ef8200; }
 
 .signup-submit,
 .login-submit {
@@ -97,27 +170,34 @@ a {
   justify-content: center; }
 
 .login__button {
-  height: 3rem;
-  width: 7rem;
-  border-radius: 25px;
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
   border: 0.5px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 1rem;
-  background-color: #033382;
+  font-size: 0.8rem;
+  margin-top: 1.5rem; }
+
+.login__button--color {
+  background-color: #1d3355;
   color: #fff; }
 
 .signup__button {
-  height: 3rem;
-  width: 7rem;
-  border-radius: 25px;
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
   border: 0.5px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 1rem;
-  background-color: #fdd664; }
+  font-size: 0.8rem;
+  margin-top: 2rem; }
+
+.signup__button--color {
+  background-color: #fdd664;
+  color: #1d3355; }
 
 .flash {
   display: block;
@@ -125,5 +205,69 @@ a {
   z-index: 1;
   font-family: "Nanum Gothic", sans-serif;
   background-color: #fff; }
+
+.join-us__button, .more-info-button {
+  border: 0;
+  border-bottom: 1px solid #1d3355;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  background-color: #fff;
+  transition: border 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+
+.join-us__button:hover, .more-info-button:hover {
+  cursor: pointer; }
+
+.join-us, .more-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.join-us--style {
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16); }
+
+.join-us__text {
+  text-align: center;
+  width: 90%; }
+
+.join-us__title {
+  font-size: 1rem; }
+
+.more-info {
+  padding-bottom: 2rem; }
+
+.more-info--style {
+  box-shadow: 0px 2.5px 1px 1px rgba(0, 0, 0, 0.16); }
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: 0;
+  overflow: hidden;
+  padding-bottom: 0rem;
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding-bottom 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.stats-show {
+  max-height: 60rem;
+  padding-bottom: 2rem;
+  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding-bottom 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.stats--color {
+  background-color: #e7e9ca4d; }
+
+.stat__stats {
+  text-align: center;
+  font-size: 1rem; }
+
+.stat__value {
+  font-size: 4rem; }
+
+.dc-chart .pie-slice {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem; }
+
+.stats__label {
+  font-size: 1.2rem; }
 
 /*# sourceMappingURL=main.css.map */

@@ -24,7 +24,10 @@ app.secret_key = 'my_cat_called_sumo'
 # LANDING PAGE #
 @app.route('/', methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    stats = Totals().get_all_totals()
+    percentage_shared = Totals().get_percentage_shared(stats)
+   # print(percentage_shared)
+    return render_template('index.html', stats=stats, shared=percentage_shared)
 
 @app.route('/stats', methods = ['GET', 'POST'])
 def stats():

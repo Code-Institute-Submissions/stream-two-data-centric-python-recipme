@@ -154,7 +154,12 @@ class Totals():
        
         return totals
 
+    def get_percentage_shared(self, stats):
+        total_recipes = int(stats[0]['TotalRecipe'])
+        total_shared = int(stats[1]['PublicRecipe'])
+        percentage_shared = int((total_shared/total_recipes) * 100)
 
+        return percentage_shared
     
 
     

@@ -30,6 +30,8 @@ const getRequest = (url) => {
         xhr.send()  
     });
 };
+
+
 // -------------------------------- VISUALISATION ---------------------------- //
 
 const makePieGraph = (recipeData) => {
@@ -42,14 +44,19 @@ const makePieGraph = (recipeData) => {
     const total_cuisine = cuisine_dim.group();
 
     dc.pieChart('#cuisine-chart')
-        .height(330)
+        .height(200)
         .radius(120)
         .transitionDuration(1500)
         .dimension(cuisine_dim)
         .group(total_cuisine);
 
-    dc.barChart('#course-chart')
-        .width(600)
+    dc.pieChart('#course-chart')
+        .height(200)
+        .radius(120)
+        .transitionDuration(1500)
+        .dimension(course_dim)
+        .group(total_course);
+        /*.width(600)
         .height(200)
         .margins({top: 10, right: 50, bottom: 30, left: 50})
         .transitionDuration(1500)
@@ -58,7 +65,7 @@ const makePieGraph = (recipeData) => {
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .xAxisLabel('Courses')
-        .yAxis().ticks(4);
+        .yAxis().ticks(4);*/
 
     dc.renderAll();
 };
@@ -73,6 +80,7 @@ const getRecipesData = (url) => {
             const data = JSON.parse(response);
             const recipeData = data;
             makePieGraph(recipeData);
+            //console.log(recipeData);
             
         })
         .catch((error) => {
@@ -88,28 +96,116 @@ getRecipesData('/stats');
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 
-//------------------------ BUTTON DROPDOWN ----------------------------------//
+//------------------------ FORM BUTTON DROPDOWNS ----------------------------------//
 
-//const formButton = document.getElementsByClassName('dropdown');
 const signUpButton = document.getElementById('signup-button');
 const logInButton = document.getElementById('login-button');
-
 const signUpForm = document.getElementById('signup');
 const logInForm = document.getElementById('login');
 
+// DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
+const formAccordian = (button, show, hide, showStyle, hideStyle) => {
 
+    button.addEventListener('click', () => {
 
-logInButton.addEventListener('click', function() {
-    //console.log(logInForm);
-    logInForm.classList.toggle('show-login-form');
-    // this.nextElementSibling.style.display ='none';
+        show.classList.toggle(`${showStyle}`);
+        hide.classList.remove(`${hideStyle}`);
+       
+    });
     
-});
+};
 
-signUpButton.addEventListener('click', function() {
-    //console.log(logInForm);
-    signUpForm.classList.toggle('show-signup-form');
-    // this.nextElementSibling.style.display ='none';
+formAccordian(logInButton, logInForm, signUpForm, 'show-login-form', 'show-signup-form');
+formAccordian(signUpButton, signUpForm,logInForm, 'show-signup-form',  'show-login-form');
+
+
+// ACCORDIAN VARIABLES FOR JOIN US AND MORE INFO //
+
+const joinUsButton = document.getElementById('join-us-button');
+const formsContainer = document.getElementById('forms-container');
+const stingContainer = document.getElementById('sting');
+
+const moreInfoButton = document.getElementById('more-info');
+const moreInfoContainer = document.getElementById('more-info-container');
+const scrollToStat = document.getElementById('stat-scroll');
+const statsContainer = document.getElementById('stats');
+
+
+const formSectionAccordian = () => {
+
+    joinUsButton.addEventListener('click', () => {
+
+        formsContainer.classList.toggle('forms-login-display');
+        stingContainer.classList.toggle('sting--style');
     
-});
+    });
+
+}
+
+// SCROLL TO WINDOW ELEMENT FUNCTION // 
+
+const scrollTo = (element) => {
+    window.scroll({
+      behavior: 'smooth',
+      left: 0,
+      top: element.offsetTop
+    });
+  }
+
+// STATS SECTION ACCORDIAN WITH SCROLL TO FUNCTIONALITY //
+
+const statsAccordian = () => {
+
+    moreInfoButton.addEventListener('click', () => {
+        
+        if (statsContainer.classList.contains('stats-show')) {
+
+            scrollTo(moreInfoContainer);
+            statsContainer.classList.remove('stats-show');
+            moreInfoContainer.classList.remove('more-info--style');
+
+        } else {
+           // getRecipesData('/stats');
+            statsContainer.classList.add('stats-show');
+            moreInfoContainer.classList.add('more-info--style');
+            setTimeout(scrollToStatElement, 500);
+        }
+        
+    });
+}
+
+// CALL SCROLL TO FUNCTION FOR ELEME
+const scrollToStatElement = () => {
+
+    if (statsContainer.classList.contains('stats-show')) {
+
+        scrollTo(scrollToStat);
+    }
+
+}
+
+formSectionAccordian();
+statsAccordian();
+
+//------------------------ STICKY HEADER -------------------------------//
+
+window.onscroll = () => {
+
+    stickyHeader();
+}
+
+const header = document.getElementById('header');
+const sticky = statsContainer.offsetTop;
+
+const stickyHeader = () => {
+
+    if (window.pageYOffset <= sticky){
+
+        header.classList.remove('sticky');
+
+    } else {
+
+        header.classList.add('sticky');
+    }
+}
 

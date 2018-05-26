@@ -2,24 +2,121 @@
 @import 'helpers/mixins';
 @import 'helpers/global_resets';
 
-//------------------ LOGIN PAGE -------------------//
-.background-image {
 
-    background-image: url('../images/dull-1418280-pxhere.com-65percent.jpg');
+//GLOBAL SETTINGS //
+
+p, h3, h4, h5, h6 {
+
+    font-family: $nanum; 
+    font-size: 0.8rem;
+    color: $title-color;
+}
+
+.login-body {
+
+    //background-color: #f4f5e380;
+}
+
+.header {
+
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    transition: top 0.3s ease-in-out;
+}
+
+.sticky {
+
+    top:-6rem;
+}
+//------------------ LOGIN PAGE -------------------//
+
+.content-wrapper {
+
+    position: relative;
+    top: 4.1rem;
+
+}
+
+.title-image {
+
+    background-image: url('../images/bright-1418280-pxhere.com-65percent.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
-    height: 34rem;
+    height: 15rem;
+    width: 80%;
+   // border: 1px solid $title-color;
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+    //background: #fff;
 }
 
+//.overlay {
 
-.forms-container {
+  //  height: 100%;
+   // width: 100%;
+  //  background: rgba(255, 255, 255, 0.37);
+//}
+// BLURB //
+.title-image-container {
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-image-container--color {
+
+    background-color: #fff;
+}
+.sting {
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    
+    
+}
 
+.sting--style {
+
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+    //background-color: $title-color;
+
+}
+
+.sting__heading,
+.sting__text {
+
+    font-family: $pacifico;
+}
+
+.sting__heading {
+
+    //margin-bottom: 0;
+    font-size: 1.3rem;
+   // margin-top: 0;
+}
+
+.sting__heading--color {
+
+    color: $title-color;
+
+}
+
+.sting__text {
+
+    width: 18rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.sting__text--color {
+
+    color: $title-color;
 }
 
 .title-container {
@@ -27,6 +124,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
 }
 
 
@@ -36,7 +134,45 @@
     font-size: 2rem;
     margin: 0;
     padding-bottom: 0.5rem;
-    color: #1d3355;
+
+}
+
+.title--color {
+
+    color: $title-color;
+
+}
+
+// FORMS //
+
+.signup-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
+    max-height: 20rem;
+    overflow: hidden;
+    transition: max-height $dropDownTransition;
+  
+}
+
+.login-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.forms-login-display {
+
+    max-height: 0rem;
+    transition: max-height $dropDownTransition;
+}
+
+.forms-container--color {
+
+    background-color:#e7e9ca4d;
 }
 
 .login__label, 
@@ -58,42 +194,31 @@
 .signup, .login { 
 
    @include login-page-forms;
-
+   padding: 0;
+   max-height: 0rem;
+   overflow: hidden;
+   transition: max-height $dropDownTransition, padding $dropDownTransition;
 }
 
+.signup--color {
 
-.signup {
-
-    padding: 0;
-    max-height: 0rem;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-    //transition: max-height 0.4s ease-in-out;
-}
-
-.login {
-
-    padding: 0;
-    max-height: 0rem;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-    
+    background-color: #e9ef8200;
 }
 
 .show-login-form {
 
-    
+    padding: 0.5rem;
     max-height: 5rem;
-    transition: max-height 0.4s ease-in-out;
-    
+    transition: max-height $dropDownTransition, padding $dropDownTransition;
+   
 }
 
 .show-signup-form {
 
+    padding: 0.5rem;
     max-height: 10rem;
-    transition: max-height 0.4s ease-in-out;
-    
-
+    transition: max-height $dropDownTransition, padding $dropDownTransition;
+   
 }
 
 
@@ -102,10 +227,16 @@
 
     @include form-input;
     width: 11rem;
-    
+    color: $title-color;
+    background-color: #e9ef8200;
 }
 
 //-------------- LOGIN/SIGNUP BUTTONS -----------------//
+.photo-separator {
+
+  //  margin-bottom: 2rem;
+}
+
 .signup-submit,
 .login-submit {
 
@@ -118,15 +249,27 @@
 .login__button {
 
     @include form-button;
-    background-color: #033382;
-    color: #fff;
+    margin-top: 1.5rem;
+  
+}
 
+.login__button--color {
+
+    background-color: #1d3355;
+    color: #fff;
 }
 
 .signup__button {
 
     @include form-button;
+    margin-top: 2rem;
+}
+
+.signup__button--color {
+
     background-color:#fdd664;
+    color: $title-color;
+
 }
 
 .flash {
@@ -136,4 +279,119 @@
     z-index: 1;
     font-family: $nanum;
     background-color: #fff;
+}
+
+//--------------------- INFO --------------------------- //
+
+.join-us__button {
+
+    //@include form-button;
+    border: 0;
+    border-bottom: 1px solid $title-color;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    background-color: #fff;
+    transition: border 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.join-us__button:hover {
+
+    //border-bottom: 1px solid $title-color;
+    cursor: pointer;
+}
+
+.join-us {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    //box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16); 
+}
+.join-us--style {
+
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
+}
+
+
+.join-us__text {
+
+    text-align: center;
+    width: 90%;
+}
+
+.join-us__title {
+
+    font-size: 1rem;
+}
+
+.more-info {
+
+    @extend .join-us;
+    padding-bottom: 2rem;
+}
+
+.more-info--style {
+
+    box-shadow: 0px 2.5px 1px 1px rgba(0, 0, 0, 0.16)
+}
+.more-info-button {
+
+    @extend .join-us__button;
+}
+
+.more-info-button:hover {
+
+    @extend .join-us__button:hover;
+}
+
+.stats {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height:0;
+    overflow: hidden;
+    padding-bottom: 0rem;
+    transition: max-height $dropDownTransition, padding-bottom $dropDownTransition;
+}
+
+.stats-show {
+
+    max-height: 60rem;
+    padding-bottom: 2rem;
+    transition: max-height $dropDownTransition, padding-bottom $dropDownTransition;
+
+}
+.stats--color {
+
+    background-color:#e7e9ca4d;
+    
+}
+
+.stat__stats {
+
+    text-align: center;
+    font-size: 1rem;
+}
+
+.stat__value {
+    font-size: 4rem;
+   // display: block;
+    //border: 1px solid;
+   // border-radius: 49px;
+   // padding: 0.5rem;
+}
+
+// CHARTS //
+
+.dc-chart .pie-slice {
+
+    font-family: $nanum;
+    font-size: 0.8rem;
+}
+
+.stats__label {
+
+    font-size: 1.2rem;
 }
