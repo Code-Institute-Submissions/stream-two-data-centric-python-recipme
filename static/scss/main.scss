@@ -47,8 +47,8 @@ p, h3, h4, h5, h6 {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
-    height: 15rem;
-    width: 80%;
+    height: 34rem;
+    width: 90%;
    // border: 1px solid $title-color;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
     //background: #fff;
@@ -91,7 +91,7 @@ p, h3, h4, h5, h6 {
 .sting__heading,
 .sting__text {
 
-    font-family: $pacifico;
+    font-family: $nanum;
 }
 
 .sting__heading {
@@ -208,7 +208,7 @@ p, h3, h4, h5, h6 {
 .show-login-form {
 
     padding: 0.5rem;
-    max-height: 5rem;
+    max-height: 10rem;
     transition: max-height $dropDownTransition, padding $dropDownTransition;
    
 }
@@ -262,7 +262,7 @@ p, h3, h4, h5, h6 {
 .signup__button {
 
     @include form-button;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
 }
 
 .signup__button--color {

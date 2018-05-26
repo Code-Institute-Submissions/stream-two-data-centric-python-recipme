@@ -23,7 +23,6 @@
         
         <section>
             <div id='forms-container' class='signup-container forms-container--color forms-login-display'>
-                <input id='signup-button' class='signup__button dropdown signup__button--color' type='submit' value='Sign Up'>
                 <form action="{{ url_for('signup') }}" method='POST'>
                     <fieldset id='signup' class='signup signup--color'>
                         <br>
@@ -38,6 +37,7 @@
                         <br>
                         <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
                         <br>
+                        <input id='signup-button' class='signup__button dropdown signup__button--color' type='submit' value='Sign Up'>
                     </fieldset>
                 </form>
                 <br>
@@ -55,14 +55,14 @@
             </p>
         </section>
         <div class='login-container'>
-            <input id='login-button' class='login__button  login__button--color dropdown' type='submit' value='Login'>
             <form action="{{ url_for('login') }}" method='POST'>
-                <fieldset id='login'class='login'>
+                <fieldset id='login'class='login show-login-form'>
                     <br>
                     <input class='login__input' type='text' id='Username' placeholder='Username' name='Username' required>
                     <br>
                     <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
                     <br>
+                    <input id='login-button' class='login__button  login__button--color dropdown' type='submit' value='Login'>
                 </fieldset>
             </form>
         </div>

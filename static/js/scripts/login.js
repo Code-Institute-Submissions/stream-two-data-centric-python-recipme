@@ -56,16 +56,7 @@ const makePieGraph = (recipeData) => {
         .transitionDuration(1500)
         .dimension(course_dim)
         .group(total_course);
-        /*.width(600)
-        .height(200)
-        .margins({top: 10, right: 50, bottom: 30, left: 50})
-        .transitionDuration(1500)
-        .dimension(course_dim)
-        .group(total_course)
-        .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal)
-        .xAxisLabel('Courses')
-        .yAxis().ticks(4);*/
+       
 
     dc.renderAll();
 };
@@ -103,24 +94,7 @@ const logInButton = document.getElementById('login-button');
 const signUpForm = document.getElementById('signup');
 const logInForm = document.getElementById('login');
 
-// DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
-const formAccordian = (button, show, hide, showStyle, hideStyle) => {
-
-    button.addEventListener('click', () => {
-
-        show.classList.toggle(`${showStyle}`);
-        hide.classList.remove(`${hideStyle}`);
-       
-    });
-    
-};
-
-formAccordian(logInButton, logInForm, signUpForm, 'show-login-form', 'show-signup-form');
-formAccordian(signUpButton, signUpForm,logInForm, 'show-signup-form',  'show-login-form');
-
-
 // ACCORDIAN VARIABLES FOR JOIN US AND MORE INFO //
-
 const joinUsButton = document.getElementById('join-us-button');
 const formsContainer = document.getElementById('forms-container');
 const stingContainer = document.getElementById('sting');
@@ -129,6 +103,25 @@ const moreInfoButton = document.getElementById('more-info');
 const moreInfoContainer = document.getElementById('more-info-container');
 const scrollToStat = document.getElementById('stat-scroll');
 const statsContainer = document.getElementById('stats');
+
+// DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
+const formAccordian = (button, show,  showStyle) => {
+
+    button.addEventListener('click', () => {
+
+        show.classList.toggle(`${showStyle}`);
+        //hide.classList.remove(`${hideStyle}`);
+       
+    });
+    
+};
+
+//formAccordian(logInButton, logInForm, signUpForm, 'show-login-form', 'show-signup-form');
+formAccordian(joinUsButton, signUpForm, 'show-signup-form');
+
+
+
+
 
 
 const formSectionAccordian = () => {
