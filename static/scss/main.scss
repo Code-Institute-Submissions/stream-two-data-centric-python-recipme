@@ -52,14 +52,18 @@ p, h3, h4, h5, h6 {
    // border: 1px solid $title-color;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
     //background: #fff;
+
+    @include mobile {
+
+        height: 15rem;
+    }
+
+    @include tablet {
+
+        height: 34rem;
+    }
 }
 
-//.overlay {
-
-  //  height: 100%;
-   // width: 100%;
-  //  background: rgba(255, 255, 255, 0.37);
-//}
 // BLURB //
 .title-image-container {
 
@@ -75,17 +79,13 @@ p, h3, h4, h5, h6 {
 .sting {
 
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    
-    
+    flex-direction: column;
+    align-items: center; 
 }
 
 .sting--style {
 
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
-    //background-color: $title-color;
-
+    box-shadow: 0px 6px 5px 0px rgba(0, 0, 0, 0.26);
 }
 
 .sting__heading,
@@ -250,7 +250,14 @@ p, h3, h4, h5, h6 {
 
     @include form-button;
     margin-top: 1.5rem;
-  
+    transition: width 0.3s $dropDownTransition; 
+                //color $dropDownTransition, 
+                //border $dropDownTransition;
+}
+
+.login__button:hover {
+
+    width: 4rem;
 }
 
 .login__button--color {
@@ -259,16 +266,40 @@ p, h3, h4, h5, h6 {
     color: #fff;
 }
 
+.login__button--click {
+
+    border: 1px solid $title-color;
+    background-color: #fff;
+    color:$title-color;
+    width: 4rem;
+}
+
+
 .signup__button {
 
     @include form-button;
     margin-top: 0.5rem;
+    transition: width 0.3s $dropDownTransition; 
+}
+
+
+.signup__button:hover {
+
+    width: 4rem;
 }
 
 .signup__button--color {
 
     background-color:#fdd664;
     color: $title-color;
+}
+
+.signup__button--click {
+
+    border: 1px solid $title-color;
+    background-color: #e7e9ca4d;
+    color: $title-color;
+    width: 4rem;
 
 }
 
@@ -394,4 +425,12 @@ p, h3, h4, h5, h6 {
 .stats__label {
 
     font-size: 1.2rem;
+}
+
+// FLASHED MESSAGES //
+
+.flashed {
+
+    color: #dd1414;
+    margin-top: 0;
 }

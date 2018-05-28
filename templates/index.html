@@ -16,9 +16,17 @@
         <section>
             <div id='sting' class='sting'>
                 <h2 class='sting__heading sting__heading--color'> Create. Cook. Share. </h2>
-                <!--<p class='info__text info__text--color'> Publish recipes, find recipes, <br> get feedback, give feedback. <br> <strong>Have fun!</strong>-->
-                </p>
+                <!--<p class='info__text info__text--color'> Publish recipes, find recipes, <br> get feedback, give feedback. <br> <strong>Have fun!</strong>
+                </p>-->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <p class='flashed'> {{ message }}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
             </div>
+           
         </section>
         
         <section>
@@ -49,7 +57,7 @@
            <!-- <p class='join-us__text'><strong><span class='join-us__title'>Join us!</span></strong> -->
                 <button id='join-us-button' class='join-us__button' type='button'>Join Us!</button>
             <p class='join-us__text'>
-                Contribute to our growing online cookbook. <br>Entirely created by you!
+                Contribute to our growing online cookbook.Entirely created by you!  <br>
                 Create your own recipes, publish your favourites, browse the community, get feedback,
                 give feedback and most of all, have fun!
             </p>

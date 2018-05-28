@@ -80,21 +80,17 @@ const getRecipesData = (url) => {
 
 };
 
-//---------------------- CALL XHR -------------------------------------------//
-
-getRecipesData('/stats');
-
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 
-//------------------------ FORM BUTTON DROPDOWNS ----------------------------------//
+//------------------------ BUTTON AND FORM VARIABLES ----------------------------------//
 
 const signUpButton = document.getElementById('signup-button');
 const logInButton = document.getElementById('login-button');
 const signUpForm = document.getElementById('signup');
 const logInForm = document.getElementById('login');
 
-// ACCORDIAN VARIABLES FOR JOIN US AND MORE INFO //
+// ACCORDIAN VARIABLES FOR JOIN US AND MORE INFO BUTTON //
 const joinUsButton = document.getElementById('join-us-button');
 const formsContainer = document.getElementById('forms-container');
 const stingContainer = document.getElementById('sting');
@@ -104,26 +100,20 @@ const moreInfoContainer = document.getElementById('more-info-container');
 const scrollToStat = document.getElementById('stat-scroll');
 const statsContainer = document.getElementById('stats');
 
+//-------------------------- ACCORDIAN FUNCTIONS ----------------------------------------//
+
 // DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
 const formAccordian = (button, show,  showStyle) => {
 
     button.addEventListener('click', () => {
 
         show.classList.toggle(`${showStyle}`);
-        //hide.classList.remove(`${hideStyle}`);
-       
+        
     });
     
 };
 
-//formAccordian(logInButton, logInForm, signUpForm, 'show-login-form', 'show-signup-form');
-formAccordian(joinUsButton, signUpForm, 'show-signup-form');
-
-
-
-
-
-
+// SIGN UP FORM ACCORDDIAN SECTION //
 const formSectionAccordian = () => {
 
     joinUsButton.addEventListener('click', () => {
@@ -167,7 +157,9 @@ const statsAccordian = () => {
     });
 }
 
-// CALL SCROLL TO FUNCTION FOR ELEME
+//------------------------------ AUTO SCROLL -----------------------------//
+
+// CALL SCROLL TO FUNCTION FOR ELEMENT //
 const scrollToStatElement = () => {
 
     if (statsContainer.classList.contains('stats-show')) {
@@ -177,15 +169,7 @@ const scrollToStatElement = () => {
 
 }
 
-formSectionAccordian();
-statsAccordian();
-
 //------------------------ STICKY HEADER -------------------------------//
-
-window.onscroll = () => {
-
-    stickyHeader();
-}
 
 const header = document.getElementById('header');
 const sticky = statsContainer.offsetTop;
@@ -202,3 +186,41 @@ const stickyHeader = () => {
     }
 }
 
+//-------------------------------------------------------------------------//
+
+//------------------------- CLICK STYLES ---------------------------------//
+
+const formButtonClick = (button, styles) => {
+
+    button.addEventListener('mousedown', () => {
+
+        button.classList.add(`${styles}`);
+    });
+
+    button.addEventListener('mouseup', () => {
+
+        button.classList.remove(`${styles}`);
+    });
+}
+
+// ----------------------- FUNCTION CALLS ------------------------------- //
+
+window.onscroll = () => {
+
+    stickyHeader();
+}
+
+// ACCORDIANS //
+
+formSectionAccordian();
+statsAccordian();
+formAccordian(joinUsButton, signUpForm, 'show-signup-form');
+
+//CALL XHR //
+
+getRecipesData('/stats');
+
+// CLICK STYLES //
+
+formButtonClick(logInButton, 'login__button--click');
+formButtonClick(signUpButton, 'signup__button--click');

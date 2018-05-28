@@ -43,13 +43,13 @@ def signup():
         user_values = request.form
         new_user = user_login.LogIn(user_values).sign_up()
         if user_values['Username'] == '':
-            #flash('Please fill in all the fields.')
+            flash('Please fill in all the fields.')
             return redirect('/')
         elif  user_values['First'] == '':
-            #flash('Please fill in all the fields.')
+            flash('Please fill in all the fields.')
             return redirect('/')
         elif user_values['Last'] == '':
-            #flash('Please fill in all the fields.')
+            flash('Please fill in all the fields.')
             return redirect('/')
         else:
             if new_user == True:
@@ -70,10 +70,10 @@ def login():
         user_values= request.form
         returning_user = user_login.LogIn(user_values).user_login()
         if user_values['Username'] == '':
-            #flash('Please fill in all the fields.')
+            flash('Please fill in all the fields.')
             return redirect('/')
         elif user_values['Password'] == '':
-            #flash('Please fill in all the fields.')
+            flash('Please fill in all the fields.')
             return redirect('/')
         else:
             if returning_user == True:

@@ -44,6 +44,12 @@ p, h3, h4, h5, h6 {
   height: 34rem;
   width: 90%;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75); }
+  @media (min-width: 575px) {
+    .title-image {
+      height: 15rem; } }
+  @media (min-width: 767px) {
+    .title-image {
+      height: 34rem; } }
 
 .title-image-container {
   display: flex;
@@ -55,11 +61,11 @@ p, h3, h4, h5, h6 {
 
 .sting {
   display: flex;
-  flex-direction: row;
-  justify-content: center; }
+  flex-direction: column;
+  align-items: center; }
 
 .sting--style {
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26); }
+  box-shadow: 0px 6px 5px 0px rgba(0, 0, 0, 0.26); }
 
 .sting__heading,
 .sting__text {
@@ -178,11 +184,21 @@ p, h3, h4, h5, h6 {
   margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
-  margin-top: 1.5rem; }
+  margin-top: 1.5rem;
+  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.login__button:hover {
+  width: 4rem; }
 
 .login__button--color {
   background-color: #1d3355;
   color: #fff; }
+
+.login__button--click {
+  border: 1px solid #1d3355;
+  background-color: #fff;
+  color: #1d3355;
+  width: 4rem; }
 
 .signup__button {
   height: 2rem;
@@ -193,11 +209,21 @@ p, h3, h4, h5, h6 {
   margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
-  margin-top: 0.5rem; }
+  margin-top: 0.5rem;
+  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+
+.signup__button:hover {
+  width: 4rem; }
 
 .signup__button--color {
   background-color: #fdd664;
   color: #1d3355; }
+
+.signup__button--click {
+  border: 1px solid #1d3355;
+  background-color: #e7e9ca4d;
+  color: #1d3355;
+  width: 4rem; }
 
 .flash {
   display: block;
@@ -269,5 +295,9 @@ p, h3, h4, h5, h6 {
 
 .stats__label {
   font-size: 1.2rem; }
+
+.flashed {
+  color: #dd1414;
+  margin-top: 0; }
 
 /*# sourceMappingURL=main.css.map */
