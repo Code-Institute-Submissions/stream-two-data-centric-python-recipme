@@ -93,7 +93,7 @@ def login():
 @app.route('/my_recipme/<username>')
 def my_recipme(username):
     recipe_groups = ViewVariables(username).groupings()
-    return render_template('my_recipme.html', username=username, cuisines=recipe_groups[0][0], 
+    return render_template('my_recipme.html', search=False, username=username, cuisines=recipe_groups[0][0], 
                             courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
                             public_courses=recipe_groups[1][1])
 
@@ -117,7 +117,7 @@ def all_myrecipme_paginate(username, order_by, direction):
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
 
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0],
+    return render_template('my_recipme.html', search=True, username=username, my_recipme=recipe_info[0],
                             count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                             results=pagination_results, page=page, per_page=per_page, pagination=pagination)

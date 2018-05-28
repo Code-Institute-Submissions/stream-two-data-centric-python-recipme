@@ -1,5 +1,5 @@
 
-{% include 'my_recipme.html' %}
+{% block search %}
 <h2>Your search results.</h2>
 {% if count == 1 %}
 <p> Found {{ count }} RecipMe.</p>
@@ -9,3 +9,4 @@
 {% include 'mini_recipe_partial.html' %}
 {% block mini_recipe %}
 {% endblock mini_recipe %}
+{% endblock search %}

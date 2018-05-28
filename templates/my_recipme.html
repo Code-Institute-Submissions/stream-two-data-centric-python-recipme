@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 <body>
-    <header id='header' class='header'>
+    <header id='header' class='header header--relative'>
         <div class='title-container'>
             <h1 class='title'>Recipme.</h1>
+            <div id='burger-menu'class='bars'>
+                <div class="bars__bar1"></div>
+                <div class="bars__bar2"></div>
+                <div class="bars__bar3"></div>
+            </div>
         </div>
+        <ul>
+            <li><a href="{{ url_for('add_recipe', username=username) }}">Create</a></li>
+            <li> <a href="{{ url_for('index')}}">Log Out</a></li>
+        </ul>
     </header>
+    
     <div>
-        <h1><a href="{{ url_for('my_recipme', username=username)}}">My RecipMe.</a></h1>
-        <p>Welcome {{ username }}!</p>
-        <h2>View your RecipMe's.</h2>
-        <p>Search all of your cookbook, search by Cuisine, Course, or by Ingredient.</p>
+        <p>Logged in as {{ username }}!</p>
+        <h2>My RecipMe's.</h2>
+        <p>Search all of your cookbook, by Cuisine, Course, or Ingredient.</p>
     </div>
     <div></div>
-    <a href="{{ url_for('add_recipe', username=username) }}">Create a New RecipMe</a>
-    <br> 
-    <a href="{{ url_for('index')}}">Log Out</a>
+    
     <br>
     <h3>View All MyRecipMe's</h3>
     <form action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
@@ -194,6 +201,9 @@
             <option value="desc">Descending</option>
         </select>
     </form>
+    {% if search == True %}
+    {% include 'all_my_recipme.html' %}
+    {% endif %}
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
 </body>

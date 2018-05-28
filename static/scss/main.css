@@ -28,6 +28,9 @@ p, a, h3, h4, h5, h6, button, select {
   z-index: 1;
   transition: top 0.3s ease-in-out; }
 
+.header--relative {
+  position: relative; }
+
 .sticky {
   top: -6rem; }
 
@@ -82,7 +85,8 @@ p, a, h3, h4, h5, h6, button, select {
 .title-container {
   display: flex;
   flex-direction: row;
-  justify-content: center; }
+  justify-content: center;
+  align-items: center; }
 
 .title {
   font-family: "Pacifico", cursive;
@@ -281,5 +285,28 @@ p, a, h3, h4, h5, h6, button, select {
 .flashed {
   color: #dd1414;
   margin-top: 0; }
+
+.bars {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  left: 6rem; }
+
+.bars__bar1, .bars__bar2, .bars__bar3 {
+  width: 1.5rem;
+  height: 0.2rem;
+  background-color: #1d3355;
+  margin: 0.3rem;
+  transition: .4s;
+  border-radius: 4px; }
+
+.alter .bars__bar1 {
+  transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
+
+.alter .bars__bar2 {
+  opacity: 0; }
+
+.alter .bars__bar3 {
+  transform: rotate(425deg) translate(-0.6rem, 0.2rem); }
 
 /*# sourceMappingURL=main.css.map */

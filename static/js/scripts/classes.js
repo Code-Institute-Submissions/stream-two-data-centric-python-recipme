@@ -1,4 +1,5 @@
 
+// ---------------------------- LOGIN PAGE RELATED JS ------------------------ //
 // -------------------------------- VISUALISATION ---------------------------- //
 
 
@@ -125,8 +126,9 @@ class LoginVariables {
         this.header, this.sticky;
         
     }
-    }
-    //-------------------------- ACCORDIANS ----------------------------------------//
+}
+
+   //-------------------------- ACCORDIANS ----------------------------------------//
 
 class FormAccordian {
     // DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
@@ -161,7 +163,7 @@ class StatAccordian {
         this.moreInfoContainer = moreInfoContainer;
     
     }
-    // STATS SECTION ACCORDIAN WITH SCROLL TO FUNCTIONALITY //
+// STATS SECTION ACCORDIAN WITH SCROLL TO FUNCTIONALITY //
     statsAccordian(){
 
         this.moreInfoButton.addEventListener('click', () => {
@@ -182,9 +184,9 @@ class StatAccordian {
         });
     }
 
-    //------------------------------ AUTO SCROLL -----------------------------//
+//------------------------------ AUTO SCROLL -----------------------------//
 
-    // SCROLL TO WINDOW ELEMENT FUNCTION // 
+// SCROLL TO WINDOW ELEMENT FUNCTION // 
     scrollTo() {
         
         console.log('here');
@@ -229,4 +231,22 @@ const formButtonClick = (button, styles) => {
     });
 }
     
+// -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
 
+
+class MyRecipmeVariables {
+
+    constructor () {
+
+        this.burgerMenu = document.getElementById('burger-menu');
+
+    }
+}
+
+const clickBurgerMenu = (icon) => {
+
+    icon.addEventListener('click', () => {
+
+        icon.classList.toggle('alter');
+    })
+}
