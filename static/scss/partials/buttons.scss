@@ -1,0 +1,15 @@
+//BUTTONS//
+
+// LOGIN PAGE //
+@mixin form-button {
+
+    height: 2rem;
+    width: 6rem;
+    border-radius:4px;
+    border: 0.5px;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    font-family: $nanum;
+    font-size: 0.8rem;
+
+}

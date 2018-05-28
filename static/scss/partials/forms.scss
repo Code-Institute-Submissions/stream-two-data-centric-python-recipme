@@ -1,0 +1,27 @@
+
+//FORMS//
+
+@mixin form-input {
+
+    margin-bottom: 0.5rem;
+    border: 0.5px solid $title-color;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    font-family: $nanum;
+    font-size: 1rem;
+}
+
+@mixin login-page-forms {
+
+    border: 0;
+    margin: 1rem;
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    
+}
+
+

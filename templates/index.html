@@ -1,23 +1,14 @@
 {% extends 'base.html'%}
 {% block content %}
 <body class='login-body'>
-
-    <header id='header' class='header'>
-        <div class='title-container'>
-            <h1 class='title title--color'>Recipme.</h1>
-        </div>
-    </header>
-    <!--<hr>-->
-    <div class='content-wrapper'>
-        <section class='title-image-container title-image-container--color'>
+    <div class='login-content-wrapper'>
+        <section class='title-image-container'>
             <div class='title-image'>
             </div>
         </section>
         <section>
             <div id='sting' class='sting'>
-                <h2 class='sting__heading sting__heading--color'> Create. Cook. Share. </h2>
-                <!--<p class='info__text info__text--color'> Publish recipes, find recipes, <br> get feedback, give feedback. <br> <strong>Have fun!</strong>
-                </p>-->
+                <h2 class='sting__heading'> Create. Cook. Share. </h2>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
                 {% for message in messages %}
@@ -26,15 +17,13 @@
                 {% endif %}
                 {% endwith %}
             </div>
-           
         </section>
-        
         <section>
-            <div id='forms-container' class='signup-container forms-container--color forms-login-display'>
+            <div id='forms-container' class='signup-container forms-login-display'>
                 <form action="{{ url_for('signup') }}" method='POST'>
                     <fieldset id='signup' class='signup signup--color'>
                         <br>
-                        <input class='signup__input signup__input--bg--color' type='text' id='Username' placeholder='Username' name='Username' required>
+                        <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' required>
                         <br>
                         <br>
                         <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' required>
@@ -45,17 +34,15 @@
                         <br>
                         <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
                         <br>
-                        <input id='signup-button' class='signup__button dropdown signup__button--color' type='submit' value='Sign Up'>
+                        <input id='signup-button' class='signup__button dropdown' type='submit' value='Sign Up'>
                     </fieldset>
                 </form>
                 <br>
                 <br>
             </div>
         </section>
-        <!--<hr>-->
         <section class='join-us'>
-           <!-- <p class='join-us__text'><strong><span class='join-us__title'>Join us!</span></strong> -->
-                <button id='join-us-button' class='join-us__button' type='button'>Join Us!</button>
+            <button id='join-us-button' class='join-us__button' type='button'>Join Us!</button>
             <p class='join-us__text'>
                 Contribute to our growing online cookbook.Entirely created by you!  <br>
                 Create your own recipes, publish your favourites, browse the community, get feedback,
@@ -70,15 +57,14 @@
                     <br>
                     <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
                     <br>
-                    <input id='login-button' class='login__button  login__button--color dropdown' type='submit' value='Login'>
+                    <input id='login-button' class='login__button dropdown' type='submit' value='Login'>
                 </fieldset>
             </form>
         </div>
         <div id='more-info-container' class='more-info'>
-            <button id='more-info' class='more-info-button more-info-button--color' type='button'>More info.</button>
+            <button id='more-info' class='more-info-button' type='button'>More info.</button>
         </div>
         <section id='stats' class='stats stats--color'>
-            <!--<p class='stat__stats'> <strong>We are growing!</strong></p> <br>-->
             <p class='stat__stats'><span class='stat__value'>{{ stats[2]['TotalUser'] }}</span><br> Active Users.</p> <br> 
             <p class='stat__stats'><span class='stat__value'>{{ stats[0]['TotalRecipe'] }}</span><br>Total Recipes.</p><br>
             <p id='stat-scroll' class='stat__stats'><span class='stat__value'>{{ shared }}%</span><br>Of all Recipes are Shared!</p>
@@ -96,5 +82,6 @@
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.js"></script>
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
 <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/login.js') }}"></script>
 {% endblock %}

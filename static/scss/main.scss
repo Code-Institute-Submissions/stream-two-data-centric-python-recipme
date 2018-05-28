@@ -1,21 +1,12 @@
+@import 'helpers/variables';
+@import 'helpers/colors';
 @import 'helpers/fonts';
-@import 'helpers/mixins';
+@import 'helpers/media_queries';
 @import 'helpers/global_resets';
+@import 'partials/forms';
+@import 'partials/buttons';
 
-
-//GLOBAL SETTINGS //
-
-p, h3, h4, h5, h6 {
-
-    font-family: $nanum; 
-    font-size: 0.8rem;
-    color: $title-color;
-}
-
-.login-body {
-
-    //background-color: #f4f5e380;
-}
+//------------------ LOGIN PAGE -------------------//
 
 .header {
 
@@ -31,9 +22,10 @@ p, h3, h4, h5, h6 {
 
     top:-6rem;
 }
-//------------------ LOGIN PAGE -------------------//
 
-.content-wrapper {
+//------------------------------------------------//
+
+.login-content-wrapper {
 
     position: relative;
     top: 4.1rem;
@@ -49,9 +41,7 @@ p, h3, h4, h5, h6 {
     background-position: center;
     height: 34rem;
     width: 90%;
-   // border: 1px solid $title-color;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
-    //background: #fff;
 
     @include mobile {
 
@@ -70,12 +60,9 @@ p, h3, h4, h5, h6 {
     display:flex;
     justify-content: center;
     align-items: center;
-}
-
-.title-image-container--color {
-
     background-color: #fff;
 }
+
 .sting {
 
     display: flex;
@@ -96,15 +83,9 @@ p, h3, h4, h5, h6 {
 
 .sting__heading {
 
-    //margin-bottom: 0;
     font-size: 1.3rem;
-   // margin-top: 0;
-}
-
-.sting__heading--color {
-
     color: $title-color;
-
+ 
 }
 
 .sting__text {
@@ -112,10 +93,6 @@ p, h3, h4, h5, h6 {
     width: 18rem;
     text-align: center;
     font-size: 1rem;
-}
-
-.sting__text--color {
-
     color: $title-color;
 }
 
@@ -127,23 +104,16 @@ p, h3, h4, h5, h6 {
     
 }
 
-
 .title {
 
     font-family: $pacifico;
     font-size: 2rem;
     margin: 0;
     padding-bottom: 0.5rem;
-
-}
-
-.title--color {
-
     color: $title-color;
-
 }
 
-// FORMS //
+// LOGIN PAGE FORMS //
 
 .signup-container {
 
@@ -153,6 +123,7 @@ p, h3, h4, h5, h6 {
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
     max-height: 20rem;
     overflow: hidden;
+    background-color: $carousel-inner;
     transition: max-height $dropDownTransition;
   
 }
@@ -162,17 +133,13 @@ p, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 .forms-login-display {
 
     max-height: 0rem;
     transition: max-height $dropDownTransition;
-}
-
-.forms-container--color {
-
-    background-color:#e7e9ca4d;
 }
 
 .login__label, 
@@ -188,7 +155,7 @@ p, h3, h4, h5, h6 {
 
     font-family: $nanum;
     font-size: 2rem;
-    //margin-bottom: 1.5rem;
+
 }
 
 .signup, .login { 
@@ -197,19 +164,17 @@ p, h3, h4, h5, h6 {
    padding: 0;
    max-height: 0rem;
    overflow: hidden;
-   transition: max-height $dropDownTransition, padding $dropDownTransition;
-}
-
-.signup--color {
-
-    background-color: #e9ef8200;
+   background-color: #e9ef8200;
+   transition: max-height $dropDownTransition, 
+                padding $dropDownTransition;
 }
 
 .show-login-form {
 
     padding: 0.5rem;
     max-height: 10rem;
-    transition: max-height $dropDownTransition, padding $dropDownTransition;
+    transition: max-height $dropDownTransition, 
+                            padding $dropDownTransition;
    
 }
 
@@ -217,7 +182,8 @@ p, h3, h4, h5, h6 {
 
     padding: 0.5rem;
     max-height: 10rem;
-    transition: max-height $dropDownTransition, padding $dropDownTransition;
+    transition: max-height $dropDownTransition, 
+                padding $dropDownTransition;
    
 }
 
@@ -232,10 +198,6 @@ p, h3, h4, h5, h6 {
 }
 
 //-------------- LOGIN/SIGNUP BUTTONS -----------------//
-.photo-separator {
-
-  //  margin-bottom: 2rem;
-}
 
 .signup-submit,
 .login-submit {
@@ -251,19 +213,14 @@ p, h3, h4, h5, h6 {
     @include form-button;
     margin-top: 1.5rem;
     transition: width 0.3s $dropDownTransition; 
-                //color $dropDownTransition, 
-                //border $dropDownTransition;
+    background-color: #1d3355;
+    color: #fff;
+        
 }
 
 .login__button:hover {
 
     width: 4rem;
-}
-
-.login__button--color {
-
-    background-color: #1d3355;
-    color: #fff;
 }
 
 .login__button--click {
@@ -279,19 +236,14 @@ p, h3, h4, h5, h6 {
 
     @include form-button;
     margin-top: 0.5rem;
-    transition: width 0.3s $dropDownTransition; 
+    transition: width 0.3s $dropDownTransition;
+    background-color:#fdd664;
+    color: $title-color;
 }
-
 
 .signup__button:hover {
 
     width: 4rem;
-}
-
-.signup__button--color {
-
-    background-color:#fdd664;
-    color: $title-color;
 }
 
 .signup__button--click {
@@ -316,7 +268,6 @@ p, h3, h4, h5, h6 {
 
 .join-us__button {
 
-    //@include form-button;
     border: 0;
     border-bottom: 1px solid $title-color;
     font-size: 1rem;
@@ -327,7 +278,6 @@ p, h3, h4, h5, h6 {
 
 .join-us__button:hover {
 
-    //border-bottom: 1px solid $title-color;
     cursor: pointer;
 }
 
@@ -336,13 +286,12 @@ p, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    //box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16); 
+    
 }
 .join-us--style {
 
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
 }
-
 
 .join-us__text {
 
@@ -384,6 +333,7 @@ p, h3, h4, h5, h6 {
     max-height:0;
     overflow: hidden;
     padding-bottom: 0rem;
+    background-color:$carousel-inner;;
     transition: max-height $dropDownTransition, padding-bottom $dropDownTransition;
 }
 
@@ -392,12 +342,8 @@ p, h3, h4, h5, h6 {
     max-height: 60rem;
     padding-bottom: 2rem;
     transition: max-height $dropDownTransition, padding-bottom $dropDownTransition;
-
-}
-.stats--color {
-
-    background-color:#e7e9ca4d;
     
+
 }
 
 .stat__stats {
@@ -408,10 +354,6 @@ p, h3, h4, h5, h6 {
 
 .stat__value {
     font-size: 4rem;
-   // display: block;
-    //border: 1px solid;
-   // border-radius: 49px;
-   // padding: 0.5rem;
 }
 
 // CHARTS //
@@ -434,3 +376,5 @@ p, h3, h4, h5, h6 {
     color: #dd1414;
     margin-top: 0;
 }
+
+//------------------------------------ MY RECIPE PAGE -------------------------------------------//

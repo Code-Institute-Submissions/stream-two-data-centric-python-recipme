@@ -1,5 +1,6 @@
 // global resets //
 
+
 html {
 
     font-size: 16px;
@@ -28,3 +29,12 @@ hr {
 
     margin: 0;
 }
+
+
+p, a, h3, h4, h5, h6, button, select {
+
+    font-family: $nanum; 
+    font-size: 0.8rem;
+    color: $title-color;
+}
+

@@ -1,0 +1,55 @@
+// MEDIA QUERIES //
+
+$sm-mobile-width: 375px;
+$mobile-width: 575px;
+$tablet-width: 767px;
+$desktop-width: 991px;
+$large-desktop-width: 1199px;
+
+
+
+@mixin sm-mobile {
+
+    @media(min-width:$sm-mobile-width){
+        
+        @content;
+    }
+}
+
+@mixin mobile {
+
+    @media(min-width:$mobile-width){
+        
+        @content;
+    }
+}
+
+@mixin tablet {
+
+    @media(min-width:$tablet-width) {
+        
+        @content;
+    }
+}
+
+@mixin desktop {
+
+    @media(min-width:$desktop-width){
+        
+        @content;
+    }
+}
+
+@mixin large {
+
+    @media(min-width:$large-desktop-width){
+
+        @content;
+    }
+}
+
+//---------------------------------------------------------------------//
+
+
+
+
