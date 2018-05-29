@@ -5,6 +5,7 @@
 @import 'helpers/global_resets';
 @import 'partials/forms';
 @import 'partials/buttons';
+@import 'partials/dropdown';
 
 //------------------ LOGIN PAGE -------------------//
 
@@ -21,12 +22,42 @@
 .header--relative {
 
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     
 }
 
 .sticky {
 
     top:-6rem;
+}
+
+
+.title-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.title-container-recipme {
+
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.title {
+
+    font-family: $pacifico;
+    font-size: 2rem;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    color: $title-color;
 }
 
 //------------------------------------------------//
@@ -102,23 +133,6 @@
     color: $title-color;
 }
 
-.title-container {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    
-}
-
-.title {
-
-    font-family: $pacifico;
-    font-size: 2rem;
-    margin: 0;
-    padding-bottom: 0.5rem;
-    color: $title-color;
-}
 
 // LOGIN PAGE FORMS //
 
@@ -386,40 +400,65 @@
 
 //------------------------------------ MY RECIPE PAGE -------------------------------------------//
 
-//  MENU ICON //
+.login-info {
 
-.bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.login-info p {
+
+    padding-right: 1rem;
+}
+
+.login-info h2 {
+    
+    font-family: $nanum;
+    padding-left: 1rem;
+    font-size: 1.2rem;
+    color: $title-color;
+}
+
+.hr-90 {
+
+    width: 90%;
+    color: #1d33554d;
+    margin: 0 auto; 
+
+}
+
+.my-recipme {
+
+   // display: flex;
+    //flex-direction: column;
+    //align-items: center;
+    //justify-content: center;
+}
+
+.public {
+
+    display: none;
+}
+
+.ingredient {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.ingredient__form {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+}
+
+.ingredient__select {
 
     display: inline-block;
-    cursor: pointer;
-    position: relative;
-    left: 6rem;
-}
-
-.bars__bar1, .bars__bar2, .bars__bar3 {
-
-    width: 1.5rem;
-    height: 0.2rem;
-    background-color: #1d3355;
-    margin: 0.3rem;
-    transition: .4s;
-    border-radius: 4px;
-}
-
-.alter .bars__bar1 {
-
-    transform: rotate(-65deg) translate(-0.4rem, 0.4rem);
-    
-}
-
-
-.alter .bars__bar2 {
-
-    opacity: 0;
-}
-
-
-.alter .bars__bar3 {
-
-    transform: rotate(425deg) translate(-0.6rem, 0.2rem);
+    padding: 1rem;
 }

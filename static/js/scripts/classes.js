@@ -233,20 +233,29 @@ const formButtonClick = (button, styles) => {
     
 // -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
 
-
+// -------------------------- MY RECIPME RELATED JS -------------------------------//
 class MyRecipmeVariables {
 
-    constructor () {
-
-        this.burgerMenu = document.getElementById('burger-menu');
-
-    }
+   
 }
 
-const clickBurgerMenu = (icon) => {
+class NavDropDown {
 
-    icon.addEventListener('click', () => {
+    constructor() {
 
-        icon.classList.toggle('alter');
-    })
+        this.burgerMenu = document.getElementById('burger-menu');
+        this.navSideBar = document.getElementById('side-bar');
+
+    }
+
+    clickBurgerMenu() {
+
+        this.burgerMenu.addEventListener('click', () => {
+
+            this.burgerMenu.classList.toggle('alter');
+            this.navSideBar.classList.toggle('show-side-bar');
+        })
+    }
+
+    
 }

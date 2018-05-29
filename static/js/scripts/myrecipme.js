@@ -1,7 +1,3 @@
-const burgerIcon = new MyRecipmeVariables();
+const mobileNavMenu = new NavDropDown();
 
-
-
-const icon = burgerIcon.burgerMenu;
-
-clickBurgerMenu(icon);
+mobileNavMenu.clickBurgerMenu();
