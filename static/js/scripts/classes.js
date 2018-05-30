@@ -130,9 +130,9 @@ class LoginVariables {
 
    //-------------------------- ACCORDIANS ----------------------------------------//
 
-class FormAccordian {
+class Accordian {
     // DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
-    formAccordian(button, show,  showStyle){
+    accordian(button, show,  showStyle){
 
         button.addEventListener('click', () => {
 
@@ -142,7 +142,7 @@ class FormAccordian {
         
     };
 
-    // SIGN UP FORM ACCORDDIAN SECTION //
+    // SIGN UP FORM ACCORDIAN SECTION //
     formSectionAccordian(button, formsContainer, stingContainer) {
         button.addEventListener('click', () => {
 
@@ -150,6 +150,40 @@ class FormAccordian {
             stingContainer.classList.toggle('sting--style');
         
         });
+
+    }
+
+    // RECIPME MAIN ACCORDIAN //
+    recipemeAccordian(element, showStyle, activeStyle) {
+            
+        for (let i=0; i < element.length; i++) { // LOOP THROUGH ARRAY OF CONTAINERS ASSIGN EACH TO 'i'
+
+            element[i].addEventListener('click', function() { // ADD EVENT LISTENER
+
+            if (this.nextElementSibling.classList.contains(`${showStyle}`)){ 
+
+                this.classList.remove(`${activeStyle}`);
+                this.nextElementSibling.classList.remove(`${showStyle}`); // REMOVE STYLE ON BUTTON
+                
+            } else {
+
+                for (let j=0; j < element.length; j++) { // LOOP THROUGH CONTAINERS AGAIN BUT ASSIGN TO 'j', REMOVE SHOW STYLE ON J
+
+                    if(element[j].nextElementSibling.classList.contains(`${showStyle}`)){
+
+                        element[j].nextElementSibling.classList.remove(`${showStyle}`);
+                        element[j].classList.remove(`${activeStyle}`);
+                    }
+                }
+
+                this.classList.add(`${activeStyle}`);
+                this.nextElementSibling.classList.add(`${showStyle}`); // RE-APPLY SHOW STYLE TO CLICKED 'i'
+                
+            }
+
+            });
+        
+        }
 
     }
 }
@@ -163,6 +197,7 @@ class StatAccordian {
         this.moreInfoContainer = moreInfoContainer;
     
     }
+
 // STATS SECTION ACCORDIAN WITH SCROLL TO FUNCTIONALITY //
     statsAccordian(){
 
@@ -236,6 +271,10 @@ const formButtonClick = (button, styles) => {
 // -------------------------- MY RECIPME RELATED JS -------------------------------//
 class MyRecipmeVariables {
 
+        constructor() {
+
+            this.outerAccordian = document.getElementsByClassName('accordian-outer');
+        }
    
 }
 

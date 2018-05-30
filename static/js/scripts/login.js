@@ -1,7 +1,7 @@
 // ----------------- LOGIN PAGE ---------------------------------------------------- //
 
 const element = new LoginVariables();
-const form = new FormAccordian();
+const form = new Accordian();
 const stat = new StatAccordian(element.moreInfoButton, element.statsContainer, 
                                 element.moreInfoContainer);
 
@@ -16,7 +16,7 @@ window.onscroll = () => {
 form.formSectionAccordian(element.joinUsButton, element.formsContainer, 
                                                 element.stingContainer);
 stat.statsAccordian();
-form.formAccordian(element.joinUsButton, element.signUpForm, 'show-signup-form');
+form.accordian(element.joinUsButton, element.signUpForm, 'show-signup-form');
 
 // CALL XHR //
 

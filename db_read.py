@@ -118,6 +118,7 @@ class QueryReadRecipes():
                                     column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, 
             SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
+        print(table)
         join_table = []
         if table == 'Cuisine':
             join_table = 'Course'

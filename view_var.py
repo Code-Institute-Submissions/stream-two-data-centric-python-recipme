@@ -65,6 +65,7 @@ class ViewVariables():
 
     def var_cat_search(self, table, search_by, search_value, 
                             column, category, order_by, direction):
+        #print(order_by)
         query = QueryReadRecipes()
         results = query.query_category_mini_recipes(table, search_by, search_value, 
                                                     column, category, order_by, direction)

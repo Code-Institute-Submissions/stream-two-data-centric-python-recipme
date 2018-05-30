@@ -18,155 +18,95 @@
         </ul>
     </div>
     <div class='login-info'>
-        <h2>My RecipMe's.</h2>
+        <h2>My Recipme's.</h2>
         <p>Logged in as {{ username }}.</p>
     </div>
     <hr class='hr-90'>
     <section id='my-recipme' class='my-recipme'>
-        <div class='accordian-inner ingredient'>
-            <h3>Ingredient Search.</h3>
-            <div class='ingredient__form-container'>
-                <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
-                    <div>
-                        <input type='text' placeholder='Ingredient' name='Ingredient' required maxlength="50">
-                    </div>
-                    <br>
-                    <div class='ingredient__sort'>
-                        <select name="SortBy">
-                        <!--<option value="RecipeTitle">Sort By:</option>-->
-                            <option value="RecipeTitle">Alphabetical</option>
-                            <option value="CookingTimeMins">Cooking Time</option>
-                            <option value="Created">Created Date</option>
-                            <option value="Price">Cost</option>
-                            <option value="Servings">Servings</option>
-                            <option value="Calories">Calories</option>
-                        </select>
-                        <select name="Direction">
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div>
-                        <input type='submit' value='Search'>
-                    </div>
-                </form>
+        <!--<p class='my-recipme__instructions'><strong>Find a recipe.</strong></p>-->
+        <div class='accordian'>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Ingredient</h3>
             </div>
-        </div>
-     
+            <div class='accordian-inner ingredient'>
+                <div class='ingredient__form-container'>
+                    <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+                        <div>
+                            <input class='ingredient__input' type='text' placeholder='Search' name='Ingredient' required maxlength="50">
+                        </div>
+                        <br>
+                        {% include 'search_sort.html' %}
+                        <br>
+                        <div>
+                            <input class='accordian-submit' type='submit' value='Search'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>All</h3>
+            </div>
             <div class='accordian-inner all-recipe'>
-                <h3>All MyRecipMe's</h3>
                 <div>
                     <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
-                        <div class='all-recipe__sort'>
-                            <select name="SortBy">
-                            <!--<option value="RecipeTitle">Sort By:</option>-->
-                                <option value="RecipeTitle">Alphabetical</option>
-                                <option value="CookingTimeMins">Cooking Time</option>
-                                <option value="Created">Created Date</option>
-                                <option value="Price">Cost</option>
-                                <option value="Servings">Servings</option>
-                                <option value="Calories">Calories</option>
-                            </select>
-                            <select name="Direction">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
+                        {% include 'search_sort.html' %}
                         <div>
-                            <button type='submit'>All MyRecipMe's</button>
+                            <button class='accordian-submit'type='submit'>Search</button>
                         </div>
                     </form>
                 </div>
             </div>
-      
-        
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Saved</h3>
+            </div>
             <div class='accordian-inner saved-recipe'>
-                <h3>Saved RecipMe's</h3>
                 <div>
                     <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
-                        <div class='saved-recipe__sort'>
-                            <select name="SortBy">
-                            <!--<option value="RecipeTitle">Sort By:</option>-->
-                                <option value="RecipeTitle">Alphabetical</option>
-                                <option value="CookingTimeMins">Cooking Time</option>
-                                <option value="Created">Created Date</option>
-                                <option value="Price">Cost</option>
-                                <option value="Servings">Servings</option>
-                                <option value="Calories">Calories</option>
-                            </select>
-                            <select name="Direction">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
+                        {% include 'search_sort.html' %}
                         <div>
-                            <button type="submit">Saved RecipMe's</button>
+                            <button class='accordian-submit' type="submit">Search</button>
                         </div>
                     </form>
                 </div>
             </div>
-       
-        
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Cuisine</h3>
+            </div>
             <div class='accordian-inner cuisine'>
-                <h3>Search My RecipMe's by Cuisine</h3>
                 <div>
                     <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                        <div class='cuisine__sort'>
-                            <select name="SortBy">
-                            <!--<option value="RecipeTitle">Sort By:</option>-->
-                                <option value="RecipeTitle">Alphabetical</option>
-                                <option value="CookingTimeMins">Cooking Time</option>
-                                <option value="Created">Created Date</option>
-                                <option value="Price">Cost</option>
-                                <option value="Servings">Servings</option>
-                                <option value="Calories">Calories</option>
-                            </select>
-                            <select name="Direction">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
+                        {% include 'search_sort.html' %}
                         <div class='cuisine__button'> 
                             {% for cuisine in cuisines %}
-                            <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
+                            <button class='accordian-submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
                             {% endfor %}
                         </div>
                     </form>
                 </div>
             </div>
-       
-        
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Course</h3>
+            </div>
             <div class='accordian-inner course'>
-                <h3>Search My RecipeMe's by Course</h3>
                 <div>
                     <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                        <div class='course__sort'>
-                            <select name="SortBy">
-                            <!--<option value="RecipeTitle">Sort By:</option>-->
-                                <option value="RecipeTitle">Alphabetical</option>
-                                <option value="CookingTimeMins">Cooking Time</option>
-                                <option value="Created">Created Date</option>
-                                <option value="Price">Cost</option>
-                                <option value="Servings">Servings</option>
-                                <option value="Calories">Calories</option>
-                            </select>
-                            <select name="Direction">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
+                        {% include 'search_sort.html' %}
+                        <div class='course__button' >
+                            {% for course in courses %}
+                            <button class='accordian-submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
+                            {% endfor %}
                         </div>
-                    <div class='course__button' >
-                        {% for course in courses %}
-                        <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
-                        {% endfor %}
-                    </div>
                     </form>     
                 </div>
             </div>
         </div>
     </section>
-    <hr>
+    <!--<hr class='hr-90'>-->
     <!-------------------------------------------------------------------------------------->
     <section class='public'>
         <h3>View All Public RecipeMe's</h3>

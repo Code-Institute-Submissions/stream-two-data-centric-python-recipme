@@ -129,9 +129,9 @@ def category_search(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
         keys = [key for key in request.form]
-        table, column = keys[0], keys[0] + 'Name'
+        table, column = keys[2], keys[2] + 'Name'
         category = request.form[table]
-       
+        print(keys)
         return redirect ('/my_recipme/%s/category/search/%s/%s/%s/%s/%s' % (username, table, column, category,
                                                                               order_by, direction))
 # ALL RECIPES FOR A GIVEN CATEGORY PAGINATE #
@@ -140,6 +140,8 @@ def category_paginate(username, table, column, category, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
     recipe_info = ViewVariables(username).var_cat_search(table, 'User.UserId', user_id, column, 
                                                             category, order_by, direction)
+
+   # print(recipe_info)
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
@@ -228,7 +230,7 @@ def category_public(username):
     if request.method == 'POST':
         order_by, direction = request.form['SortBy'], request.form['Direction']
         keys = [key for key in request.form]
-        table, column = keys[0], keys[0] + 'Name'
+        table, column = keys[2], keys[2] + 'Name'
         category = request.form[table]
        
         return redirect ('/my_recipme/%s/category_public/search/%s/%s/%s/%s/%s' % (username, table, column, category,
