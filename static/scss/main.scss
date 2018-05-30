@@ -441,7 +441,7 @@
     display: none;
 }
 
-.ingredient {
+.accordian-inner {
 
     display: flex;
     flex-direction: column;
@@ -449,7 +449,11 @@
 
 }
 
-.ingredient__form {
+.ingredient__form,
+ .all-recipe__form,
+ .saved-recipe__form,
+ .cuisine__form,
+ .course__form {
 
         display: flex;
         flex-direction: column;
@@ -457,8 +461,22 @@
 
 }
 
-.ingredient__select {
+.ingredient__select,
+.all-recipe__sort,
+.saved-recipe__sort,
+.cuisine__sort,
+.course__sort {
 
     display: inline-block;
     padding: 1rem;
+}
+
+.course__button,
+.cuisine__button {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+
 }
