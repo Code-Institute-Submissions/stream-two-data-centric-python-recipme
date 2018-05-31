@@ -128,9 +128,77 @@ class LoginVariables {
     }
 }
 
-   //-------------------------- ACCORDIANS ----------------------------------------//
+  
 
-class Accordian {
+//------------------------ STICKY HEADER -------------------------------//
+
+const stickyHeader = (header, unStick) => {
+
+    if (window.pageYOffset <= unStick){
+
+        header.classList.remove('sticky');
+
+    } else {
+
+        header.classList.add('sticky');
+    }
+}
+
+//-------------------------------------------------------------------------//
+
+//------------------------- CLICK STYLES ---------------------------------//
+
+const formButtonClick = (button, styles) => {
+
+    button.addEventListener('mousedown', () => {
+
+        button.classList.add(`${styles}`);
+    });
+
+    button.addEventListener('mouseup', () => {
+
+        button.classList.remove(`${styles}`);
+    });
+}
+    
+// -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
+
+// -------------------------- MY RECIPME RELATED JS -------------------------------//
+class MyRecipmeVariables {
+
+        constructor() {
+
+            this.outerAccordian = document.getElementsByClassName('accordian-outer');
+        }
+   
+}
+
+class NavDropDown {
+
+    constructor() {
+
+        this.burgerMenu = document.getElementById('burger-menu');
+        this.navSideBar = document.getElementById('side-bar');
+
+    }
+
+    clickBurgerMenu() {
+
+        this.burgerMenu.addEventListener('click', () => {
+
+            this.burgerMenu.classList.toggle('alter');
+            this.navSideBar.classList.toggle('show-side-bar');
+        })
+    }
+
+    
+}
+
+//  GENERAL // 
+
+ //-------------------------- ACCORDIANS ----------------------------------------//
+
+ class Accordian {
     // DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
     accordian(button, show,  showStyle){
 
@@ -232,69 +300,4 @@ class StatAccordian {
         });
     }
 
-}
-
-
-//------------------------ STICKY HEADER -------------------------------//
-
-const stickyHeader = (header, unStick) => {
-
-    if (window.pageYOffset <= unStick){
-
-        header.classList.remove('sticky');
-
-    } else {
-
-        header.classList.add('sticky');
-    }
-}
-
-//-------------------------------------------------------------------------//
-
-//------------------------- CLICK STYLES ---------------------------------//
-
-const formButtonClick = (button, styles) => {
-
-    button.addEventListener('mousedown', () => {
-
-        button.classList.add(`${styles}`);
-    });
-
-    button.addEventListener('mouseup', () => {
-
-        button.classList.remove(`${styles}`);
-    });
-}
-    
-// -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
-
-// -------------------------- MY RECIPME RELATED JS -------------------------------//
-class MyRecipmeVariables {
-
-        constructor() {
-
-            this.outerAccordian = document.getElementsByClassName('accordian-outer');
-        }
-   
-}
-
-class NavDropDown {
-
-    constructor() {
-
-        this.burgerMenu = document.getElementById('burger-menu');
-        this.navSideBar = document.getElementById('side-bar');
-
-    }
-
-    clickBurgerMenu() {
-
-        this.burgerMenu.addEventListener('click', () => {
-
-            this.burgerMenu.classList.toggle('alter');
-            this.navSideBar.classList.toggle('show-side-bar');
-        })
-    }
-
-    
 }

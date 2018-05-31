@@ -325,9 +325,12 @@ p, a, h3, h4, h5, h6, button, select {
   color: #1d33554d;
   margin: 0 auto; }
 
-.my-recipme {
-  height: 26rem; }
+/*.my-recipme {
 
+    
+    height: 26rem;
+    //justify-content: center;
+}*/
 .my-recipme__instructions {
   text-align: center; }
 
@@ -510,5 +513,72 @@ p, a, h3, h4, h5, h6, button, select {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap; }
+
+.search-buttons-container {
+  display: flex;
+  flex-direction: column;
+  height: 7rem; }
+
+.search-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  top: 2rem; }
+
+.search-instructions p {
+  text-align: center; }
+
+.search-buttons__button {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  background-color: #1d3355;
+  color: #fff;
+  margin: 0.5rem;
+  cursor: pointer; }
+
+.search-forms-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%; }
+
+.ingredient {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+.ingredient__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.ingredient__submit {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  background-color: #df6400f6;
+  cursor: pointer; }
+
+.search-form--hide {
+  display: none; }
+
+.all-recipe__form,
+.saved-recipe__form,
+.cuisine__form,
+.course__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
 
 /*# sourceMappingURL=main.css.map */

@@ -22,91 +22,73 @@
         <p>Logged in as {{ username }}.</p>
     </div>
     <hr class='hr-90'>
-    <section id='my-recipme' class='my-recipme'>
-        <!--<p class='my-recipme__instructions'><strong>Find a recipe.</strong></p>-->
-        <div class='accordian'>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Ingredient</h3>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>All</h3>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Saved</h3>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Cuisine</h3>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Course</h3>
-            </div>
-            <div class='accordian-inner ingredient'>
-                <div class='ingredient__form-container'>
-                    <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
-                        <div>
-                            <input class='ingredient__input' type='text' placeholder='Search' name='Ingredient' required maxlength="50">
-                        </div>
-                        <br>
-                        {% include 'search_sort.html' %}
-                        <br>
-                        <div>
-                            <input class='accordian-submit' type='submit' value='Search'>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class='accordian-inner all-recipe'>
+    <div class='ingredient'>
+        <div class='ingredient__form-container'>
+            <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
                 <div>
-                    <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
-                        {% include 'search_sort.html' %}
-                        <div>
-                            <button class='accordian-submit'type='submit'>Search</button>
-                        </div>
-                    </form>
+                    <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
                 </div>
-            </div>
-            <div class='accordian-inner saved-recipe'>
+                <br>
+                {% include 'search_sort.html' %}
+                <br>
                 <div>
-                    <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
-                        {% include 'search_sort.html' %}
-                        <div>
-                            <button class='accordian-submit' type="submit">Search</button>
-                        </div>
-                    </form>
+                    <input class='ingredient__submit' type='submit' value='Search'>
                 </div>
-            </div>
-            <div class='accordian-inner cuisine'>
-                <div>
-                    <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                        {% include 'search_sort.html' %}
-                        <div class='cuisine__button'> 
-                            {% for cuisine in cuisines %}
-                            <button class='accordian-submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
-                            {% endfor %}
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class='accordian-inner course'>
-                <div>
-                    <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                        {% include 'search_sort.html' %}
-                        <div class='course__button' >
-                            {% for course in courses %}
-                            <button class='accordian-submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
-                            {% endfor %}
-                        </div>
-                    </form>     
-                </div>
-            </div>
+            </form>
+        </div>
+    </div>
+    <hr class='hr-90'>
+    <div class='search-instructions'>
+        <p>Search for your own recipes by Ingredient, or choose a category below.</p>
+    </div>
+    <hr class='hr-90'>
+    <section id='my-recipme' class='search-buttons-container'>
+        <div class='search-buttons'>
+           <!-- <button class='search-buttons__button' type='button' class='accordian-outer__title'>Ingredient</button type='button'>-->
+            <button id='search-all' class='search-buttons__button' type='button' class='accordian-outer__title'>All</button type='button'>
+            <button id='search-saved' class='search-buttons__button' type='button' class='accordian-outer__title'>Saved</button type='button'>
+            <button id='search-cuisine' class='search-buttons__button' type='button' class='accordian-outer__title'>Cuisine</button type='button'>
+            <button id='search-course' class='search-buttons__button' type='button' class='accordian-outer__title'>Course</button type='button'>
         </div>
     </section>
-   
+    <section class='search-forms-container'>
+        <div id='all-recipe' class='all-recipe search-form--hide'>
+            <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
+                {% include 'search_sort.html' %}
+                <div>
+                    <button class='accordian-submit'type='submit'>Search</button>
+                </div>
+            </form>
+        </div>
+        <div id='saved-recipe' class='saved-recipe search-form--hide'>
+            <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
+                {% include 'search_sort.html' %}
+                <div>
+                    <button class='accordian-submit' type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div id='cuisine' class='cuisine search-form--hide'>
+            <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
+                {% include 'search_sort.html' %}
+                <div class='cuisine__button'> 
+                    {% for cuisine in cuisines %}
+                    <button class='accordian-submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        <div id='course' class='course search-form--hide'>
+            <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
+                {% include 'search_sort.html' %}
+                <div class='course__button' >
+                    {% for course in courses %}
+                    <button class='accordian-submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
+                    {% endfor %}
+                </div>
+            </form>      
+        </div>
+    </section>
     {% if search == True %}
     {% include 'all_my_recipme.html' %}
     {% endif %}

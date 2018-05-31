@@ -404,12 +404,12 @@
 
 }
 
-.my-recipme {
+/*.my-recipme {
 
     
     height: 26rem;
     //justify-content: center;
-}
+}*/
 
 .my-recipme__instructions {
 
@@ -643,4 +643,78 @@
 
 }
 
+.search-buttons-container {
+
+    display: flex;
+    flex-direction: column;
+    height: 7rem;
+}
+
+.search-buttons {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    top: 2rem;
+   
+}
+
+.search-instructions p { 
+
+    text-align: center;
+}
+.search-buttons__button {
+
+    @include form-button;
+    background-color: $title-color;
+    color: #fff;
+    margin:0.5rem;
+    cursor: pointer;
+
+}
+.search-forms-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+
+}
+
+.ingredient {
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.ingredient__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredient__submit {
+
+    @include form-button;
+    background-color: $side-bar;
+    cursor: pointer;
+}
+
+.search-form--hide {
+
+    display:none;
+
+}
+
+.all-recipe__form,
+.saved-recipe__form,
+.cuisine__form,
+.course__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
 
