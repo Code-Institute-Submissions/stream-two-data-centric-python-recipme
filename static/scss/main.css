@@ -20,51 +20,16 @@ p, a, h3, h4, h5, h6, button, select {
   font-size: 0.8rem;
   color: #1d3355; }
 
-.signup-submit,
-.login-submit {
-  display: flex;
-  flex-direction: row;
-  justify-content: center; }
-
-.login__button {
-  height: 2rem;
-  width: 6rem;
-  border-radius: 4px;
-  border: 0.5px;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
+.ingredient__input {
+  margin-bottom: 0.5rem;
+  border: 0.5px solid #1d3355;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.8rem;
-  margin-top: 1.5rem;
-  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  background-color: #1d3355;
-  color: #fff; }
-
-.login__button:hover {
-  width: 4rem; }
-
-.login__button--click {
-  border: 1px solid #1d3355;
-  background-color: #fff;
-  color: #1d3355;
-  width: 4rem; }
-
-.signup__button {
-  height: 2rem;
-  width: 6rem;
-  border-radius: 4px;
-  border: 0.5px;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  background-color: #fdd664;
-  color: #1d3355; }
-
-.signup__button:hover {
-  width: 4rem; }
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0);
+  text-align: center; }
 
 .signup__button--click {
   border: 1px solid #1d3355;
@@ -82,139 +47,6 @@ p, a, h3, h4, h5, h6, button, select {
 
 .join-us__button:hover, .more-info-button:hover {
   cursor: pointer; }
-
-.bars {
-  display: inline-block;
-  cursor: pointer;
-  position: absolute;
-  left: .5rem; }
-
-.bars__bar1, .bars__bar2, .bars__bar3 {
-  width: 1.5rem;
-  height: 0.2rem;
-  background-color: #1d3355;
-  margin: 0.3rem;
-  transition: .4s;
-  border-radius: 4px; }
-
-.alter .bars__bar1 {
-  transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
-
-.alter .bars__bar2 {
-  opacity: 0; }
-
-.alter .bars__bar3 {
-  transform: rotate(425deg) translate(-0.6rem, 0.2rem); }
-
-.nav-side-bar {
-  list-style: none;
-  margin: 0;
-  padding: 1rem;
-  position: absolute;
-  background-color: #df6400f6;
-  border-bottom-right-radius: 1rem;
-  border-top-right-radius: 1rem; }
-
-.nav-side-bar li {
-  padding-bottom: 0.5rem; }
-
-.nav-side-bar li a {
-  color: #fff; }
-
-.side-bar-wrapper {
-  display: flex;
-  justify-content: left;
-  position: relative;
-  right: 1rem;
-  transition: left 0.3s ease-in-out;
-  left: -16rem; }
-
-.show-side-bar {
-  left: 0rem; }
-
-.accordian {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  top: 4rem; }
-
-.accordian-outer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 80%;
-  position: relative;
-  height: 4rem;
-  align-items: center; }
-
-.accordian-outer:hover {
-  cursor: pointer; }
-
-.accordian-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 0rem;
-  overflow: hidden;
-  transition: max-height .2s ease-in-out;
-  width: 80%;
-  background-color: #b8b8b84d; }
-
-.show-recipme-accordian-inner {
-  max-height: 10rem; }
-
-.accordian-outer--color {
-  opacity: 1;
-  background: linear-gradient(#1d3355, rgba(29, 52, 88, 0.93));
-  transition: opacity 0.3s ease-in-out; }
-
-.accordian-outer--active {
-  background: linear-gradient(#8394ae, #8394ae);
-  opacity: 0.8; }
-
-.accordian-outer__title {
-  color: #fff; }
-
-.accordian-outer__plus {
-  position: absolute;
-  height: 2rem;
-  width: 2rem;
-  left: 0.2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  left: 0.2rem; }
-
-.accordian-outer__plus:before {
-  content: '+';
-  height: 1rem;
-  width: 1rem;
-  color: #fff; }
-
-.ingredient__form,
-.all-recipe__form,
-.saved-recipe__form,
-.cuisine__form,
-.course__form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 0rem; }
-
-.search-sort {
-  display: inline-block;
-  padding: 1rem; }
-
-.course__button,
-.cuisine__button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap; }
 
 .header {
   background-color: #fff;
@@ -394,6 +226,52 @@ p, a, h3, h4, h5, h6, button, select {
 .more-info--style {
   box-shadow: 0px 2.5px 1px 1px rgba(0, 0, 0, 0.16); }
 
+.signup-submit,
+.login-submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.login__button {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
+  background-color: #1d3355;
+  color: #fff; }
+
+.login__button:hover {
+  width: 4rem; }
+
+.login__button--click {
+  border: 1px solid #1d3355;
+  background-color: #fff;
+  color: #1d3355;
+  width: 4rem; }
+
+.signup__button {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
+  background-color: #fdd664;
+  color: #1d3355; }
+
+.signup__button:hover {
+  width: 4rem; }
+
 .stats {
   display: flex;
   flex-direction: column;
@@ -456,29 +334,181 @@ p, a, h3, h4, h5, h6, button, select {
 .public {
   display: none; }
 
-.ingredient__input {
-  margin-bottom: 0.5rem;
-  border: 0.5px solid #1d3355;
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 1rem;
-  background-color: rgba(255, 255, 255, 0);
-  text-align: center; }
+.bars {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  left: .5rem; }
+
+.bars__bar1, .bars__bar2, .bars__bar3 {
+  width: 1.5rem;
+  height: 0.2rem;
+  background-color: #1d3355;
+  margin: 0.3rem;
+  transition: .4s;
+  border-radius: 4px; }
+
+.alter .bars__bar1 {
+  transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
+
+.alter .bars__bar2 {
+  opacity: 0; }
+
+.alter .bars__bar3 {
+  transform: rotate(425deg) translate(-0.6rem, 0.2rem); }
+
+.nav-side-bar {
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+  position: absolute;
+  background-color: #df6400f6;
+  border-bottom-right-radius: 1rem;
+  border-top-right-radius: 1rem; }
+
+.nav-side-bar li {
+  padding-bottom: 0.5rem; }
+
+.nav-side-bar li a {
+  color: #fff; }
+
+.side-bar-wrapper {
+  display: flex;
+  justify-content: left;
+  position: relative;
+  right: 1rem;
+  transition: left 0.3s ease-in-out;
+  left: -16rem; }
+
+.show-side-bar {
+  left: 0rem; }
+
+/*
+.accordian {
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 4rem;
+}
+
+
+.accordian-outer {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 80%;
+    position: relative;
+    height: 4rem;
+    align-items: center;
+    
+}
+
+.accordian-outer:hover {
+
+    cursor: pointer;
+}
+
+.accordian-inner {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 0rem;
+    overflow: hidden;
+    transition: max-height .2s ease-in-out;
+    width: 80%;
+    background-color: $accordian-inner;
+    
+}
+
+.show-recipme-accordian-inner {
+
+    max-height: 10rem;
+}
+
+.accordian-outer--color,
+ {
+    opacity: 1;
+    //background-color: $title-color;
+    background: linear-gradient($title-color, rgba(29, 52, 88, 0.93));
+    //border: 1px solid #2f4669cc; 
+    transition: opacity 0.3s ease-in-out;
+}
+
+.accordian-outer--active {
+
+    background: linear-gradient($accordian-active, $accordian-active);
+    opacity: 0.8;
+}
+
+
+.accordian-outer__title {
+
+    color: #fff;
+}
+
+.accordian-outer__plus {
+
+    position: absolute;
+    height: 2rem;
+    width: 2rem;
+    left: 0.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left: 0.2rem;
+
+}
+
+.accordian-outer__plus:before {
+
+    content:'+';
+    height: 1rem;
+    width: 1rem;
+    color: #fff;
+
+}
 
 .accordian-submit {
-  height: 2rem;
-  width: 6rem;
-  border-radius: 4px;
-  border: 0.5px;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.8rem;
-  background-color: #df6400f6;
-  margin: 0.2rem;
-  max-width: 5rem;
-  cursor: pointer; }
+
+    @include form-button;
+    background-color: $side-bar;
+    margin: 0.2rem;
+    max-width: 5rem;
+    cursor: pointer;
+}
+
+
+
+.ingredient__form,
+ .all-recipe__form,
+ .saved-recipe__form,
+ .cuisine__form,
+ .course__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0rem;
+    //background-color: $accordian-inner;
+
+}
+*/
+.search-sort {
+  display: inline-block;
+  padding: 1rem; }
+
+.course__button,
+.cuisine__button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap; }
 
 /*# sourceMappingURL=main.css.map */

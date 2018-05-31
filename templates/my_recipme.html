@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<body>
+<body>  
     <header id='header' class='header header--relative'>
         <div id='burger-menu'class='bars'>
             <div class="bars__bar1"></div>
@@ -29,6 +29,22 @@
                 <div class='accordian-outer__plus'></div> 
                 <h3 class='accordian-outer__title'>Ingredient</h3>
             </div>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>All</h3>
+            </div>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Saved</h3>
+            </div>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Cuisine</h3>
+            </div>
+            <div class='accordian-outer accordian-outer--color'>
+                <div class='accordian-outer__plus'></div> 
+                <h3 class='accordian-outer__title'>Course</h3>
+            </div>
             <div class='accordian-inner ingredient'>
                 <div class='ingredient__form-container'>
                     <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
@@ -44,10 +60,6 @@
                     </form>
                 </div>
             </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>All</h3>
-            </div>
             <div class='accordian-inner all-recipe'>
                 <div>
                     <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
@@ -58,10 +70,6 @@
                     </form>
                 </div>
             </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Saved</h3>
-            </div>
             <div class='accordian-inner saved-recipe'>
                 <div>
                     <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
@@ -71,10 +79,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Cuisine</h3>
             </div>
             <div class='accordian-inner cuisine'>
                 <div>
@@ -87,10 +91,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class='accordian-outer accordian-outer--color'>
-                <div class='accordian-outer__plus'></div> 
-                <h3 class='accordian-outer__title'>Course</h3>
             </div>
             <div class='accordian-inner course'>
                 <div>
@@ -106,89 +106,7 @@
             </div>
         </div>
     </section>
-    <!--<hr class='hr-90'>-->
-    <!-------------------------------------------------------------------------------------->
-    <section class='public'>
-        <h3>View All Public RecipeMe's</h3>
-        <form action="{{ url_for('all_public', username=username)}}", method='POST'>
-            <button type='submit'>All Public RecipMe's</button> 
-            <select name="SortBy">
-            <!--<option value="RecipeTitle">Sort By:</option>-->
-                <option value="RecipeTitle">Alphabetical</option>
-                <option value="CookingTimeMins">Cooking Time</option>
-                <option value="Created">Created Date</option>
-                <option value="Price">Cost</option>
-                <option value="Servings">Servings</option>
-                <option value="Calories">Calories</option>
-            </select>
-            <select name="Direction">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-        </form>
-        <h3>Choose RecipMe by Cuisine</h3>
-        <form action="{{ url_for('category_public', username=username)}}" method='POST'>
-            {% for cuisine in public_cuisines %}
-                <button type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }} ({{ cuisine ['Total'] }})</button>
-            {% endfor %}
-            <br>
-            <br>
-            <select name="SortBy">
-            <!--<option value="RecipeTitle">Sort By:</option>-->
-                <option value="RecipeTitle">Alphabetical</option>
-                <option value="CookingTimeMins">Cooking Time</option>
-                <option value="Created">Created Date</option>
-                <option value="Price">Cost</option>
-                <option value="Servings">Servings</option>
-                <option value="Calories">Calories</option>
-            </select>
-            <select name="Direction">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-        </form>
-        <h3>Choose RecipeMe by Course</h3>
-        <form action="{{ url_for('category_public', username=username)}}" method='POST'>
-            {% for course in public_courses %}
-            <button type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }} ({{ course['Total']}})</button>
-            {% endfor %}
-            <br>
-            <br>
-            <select name="SortBy">      
-            <!--<option value="RecipeTitle">Sort By:</option>-->
-                <option value="RecipeTitle">Alphabetical</option>
-                <option value="CookingTimeMins">Cooking Time</option>
-                <option value="Created">Created Date</option>
-                <option value="Price">Cost</option>
-                <option value="Servings">Servings</option>
-                <option value="Calories">Calories</option>
-            </select>
-            <select name="Direction">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-        </form>
-        <h3>OR</h3>
-        <h3>Search by Ingredient.</h3>
-
-        <form action = "{{ url_for('ingredient_search_public', username=username)}}" method='POST'>
-            <input type='text' placeholder='Ingredient' name='Ingredient' required maxlength="50">
-            <input type='submit' value='Search MyRecipMe'>
-            <select name="SortBy">
-            <!--<option value="RecipeTitle">Sort By:</option>-->
-                <option value="RecipeTitle">Alphabetical</option>
-                <option value="CookingTimeMins">Cooking Time</option>
-                <option value="Created">Created Date</option>
-                <option value="Price">Cost</option>
-                <option value="Servings">Servings</option>
-                <option value="Calories">Calories</option>
-            </select>
-            <select name="Direction">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-        </form>
-    </section>
+   
     {% if search == True %}
     {% include 'all_my_recipme.html' %}
     {% endif %}

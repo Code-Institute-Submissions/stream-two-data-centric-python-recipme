@@ -16,52 +16,6 @@
 
 //-------------- LOGIN/SIGNUP BUTTONS -----------------//
 
-.signup-submit,
-.login-submit {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-
-.login__button {
-
-    @include form-button;
-    margin-top: 1.5rem;
-    transition: width 0.3s $dropDownTransition; 
-    background-color: #1d3355;
-    color: #fff;
-        
-}
-
-.login__button:hover {
-
-    width: 4rem;
-}
-
-.login__button--click {
-
-    border: 1px solid $title-color;
-    background-color: #fff;
-    color:$title-color;
-    width: 4rem;
-}
-
-
-.signup__button {
-
-    @include form-button;
-    margin-top: 0.5rem;
-    transition: width 0.3s $dropDownTransition;
-    background-color:#fdd664;
-    color: $title-color;
-}
-
-.signup__button:hover {
-
-    width: 4rem;
-}
 
 .signup__button--click {
 
@@ -86,3 +40,4 @@
 
     cursor: pointer;
 }
+
