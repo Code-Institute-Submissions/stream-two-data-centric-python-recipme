@@ -51,8 +51,8 @@
             <button id='search-course' class='search-buttons__button' type='button' class='accordian-outer__title'>Course</button type='button'>
         </div>
     </section>
-    <section class='search-forms-container'>
-        <div id='all-recipe' class='all-recipe search-form--hide'>
+    <section id='search-forms' class='search-forms-container'>
+        <div id='all-recipe' class='search-all search-form--hide search-form'>
             <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
                 {% include 'search_sort.html' %}
                 <div>
@@ -60,7 +60,7 @@
                 </div>
             </form>
         </div>
-        <div id='saved-recipe' class='saved-recipe search-form--hide'>
+        <div id='saved-recipe' class='search-saved saved-recipe search-form--hide search-form'>
             <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div>
@@ -68,7 +68,7 @@
                 </div>
             </form>
         </div>
-        <div id='cuisine' class='cuisine search-form--hide'>
+        <div id='cuisine' class='search-cuisine cuisine search-form--hide search-form'>
             <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div class='cuisine__button'> 
@@ -78,7 +78,7 @@
                 </div>
             </form>
         </div>
-        <div id='course' class='course search-form--hide'>
+        <div id='course' class='search-course course search-form--hide search-form'>
             <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div class='course__button' >
