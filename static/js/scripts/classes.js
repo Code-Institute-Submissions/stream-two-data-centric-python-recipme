@@ -162,15 +162,76 @@ const formButtonClick = (button, styles) => {
 }
     
 // -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
-
+// ------------------------------------------------------------------------------- //
 // -------------------------- MY RECIPME RELATED JS -------------------------------//
 class MyRecipmeVariables {
+// MY RECIPME RELATED VARIABLES //
+    constructor() {
 
-        constructor() {
-
-            this.outerAccordian = document.getElementsByClassName('accordian-outer');
-        }
+        this.outerAccordian = document.getElementsByClassName('accordian-outer');
+      
+    }
    
+}
+
+class showHide {
+// CLASS TO SHOW/HIDE ELEMENTS BASED ON CLICKED ELEMENT //
+    constructor() {
+
+        this.allSearchButtons = document.getElementsByClassName('search-buttons__button');
+        this.allSearchForms = document.getElementsByClassName('search-form');
+        this.ingredientButton = document.getElementById('search-ingredient');
+        this.ingredientForm = document.getElementById('ingredient-form');
+    }
+// RECIPME SEARCH FORM SHOW/HIDE //
+    showHideSearchForms(){
+
+        const selfSearchForms = this.allSearchForms;
+        const selfSearchButtons = this.allSearchButtons;
+        const selfIngredientButton = this.ingredientButton;
+       
+        for(let i = 0; i < selfSearchButtons.length; i++) {
+            
+            selfSearchButtons[i].addEventListener('click', function(event) {
+                
+                selfIngredientButton.classList.remove('search-buttons__ingredient--hide');
+        
+                for(let j = 0; j < selfSearchForms.length; j++) {
+                    // IF ALL SEARCH FORMS CONTAIN CLASS OF SEARCH BUTTON ID //
+                    if (selfSearchForms[j].classList.contains(selfSearchButtons[i].getAttribute('id'))){
+                        // REMOVE CLASS TO REVEAL FORM //
+                        selfSearchForms[j].classList.remove('search-form--hide');
+
+                    } else { // CLASS DOESN'T CONTAIN CLASS OF BUTTON ID , ADD CLASS TO HIDE FORM //
+
+                        selfSearchForms[j].classList.add('search-form--hide');
+                    }
+
+                }
+
+            });
+
+        }
+
+    } 
+
+// RECIPME INGREDIENT SEARCH SHOW/HIDE //
+
+    showHideIngredientSearch() {
+
+        this.ingredientButton.addEventListener('click', () => {
+
+            this.ingredientForm.classList.remove('search-form--hide');
+            this.ingredientButton.classList.add('search-buttons__ingredient--hide');
+
+            for (let i = 0; i < this.allSearchForms.length; i++){
+
+                this.allSearchForms[i].classList.add('search-form--hide');
+                this.ingredientForm.classList.remove('search-form--hide');
+            }
+
+        });
+    }
 }
 
 class NavDropDown {
@@ -194,7 +255,7 @@ class NavDropDown {
     
 }
 
-//  GENERAL // 
+//---------------------------  GENERAL CLASSES --------------------------------- // 
 
  //-------------------------- ACCORDIANS ----------------------------------------//
 

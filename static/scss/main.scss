@@ -627,6 +627,130 @@
 
 }
 */
+
+.search-buttons-container {
+
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: center;
+}
+
+.search-buttons {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    //top: 2rem;
+   
+}
+
+.search-instructions p { 
+
+    text-align: center;
+    padding-bottom: 1rem;
+}
+.search-buttons__button {
+
+    @include form-button;
+    background-color: $title-color;
+    color: #fff;
+    margin:0.5rem;
+    cursor: pointer;
+
+}
+
+.search-buttons__ingredient {
+
+    @extend .search-buttons__button;
+}
+
+.search-buttons__ingredient--hide {
+
+    display: none;
+}
+
+.search-forms-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: $accordian-inner;
+    //padding-bottom: 1rem;
+
+}
+
+.ingredient {
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-height: 12rem;
+    transition: max-height $dropDownTransition;
+    background-color: $accordian-inner;
+}
+
+/*.ingredient--hide {
+
+    max-height: 0rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+
+}*/
+.ingredient__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.ingredient__submit,
+.all-recipe__submit,
+.saved-recipe__submit,
+.cuisine__submit,
+.course__submit {
+
+    @include form-button;
+    background-color: $side-bar;
+    cursor: pointer;
+    margin: 0.3rem;
+}
+
+.all-recipe__form,
+.saved-recipe__form,
+.cuisine__form,
+.course__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+    
+
+}
+
+.search-forms__instructions {
+
+    text-align: center;
+   
+}
+
+/*.search-form {
+
+    max-height: 13rem;
+    transition: max-height $dropDownTransition;
+}*/
+
+.search-form--hide {
+
+    //display:none;
+    max-height: 0rem;
+    overflow: hidden;
+    padding: 0rem;
+}
+
 .search-sort {
 
     display: inline-block;
@@ -643,78 +767,7 @@
 
 }
 
-.search-buttons-container {
 
-    display: flex;
-    flex-direction: column;
-    height: 7rem;
-}
 
-.search-buttons {
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: relative;
-    top: 2rem;
-   
-}
-
-.search-instructions p { 
-
-    text-align: center;
-}
-.search-buttons__button {
-
-    @include form-button;
-    background-color: $title-color;
-    color: #fff;
-    margin:0.5rem;
-    cursor: pointer;
-
-}
-.search-forms-container {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-
-}
-
-.ingredient {
-
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-.ingredient__form {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.ingredient__submit {
-
-    @include form-button;
-    background-color: $side-bar;
-    cursor: pointer;
-}
-
-.search-form--hide {
-
-    display:none;
-
-}
-
-.all-recipe__form,
-.saved-recipe__form,
-.cuisine__form,
-.course__form {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
 
