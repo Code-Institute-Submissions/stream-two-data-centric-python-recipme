@@ -693,7 +693,8 @@ select {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding-left: 0; }
+  padding-left: 0;
+  margin-bottom: 0; }
 
 .pagination li,
 .pagination li a {
@@ -731,10 +732,12 @@ select {
   font-size: .8rem;
   text-align: center;
   color: #1d3355;
-  padding-bottom: 1.5rem; }
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem; }
 
 .results-recipe__title {
-  padding-bottom: 1rem; }
+  padding-bottom: 1rem;
+  font-family: "Pacifico", cursive; }
 
 .results-recipe__category {
   font-size: 1rem; }

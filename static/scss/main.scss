@@ -865,6 +865,7 @@ select {
     flex-wrap: wrap;
     justify-content: center;
     padding-left: 0;
+    margin-bottom: 0;
 }
 
 .pagination li,
@@ -920,17 +921,20 @@ select {
     text-align: center;
     color: $title-color;
     padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
     
 }
 .results-recipe__title {
 
     @extend.results__heading;
     padding-bottom: 1rem;
+    font-family: $pacifico;
 }
 
 .results-recipe__category {
 
     font-size: 1rem;
+    //font-family: $pacifico;
 }
 
 .full-recipe-button {
