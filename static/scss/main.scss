@@ -773,7 +773,7 @@
 .search-buttons__button--active {
 
     @include category-button-active;
-    
+
 }
 .course__button,
 .cuisine__button {
@@ -795,7 +795,7 @@ select {
     @include select;
 }
 
-.utensils {
+.fa {
 
     display: flex;
     flex-direction: row;
@@ -805,7 +805,7 @@ select {
 
 }
 
-.utensils__icon {
+.fa__icon {
 
     font-size: 2rem;
     color: $title-color;
@@ -815,4 +815,161 @@ select {
     border-radius: 10px;
 }
 
+// --------------------------- SEARCH RESULTS STYLES --------------------- //
 
+.results {
+
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results__reset {
+
+    @include form-button;
+    background-color: $title-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $title-color;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    color: #fff;
+}
+
+.results__reset--clicked {
+
+    color: $title-color;
+    background-color: #fff;
+    border: 1px solid $title-color;
+}
+
+.results__heading {
+
+    font-family: $nanum;
+   // padding-left: 1rem;
+    font-size: 1.2rem;
+    color: $title-color;
+    text-align: center;
+}
+
+//----------------- PAGINATION STYLES ---------------------------//
+
+.pagination {
+
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.pagination li,
+.pagination li a {
+
+    font-family: $nanum;
+    color: $title-color;
+    padding: .5rem;
+    font-size: 0.8rem;
+}
+
+
+//-------------------- RESULTS STYLES ----------------------------//
+
+.results-recipe {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $accordian-inner;
+}
+
+.results-recipe__info {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 3px 4px 8px 2px rgba(0, 0, 0, 0.26);;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #fff;
+    
+}
+
+.results-recipe__info h2,
+.results-recipe__info p,
+.results-recipe__info h3 {
+
+    margin-bottom: 0rem;
+}
+
+#results-recipe__author {
+
+    margin-bottom: 1.5rem;
+}
+
+
+.pagination-page-info {
+
+    font-family: $nanum;
+    font-size: .8rem;
+    text-align: center;
+    color: $title-color;
+    padding-bottom: 1.5rem;
+    
+}
+.results-recipe__title {
+
+    @extend.results__heading;
+    padding-bottom: 1rem;
+}
+
+.results-recipe__category {
+
+    font-size: 1rem;
+}
+
+.full-recipe-button {
+
+    padding-bottom: 1.5rem;
+}
+.full-recipe-button__button {
+
+    @include form-button;
+    background-color: $side-bar;
+    color: $title-color;
+    
+}
+
+.full-recipe-button__button:hover {
+
+    cursor: pointer;
+}
+
+.full-recipe-button__button--clicked {
+
+    @include search-button-click;
+}
+
+.results-recipe__row {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.results-recipe__column{
+
+    width: 50%;
+}
+
+.results-recipe__row h2,
+.results-recipe__row p {
+
+    //text-align: center;
+}

@@ -156,6 +156,8 @@ class MyRecipmeVariables {
         this.allSearchSubmit = document.getElementsByClassName('search-form__submit');
         this.allCategoryButtons = document.getElementsByClassName('search-buttons__button');
         this.ingredientButton = document.getElementById('search-ingredient');
+        this.searchResetButton = document.getElementById('search-reset-button');
+        this.fullRecipeButton = document.getElementsByClassName('full-recipe-button__button');
       
     }
    
@@ -230,7 +232,7 @@ class ButtonClick {
         
     }
 
-    formButtonClick() {
+    singleButtonClick() {
       
         this.buttons.addEventListener('mousedown', () => {
     
@@ -243,7 +245,7 @@ class ButtonClick {
         });
     }
 
-    formButtonsClick() {
+    multiButtonsClick() {
         
         for(let i=0; i < this.buttons.length; i++) {
             
@@ -271,17 +273,9 @@ class ButtonClick {
 
             this.buttons[i].addEventListener('click', () => {
 
-                if (this.buttons[i].classList.contains(`${this.style}`)){
+                for (let j=0; j < this.buttons.length; j++) {
 
-                    this.buttons[i].classList.remove(`${this.style}`);
-                    
-                } else {
-
-                    for (let j=0; j < this.buttons.length; j++) {
-
-                        this.buttons[j].classList.remove(`${this.style}`);
-                    }
-                    
+                    this.buttons[j].classList.remove(`${this.style}`);
                     this.buttons[i].classList.add(`${this.style}`);
 
                 }

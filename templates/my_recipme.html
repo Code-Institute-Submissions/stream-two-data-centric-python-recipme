@@ -22,16 +22,16 @@
         <p>Logged in as <strong>{{ username }}</strong>.</p>
     </div>
    <!-- <hr class='hr-90'> -->
+   <hr class='hr-90'>
+    <div class='search-instructions'>
+        <p>Search for your own recipes by Ingredient, or choose a category.</p>
+    </div>
+    <!--<hr class='hr-90'>-->
+    {% if search == False %}
     <div id='ingredient-form' class='ingredient search-form'>
-        <div class='utensils'>
-            <i class="fas fa-utensils utensils__icon"></i>
+        <div class='fa'>
+            <i class="fas fa-search fa__icon" aria-hidden="true"></i>
         </div>
-        <hr class='hr-90'>
-        
-        <div class='search-instructions'>
-            <p>Search for your own recipes by <strong>Ingredient</strong>, or choose a category below.</p>
-        </div>
-        <hr class='hr-90'>
         <div class='ingredient__form-container'>
             <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
                 <div>
@@ -46,10 +46,34 @@
             </form>
         </div>
     </div>
+    {% else %}
+    <div id='ingredient-form' class='ingredient search-form search-form--hide'>
+        <div class='fa'>
+            <i class="fas fa-search fa__icon" aria-hidden="true"></i>
+        </div>
+        <div class='ingredient__form-container'>
+            <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+                <div>
+                    <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
+                </div>
+                <br>
+                {% include 'search_sort.html' %}
+                <br>
+                <div class='ingredient__submit-container'>
+                    <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
     <!--<hr class='hr-90'>-->
     <section id='my-recipme' class='search-buttons-container'>
         <div class='search-buttons'>
+            {% if search == False %}
             <button id='search-ingredient' class='search-buttons__ingredient search-buttons__ingredient--hide' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
+            {% else %}
+            <button id='search-ingredient' class='search-buttons__ingredient' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
+            {% endif %}
             <button id='search-all' class='search-buttons__button' type='button' class='accordian-outer__title'>All</button type='button'>
             <button id='search-saved' class='search-buttons__button' type='button' class='accordian-outer__title'>Saved</button type='button'>
             <button id='search-cuisine' class='search-buttons__button' type='button' class='accordian-outer__title'>Cuisine</button type='button'>
@@ -58,6 +82,9 @@
     </section>
     <section id='search-forms' class='search-forms-container'>
         <div id='all-recipe' class='search-all search-form--hide search-form'>
+            <div class='fa'>
+                <i class="fas fa-utensils fa__icon" aria-hidden="true"></i>
+            </div>
             <p class='search-forms__instructions'>Search <strong>ALL</strong> of your own recipes.</p>
             <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
                 {% include 'search_sort.html' %}
@@ -67,6 +94,9 @@
             </form>
         </div>
         <div id='saved-recipe' class='search-saved saved-recipe search-form--hide search-form'>
+            <div class='fa'>
+                <i class="far fa-save fa__icon" aria-hidden="true"></i>
+            </div>
             <p class='search-forms__instructions'>Search other users recipes you've <strong>Saved</strong>.</p>
             <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
                 {% include 'search_sort.html' %}
@@ -76,6 +106,9 @@
             </form>
         </div>
         <div id='cuisine' class='search-cuisine cuisine search-form--hide search-form'>
+            <div class='fa'>
+                <i class="fas fa-globe fa__icon" aria-hidden="true"></i>
+            </div>
             <p class='search-forms__instructions'>Search your own recipes by <strong>Cuisine</strong>.</p>
             <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
@@ -87,10 +120,13 @@
             </form>
         </div>
         <div id='course' class='search-course course search-form--hide search-form'>
+            <div class='fa'>
+                <i class="fas fa-coffee fa__icon" aria-hidden="true"></i>
+            </div>
             <p class='search-forms__instructions'>Search your own recipes by <strong>Course</strong>.</p>
             <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
-                <div class='course__button' >
+                <div class='course__button'>
                     {% for course in courses %}
                     <button class='course__submit search-form__submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
                     {% endfor %}
@@ -98,8 +134,15 @@
             </form>      
         </div>
     </section>
-    {% if search == True %}
-    {% include 'all_my_recipme.html' %}
+    <hr class='hr-90'>
+    {% if search == 'all' %}
+        {% include 'all_my_recipme.html' %}
+    {% elif search == 'category' %}
+        {% include 'category_search.html'%}
+    {% elif search == 'ingredient' %}
+        {% include 'ingredient_search.html'%}
+    {% elif search == 'saved' %}
+        {% include 'saved_recipme.html'%}
     {% endif %}
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>

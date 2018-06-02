@@ -27,7 +27,7 @@ query.getRecipesData();
 
 // CLICK STYLES //
 
-loginButtonClick.formButtonClick();
-signUpButtonClick.formButtonClick();
+loginButtonClick.singleButtonClick();
+signUpButtonClick.singleButtonClick();
 
 //------------------------------------------------------------------------------------//

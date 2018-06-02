@@ -1,14 +1,9 @@
 
 {% block search %}
-<div>
-    <a href="{{ url_for('my_recipme', username=username) }}">Reset</a>
-</div>
-<h2>Your search results.</h2>
-{% if count == 1 %}
-<p> Found {{ count }} RecipMe.</p>
-{% else %}
-<p>Found {{ count }} RecipeMe's.</p>
-{% endif %}
+<section class='results'>
+    <a id='search-reset-button' class='results__reset' href="{{ url_for('my_recipme', username=username) }}">Reset</a>
+   <h2 class='results__heading'>You searched all your recipes.</h2>
+</section>
 {% include 'mini_recipe_partial.html' %}
 {% block mini_recipe %}
 {% endblock mini_recipe %}

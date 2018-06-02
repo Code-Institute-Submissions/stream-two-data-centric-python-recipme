@@ -1,26 +1,61 @@
 {% block mini_recipe %}
 {{ pagination.links }}
-<div class="container">
-    {{ pagination.info }}
+{{ pagination.info }}
+<div class='results-recipe'>
+    <!--<hr class='hr-90'>-->
     {% for recipe in results %}
     <br>
-    {{ loop.index + (page - 1) * per_page }}
-    <h2>{{ recipe['RecipeTitle']}}</h2>
-    <h3>Description</h3>
-    <p>{{ recipe['RecipeDescription']}}</p>
-    <h3> Recipe Stats </h3>
-    <p><strong>Cuisine</strong>:{{ recipe['CuisineName'] }}.</p>
-    <p><strong>Course</strong>: {{ recipe ['CourseName'] }}.</p>
-    <p><strong>Total cooking time</strong>: {{ recipe['CookingTimeMins']}} minutes.</p>
-    <p><strong>Cost</strong>: £{{ recipe['Price'] }}.</p>
-    <p><strong>Servings</strong>: {{ recipe['Servings'] }}.</p>
-    <p><strong>Estimated Calories</strong>: {{ recipe['Calories'] }}.</p>
-    <h3>RecipMe Author</h3>
-    <p>Recipe created by: <strong>{{ recipe['Author'] }}</strong> at {{ recipe['Created'] }}.</p>
-    <form action = "{{ url_for('full_redirect', username=username)}}" method='POST'>
-        <button type='submit' name='RecipeId' value="{{ recipe['RecipeId']}}">Full RecipMe</button>
+    <div class='results-recipe__info'>
+        <div class='results-recipe__row'>
+            <div >
+                <h2 class='results-recipe__title'>{{ loop.index + (page - 1) * per_page }}. {{ recipe['RecipeTitle']}}</h2>
+            </div>
+        </div>
+        <hr class='hr-90'>
+        <div class='results-recipe__row'>
+            <div>
+                <h3 class='results-recipe__category'>Description</h3>
+                <p>{{ recipe['RecipeDescription']}}</p>
+            </div>
+        </div>
+        <div class='results-recipe__row'>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Cuisine</h3>
+                <p>{{ recipe['CuisineName'] }}.</p>
+            </div>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Course</h3>
+                <p>{{ recipe ['CourseName'] }}.</p>
+            </div>
+        </div>
+       
+        <div class='results-recipe__row'>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Cooking Time</h3>
+                <p>{{ recipe['CookingTimeMins']}} minutes.</p>
+            </div>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Cost</h3>
+                <p>£{{ recipe['Price'] }}.</p>
+            </div>
+        </div>
+        <div class='results-recipe__row'>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Servings</h3>
+                <p>{{ recipe['Servings'] }}.</p>
+            </div>
+            <div class='results-recipe__column'>
+                <h3 class='results-recipe__category'>Estimated Calories</h3>
+                <p>{{ recipe['Calories'] }}.</p>
+            </div>
+        </div>
+        <h3 class='results-recipe__category'>Recipe Author</h3>
+        <p id='results-recipe__author'>created by <strong>{{ recipe['Author'] }}</strong> at {{ recipe['Created'] }}.</p>
+    </div>
+    <form class='full-recipe-button'action = "{{ url_for('full_redirect', username=username)}}" method='POST'>
+        <button class='full-recipe-button__button' type='submit' name='RecipeId' value="{{ recipe['RecipeId']}}">Full Recipe</button>
     </form>
-    <hr>
+    <hr class='hr-90'>
     {% endfor %}
 </div>
 {{ pagination.links }}

@@ -637,18 +637,138 @@ select {
   width: 8rem;
   height: 1.5rem; }
 
-.utensils {
+.fa {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 1rem;
   padding-top: 1rem; }
 
-.utensils__icon {
+.fa__icon {
   font-size: 2rem;
   color: #1d3355;
   border: 1px solid #1d3355;
   padding: 1rem;
   border-radius: 10px; }
+
+.results {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.results__reset {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  background-color: #1d3355;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1d3355;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+  color: #fff; }
+
+.results__reset--clicked {
+  color: #1d3355;
+  background-color: #fff;
+  border: 1px solid #1d3355; }
+
+.results__heading, .results-recipe__title {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 1.2rem;
+  color: #1d3355;
+  text-align: center; }
+
+.pagination {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-left: 0; }
+
+.pagination li,
+.pagination li a {
+  font-family: "Nanum Gothic", sans-serif;
+  color: #1d3355;
+  padding: .5rem;
+  font-size: 0.8rem; }
+
+.results-recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #b8b8b84d; }
+
+.results-recipe__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 3px 4px 8px 2px rgba(0, 0, 0, 0.26);
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #fff; }
+
+.results-recipe__info h2,
+.results-recipe__info p,
+.results-recipe__info h3 {
+  margin-bottom: 0rem; }
+
+#results-recipe__author {
+  margin-bottom: 1.5rem; }
+
+.pagination-page-info {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: .8rem;
+  text-align: center;
+  color: #1d3355;
+  padding-bottom: 1.5rem; }
+
+.results-recipe__title {
+  padding-bottom: 1rem; }
+
+.results-recipe__category {
+  font-size: 1rem; }
+
+.full-recipe-button {
+  padding-bottom: 1.5rem; }
+
+.full-recipe-button__button {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  background-color: #df6400f6;
+  color: #1d3355; }
+
+.full-recipe-button__button:hover {
+  cursor: pointer; }
+
+.full-recipe-button__button--clicked {
+  border: 1px solid #df6400f6;
+  background-color: #fff;
+  color: #df6400f6; }
+
+.results-recipe__row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%; }
+
+.results-recipe__column {
+  width: 50%; }
 
 /*# sourceMappingURL=main.css.map */
