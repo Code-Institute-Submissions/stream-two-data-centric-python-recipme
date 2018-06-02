@@ -144,31 +144,18 @@ const stickyHeader = (header, unStick) => {
     }
 }
 
-//-------------------------------------------------------------------------//
-
-//------------------------- CLICK STYLES ---------------------------------//
-
-const formButtonClick = (button, styles) => {
-
-    button.addEventListener('mousedown', () => {
-
-        button.classList.add(`${styles}`);
-    });
-
-    button.addEventListener('mouseup', () => {
-
-        button.classList.remove(`${styles}`);
-    });
-}
-    
 // -------------------------- END OF LOGIN PAGE REALATED JS -----------------------//
 // ------------------------------------------------------------------------------- //
 // -------------------------- MY RECIPME RELATED JS -------------------------------//
+
 class MyRecipmeVariables {
 // MY RECIPME RELATED VARIABLES //
     constructor() {
 
         this.outerAccordian = document.getElementsByClassName('accordian-outer');
+        this.allSearchSubmit = document.getElementsByClassName('search-form__submit');
+        this.allCategoryButtons = document.getElementsByClassName('search-buttons__button');
+        this.ingredientButton = document.getElementById('search-ingredient');
       
     }
    
@@ -185,26 +172,22 @@ class showHide {
     }
 // RECIPME SEARCH FORM SHOW/HIDE //
     showHideSearchForms(){
-
-        const selfSearchForms = this.allSearchForms;
-        const selfSearchButtons = this.allSearchButtons;
-        const selfIngredientButton = this.ingredientButton;
        
-        for(let i = 0; i < selfSearchButtons.length; i++) {
+        for(let i = 0; i < this.allSearchButtons.length; i++) {
             
-            selfSearchButtons[i].addEventListener('click', function(event) {
+            this.allSearchButtons[i].addEventListener('click', () => {
                 
-                selfIngredientButton.classList.remove('search-buttons__ingredient--hide');
+                this.ingredientButton.classList.remove('search-buttons__ingredient--hide');
         
-                for(let j = 0; j < selfSearchForms.length; j++) {
+                for(let j = 0; j < this.allSearchForms.length; j++) {
                     // IF ALL SEARCH FORMS CONTAIN CLASS OF SEARCH BUTTON ID //
-                    if (selfSearchForms[j].classList.contains(selfSearchButtons[i].getAttribute('id'))){
+                    if (this.allSearchForms[j].classList.contains(this.allSearchButtons[i].getAttribute('id'))){
                         // REMOVE CLASS TO REVEAL FORM //
-                        selfSearchForms[j].classList.remove('search-form--hide');
+                        this.allSearchForms[j].classList.remove('search-form--hide');
 
                     } else { // CLASS DOESN'T CONTAIN CLASS OF BUTTON ID , ADD CLASS TO HIDE FORM //
 
-                        selfSearchForms[j].classList.add('search-form--hide');
+                        this.allSearchForms[j].classList.add('search-form--hide');
                     }
 
                 }
@@ -234,8 +217,105 @@ class showHide {
     }
 }
 
-class NavDropDown {
+//---------------------------  GENERAL CLASSES --------------------------------- // 
 
+//------------------------- CLICK FUNCTION  ---------------------------------//
+
+class ButtonClick {
+
+    constructor(buttons, style) {
+
+        this.buttons = buttons;
+        this.style = style;
+        
+    }
+
+    formButtonClick() {
+      
+        this.buttons.addEventListener('mousedown', () => {
+    
+            this.buttons.classList.add(`${this.style}`);
+        });
+    
+        this.buttons.addEventListener('mouseup', () => {
+    
+            this.buttons.classList.remove(`${this.style}`);
+        });
+    }
+
+    formButtonsClick() {
+        
+        for(let i=0; i < this.buttons.length; i++) {
+            
+            this.buttons[i].addEventListener('mousedown', () => {
+                
+                this.buttons[i].classList.add(`${this.style}`);
+
+            });
+
+            this.buttons[i].addEventListener('mouseup', () => {
+
+                this.buttons[i].classList.remove(`${this.style}`);
+
+            });
+
+           
+
+        }
+
+    }
+
+    categoryButtonClick() {
+
+        for (let i=0; i < this.buttons.length; i++) {
+
+            this.buttons[i].addEventListener('click', () => {
+
+                if (this.buttons[i].classList.contains(`${this.style}`)){
+
+                    this.buttons[i].classList.remove(`${this.style}`);
+                    
+                } else {
+
+                    for (let j=0; j < this.buttons.length; j++) {
+
+                        this.buttons[j].classList.remove(`${this.style}`);
+                    }
+                    
+                    this.buttons[i].classList.add(`${this.style}`);
+
+                }
+            });
+        }
+
+    }
+
+    ingredientButtonClick(ingredientButton) {
+
+        const selfButtons = this.buttons;
+        const selfStyle = this.style;
+        
+        ingredientButton.addEventListener('click', () => {
+
+            for (let i=0; i < this.buttons.length; i++) {
+
+                this.buttons[i].classList.remove('search-buttons__button--active');
+
+            }
+           
+
+        });
+
+    }
+
+}
+
+
+
+ //-------------------------- ACCORDIANS ----------------------------------------//
+
+ class NavDropDown {
+    // CLASS TO TOGGLE SCSS CLASS FOR ANIMATING BURGER MENU //
     constructor() {
 
         this.burgerMenu = document.getElementById('burger-menu');
@@ -254,10 +334,6 @@ class NavDropDown {
 
     
 }
-
-//---------------------------  GENERAL CLASSES --------------------------------- // 
-
- //-------------------------- ACCORDIANS ----------------------------------------//
 
  class Accordian {
     // DROP DOWN FORM AND CLOSE ALREADY OPENED FORM //
@@ -351,6 +427,7 @@ class StatAccordian {
 //------------------------------ AUTO SCROLL -----------------------------//
 
 // SCROLL TO WINDOW ELEMENT FUNCTION // 
+
     scrollTo() {
         
         console.log('here');

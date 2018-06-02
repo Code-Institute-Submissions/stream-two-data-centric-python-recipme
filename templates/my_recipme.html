@@ -18,16 +18,20 @@
         </ul>
     </div>
     <div class='login-info'>
-        <h2>My Recipme's.</h2>
-        <p>Logged in as {{ username }}.</p>
+        <h2>My Recipme's.<!--<i class="fas fa-utensils"></i>--></h2>
+        <p>Logged in as <strong>{{ username }}</strong>.</p>
     </div>
-    
    <!-- <hr class='hr-90'> -->
     <div id='ingredient-form' class='ingredient search-form'>
-       <!-- <hr class='hr-90'>-->
-        <div class='search-instructions'>
-            <p>Search for your own recipes by Ingredient, or choose a category below.</p>
+        <div class='utensils'>
+            <i class="fas fa-utensils utensils__icon"></i>
         </div>
+        <hr class='hr-90'>
+        
+        <div class='search-instructions'>
+            <p>Search for your own recipes by <strong>Ingredient</strong>, or choose a category below.</p>
+        </div>
+        <hr class='hr-90'>
         <div class='ingredient__form-container'>
             <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
                 <div>
@@ -36,8 +40,8 @@
                 <br>
                 {% include 'search_sort.html' %}
                 <br>
-                <div>
-                    <input class='ingredient__submit' type='submit' value='Search'>
+                <div class='ingredient__submit-container'>
+                    <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
                 </div>
             </form>
         </div>
@@ -54,41 +58,41 @@
     </section>
     <section id='search-forms' class='search-forms-container'>
         <div id='all-recipe' class='search-all search-form--hide search-form'>
-            <p class='search-forms__instructions'>Search all of your own recipes.</p>
+            <p class='search-forms__instructions'>Search <strong>ALL</strong> of your own recipes.</p>
             <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
                 {% include 'search_sort.html' %}
                 <div>
-                    <button class='all-recipe__submit'type='submit'>Search</button>
+                    <button class='all-recipe__submit search-form__submit' type='submit'>Search</button>
                 </div>
             </form>
         </div>
         <div id='saved-recipe' class='search-saved saved-recipe search-form--hide search-form'>
-            <p class='search-forms__instructions'>Search other users recipes you've saved.</p>
+            <p class='search-forms__instructions'>Search other users recipes you've <strong>Saved</strong>.</p>
             <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div>
-                    <button class='saved-recipe__submit' type="submit">Search</button>
+                    <button class='saved-recipe__submit search-form__submit' type="submit">Search</button>
                 </div>
             </form>
         </div>
         <div id='cuisine' class='search-cuisine cuisine search-form--hide search-form'>
-            <p class='search-forms__instructions'>Search your own recipes by Cuisine.</p>
+            <p class='search-forms__instructions'>Search your own recipes by <strong>Cuisine</strong>.</p>
             <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div class='cuisine__button'> 
                     {% for cuisine in cuisines %}
-                    <button class='cuisine__submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
+                    <button class='cuisine__submit search-form__submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
                     {% endfor %}
                 </div>
             </form>
         </div>
         <div id='course' class='search-course course search-form--hide search-form'>
-            <p class='search-forms__instructions'>Search your own recipes by Course.</p>
+            <p class='search-forms__instructions'>Search your own recipes by <strong>Course</strong>.</p>
             <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
                 {% include 'search_sort.html' %}
                 <div class='course__button' >
                     {% for course in courses %}
-                    <button class='course__submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
+                    <button class='course__submit search-form__submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
                     {% endfor %}
                 </div>
             </form>      

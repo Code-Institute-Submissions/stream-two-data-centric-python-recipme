@@ -16,17 +16,26 @@
 
 //-------------- LOGIN/SIGNUP BUTTONS -----------------//
 
+@mixin login-click {
 
-.signup__button--click {
+    border: 1px solid $title-color;
+    background-color: #fff;
+    color:$title-color;
+    //width: 4rem;
+
+}
+
+
+@mixin signup-click {
 
     border: 1px solid $title-color;
     background-color: #e7e9ca4d;
     color: $title-color;
-    width: 4rem;
+    //width: 4rem;
 
 }
 
-.join-us__button {
+@mixin join-us-button {
 
     border: 0;
     border-bottom: 1px solid $title-color;
@@ -36,8 +45,16 @@
     transition: border 0.5s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.join-us__button:hover {
 
-    cursor: pointer;
+@mixin search-button-click {
+
+    border: 1px solid #df6400f6;
+    background-color: #fff;
+    color: #df6400f6;
+
 }
 
+@mixin category-button-active {
+
+    background-color: $category-active;
+}

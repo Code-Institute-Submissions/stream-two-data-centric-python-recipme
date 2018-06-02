@@ -31,23 +31,6 @@ p, a, h3, h4, h5, h6, button, select {
   background-color: rgba(255, 255, 255, 0);
   text-align: center; }
 
-.signup__button--click {
-  border: 1px solid #1d3355;
-  background-color: #e7e9ca4d;
-  color: #1d3355;
-  width: 4rem; }
-
-.join-us__button, .more-info-button {
-  border: 0;
-  border-bottom: 1px solid #1d3355;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  background-color: #fff;
-  transition: border 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
-
-.join-us__button:hover, .more-info-button:hover {
-  cursor: pointer; }
-
 .header {
   background-color: #fff;
   position: fixed;
@@ -226,6 +209,17 @@ p, a, h3, h4, h5, h6, button, select {
 .more-info--style {
   box-shadow: 0px 2.5px 1px 1px rgba(0, 0, 0, 0.16); }
 
+.join-us__button, .more-info-button {
+  border: 0;
+  border-bottom: 1px solid #1d3355;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  background-color: #fff;
+  transition: border 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+
+.join-us__button:hover, .more-info-button:hover {
+  cursor: pointer; }
+
 .signup-submit,
 .login-submit {
   display: flex;
@@ -242,18 +236,17 @@ p, a, h3, h4, h5, h6, button, select {
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
   margin-top: 1.5rem;
-  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
   background-color: #1d3355;
-  color: #fff; }
+  color: #fff;
+  transition: background-color 0.1s ease-in-out; }
 
 .login__button:hover {
-  width: 4rem; }
+  cursor: pointer; }
 
 .login__button--click {
   border: 1px solid #1d3355;
   background-color: #fff;
-  color: #1d3355;
-  width: 4rem; }
+  color: #1d3355; }
 
 .signup__button {
   height: 2rem;
@@ -265,12 +258,19 @@ p, a, h3, h4, h5, h6, button, select {
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
   margin-top: 0.5rem;
-  transition: width 0.3s 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  background-color: #fdd664;
-  color: #1d3355; }
+  background-color: #df6400f6;
+  color: #1d3355;
+  transition: background-color 0.1s ease-in-out; }
+
+.signup__button--click {
+  border: 1px solid #1d3355;
+  background-color: #e7e9ca4d;
+  color: #1d3355;
+  color: #df6400f6;
+  border: 1px solid #df6400f6; }
 
 .signup__button:hover {
-  width: 4rem; }
+  cursor: pointer; }
 
 .stats {
   display: flex;
@@ -322,7 +322,7 @@ p, a, h3, h4, h5, h6, button, select {
 
 .hr-90 {
   width: 90%;
-  color: #1d33554d;
+  color: #edf2fb4d;
   margin: 0 auto; }
 
 /*.my-recipme {
@@ -367,7 +367,8 @@ p, a, h3, h4, h5, h6, button, select {
   position: absolute;
   background-color: #df6400f6;
   border-bottom-right-radius: 1rem;
-  border-top-right-radius: 1rem; }
+  border-top-right-radius: 1rem;
+  z-index: 1; }
 
 .nav-side-bar li {
   padding-bottom: 0.5rem; }
@@ -503,38 +504,8 @@ p, a, h3, h4, h5, h6, button, select {
 
 }
 */
-.search-buttons-container {
-  display: flex;
-  flex-direction: column;
-  height: 5rem;
-  justify-content: center; }
-
-.search-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  position: relative; }
-
 .search-instructions p {
-  text-align: center;
-  padding-bottom: 1rem; }
-
-.search-buttons__button, .search-buttons__ingredient {
-  height: 2rem;
-  width: 6rem;
-  border-radius: 4px;
-  border: 0.5px;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.8rem;
-  background-color: #1d3355;
-  color: #fff;
-  margin: 0.5rem;
-  cursor: pointer; }
-
-.search-buttons__ingredient--hide {
-  display: none; }
+  text-align: center; }
 
 .search-forms-container {
   display: flex;
@@ -544,9 +515,7 @@ p, a, h3, h4, h5, h6, button, select {
   background-color: #b8b8b84d; }
 
 .ingredient {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  max-height: 12rem;
+  max-height: 20rem;
   transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
   background-color: #b8b8b84d; }
 
@@ -557,10 +526,16 @@ p, a, h3, h4, h5, h6, button, select {
     padding-bottom: 0rem;
 
 }*/
+.ingredient__form-container {
+  padding-top: 1rem; }
+
 .ingredient__form {
   display: flex;
   flex-direction: column;
   align-items: center; }
+
+.ingredient__submit-container {
+  padding-bottom: 1rem; }
 
 .ingredient__submit,
 .all-recipe__submit,
@@ -605,11 +580,75 @@ p, a, h3, h4, h5, h6, button, select {
   display: inline-block;
   padding: 1rem; }
 
+.search-buttons-container {
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+  justify-content: center; }
+
+.search-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative; }
+
+.search-buttons__button, .search-buttons__ingredient {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  background-color: #1d3355;
+  color: #fff;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out; }
+
+.search-buttons__ingredient--hide {
+  display: none; }
+
+.search-buttons__button--active {
+  background-color: #8394ae; }
+
 .course__button,
 .cuisine__button {
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap; }
+
+.search-buttons__button--clicked {
+  border: 1px solid #df6400f6;
+  background-color: #fff;
+  color: #df6400f6; }
+
+select {
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("../images/if_ic_keyboard_arrow_down_20px_352466_blue.png");
+  background-repeat: no-repeat;
+  background-position: 108px 3px;
+  text-align: center;
+  width: 8rem;
+  height: 1.5rem; }
+
+.utensils {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding-top: 1rem; }
+
+.utensils__icon {
+  font-size: 2rem;
+  color: #1d3355;
+  border: 1px solid #1d3355;
+  padding: 1rem;
+  border-radius: 10px; }
 
 /*# sourceMappingURL=main.css.map */

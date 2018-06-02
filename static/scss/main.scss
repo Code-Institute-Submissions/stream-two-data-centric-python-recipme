@@ -264,6 +264,17 @@
 
     box-shadow: 0px 2.5px 1px 1px rgba(0, 0, 0, 0.16)
 }
+
+.join-us__button {
+
+    @include join-us-button;
+}
+
+.join-us__button:hover {
+
+    cursor: pointer;
+}
+
 .more-info-button {
 
     @extend .join-us__button;
@@ -287,23 +298,22 @@
 
     @include form-button;
     margin-top: 1.5rem;
-    transition: width 0.3s $dropDownTransition; 
+    //transition: width 0.3s $dropDownTransition; 
     background-color: #1d3355;
     color: #fff;
+    transition: background-color 0.1s ease-in-out;
         
 }
 
 .login__button:hover {
 
-    width: 4rem;
+    //width: 4rem;
+    cursor: pointer;
 }
 
 .login__button--click {
 
-    border: 1px solid $title-color;
-    background-color: #fff;
-    color:$title-color;
-    width: 4rem;
+    @include login-click;
 }
 
 
@@ -311,14 +321,24 @@
 
     @include form-button;
     margin-top: 0.5rem;
-    transition: width 0.3s $dropDownTransition;
-    background-color:#fdd664;
+    //transition: width 0.3s $dropDownTransition;
+    background-color:$side-bar;
     color: $title-color;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.signup__button--click {
+
+    @include signup-click;
+    
+    color: $side-bar;
+    border: 1px solid $side-bar;
 }
 
 .signup__button:hover {
 
-    width: 4rem;
+    cursor: pointer;
+    //width: 4rem;
 }
 
 .stats {
@@ -399,7 +419,7 @@
 .hr-90 {
 
     width: 90%;
-    color: #1d33554d;
+    color: #edf2fb4d;
     margin: 0 auto; 
 
 }
@@ -427,22 +447,13 @@
 
 .bars {
 
-    display: inline-block;
-    cursor: pointer;
-    position: absolute;
-    left: .5rem;
-    //flex: 1;
-    //width: 50%;
+    @include bars-container;
+    
 }
 
 .bars__bar1, .bars__bar2, .bars__bar3 {
 
-    width: 1.5rem;
-    height: 0.2rem;
-    background-color: #1d3355;
-    margin: 0.3rem;
-    transition: .4s;
-    border-radius: 4px;
+   @include bars;
 }
 
 .alter .bars__bar1 {
@@ -467,14 +478,7 @@
 
 .nav-side-bar {
 
-    list-style: none;
-    margin: 0;
-    padding: 1rem;
-    position: absolute;
-   // top: -1rem;
-    background-color: $side-bar;
-    border-bottom-right-radius: 1rem;
-    border-top-right-radius: 1rem;
+    @include side-bar;
     
 }
 
@@ -493,14 +497,8 @@
 
 .side-bar-wrapper {
 
-    display: flex;
-    justify-content: left;
-    position: relative;
-    right: 1rem;
-    transition: left 0.3s ease-in-out;
-    left: -16rem;
-    
-   
+    @include side-bar-wrapper;
+       
 }
 
 .show-side-bar {
@@ -627,49 +625,15 @@
 
 }
 */
-
-.search-buttons-container {
-
-    display: flex;
-    flex-direction: column;
-    height: 5rem;
-    justify-content: center;
-}
-
-.search-buttons {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: relative;
-    //top: 2rem;
-   
-}
-
 .search-instructions p { 
 
     text-align: center;
-    padding-bottom: 1rem;
-}
-.search-buttons__button {
-
-    @include form-button;
-    background-color: $title-color;
-    color: #fff;
-    margin:0.5rem;
-    cursor: pointer;
-
+    //padding-bottom: 1rem;
 }
 
-.search-buttons__ingredient {
 
-    @extend .search-buttons__button;
-}
 
-.search-buttons__ingredient--hide {
 
-    display: none;
-}
 
 .search-forms-container {
 
@@ -684,9 +648,9 @@
 
 .ingredient {
 
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    max-height: 12rem;
+   // padding-top: 1rem;
+   // padding-bottom: 1rem;
+    max-height: 20rem;
     transition: max-height $dropDownTransition;
     background-color: $accordian-inner;
 }
@@ -698,12 +662,22 @@
     padding-bottom: 0rem;
 
 }*/
+
+.ingredient__form-container {
+
+    padding-top: 1rem;
+}
 .ingredient__form {
 
     display: flex;
     flex-direction: column;
     align-items: center;
     
+}
+
+.ingredient__submit-container {
+
+    padding-bottom: 1rem;
 }
 
 .ingredient__submit,
@@ -728,7 +702,6 @@
     align-items: center;
     padding-bottom: 1rem;
     
-
 }
 
 .search-forms__instructions {
@@ -757,6 +730,51 @@
     padding: 1rem;
 }
 
+.search-buttons-container {
+
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: center;
+}
+
+.search-buttons {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    //top: 2rem;
+   
+}
+
+
+.search-buttons__button {
+
+    @include form-button;
+    background-color: $title-color;
+    color: #fff;
+    margin:0.5rem;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+
+}
+
+.search-buttons__ingredient {
+
+    @extend .search-buttons__button;
+}
+
+.search-buttons__ingredient--hide {
+
+    display: none;
+}
+
+.search-buttons__button--active {
+
+    @include category-button-active;
+    
+}
 .course__button,
 .cuisine__button {
 
@@ -767,7 +785,34 @@
 
 }
 
+.search-buttons__button--clicked {
 
+    @include search-button-click;
+}
 
+select {
+
+    @include select;
+}
+
+.utensils {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+
+}
+
+.utensils__icon {
+
+    font-size: 2rem;
+    color: $title-color;
+    border: 1px solid $title-color;
+    padding: 1rem;
+   
+    border-radius: 10px;
+}
 
 
