@@ -2,106 +2,140 @@
 {% block content %}
 <body>
     {% include 'full_header.html' %}
-    <h1>Full RecipMe</h1>
-    <h2>{{ full_recipe[1][0]['RecipeTitle']}}</h2>
-    <p>Recipe created by: <strong>{{ full_recipe[1][0] ['Author'] }}</strong> at {{ full_recipe[1][0]['Created'] }}</p>
-    <h3> Recipe Stats </h3>
-    <p><strong>Cuisine</strong>:{{ full_recipe[1][0]['CuisineName'] }}.</p>
-    <p><strong>Course</strong>: {{ full_recipe[1][0] ['CourseName'] }}.</p>
-    <p><strong>Total cooking time</strong>: {{ full_recipe[1][0]['CookingTimeMins']}} minutes.</p>
-    <p><strong>Cost</strong>: £{{ full_recipe[1][0]['Price'] }}.</p>
-    <p><strong>Servings</strong>: {{ full_recipe[1][0]['Servings'] }}.</p>
-    <p><strong>Estimated Calories</strong>: {{full_recipe[1][0]['Calories']}}.</p>
-    <hr>
-    <h2>Description</h2>
-    <p>{{ full_recipe[1][0]['RecipeDescription']}}</p>
-    <hr>
-    <h2>Ingredients</h2>
-    <ul>
-        {% if full_recipe[2] == [] %}
-        <p>No ingredients for this recipe yet</p>
+    <div class="full-recipe-container">
+        <section class='full-recipe'>
+            <div class='full-recipe__row--grey-background'>
+                <h2 class='full-recipe__title'>{{ full_recipe[1][0]['RecipeTitle']}}</h2>
+            </div>
+            <div>
+                <p class='full-recipe__text'>created by <strong>{{ full_recipe[1][0] ['Author'] }}</strong> at {{ full_recipe[1][0]['Created'] }}</p>
+            </div>
+            <div class='full-recipe__row full-recipe__row--grey-background'>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Cuisine</h3>
+                    <p class='full-recipe__text' >{{ full_recipe[1][0]['CuisineName'] }}.</p>
+                </div>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Course</h3> 
+                    <p class='full-recipe__text'>{{ full_recipe[1][0] ['CourseName'] }}.</p>
+                </div>
+            </div>
+            <div class='full-recipe__row'>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Time</h3>
+                    <p class='full-recipe__text'>{{ full_recipe[1][0]['CookingTimeMins']}} minutes.</p>
+                </div>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Cost</h3>
+                    <p class='full-recipe__text'>£{{ full_recipe[1][0]['Price'] }}.</p>
+                </div>
+            </div>
+            <div class='full-recipe__row full-recipe__row--grey-background'>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Servings</h3>
+                    <p class='full-recipe__text'>{{ full_recipe[1][0]['Servings'] }}.</p>
+                </div>
+                <div class='full-recipe__column'>
+                    <h3 class='full-recipe__subtitle'>Calories</h3>
+                    <p class='full-recipe__text'>{{full_recipe[1][0]['Calories']}}.</p>
+                </div>
+            </div>
+            <div class='full-recipe__description'>
+                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Description</h3>
+                <p class='full-recipe__text'>{{ full_recipe[1][0]['RecipeDescription']}}</p>
+            </div>
+            <hr class='hr-90'>
+            <div class='full-recipe__ingredients'>
+                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Ingredients</h3>
+                <ol>
+                    {% if full_recipe[2] == [] %}
+                    <li>No ingredients for this recipe yet</li>
+                    {% else %}
+                    {% for ingredient in full_recipe[2] %}
+                    <li>{{ ingredient['Quantity']}} {{ ingredient['IngredientName']}}</li>
+                    {% endfor %}
+                    {% endif %}
+                </ol>
+            </div>
+            <hr class='hr-90'>
+            <div class='full-recipe-method'>
+                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Method</h3>
+                <ol>
+                    {% if full_recipe[3] == [] %}
+                    <li>No method for this recipe yet</li>
+                    {% else %}
+                    {% for step in full_recipe[3] %}
+                    <li>{{ step['StepDescription']}}</li>
+                    {% endfor %}
+                    {% endif %}
+                </ol>
+            </div>
+        </section>
+        <br>
+        {% if username == full_recipe[1][0] ['Author'] %}
+        <form action="{{ url_for('edit_recipe', username=username, recipe_id=recipe_id)}}" method='POST'>
+            <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Edit Recipe</button>
+        </form>
+        <br>
+        <form action="{{ url_for('delete_recipe', username=username) }}" method='POST'>
+            <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>
+        </form>
         {% else %}
-        {% for ingredient in full_recipe[2] %}
-        <li>{{ ingredient['Quantity']}} {{ ingredient['IngredientName']}}</li>
-        {% endfor %}
-        {% endif %}
-    </ul>
-    <hr>
-    <h2>Method</h2>
-    <ol>
-        {% if full_recipe[3] == [] %}
-        <p>No method for this recipe yet</p>
-        {% else %}
-        {% for step in full_recipe[3] %}
-        <li>{{ step['StepDescription']}}</li>
-        {% endfor %}
-        {% endif %}
-    </ol>
-    <a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
-    <br>
-    {% if username == full_recipe[1][0] ['Author'] %}
-    <form action="{{ url_for('edit_recipe', username=username, recipe_id=recipe_id)}}" method='POST'>
-        <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Edit Recipe</button>
-    </form>
-    <br>
-    <form action="{{ url_for('delete_recipe', username=username) }}" method='POST'>
-        <button type='submit' name='RecipeId' value='{{ recipe_id }}'>Delete Recipe</button>
-    </form>
-    {% else %}
-    <br>
-    {% if full_recipe[4] == False %}
-    <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-        <label>Save this Recipe?</label>
         <br>
-        <br>
-        <input type='radio' name='Saved' value='1'> Save
-        <br>
-        <br>
-        <input type='submit' value='submit'>
-    </form>
-    {% elif full_recipe[4] == True %}
-    <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-        <label>Remove this Recipe?</label>
-        <br>
-        <br>
-        <input type='radio' name='Saved' value='0'> Un-save
-        <br>
-        <br>
-        <input type='submit' value='submit'>
-    </form>
-    <br>
-    {% endif %}
-    <form action=" {{ url_for('rate_recipe', username=username, recipe_id=recipe_id ) }}" method='POST'>
-        <fieldset>
-            <label>Leave a comment</label>
+        {% if full_recipe[4] == False %}
+        <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
+            <label>Save this Recipe?</label>
             <br>
-            <textarea type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
-        </fieldset>
-        <fieldset>
-            <label>Rate this RecipMe.</label>
             <br>
-            <input type='radio' value='1' name='Rating'>1
-            <input type='radio' value='2' name='Rating'>2
-            <input type='radio' value='3' name='Rating'>3
-            <input type='radio' value='4' name='Rating'>4
-            <input type='radio' value='5' name='Rating' checked>5
-        </fieldset>
-        <input type='submit' value='Submit'>
-    </form>
-    {% if full_recipe[5] != [] %}
-    <div>
-        <h3>User Comments</h3>
-        {% for rating in full_recipe[5] %}
-        <p><strong>Rating: </strong>{{ rating['Rating'] }}</p>
-        
-        <p><em>"{{ rating['Comments'] }}"</em></p>
-        <p>Rated by <strong>{{ rating['Username'] }}</strong>.</p>
+            <input type='radio' name='Saved' value='1'> Save
+            <br>
+            <br>
+            <input type='submit' value='submit'>
+        </form>
+        {% elif full_recipe[4] == True %}
+        <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
+            <label>Remove this Recipe?</label>
+            <br>
+            <br>
+            <input type='radio' name='Saved' value='0'> Un-save
+            <br>
+            <br>
+            <input type='submit' value='submit'>
+        </form>
         <br>
-        {% endfor %}
+        {% endif %}
+        <form action=" {{ url_for('rate_recipe', username=username, recipe_id=recipe_id ) }}" method='POST'>
+            <fieldset>
+                <label>Leave a comment</label>
+                <br>
+                <textarea type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
+            </fieldset>
+            <fieldset>
+                <label>Rate this RecipMe.</label>
+                <br>
+                <input type='radio' value='1' name='Rating'>1
+                <input type='radio' value='2' name='Rating'>2
+                <input type='radio' value='3' name='Rating'>3
+                <input type='radio' value='4' name='Rating'>4
+                <input type='radio' value='5' name='Rating' checked>5
+            </fieldset>
+            <input type='submit' value='Submit'>
+        </form>
+        {% if full_recipe[5] != [] %}
+        <div>
+            <h3>User Comments</h3>
+            {% for rating in full_recipe[5] %}
+            <p class='full-recipe__text'><strong>Rating: </strong>{{ rating['Rating'] }}</p>
+            
+            <p class='full-recipe__text'><em>"{{ rating['Comments'] }}"</em></p>
+            <p class='full-recipe__text'>Rated by <strong>{{ rating['Username'] }}</strong>.</p>
+            <br>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endif %}
     </div>
-    {% endif %}
-
-
-    {% endif %}
+    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
+    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/fullrecipe.js') }}"></script>
 </body>
 {% endblock%}
