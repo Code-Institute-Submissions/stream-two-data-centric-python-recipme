@@ -1204,6 +1204,12 @@ select {
 
     @extend.title;
     font-size: 1.5rem;
+    padding-left: .5rem
+}
+
+.full-recipe__author {
+
+    padding-left: .5rem;
 }
 
 .full-recipe__subtitle {
@@ -1224,18 +1230,37 @@ select {
 .full-recipe__column {
 
     @extend.results-recipe__column;
+    padding-left: .5rem;
 }
 
 .full-recipe__text {
 
     font-size: .8rem;
+    
 }
 .full-recipe__ingredients ol li,
-.full-recipe-method ol li {
+.full-recipe__method ol li {
 
     font-family: $nanum;
     font-size: .8rem;
     color: $title-color;
     //list-style: none;
     padding-left: 0rem;
+}
+
+.full-recipe__description p {
+
+    padding-left: .5rem;
+}
+
+.full-recipe__row--margin--bottom {
+
+    margin-bottom: 1rem;
+}
+
+.full-recipe__description h3,
+.full-recipe__ingredients h3,
+.full-recipe__method h3 {
+
+    padding-left: .5rem;
 }

@@ -911,7 +911,11 @@ select {
   width: 80%; }
 
 .full-recipe__title {
-  font-size: 1.5rem; }
+  font-size: 1.5rem;
+  padding-left: 0.5rem; }
+
+.full-recipe__author {
+  padding-left: .5rem; }
 
 .full-recipe__subtitle {
   font-size: 1rem; }
@@ -919,14 +923,28 @@ select {
 .full-recipe__row--grey-background {
   background-color: #b8b8b84d; }
 
+.full-recipe__column {
+  padding-left: .5rem; }
+
 .full-recipe__text {
   font-size: .8rem; }
 
 .full-recipe__ingredients ol li,
-.full-recipe-method ol li {
+.full-recipe__method ol li {
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
   color: #1d3355;
   padding-left: 0rem; }
+
+.full-recipe__description p {
+  padding-left: .5rem; }
+
+.full-recipe__row--margin--bottom {
+  margin-bottom: 1rem; }
+
+.full-recipe__description h3,
+.full-recipe__ingredients h3,
+.full-recipe__method h3 {
+  padding-left: .5rem; }
 
 /*# sourceMappingURL=main.css.map */
