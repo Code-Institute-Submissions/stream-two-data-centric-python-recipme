@@ -160,7 +160,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 12rem;
+    width: 19rem;
     padding-left: 1rem;
     margin-bottom: 0rem;
 }
@@ -178,6 +178,7 @@
     border-bottom: 1px solid $title-color;
 }
 //--------------------------------------------------//
+.title,
 .title a {
 
     font-family: $pacifico;
@@ -781,6 +782,7 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 1rem;
+    max-width: 27rem;
     
 }
 
@@ -895,19 +897,47 @@ select {
     border-radius: 10px;
 }
 
-.myrecipme-image {
+.my-recipe-banner-image-helper {
+
+    background-image: url("../images/spice-still-1433265-60pecent-pxhere.jpg");
+
+}
+
+.shared-banner-image-helper {
+
+    background-image: url("../images/23295-pxhere-80percentjpg.jpg");
+
+}
+
+.banner-image-styles-helper {
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
+    width: 100%;
+    height: 7rem;
 
     @include large {
-        background-image: url("../images/spice-still-1433265-60pecent-pxhere.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: 50% 40%;
-        height: 34rem;
-        width: 100%;
+
         box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
-        height: 7rem;
+        height: 9rem;
     }
+
 }
+
+.myrecipme-image {
+
+    @extend .my-recipe-banner-image-helper;
+    @extend .banner-image-styles-helper;
+}
+
+.shared-image {
+
+    @extend .shared-banner-image-helper;
+    @extend .banner-image-styles-helper;
+
+}
+
 // --------------------------- SEARCH RESULTS STYLES --------------------- //
 
 .results {

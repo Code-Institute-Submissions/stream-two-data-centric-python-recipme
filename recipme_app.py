@@ -202,7 +202,14 @@ def saved_paginate(username, order_by, direction):
 
 ############### PUBLIC SEARCH ROUTES ##########################
 
-# ALL PUBLIC RECIPES #   
+# ALL PUBLIC RECIPES #  
+
+@app.route('/my_recipme/<username>/public')
+def public(username):
+    recipe_groups = ViewVariables(username).groupings()
+    return render_template('public_recipes.html', search=False, username=username, cuisines=recipe_groups[0][0], 
+                            courses=recipe_groups[0][1], public_cuisines=recipe_groups[1][0], 
+                            public_courses=recipe_groups[1][1])
                                     
 @app.route('/my_recipme/<username>/all_public', methods=['GET', 'POST'])
 def all_public(username):
@@ -219,7 +226,7 @@ def public_paginate(username, order_by, direction):
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
 
-    return render_template('all_my_recipme.html', username=username, my_recipme=recipe_info[0], 
+    return render_template('public_recipes.html', search='all_public', username=username, my_recipme=recipe_info[0], 
                                 count=recipe_info[1], cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                                 public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                                 results=pagination_results, page=page, per_page=per_page, pagination=pagination)
@@ -245,7 +252,7 @@ def category_public_paginate(username, table, column, category, order_by, direct
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
                                                             
-    return render_template('category_search.html', username=username, my_recipme=recipe_info[0], count=recipe_info[1], 
+    return render_template('public_recipes.html', username=username, search='category_public', my_recipme=recipe_info[0], count=recipe_info[1], 
                                                     cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1], 
                                                     public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],
                                                     category=category, category_item=table, results=pagination_results, 
@@ -269,7 +276,7 @@ def public_ingredient_paginate(username, ingredient, order_by, direction):
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
 
-    return render_template('ingredient_search.html', username=username, 
+    return render_template('public_recipes.html', search='ingredient_public', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],
                             cuisines=recipe_info[2][0][0], courses=recipe_info[2][0][1],
                             public_cuisines=recipe_info[2][1][0], public_courses=recipe_info[2][1][1],

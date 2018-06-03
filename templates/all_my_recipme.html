@@ -1,6 +1,10 @@
 
 <section class='results'>
+    {% if search == 'all_public'%}
+    <a id='search-reset-button' class='results__reset' href="{{ url_for('public', username=username) }}">Reset</a>
+    {% else %}
     <a id='search-reset-button' class='results__reset' href="{{ url_for('my_recipme', username=username) }}">Reset</a>
-   <h2 class='results__heading'>You searched all your recipes.</h2>
+    {% endif %}
+   <h2 class='results__heading'>You searched all recipes.</h2>
 </section>
 {% include 'mini_recipe_partial.html' %}
