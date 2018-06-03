@@ -47,22 +47,20 @@
     list-style: none;
     margin: 0;
     padding: 1rem;
-    position: absolute;
-   // top: -1rem;
     background-color: $side-bar;
     border-bottom-right-radius: 1rem;
     border-top-right-radius: 1rem;
-    z-index: 1;
-
+   
 }
 
 @mixin side-bar-wrapper {
 
     display: flex;
     justify-content: left;
-    position: relative;
-    right: 1rem;
     transition: left 0.3s ease-in-out;
     left: -16rem;
+    top: 4rem;
+    z-index: 1;
+    position: absolute;
 
 }

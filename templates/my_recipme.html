@@ -3,22 +3,19 @@
 <body>
     {% include 'full_header.html' %}
     <div class='myrecipme-container'>
-        <div id='side-bar' class='side-bar-wrapper'>
-            <ul class='nav-side-bar'>
-                <li><a href="{{ url_for('add_recipe', username=username) }}">Create</a></li>
-                <li> <a href="{{ url_for('index')}}">Log Out</a></li>
-            </ul>
-        </div>
+            <hr class="hr-90">
         <div class='login-info'>
             <h2>My Recipme's.<!--<i class="fas fa-utensils"></i>--></h2>
             <p>Logged in as <strong>{{ username }}</strong>.</p>
         </div>
         <hr class='hr-90'>
+        <div class='myrecipme-image'></div>
         <div class='search-instructions'>
             <p>Search for your own recipes by Ingredient, or choose a category.</p>
         </div>
         <!--<hr class='hr-90'>-->
         {% if search == False %}
+        
         <section id='ingredient-form' class='ingredient search-form'>
             <div class='fa'>
                 <i class="fas fa-search fa__icon" aria-hidden="true"></i>
@@ -126,8 +123,7 @@
             </div>
         </section>
         <hr class='hr-90'>
-   
-
+     
         {% if search == 'all' %}
             {% include 'all_my_recipme.html' %}
         {% elif search == 'category' %}
@@ -138,7 +134,6 @@
             {% include 'saved_recipe.html'%}
         {% endif %}
     </div>
-    
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
 </body>

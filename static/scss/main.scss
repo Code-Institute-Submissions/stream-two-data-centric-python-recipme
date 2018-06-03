@@ -7,8 +7,8 @@
 @import 'partials/buttons';
 @import 'partials/component';
 
-//------------------ LOGIN PAGE -------------------//
 
+//--------------------------- HEADER ---------------------------//
 .header {
 
     background-color: #fff;
@@ -26,6 +26,15 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    height: 4rem;
+
+    @include desktop {
+
+        width: 80%;
+        position: relative;
+        left: 10%;
+        
+    }
     
 }
 
@@ -51,7 +60,125 @@
     transform: translateX(-50%);
 }
 
-.title {
+
+//  MENU ICON //
+
+.bars {
+
+    @include bars-container;
+    
+    @include desktop {
+
+        display: none;
+    }
+}
+
+.bars__bar1, .bars__bar2, .bars__bar3 {
+
+   @include bars;
+}
+
+.alter .bars__bar1 {
+
+    transform: rotate(-65deg) translate(-0.4rem, 0.4rem);
+    
+}
+
+
+.alter .bars__bar2 {
+
+    opacity: 0;
+}
+
+
+.alter .bars__bar3 {
+
+    transform: rotate(425deg) translate(-0.6rem, 0.2rem);
+}
+
+// SIDE BAR //
+
+.nav-side-bar {
+
+    @include side-bar;
+  
+}
+
+.nav-side-bar li {
+
+    padding-bottom: 0.5rem;
+   
+}
+
+.nav-side-bar li a{
+
+    color: #fff;
+    border-bottom: 1px solid $side-bar;
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+.nav-side-bar li a:hover {
+
+    border-bottom: 1px solid #fff;
+}
+
+.side-bar-wrapper {
+
+    @include side-bar-wrapper;
+
+    @include desktop {
+
+        display: none;
+    }
+       
+}
+
+.show-side-bar {
+
+    left: 0rem;
+
+}
+
+//------------------------------------------------//
+
+//-------------------- DESKTOP NAV ----------------//
+
+.desktop-nav {
+
+    display: none;
+    position: absolute;
+    //left: 61vw;
+    
+    @include desktop {
+
+        display: inline-block;
+    }
+}
+
+.desktop-nav ul {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 12rem;
+    padding-left: 1rem;
+    margin-bottom: 0rem;
+}
+
+.desktop-nav li {
+
+    list-style: none;
+    color: $title-color;
+    border-bottom: 1px solid #fff;
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+.desktop-nav li:hover {
+
+    border-bottom: 1px solid $title-color;
+}
+//--------------------------------------------------//
+.title a {
 
     font-family: $pacifico;
     font-size: 2rem;
@@ -61,7 +188,7 @@
 }
 
 //------------------------------------------------//
-
+//------------------ LOGIN PAGE -------------------//
 .login-content-wrapper {
 
     position: relative;
@@ -422,6 +549,7 @@
     color: #edf2fb4d;
     margin: 0 auto; 
 
+   
 }
 
 /*.my-recipme {
@@ -443,69 +571,6 @@
 
 //------------------------------------ MY RECIPE PAGE -------------------------------------------//
 
-//  MENU ICON //
-
-.bars {
-
-    @include bars-container;
-    
-}
-
-.bars__bar1, .bars__bar2, .bars__bar3 {
-
-   @include bars;
-}
-
-.alter .bars__bar1 {
-
-    transform: rotate(-65deg) translate(-0.4rem, 0.4rem);
-    
-}
-
-
-.alter .bars__bar2 {
-
-    opacity: 0;
-}
-
-
-.alter .bars__bar3 {
-
-    transform: rotate(425deg) translate(-0.6rem, 0.2rem);
-}
-
-// SIDE BAR //
-
-.nav-side-bar {
-
-    @include side-bar;
-    
-}
-
-.nav-side-bar li {
-
-    padding-bottom: 0.5rem;
-
-}
-
-.nav-side-bar li a{
-
-    
-    color: #fff;
-}
-
-
-.side-bar-wrapper {
-
-    @include side-bar-wrapper;
-       
-}
-
-.show-side-bar {
-
-    left: 0rem;
-
-}
 
 .myrecipme-container {
 
@@ -645,10 +710,6 @@
     //padding-bottom: 1rem;
 }
 
-
-
-
-
 .search-forms-container {
 
     display: flex;
@@ -667,6 +728,11 @@
     max-height: 20rem;
     transition: max-height $dropDownTransition;
     background-color: $accordian-inner;
+
+    @include large {
+
+        max-height: 16rem;
+    }
 }
 
 /*.ingredient--hide {
@@ -821,7 +887,7 @@ select {
 
 .fa__icon {
 
-    font-size: 2rem;
+    font-size: 1rem;
     color: $title-color;
     border: 1px solid $title-color;
     padding: 1rem;
@@ -829,6 +895,19 @@ select {
     border-radius: 10px;
 }
 
+.myrecipme-image {
+
+    @include large {
+        background-image: url("../images/spice-still-1433265-60pecent-pxhere.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 40%;
+        height: 34rem;
+        width: 100%;
+        box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+        height: 7rem;
+    }
+}
 // --------------------------- SEARCH RESULTS STYLES --------------------- //
 
 .results {
@@ -864,7 +943,7 @@ select {
 
     font-family: $nanum;
    // padding-left: 1rem;
-    font-size: 1.2rem;
+    font-size: .8rem;
     color: $title-color;
     text-align: center;
 }
@@ -940,7 +1019,6 @@ select {
         justify-content: center;
     }
    
-
 }
 
 .results-recipe {
