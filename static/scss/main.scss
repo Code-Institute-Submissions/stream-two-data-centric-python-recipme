@@ -507,6 +507,20 @@
 
 }
 
+.myrecipme-container {
+
+    @include desktop {
+
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        width: 80%;
+        position: relative;
+        left: 10%;
+       
+    }
+}
+
 // RECIPME ACCORDIAN //
 /*
 .accordian {
@@ -865,7 +879,7 @@ select {
     flex-wrap: wrap;
     justify-content: center;
     padding-left: 0;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
 }
 
 .pagination li,
@@ -880,12 +894,61 @@ select {
 
 //-------------------- RESULTS STYLES ----------------------------//
 
-.results-recipe {
+.results-container {
 
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: $accordian-inner;
+    margin-bottom: 2rem;
+
+    @include desktop {
+
+        display: flex;
+        flex-direction: row;
+        //flex-wrap: wrap;
+        overflow: scroll;
+        justify-content: left;
+    }
+}
+
+.results-container--two {
+
+    @include desktop {
+
+        display: flex;
+        flex-direction: row;
+        //flex-wrap: wrap;
+        overflow: scroll;
+        justify-content: center;
+    }
+}
+
+.results-container--three {
+    
+    @include desktop {
+
+        display: flex;
+        flex-direction: row;
+        //flex-wrap: wrap;
+        overflow: scroll;
+        justify-content: left;
+    }
+
+    @include large {
+        
+        justify-content: center;
+    }
+   
+
+}
+
+.results-recipe {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .results-recipe__info {
@@ -894,23 +957,31 @@ select {
     flex-direction: column;
     align-items: flex-start;
     box-shadow: 3px 4px 8px 2px rgba(0, 0, 0, 0.26);;
-    margin-bottom: 1.5rem;
-    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
     padding: 1rem;
     background-color: #fff;
+    min-width: 14rem;
     
+    @include tablet {
+
+        min-width: 18rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
 
-.results-recipe__info h2,
-.results-recipe__info p,
-.results-recipe__info h3 {
+//.results-recipe__info h2,
+//.results-recipe__info h3 ,
+.results-recipe__info p {
 
-    margin-bottom: 0rem;
+    font-size: 0.7rem;
+   // margin-bottom: 0.5rem;
 }
 
 #results-recipe__author {
 
-    margin-bottom: 1.5rem;
+    margin-bottom: .5rem;
 }
 
 
@@ -927,20 +998,22 @@ select {
 .results-recipe__title {
 
     @extend.results__heading;
-    padding-bottom: 1rem;
+   // padding-bottom: 1rem;
+    text-align:left;
     font-family: $pacifico;
 }
 
 .results-recipe__category {
 
-    font-size: 1rem;
+    font-size: 0.8rem;
     //font-family: $pacifico;
 }
 
 .full-recipe-button {
 
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
 }
+
 .full-recipe-button__button {
 
     @include form-button;
@@ -967,6 +1040,10 @@ select {
     width: 100%;
 }
 
+.results-recipe__row--grey-background {
+
+    background-color: $accordian-inner;
+}
 .results-recipe__column{
 
     width: 50%;
@@ -976,4 +1053,27 @@ select {
 .results-recipe__row p {
 
     //text-align: center;
+}
+
+.no-recipes {
+
+    height: 5rem;
+    background-color: $accordian-inner;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+.no-recipes p {
+
+    text-align: center
+}
+
+.mini-recipe-break {
+
+    @include desktop {
+
+        display: none;
+    }
 }

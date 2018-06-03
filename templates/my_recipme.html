@@ -1,149 +1,144 @@
 {% extends 'base.html' %}
 {% block content %}
-<body>  
-    <header id='header' class='header header--relative'>
-        <div id='burger-menu'class='bars'>
-            <div class="bars__bar1"></div>
-            <div class="bars__bar2"></div>
-            <div class="bars__bar3"></div>
+<body>
+    {% include 'full_header.html' %}
+    <div class='myrecipme-container'>
+        <div id='side-bar' class='side-bar-wrapper'>
+            <ul class='nav-side-bar'>
+                <li><a href="{{ url_for('add_recipe', username=username) }}">Create</a></li>
+                <li> <a href="{{ url_for('index')}}">Log Out</a></li>
+            </ul>
         </div>
-        <div class='title-container-recipme'>
-            <h1 class='title'>Recipme.</h1>
+        <div class='login-info'>
+            <h2>My Recipme's.<!--<i class="fas fa-utensils"></i>--></h2>
+            <p>Logged in as <strong>{{ username }}</strong>.</p>
         </div>
-    </header>
-    <div id='side-bar' class='side-bar-wrapper'>
-        <ul class='nav-side-bar'>
-            <li><a href="{{ url_for('add_recipe', username=username) }}">Create</a></li>
-            <li> <a href="{{ url_for('index')}}">Log Out</a></li>
-        </ul>
-    </div>
-    <div class='login-info'>
-        <h2>My Recipme's.<!--<i class="fas fa-utensils"></i>--></h2>
-        <p>Logged in as <strong>{{ username }}</strong>.</p>
-    </div>
-   <!-- <hr class='hr-90'> -->
-   <hr class='hr-90'>
-    <div class='search-instructions'>
-        <p>Search for your own recipes by Ingredient, or choose a category.</p>
-    </div>
-    <!--<hr class='hr-90'>-->
-    {% if search == False %}
-    <div id='ingredient-form' class='ingredient search-form'>
-        <div class='fa'>
-            <i class="fas fa-search fa__icon" aria-hidden="true"></i>
+        <hr class='hr-90'>
+        <div class='search-instructions'>
+            <p>Search for your own recipes by Ingredient, or choose a category.</p>
         </div>
-        <div class='ingredient__form-container'>
-            <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
-                <div>
-                    <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
-                </div>
-                <br>
-                {% include 'search_sort.html' %}
-                <br>
-                <div class='ingredient__submit-container'>
-                    <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
-                </div>
-            </form>
-        </div>
-    </div>
-    {% else %}
-    <div id='ingredient-form' class='ingredient search-form search-form--hide'>
-        <div class='fa'>
-            <i class="fas fa-search fa__icon" aria-hidden="true"></i>
-        </div>
-        <div class='ingredient__form-container'>
-            <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
-                <div>
-                    <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
-                </div>
-                <br>
-                {% include 'search_sort.html' %}
-                <br>
-                <div class='ingredient__submit-container'>
-                    <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
-                </div>
-            </form>
-        </div>
-    </div>
-    {% endif %}
-    <!--<hr class='hr-90'>-->
-    <section id='my-recipme' class='search-buttons-container'>
-        <div class='search-buttons'>
-            {% if search == False %}
-            <button id='search-ingredient' class='search-buttons__ingredient search-buttons__ingredient--hide' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
-            {% else %}
-            <button id='search-ingredient' class='search-buttons__ingredient' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
-            {% endif %}
-            <button id='search-all' class='search-buttons__button' type='button' class='accordian-outer__title'>All</button type='button'>
-            <button id='search-saved' class='search-buttons__button' type='button' class='accordian-outer__title'>Saved</button type='button'>
-            <button id='search-cuisine' class='search-buttons__button' type='button' class='accordian-outer__title'>Cuisine</button type='button'>
-            <button id='search-course' class='search-buttons__button' type='button' class='accordian-outer__title'>Course</button type='button'>
-        </div>
-    </section>
-    <section id='search-forms' class='search-forms-container'>
-        <div id='all-recipe' class='search-all search-form--hide search-form'>
+        <!--<hr class='hr-90'>-->
+        {% if search == False %}
+        <section id='ingredient-form' class='ingredient search-form'>
             <div class='fa'>
-                <i class="fas fa-utensils fa__icon" aria-hidden="true"></i>
+                <i class="fas fa-search fa__icon" aria-hidden="true"></i>
             </div>
-            <p class='search-forms__instructions'>Search <strong>ALL</strong> of your own recipes.</p>
-            <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
-                {% include 'search_sort.html' %}
-                <div>
-                    <button class='all-recipe__submit search-form__submit' type='submit'>Search</button>
-                </div>
-            </form>
-        </div>
-        <div id='saved-recipe' class='search-saved saved-recipe search-form--hide search-form'>
+            <div class='ingredient__form-container'>
+                <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+                    <div>
+                        <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
+                    </div>
+                    <br>
+                    {% include 'search_sort.html' %}
+                    <br>
+                    <div class='ingredient__submit-container'>
+                        <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
+                    </div>
+                </form>
+            </div>
+        </section>
+        {% else %}
+        <section id='ingredient-form' class='ingredient search-form search-form--hide'>
             <div class='fa'>
-                <i class="far fa-save fa__icon" aria-hidden="true"></i>
+                <i class="fas fa-search fa__icon" aria-hidden="true"></i>
             </div>
-            <p class='search-forms__instructions'>Search other users recipes you've <strong>Saved</strong>.</p>
-            <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
-                {% include 'search_sort.html' %}
-                <div>
-                    <button class='saved-recipe__submit search-form__submit' type="submit">Search</button>
-                </div>
-            </form>
-        </div>
-        <div id='cuisine' class='search-cuisine cuisine search-form--hide search-form'>
-            <div class='fa'>
-                <i class="fas fa-globe fa__icon" aria-hidden="true"></i>
+            <div class='ingredient__form-container'>
+                <form class='ingredient__form' action = "{{ url_for('ingredient_search', username=username)}}" method='POST'>
+                    <div>
+                        <input class='ingredient__input' type='text' placeholder='Ingredient Search' name='Ingredient' required maxlength="50">
+                    </div>
+                    <br>
+                    {% include 'search_sort.html' %}
+                    <br>
+                    <div class='ingredient__submit-container'>
+                        <input class='ingredient__submit search-form__submit' type='submit' value='Search'>
+                    </div>
+                </form>
             </div>
-            <p class='search-forms__instructions'>Search your own recipes by <strong>Cuisine</strong>.</p>
-            <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                {% include 'search_sort.html' %}
-                <div class='cuisine__button'> 
-                    {% for cuisine in cuisines %}
-                    <button class='cuisine__submit search-form__submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
-                    {% endfor %}
-                </div>
-            </form>
-        </div>
-        <div id='course' class='search-course course search-form--hide search-form'>
-            <div class='fa'>
-                <i class="fas fa-coffee fa__icon" aria-hidden="true"></i>
+        </section>
+        {% endif %}
+        <!--<hr class='hr-90'>-->
+        <section id='my-recipme' class='search-buttons-container'>
+            <div class='search-buttons'>
+                {% if search == False %}
+                <button id='search-ingredient' class='search-buttons__ingredient search-buttons__ingredient--hide' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
+                {% else %}
+                <button id='search-ingredient' class='search-buttons__ingredient' type='button' class='accordian-outer__title'>Ingredient</button type='button'>
+                {% endif %}
+                <button id='search-all' class='search-buttons__button' type='button' class='accordian-outer__title'>All</button type='button'>
+                <button id='search-saved' class='search-buttons__button' type='button' class='accordian-outer__title'>Saved</button type='button'>
+                <button id='search-cuisine' class='search-buttons__button' type='button' class='accordian-outer__title'>Cuisine</button type='button'>
+                <button id='search-course' class='search-buttons__button' type='button' class='accordian-outer__title'>Course</button type='button'>
             </div>
-            <p class='search-forms__instructions'>Search your own recipes by <strong>Course</strong>.</p>
-            <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
-                {% include 'search_sort.html' %}
-                <div class='course__button'>
-                    {% for course in courses %}
-                    <button class='course__submit search-form__submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
-                    {% endfor %}
+        </section>
+        <section id='search-forms' class='search-forms-container'>
+            <div id='all-recipe' class='search-all search-form--hide search-form'>
+                <div class='fa'>
+                    <i class="fas fa-utensils fa__icon" aria-hidden="true"></i>
                 </div>
-            </form>      
-        </div>
-    </section>
-    <hr class='hr-90'>
-    {% if search == 'all' %}
-        {% include 'all_my_recipme.html' %}
-    {% elif search == 'category' %}
-        {% include 'category_search.html'%}
-    {% elif search == 'ingredient' %}
-        {% include 'ingredient_search.html'%}
-    {% elif search == 'saved' %}
-        {% include 'saved_recipme.html'%}
-    {% endif %}
+                <p class='search-forms__instructions'>Search <strong>ALL</strong> of your own recipes.</p>
+                <form class='all-recipe__form' action="{{ url_for('all_myrecipme', username=username)}}", method='POST'>
+                    {% include 'search_sort.html' %}
+                    <div>
+                        <button class='all-recipe__submit search-form__submit' type='submit'>Search</button>
+                    </div>
+                </form>
+            </div>
+            <div id='saved-recipe' class='search-saved saved-recipe search-form--hide search-form'>
+                <div class='fa'>
+                    <i class="far fa-save fa__icon" aria-hidden="true"></i>
+                </div>
+                <p class='search-forms__instructions'>Search other users recipes you've <strong>Saved</strong>.</p>
+                <form class='saved-recipe__form' action="{{ url_for('saved_search', username=username) }}" method='POST'>
+                    {% include 'search_sort.html' %}
+                    <div>
+                        <button class='saved-recipe__submit search-form__submit' type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div id='cuisine' class='search-cuisine cuisine search-form--hide search-form'>
+                <div class='fa'>
+                    <i class="fas fa-globe fa__icon" aria-hidden="true"></i>
+                </div>
+                <p class='search-forms__instructions'>Search your own recipes by <strong>Cuisine</strong>.</p>
+                <form class='cuisine__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
+                    {% include 'search_sort.html' %}
+                    <div class='cuisine__button'> 
+                        {% for cuisine in cuisines %}
+                        <button class='cuisine__submit search-form__submit' type="submit" id="{{cuisine['CuisineName']}}" name="Cuisine" value="{{cuisine['CuisineName']}}">{{ cuisine['CuisineName'] }}</button>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+            <div id='course' class='search-course course search-form--hide search-form'>
+                <div class='fa'>
+                    <i class="fas fa-coffee fa__icon" aria-hidden="true"></i>
+                </div>
+                <p class='search-forms__instructions'>Search your own recipes by <strong>Course</strong>.</p>
+                <form class='course__form' action="{{ url_for('category_search', username=username)}}" method='POST'>
+                    {% include 'search_sort.html' %}
+                    <div class='course__button'>
+                        {% for course in courses %}
+                        <button class='course__submit search-form__submit' type="submit" id="{{course['CourseName']}}" name="Course" value="{{course['CourseName']}}">{{ course['CourseName'] }}</button>
+                        {% endfor %}
+                    </div>
+                </form>      
+            </div>
+        </section>
+        <hr class='hr-90'>
+   
+
+        {% if search == 'all' %}
+            {% include 'all_my_recipme.html' %}
+        {% elif search == 'category' %}
+            {% include 'category_search.html'%}
+        {% elif search == 'ingredient' %}
+            {% include 'ingredient_search.html'%}
+        {% elif search == 'saved' %}
+            {% include 'saved_recipe.html'%}
+        {% endif %}
+    </div>
+    
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
 </body>
