@@ -712,16 +712,27 @@ select {
 .shared-banner-image-helper, .shared-image {
   background-image: url("../images/23295-pxhere-80percentjpg.jpg"); }
 
-.banner-image-styles-helper, .myrecipme-image, .shared-image {
+.banner-image-styles-helper, .myrecipme-image {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 40%;
   width: 100%;
   height: 7rem; }
   @media (min-width: 1199px) {
-    .banner-image-styles-helper, .myrecipme-image, .shared-image {
+    .banner-image-styles-helper, .myrecipme-image {
       box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
-      height: 9rem; } }
+      height: 17rem; } }
+
+.shared-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 40%;
+  width: 100%;
+  height: 7rem; }
+  @media (min-width: 1199px) {
+    .shared-image {
+      box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+      height: 17rem; } }
 
 .results {
   margin-top: 1.5rem;
@@ -946,5 +957,66 @@ select {
 .full-recipe__ingredients h3,
 .full-recipe__method h3 {
   padding-left: .5rem; }
+
+.save-recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  background-color: #fff;
+  padding: 1rem;
+  position: relative;
+  top: 1rem;
+  box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26); }
+
+.save-recipe form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.save-recipe form div {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+.save-recipe form hr {
+  margin-top: .5rem; }
+
+.form-label {
+  font-family: "Nanum Gothic", sans-serif;
+  color: #1d3355;
+  font-size: .8rem; }
+
+.input-label {
+  padding-left: .5rem; }
+
+.form-submit {
+  height: 2rem;
+  width: 6rem;
+  border-radius: 4px;
+  border: 0.5px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  background-color: #df6400f6;
+  color: #1d3355;
+  transition: background-color 0.1s ease-in-out; }
+
+.recipe-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  background-color: #fff;
+  padding: 1rem;
+  position: relative;
+  top: 2rem;
+  box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26); }
+
+.form-text-area {
+  min-width: 15rem;
+  min-height: 10rem; }
 
 /*# sourceMappingURL=main.css.map */

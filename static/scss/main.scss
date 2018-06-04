@@ -920,7 +920,7 @@ select {
     @include large {
 
         box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
-        height: 9rem;
+        height: 17rem;
     }
 
 }
@@ -934,7 +934,17 @@ select {
 .shared-image {
 
     @extend .shared-banner-image-helper;
-    @extend .banner-image-styles-helper;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
+    width: 100%;
+    height: 7rem;
+
+    @include large {
+
+        box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+        height: 17rem;
+    }
 
 }
 
@@ -1263,4 +1273,76 @@ select {
 .full-recipe__method h3 {
 
     padding-left: .5rem;
+}
+
+// --------------------------- FULL RECIPE COMMENTS FORMS ETC ----------------------- //
+
+.save-recipe {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    background-color: #fff;
+    padding: 1rem;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26);
+
+}
+
+.save-recipe form {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.save-recipe form div {
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.save-recipe form hr {
+
+    margin-top: .5rem;
+    
+}
+
+.form-label {
+
+    @include form-label;
+    
+}
+
+.input-label {
+
+    padding-left: .5rem;
+}
+
+.form-submit {
+
+   @include form-submit;
+}
+
+.recipe-comment {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    background-color: #fff;
+    padding: 1rem;
+    position: relative;
+    top: 2rem;
+    box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26);
+}
+
+.form-text-area {
+
+    @include mobile-form-text-area;
+    
 }

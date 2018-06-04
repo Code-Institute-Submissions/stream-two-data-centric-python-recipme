@@ -24,6 +24,32 @@
     
 }
 
+@mixin mobile-form-text-area {
+
+    min-width: 15rem;
+    min-height: 10rem;
+
+}
+
+@mixin form-label {
+
+    font-family: $nanum;
+    color: $title-color;
+    font-size: .8rem;
+
+
+}
+
+@mixin form-submit {
+
+    @include form-button;
+    margin-top: 0.5rem;
+    //transition: width 0.3s $dropDownTransition;
+    background-color:$side-bar;
+    color: $title-color;
+    transition: background-color 0.1s ease-in-out;
+
+}
 // MY RECIPME //
 
 .ingredient__input {

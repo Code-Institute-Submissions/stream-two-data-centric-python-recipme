@@ -82,47 +82,43 @@
         </section>
         {% else %}
         {% if full_recipe[4] == False %}
-        <section>
+        <section class='save-recipe'>
             <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-                <label>Save this Recipe?</label>
-                <br>
-                <br>
-                <input type='radio' name='Saved' value='1'> Save
-                <br>
-                <br>
-                <input type='submit' value='submit'>
+                <label class='form-label'>Save this Recipe?</label>
+                <hr class='hr-90'>
+                <div>
+                    <input type='radio' name='Saved' value='1'><label class='form-label input-label'>Save</label>
+                </div>
+                <input class='form-submit' type='submit' value='Submit'>
             </form>
         </section>
         {% elif full_recipe[4] == True %}
-        <section>
+        <section class='save-recipe'>
             <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-                <label>Remove this Recipe?</label>
-                <br>
-                <br>
-                <input type='radio' name='Saved' value='0'> Un-save
-                <br>
-                <br>
-                <input type='submit' value='submit'>
+                <label class='form-label'><strong>Un-save this Recipe?</strong></label>
+                <hr class='hr-90'>
+                <div>
+                    <input type='radio' name='Saved' value='0'><label class='form-label input-label'>Un-save</label>
+                </div>
+                <input class='form-submit' type='submit' value='Submit'>
             </form>
         </section>
         {% endif %}
-        <section>
+        <section class='recipe-comment'>
             <form action=" {{ url_for('rate_recipe', username=username, recipe_id=recipe_id ) }}" method='POST'>
-                <fieldset>
-                    <label>Leave a comment</label>
-                    <br>
-                    <textarea type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
-                </fieldset>
-                <fieldset>
-                    <label>Rate this RecipMe.</label>
-                    <br>
-                    <input type='radio' value='1' name='Rating'>1
-                    <input type='radio' value='2' name='Rating'>2
-                    <input type='radio' value='3' name='Rating'>3
-                    <input type='radio' value='4' name='Rating'>4
-                    <input type='radio' value='5' name='Rating' checked>5
-                </fieldset>
-                <input type='submit' value='Submit'>
+                <label class='form-label'><strong>Leave a comment.</strong></label>
+                <hr class='hr-90'>
+                <textarea class='form-label form-text-area' type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
+                <label class='form-label'><strong>Rate this Recipe.</strong></label>
+                <hr class="hr-90">
+                <div>
+                    <input type='radio' value='1' name='Rating'><label class='form-label'>1</label>
+                    <input type='radio' value='2' name='Rating'><label class='form-label'>2</label>
+                    <input type='radio' value='3' name='Rating'><label class='form-label'>3</label>
+                    <input type='radio' value='4' name='Rating'><label class='form-label'>4</label>
+                    <input type='radio' value='5' name='Rating' checked><label class='form-label'>5</label>   
+                </div>
+                <input class='form-submit' type='submit' value='Submit'>
             </form>
         </section>
         {% if full_recipe[5] != [] %}
