@@ -30,9 +30,9 @@
 
     @include desktop {
 
-        width: 80%;
-        position: relative;
-        left: 10%;
+       // width: 80%;
+        //position: relative;
+       // left: 10%;
         
     }
     
@@ -152,6 +152,7 @@
     @include desktop {
 
         display: inline-block;
+        left: 1rem;
     }
 }
 
@@ -161,8 +162,8 @@
     flex-direction: row;
     justify-content: space-between;
     width: 19rem;
-    padding-left: 1rem;
-    margin-bottom: 0rem;
+    padding-left: 0rem;
+    margin-bottom: 1rem;
 }
 
 .desktop-nav li {
@@ -188,6 +189,26 @@
     color: $title-color;
 }
 
+//-------------------- FOOTER --------------------//
+
+footer {
+
+    height: 8rem;
+    width: 100%;
+    background-color: $title-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    //margin-top: 2rem;
+    align-items: center;
+    
+}
+
+footer p {
+
+    color: #fff;
+}
 //------------------------------------------------//
 //------------------ LOGIN PAGE -------------------//
 .login-content-wrapper {
@@ -544,14 +565,6 @@
     color: $title-color;
 }
 
-.hr-90 {
-
-    width: 90%;
-    color: #edf2fb4d;
-    margin: 0 auto; 
-
-   
-}
 
 /*.my-recipme {
 
@@ -574,6 +587,8 @@
 
 
 .myrecipme-container {
+
+    min-height: calc(100vh - 12rem);
 
     @include desktop {
 
@@ -718,6 +733,9 @@
     align-items: center;
     width: 100%;
     background-color: $accordian-inner;
+    margin-bottom: 2rem;
+    //opacity: 1;
+    //transition: opacity 0.3s $dropDownTransition;
     //padding-bottom: 1rem;
 
 }
@@ -801,6 +819,7 @@
 .search-form--hide {
 
     //display:none;
+    opacity: 0;
     max-height: 0rem;
     overflow: hidden;
     padding: 0rem;
@@ -1200,16 +1219,44 @@ select {
     flex-direction: column;
     align-items: center;
     background-color: $accordian-inner;
+    min-height: calc(100vh - 12rem);
+
 }
 
 .full-recipe {
 
     background-color: #fff;
     padding: 1rem;
-    box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26);
-    margin-top: 1rem;
+     box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26);
+    margin-bottom: 2rem;
     width: 80%;
+
+    @include tablet {
+
+        width: 60%;
+    }
+
+    @include desktop {
+
+        width: 40%;
+        box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26)
+    }
+
+    @include large {
+
+        width: 30%;
+        box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26);
+       
+    }
 }
+
+.full-recipe-page-title {
+
+    font-family: $nanum;
+    color: $title-color;
+    border-bottom: 1px solid $title-color;
+}
+
 .full-recipe__title {
 
     @extend.title;
@@ -1275,6 +1322,10 @@ select {
     padding-left: .5rem;
 }
 
+.full-recipe-break {
+
+    margin-top: 1rem;
+}
 // --------------------------- FULL RECIPE COMMENTS FORMS ETC ----------------------- //
 
 .save-recipe {
@@ -1285,13 +1336,37 @@ select {
     width: 80%;
     background-color: #fff;
     padding: 1rem;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26);
+    margin-top: 1rem;
+    box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26);
+
+
+    @include tablet {
+
+        width: 60%;
+    }
+
+    @include desktop {
+
+        width: 40%;
+        
+    }
+
+    @include large {
+
+        width: 30%;
+        
+       
+    }
 
 }
 
-.save-recipe form {
+.feedback-title {
+
+    
+}
+
+.save-recipe form,
+.recipe-comment form {
 
     width: 100%;
     display: flex;
@@ -1300,13 +1375,16 @@ select {
     
 }
 
-.save-recipe form div {
+.save-recipe form .form-radio-container,
+.recipe-comment form .form-radio-container {
 
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
-.save-recipe form hr {
+.save-recipe form hr,
+.recipe-comment form hr,
+.user-comments hr {
 
     margin-top: .5rem;
     
@@ -1336,13 +1414,91 @@ select {
     width: 80%;
     background-color: #fff;
     padding: 1rem;
-    position: relative;
-    top: 2rem;
-    box-shadow: 0px 3px 8px -3px rgba(0, 0, 0, 0.26);
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26);
+    
+
+
+    @include tablet {
+
+        width: 60%;
+    }
+
+    @include desktop {
+
+        width: 40%;
+       
+    }
+
+    @include large {
+
+        width: 30%;
+        
+       
+    }
 }
+
+
 
 .form-text-area {
 
     @include mobile-form-text-area;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
     
+}
+
+.user-comments {
+
+    @extend .recipe-comment;
+    //margin: 2rem 0rem;
+
+}
+
+.user-comments h3 {
+
+    font-family: $nanum; 
+    font-size: .8rem;
+}
+
+.user-comments p {
+
+    font-size: .8rem;
+}
+
+.feedback-title {
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 1rem;
+    background-color: #b8b8b84d;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    padding-top: .5rem;
+
+}
+
+.edit-recipe {
+
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.edit-button,
+.delete-button {
+
+    margin-bottom: 0.5rem;
+
+}
+
+.feedback-form-buttons--clicked {
+
+    @include search-button-click;
 }

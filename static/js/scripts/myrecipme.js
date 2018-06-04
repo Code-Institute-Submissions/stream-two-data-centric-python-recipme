@@ -21,5 +21,8 @@ searchButtonClick.multiButtonsClick();
 fullRecipeButtonClick.multiButtonsClick();
 categoryButtonClick.categoryButtonClick();
 categoryButtonClick.ingredientButtonClick(element.ingredientButton);
-resetButtonClick.singleButtonClick();
 
+if (element.searchResetButton != null) {
+    
+    resetButtonClick.singleButtonClick();
+}

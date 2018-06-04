@@ -183,13 +183,24 @@ class showHide {
         
                 for(let j = 0; j < this.allSearchForms.length; j++) {
                     // IF ALL SEARCH FORMS CONTAIN CLASS OF SEARCH BUTTON ID //
-                    if (this.allSearchForms[j].classList.contains(this.allSearchButtons[i].getAttribute('id'))){
+                    if (!this.allSearchForms[j].classList.contains(this.allSearchButtons[i].getAttribute('id'))){
                         // REMOVE CLASS TO REVEAL FORM //
-                        this.allSearchForms[j].classList.remove('search-form--hide');
+                            
+                        this.allSearchForms[j].classList.add('search-form--hide');
+    
+                        
+                           
 
                     } else { // CLASS DOESN'T CONTAIN CLASS OF BUTTON ID , ADD CLASS TO HIDE FORM //
 
-                        this.allSearchForms[j].classList.add('search-form--hide');
+                        const removeClass = () => {
+
+                            this.allSearchForms[j].classList.remove('search-form--hide');
+
+                        }
+
+                        setTimeout(removeClass, 200);
+                        
                     }
 
                 }

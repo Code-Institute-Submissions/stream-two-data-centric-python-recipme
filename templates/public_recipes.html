@@ -88,7 +88,7 @@
                 </form>      
             </div>
         </section>
-        <hr class='hr-90'>
+        
         {% if search == 'all_public' %}
             {% include 'all_my_recipme.html' %}
         {% elif search == 'category_public' %}
@@ -97,6 +97,7 @@
             {% include 'ingredient_search.html'%}
         {% endif %}
     </div>
+    {% include 'footer.html'%}
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
 </body>
