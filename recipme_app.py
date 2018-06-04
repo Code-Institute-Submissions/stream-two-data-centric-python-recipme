@@ -354,9 +354,10 @@ def updating_recipe(username, recipe_id):
 def delete_recipe(username):
     if request.method == 'POST':
         table = 'Recipe'
-        QueryDeleteRecipe(request.form['RecipeId'],table).delete()
+        QueryDeleteRecipe(request.form['RecipeId'], table).delete()
+        print(request.form)
 
-        return redirect('my_recipme/%s/%s'%(username, 'delete'))
+        return redirect('my_recipme/edit/%s/%s'%(username, 'delete'))
 
 ############# SAVED RECIPE ROUTE ############################
 

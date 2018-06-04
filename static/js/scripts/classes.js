@@ -199,7 +199,7 @@ class showHide {
 
                         }
 
-                        setTimeout(removeClass, 200);
+                        setTimeout(removeClass, 0);
                         
                     }
 
