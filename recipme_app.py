@@ -315,7 +315,7 @@ def creating_recipe(username):
         ingredient_list = [request.form.getlist('Ingredient'),user_id,
                             request.form.getlist('Quantity')]
         write_recipe.Create().write_full_recipe(recipe, user_id, ingredient_list, method_list)
-        return redirect('my_recipme/%s/%s'% (username, 'create'))
+        return redirect('my_recipme/edit/%s/%s'% (username, 'create'))
 
 ## ROUTE TO SHOW SUCESSFUL UPLOAD/EDIT OF RECIPE ##
 @app.route('/my_recipme/edit/<username>/<action>')
@@ -355,7 +355,7 @@ def delete_recipe(username):
     if request.method == 'POST':
         table = 'Recipe'
         QueryDeleteRecipe(request.form['RecipeId'], table).delete()
-        print(request.form)
+        
 
         return redirect('my_recipme/edit/%s/%s'%(username, 'delete'))
 
