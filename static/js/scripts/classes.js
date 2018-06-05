@@ -169,6 +169,7 @@ class showHide {
 
         this.allSearchButtons = document.getElementsByClassName('search-buttons__button');
         this.allSearchForms = document.getElementsByClassName('search-form');
+        this.categoryContainer = document.getElementById('search-forms');
         this.ingredientButton = document.getElementById('search-ingredient');
         this.ingredientForm = document.getElementById('ingredient-form');
     }
@@ -180,27 +181,18 @@ class showHide {
             this.allSearchButtons[i].addEventListener('click', () => {
                 
                 this.ingredientButton.classList.remove('search-buttons__ingredient--hide');
-        
+                this.categoryContainer.classList.add('search-buttons-container--show');
+
                 for(let j = 0; j < this.allSearchForms.length; j++) {
                     // IF ALL SEARCH FORMS CONTAIN CLASS OF SEARCH BUTTON ID //
                     if (!this.allSearchForms[j].classList.contains(this.allSearchButtons[i].getAttribute('id'))){
-                        // REMOVE CLASS TO REVEAL FORM //
-                            
+                        // REMOVE CLASS TO REVEAL FORM // 
                         this.allSearchForms[j].classList.add('search-form--hide');
     
-                        
-                           
-
                     } else { // CLASS DOESN'T CONTAIN CLASS OF BUTTON ID , ADD CLASS TO HIDE FORM //
 
-                        const removeClass = () => {
+                        this.allSearchForms[j].classList.remove('search-form--hide');
 
-                            this.allSearchForms[j].classList.remove('search-form--hide');
-
-                        }
-
-                        setTimeout(removeClass, 0);
-                        
                     }
 
                 }
@@ -212,13 +204,13 @@ class showHide {
     } 
 
 // RECIPME INGREDIENT SEARCH SHOW/HIDE //
-
     showHideIngredientSearch() {
 
         this.ingredientButton.addEventListener('click', () => {
 
             this.ingredientForm.classList.remove('search-form--hide');
             this.ingredientButton.classList.add('search-buttons__ingredient--hide');
+            this.categoryContainer.classList.remove('search-buttons-container--show');
 
             for (let i = 0; i < this.allSearchForms.length; i++){
 

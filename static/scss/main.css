@@ -582,6 +582,9 @@ footer p {
   background-color: #b8b8b84d;
   margin-bottom: 2rem; }
 
+.search-buttons-container--show {
+  min-height: 18rem; }
+
 .ingredient {
   max-height: 20rem;
   transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
@@ -640,11 +643,10 @@ footer p {
 
 /*.search-form {
 
-    max-height: 13rem;
+    max-height: 18rem;
     transition: max-height $dropDownTransition;
 }*/
 .search-form--hide {
-  opacity: 0;
   max-height: 0rem;
   overflow: hidden;
   padding: 0rem; }

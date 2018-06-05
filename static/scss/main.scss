@@ -737,6 +737,11 @@ footer p {
     //opacity: 1;
     //transition: opacity 0.3s $dropDownTransition;
     //padding-bottom: 1rem;
+}
+
+.search-buttons-container--show {
+
+    min-height: 18rem;
 
 }
 
@@ -812,14 +817,14 @@ footer p {
 
 /*.search-form {
 
-    max-height: 13rem;
+    max-height: 18rem;
     transition: max-height $dropDownTransition;
 }*/
 
 .search-form--hide {
 
     //display:none;
-    opacity: 0;
+   // opacity: 0;
     max-height: 0rem;
     overflow: hidden;
     padding: 0rem;
