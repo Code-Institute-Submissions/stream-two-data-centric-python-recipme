@@ -1524,7 +1524,47 @@ select {
 
 }
 
-#ingredients {
+.full-recipe__create-submit {
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.full-recipe__input {
+
+    @include form-input;
+    margin-bottom: 0rem;
     
+}
+
+.full-recipe__column-add-recipe {
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    //margin-bottom: .5rem;
+}
+
+.full-recipe__form-label {
+
+    font-family: $nanum;
+    font-size: .8rem;
+    color: $title-color;
+    margin-bottom: .3rem;
+    font-weight: 600;
+}
+
+.full-recipe__text-area {
+
+    font-family: $nanum;
+    font-size: .8rem;
+    min-width: 16.8rem;
+    height: 5rem;
+}
+
+.full-recipe__row-add-recipe {
+
+    height:.8rem;
 }

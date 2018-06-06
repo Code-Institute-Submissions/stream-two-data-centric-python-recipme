@@ -17,73 +17,79 @@
             <fieldset class='full-recipe__fieldset'>
                 <legend class='full-recipe__title'>Main Details</legend>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label class='full-recipe__subtitle'>Recipe Title </label>
-                        <input type='text' id='RecipeTitle' placeholder='Recipe Title' name='RecipeTitle' maxlength='150'required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Recipe Title </label>
+                        <input class='full-recipe__input' type='text' id='RecipeTitle' placeholder='Recipe Title' name='RecipeTitle' maxlength='50'required>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <p class='full-recipe__text' id='recipe-title-counter'></p>
+                    <p class='full-recipe__text full-recipe__row-add-recipe' id='recipe-title-counter'></p>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Brief Description:</label> 
-                        <textarea id='RecipeDescription' placeholder='Description' name='RecipeDescription' maxlength='250' required></textarea>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Brief Description</label> 
+                        <textarea class='full-recipe__text-area' id='RecipeDescription' placeholder='Description' name='RecipeDescription' maxlength='150' required></textarea>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <p class='full-recipe__text' id='recipe-description-counter'></p>
+                    <p class='full-recipe__text full-recipe__row-add-recipe' id='recipe-description-counter'></p>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column' >
-                        <label>Cooking Time</label>
-                        <input type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' min='0' max='1440' required><label>mins</label>
+                    <div class='full-recipe__column-add-recipe' >
+                        <label class='full-recipe__form-label'>Cooking Time</label>
+                        <div>
+                            <input class='full-recipe__input' type='number' id='CookingTime' value='1' step ='1' name='CookingTimeMins' min='0' max='1440' required><label class='full-recipe__form-label'> mins</label>
+                        </div>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Make Recipe Public:</label>
-                        <input type='radio' id='MakePublicYes' name='MakePublic' value='1'required checked><label>Yes</label>
-                        <input type='radio' id='MakePublicNo' name='MakePublic' value='0' required><label>No</label>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Make Recipe Public</label>
+                        <div>
+                            <input class='full-recipe__input' type='radio' id='MakePublicYes' name='MakePublic' value='1'required checked><label class='full-recipe__form-label'> Yes</label>
+                        </div>
+                        <div>
+                            <input class='full-recipe__input' type='radio' id='MakePublicNo' name='MakePublic' value='0' required><label class='full-recipe__form-label'> No</label>
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <legend class='full-recipe__title'>Stats</legend>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Cuisine</label>
-                        <input type='text' id='Cuisine' placeholder='Cuisine' name='CuisineName' maxlength='160' required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Cuisine</label>
+                        <input class='full-recipe__input' type='text' id='Cuisine' placeholder='Cuisine' name='CuisineName' maxlength='50' required>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <p class='full-recipe__text' id='cuisine-description-counter'></p>
+                    <p class='full-recipe__text full-recipe__row-add-recipe' id='cuisine-description-counter'></p>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Course</label>
-                        <input type='text' id='Course' placeholder='Course' name='CourseName' maxlength='160' required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Course</label>
+                        <input class='full-recipe__input' type='text' id='Course' placeholder='Course' name='CourseName' maxlength='50' required>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <p class='full-recipe__text' id='course-description-counter'></p>
+                    <p class='full-recipe__text full-recipe__row-add-recipe' id='course-description-counter'></p>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Calories</label>
-                        <input type='number' id='Calories' placeholder='Number of Calories' value='1' name='Calories' min='0' max='20000' required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Calories</label>
+                        <input class='full-recipe__input' type='number' id='Calories' placeholder='Number of Calories' value='1' name='Calories' min='0' max='20000' required>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
-                    <div class='full-recipe__column'>
-                        <label>Cost (£)</label>
-                        <input type='number' id='Cost' placeholder='Total Cost to Nearest Pound' value='1' name='Cost' min='0' max='10000' required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Cost (£)</label>
+                        <input class='full-recipe__input' type='number' id='Cost' placeholder='Total Cost to Nearest Pound' value='1' name='Cost' min='0' max='10000' required>
                     </div>
                 </div>
                 <div>
-                    <div class='full-recipe__column'>
-                        <label>Total Servings</label>
-                        <input type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
+                    <div class='full-recipe__column-add-recipe'>
+                        <label class='full-recipe__form-label'>Total Servings</label>
+                        <input class='full-recipe__input' type='number' id='Servings' placeholder='Total Servings' value='1' name='Servings' min='0' max='1000' required>
                     </div>   
                 </div>
             </fieldset>
@@ -102,7 +108,7 @@
                 </div>
                 <div id='method'></div>
             </fieldset>
-            <div>
+            <div class='full-recipe__create-submit'>
                 <input class='form-submit' type='submit' value='Add Recipe'>
             </div>
         </form>

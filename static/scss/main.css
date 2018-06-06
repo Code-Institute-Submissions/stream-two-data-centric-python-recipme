@@ -27,7 +27,7 @@ p, a, h3, h4, h5, h6, button, select {
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 1rem;
+  font-size: .8rem;
   background-color: rgba(255, 255, 255, 0);
   text-align: center; }
 
@@ -287,7 +287,7 @@ footer p {
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 1rem;
+  font-size: .8rem;
   width: 11rem;
   color: #1d3355;
   background-color: #e9ef8200; }
@@ -1130,5 +1130,41 @@ select {
   display: flex;
   flex-direction: column;
   align-items: left; }
+
+.full-recipe__create-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.full-recipe__input {
+  margin-bottom: 0.5rem;
+  border: 0.5px solid #1d3355;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: .8rem;
+  margin-bottom: 0rem; }
+
+.full-recipe__column-add-recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: left; }
+
+.full-recipe__form-label {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: .8rem;
+  color: #1d3355;
+  margin-bottom: .3rem;
+  font-weight: 600; }
+
+.full-recipe__text-area {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: .8rem;
+  min-width: 16.8rem;
+  height: 5rem; }
+
+.full-recipe__row-add-recipe {
+  height: .8rem; }
 
 /*# sourceMappingURL=main.css.map */

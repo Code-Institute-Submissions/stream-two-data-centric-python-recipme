@@ -18,14 +18,14 @@
  const characterCounter = (input, counter, count) => {
      document.getElementById(input).onkeyup = function() {
 
-         document.getElementById(counter).innerHTML = "Characters remaining:"+ (count-this.value.length);
+         document.getElementById(counter).innerHTML = "Remaining:"+ (count-this.value.length);
      };
  };
- /*
+ 
  const totalCharacters = (counter, count) => {
 
-     document.getElementById(counter).innerHTML = "Characters remaining:"+ count;
- };*/
+     document.getElementById(counter).innerHTML = "Remaining:"+ count;
+ };
 
  // ------------------- CREATE INPUT TEXT FIELD -------------------- //
 
@@ -169,14 +169,19 @@
 
  };
 
+const mobileNavMenu = new NavDropDown();
+mobileNavMenu.clickBurgerMenu();
 
- characterCounter("RecipeTitle","recipe-title-counter",150 );
- characterCounter("RecipeDescription","recipe-description-counter", 250);
- characterCounter("Cuisine","cuisine-description-counter",160);
- characterCounter("Course","course-description-counter", 160);
+//totalCharacters("recipe-title-counter",50 );
+//totalCharacters("recipe-description-counter",150 );
 
- addAnIngredient(addIngredientButton, ingredients);
- removeIngredient(removeIngredientButton, ingredients);
- addStep(addStepButton, method);
- removeStep(removeStepButton, method);
+characterCounter("RecipeTitle","recipe-title-counter",50 );
+characterCounter("RecipeDescription","recipe-description-counter", 150);
+characterCounter("Cuisine","cuisine-description-counter",50);
+characterCounter("Course","course-description-counter", 50);
+
+addAnIngredient(addIngredientButton, ingredients);
+removeIngredient(removeIngredientButton, ingredients);
+addStep(addStepButton, method);
+removeStep(removeStepButton, method);
      
