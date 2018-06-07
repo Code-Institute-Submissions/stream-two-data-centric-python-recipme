@@ -31,20 +31,23 @@
 
  class createElement {
 
-     constructor(field, counter) {
+     constructor(field, counter, _class) {
 
          this.field = field;
          this.counter = counter;
+         this._class = _class;
      }
 
      createInput() {
 
          const input = document.createElement("input");
          input.id = `${this.field}-${this.counter}`;
+         input.classList.add(`${this._class}`);
          input.type = "text";
          input.name = `${this.field}`;
          input.placeholder = `${this.field}`;
-         input.required = true;
+
+     
 
          return input;
      }
@@ -53,13 +56,13 @@
 
          const input = document.createElement("input");
          input.id = `s-${this.counter}`;
-         input.class = "step-number";
+         input.classList.add(`${this._class}`);
          input.type = "number";
          input.min = `${this.counter}`;
          input.max = `${this.counter}`;
          input.name = `StepNumber`;
          input.value = `${this.counter}`;
-         input.required = true;
+         
 
          return input;
      }
@@ -84,8 +87,8 @@
 
          if (ingredientCounter <= 25) {
 
-             const quantity = new createElement("Quantity", ingredientCounter);
-             const ingredient = new createElement("Ingredient", ingredientCounter);
+             const quantity = new createElement("Quantity", ingredientCounter, "full-recipe__input");
+             const ingredient = new createElement("Ingredient", ingredientCounter, "full-recipe__input");
              //const br = new createElement("Ingredient", ingredientCounter);
 
              parent.appendChild(quantity.createInput());
@@ -130,11 +133,11 @@
 
          if (methodCounter <= 25) {
              
-             //const stepNumber = new createElement();
-             const step = new createElement("Step", methodCounter);
+             const step = new createElement("Step", methodCounter, "full-recipe__input");
+             const stepNumber = new createElement("Step", methodCounter, "full-recipe__numeric-input");
              const br = new createElement("Step", methodCounter);
 
-             parent.appendChild(step.createStepNumber());
+             parent.appendChild(stepNumber.createStepNumber());
              parent.appendChild(step.createInput());
              parent.appendChild(br.createBr());
          }

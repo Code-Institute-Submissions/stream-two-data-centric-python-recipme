@@ -1234,7 +1234,7 @@ select {
     padding: 1rem;
      box-shadow: 7px 9px 9px -4px rgba(0, 0, 0, 0.26);
     margin-bottom: 2rem;
-    width: 80%;
+    width: 90%;
 
     @include tablet {
 
@@ -1508,11 +1508,13 @@ select {
 
 // ---------------------------- CREATE RECIPE ---------------------------- //
 
+
 .full-recipe__fieldset {
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    border: 1px solid $title-color;
 }
 
 .full-recipe__ingredients,
@@ -1536,15 +1538,22 @@ select {
 
     @include form-input;
     margin-bottom: 0rem;
+    margin-right: 1rem;
     
 }
 
+.full-recipe__input-recipe-title {
+
+    width: 14rem;
+}
 .full-recipe__column-add-recipe {
 
     display: flex;
     flex-direction: column;
     align-items: left;
     //margin-bottom: .5rem;
+
+
 }
 
 .full-recipe__form-label {
@@ -1552,8 +1561,10 @@ select {
     font-family: $nanum;
     font-size: .8rem;
     color: $title-color;
-    margin-bottom: .3rem;
+    margin-bottom: .5rem;
     font-weight: 600;
+    margin-top: .5rem;
+
 }
 
 .full-recipe__text-area {
@@ -1562,9 +1573,68 @@ select {
     font-size: .8rem;
     min-width: 16.8rem;
     height: 5rem;
+
+    @include desktop {
+
+        min-width: 23rem;
+    }
 }
 
 .full-recipe__row-add-recipe {
 
     height:.8rem;
 }
+
+.full-recipe__numeric-input {
+
+    @extend .full-recipe__input;
+    width: 3rem; 
+    //padding-bottom: 0.5rem;
+}
+
+.full-recipe__add-button,
+.full-recipe__remove-button {
+
+    @include form-button;
+    margin-right: 1rem;
+    width: 4rem;
+    
+}
+
+.full-recipe__add-button:hover,
+.full-recipe__remove-button:hover {
+
+    cursor:pointer;
+
+}
+
+.full-recipe__add-button {
+
+    background-color: $add-input;
+}
+
+.full-recipe__remove-button {
+
+    background-color: $remove-input;
+}
+
+.add-recipe--width {
+
+    width: 85%;
+
+    @include mobile {
+
+        width: 60%;
+    }
+
+    @include tablet {
+
+        width: 40%;
+    }
+
+    @include desktop {
+
+        width: 30%;
+    }
+}
+

@@ -2,14 +2,16 @@
 //FORMS//
 
 @mixin form-input {
-
-    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    //margin-bottom: 0.5rem;
     border: 0.5px solid $title-color;
     border-left: 0;
     border-right: 0;
     border-top: 0;
     font-family: $nanum;
     font-size: .8rem;
+    margin-right: .5rem;
+    
 }
 
 @mixin login-page-forms {
@@ -43,7 +45,8 @@
 @mixin form-submit {
 
     @include form-button;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    //margin-bottom: 0.5rem;
     //transition: width 0.3s $dropDownTransition;
     background-color:$side-bar;
     color: $title-color;
