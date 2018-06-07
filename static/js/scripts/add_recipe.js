@@ -1,10 +1,15 @@
  // -----------------------  DOM VARIABLES -------------------------- //
+
+
  const ingredients = document.getElementById("ingredients");
  const addIngredientButton =  document.getElementById("add-ingredient");
  const removeIngredientButton =  document.getElementById("remove-ingredient");
  const method = document.getElementById("method");
  const addStepButton = document.getElementById("add-step");
  const removeStepButton = document.getElementById("remove-step");
+ const submitButton = document.getElementById("add-recipe");
+ const addButtons = document.getElementsByClassName("full-recipe__add-button");
+ const removeButtons = document.getElementsByClassName("full-recipe__remove-button");
 
  // --------------------- INPUT FIELD COUNTERS --------------------//
 
@@ -15,6 +20,7 @@
 
 
  // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
+ 
  const characterCounter = (input, counter, count) => {
      document.getElementById(input).onkeyup = function() {
 
@@ -87,8 +93,8 @@
 
          if (ingredientCounter <= 25) {
 
-             const quantity = new createElement("Quantity", ingredientCounter, "full-recipe__input");
-             const ingredient = new createElement("Ingredient", ingredientCounter, "full-recipe__input");
+             const quantity = new createElement("Quantity", ingredientCounter, "full-recipe__input-ingredient");
+             const ingredient = new createElement("Ingredient", ingredientCounter, "full-recipe__input-ingredient");
              //const br = new createElement("Ingredient", ingredientCounter);
 
              parent.appendChild(quantity.createInput());
@@ -133,7 +139,7 @@
 
          if (methodCounter <= 25) {
              
-             const step = new createElement("Step", methodCounter, "full-recipe__input");
+             const step = new createElement("Step", methodCounter, "full-recipe__input-step");
              const stepNumber = new createElement("Step", methodCounter, "full-recipe__numeric-input");
              const br = new createElement("Step", methodCounter);
 
@@ -172,8 +178,17 @@
 
  };
 
+ // FUNCTION CALLS //
 const mobileNavMenu = new NavDropDown();
+const formSubmit = new ButtonClick(submitButton, "full-recipe__form--clicked");
+const inputAddClickStyle = new ButtonClick(addButtons, "full-recipe__add-button--clicked" );
+const inputRemoveClickStyle = new ButtonClick(removeButtons, "full-recipe__remove-button--clicked");
+
+formSubmit.singleButtonClick();
 mobileNavMenu.clickBurgerMenu();
+inputAddClickStyle.multiButtonsClick();
+inputRemoveClickStyle.multiButtonsClick();
+
 
 //totalCharacters("recipe-title-counter",50 );
 //totalCharacters("recipe-description-counter",150 );
@@ -188,3 +203,4 @@ removeIngredient(removeIngredientButton, ingredients);
 addStep(addStepButton, method);
 removeStep(removeStepButton, method);
      
+console.log(submitButton);

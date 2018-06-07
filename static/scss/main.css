@@ -21,7 +21,7 @@ p, a, h3, h4, h5, h6, button, select {
   color: #1d3355; }
 
 .ingredient__input {
-  padding-top: 0.5rem;
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -282,7 +282,7 @@ footer p {
 
 .signup__input,
 .login__input {
-  padding-top: 0.5rem;
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -1139,8 +1139,8 @@ select {
   flex-direction: column;
   align-items: center; }
 
-.full-recipe__input, .full-recipe__numeric-input {
-  padding-top: 0.5rem;
+.full-recipe__input, .full-recipe__numeric-input, .full-recipe__input-ingredient, .full-recipe__input-step {
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -1152,7 +1152,10 @@ select {
   margin-right: 1rem; }
 
 .full-recipe__input-recipe-title {
-  width: 14rem; }
+  width: 12rem; }
+  @media (min-width: 767px) {
+    .full-recipe__input-recipe-title {
+      width: 14rem; } }
 
 .full-recipe__column-add-recipe {
   display: flex;
@@ -1170,8 +1173,12 @@ select {
 .full-recipe__text-area {
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
-  min-width: 16.8rem;
-  height: 5rem; }
+  min-width: 12rem;
+  height: 5rem;
+  margin-top: 0.5rem; }
+  @media (min-width: 767px) {
+    .full-recipe__text-area {
+      min-width: 16.8rem; } }
   @media (min-width: 991px) {
     .full-recipe__text-area {
       min-width: 23rem; } }
@@ -1212,9 +1219,39 @@ select {
       width: 60%; } }
   @media (min-width: 767px) {
     .add-recipe--width {
-      width: 40%; } }
+      width: 60%; } }
   @media (min-width: 991px) {
     .add-recipe--width {
       width: 30%; } }
+
+.full-recipe__input-ingredient {
+  width: 6rem; }
+  @media (min-width: 767px) {
+    .full-recipe__input-ingredient {
+      width: 10rem; } }
+
+.full-recipe__input-step {
+  width: 10rem; }
+  @media (min-width: 767px) {
+    .full-recipe__input-step {
+      width: 15rem; } }
+  @media (min-width: 991px) {
+    .full-recipe__input-step {
+      width: 20rem; } }
+
+.full-recipe__form--clicked {
+  border: 1px solid #df6400f6;
+  background-color: #fff;
+  color: #df6400f6; }
+
+.full-recipe__add-button--clicked {
+  border: 1px solid #32a832;
+  background-color: #fff;
+  color: #32a832; }
+
+.full-recipe__remove-button--clicked {
+  border: 1px solid #ff3232;
+  background-color: #fff;
+  color: #ff3232; }
 
 /*# sourceMappingURL=main.css.map */

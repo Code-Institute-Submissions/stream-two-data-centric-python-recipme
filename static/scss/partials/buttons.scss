@@ -58,3 +58,19 @@
 
     background-color: $category-active;
 }
+
+
+@mixin add-input-click {
+
+    border: 1px solid #32a832;
+    background-color: #fff;
+    color: #32a832;
+}
+
+@mixin remove-input-click {
+
+    border: 1px solid #ff3232;
+    background-color: #fff;
+    color: #ff3232;
+
+}

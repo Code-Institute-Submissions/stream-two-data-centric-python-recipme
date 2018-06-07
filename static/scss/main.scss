@@ -1544,7 +1544,13 @@ select {
 
 .full-recipe__input-recipe-title {
 
-    width: 14rem;
+    width: 12rem;
+
+    @include tablet {
+        
+        width: 14rem;
+    }
+
 }
 .full-recipe__column-add-recipe {
 
@@ -1571,9 +1577,15 @@ select {
 
     font-family: $nanum;
     font-size: .8rem;
-    min-width: 16.8rem;
+    min-width: 12rem;
     height: 5rem;
+    margin-top: 0.5rem;
 
+    @include tablet {
+
+        min-width: 16.8rem;
+
+    }
     @include desktop {
 
         min-width: 23rem;
@@ -1629,7 +1641,7 @@ select {
 
     @include tablet {
 
-        width: 40%;
+        width: 60%;
     }
 
     @include desktop {
@@ -1638,3 +1650,46 @@ select {
     }
 }
 
+.full-recipe__input-ingredient {
+    @extend .full-recipe__input;
+
+    width: 6rem;
+
+    @include tablet {
+
+        width: 10rem;
+    }
+}
+
+.full-recipe__input-step {
+
+    @extend .full-recipe__input;
+
+    width: 10rem;
+
+    @include tablet {
+
+        width: 15rem;
+    }
+
+    @include desktop {
+
+        width: 20rem;
+    } 
+}
+
+.full-recipe__form--clicked {
+
+    @include search-button-click;
+}
+
+.full-recipe__add-button--clicked {
+
+    @include add-input-click;
+
+}
+
+.full-recipe__remove-button--clicked {
+
+    @include remove-input-click;
+}
