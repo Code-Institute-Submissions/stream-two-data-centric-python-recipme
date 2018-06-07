@@ -1,3 +1,25 @@
+(()=>{
+
+    const setIngredientCounter = () => {
+
+        numberOfIngredients = document.getElementsByClassName('ingredient');
+        ingredientCounter = numberOfIngredients.length + 1;
+        
+    };
+
+    const setMethodCounter = () => {
+
+        numberOfMethods = document.getElementsByClassName('method');
+        methodCounter = numberOfMethods.length + 1;
+
+    };
+
+    setIngredientCounter();
+    setMethodCounter();
+
+})();
+
+/*
 
 // -----------------------  DOM VARIABLES -------------------------- //
 const ingredients = document.getElementById("ingredients");
@@ -191,4 +213,4 @@ addAnIngredient(addIngredientButton, ingredients);
 removeIngredient(removeIngredientButton, ingredients);
 addStep(addStepButton, method);
 removeStep(removeStepButton, method);
-        
+        */
