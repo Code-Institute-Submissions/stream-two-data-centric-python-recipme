@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <body>
-   
     {% include 'full_header.html' %}
     <div class=full-recipe-container>
         <h2 class='full-recipe-page-title'>Full {{ full_recipe[1][0]['RecipeTitle']}} Recipe.</h2>
@@ -140,7 +139,7 @@
         {% endif %}
     </div>
     {% include 'footer.html' %}
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/classes.js') }}"></script>
+    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/fullrecipe.js') }}"></script>
 </body>
 {% endblock%}
