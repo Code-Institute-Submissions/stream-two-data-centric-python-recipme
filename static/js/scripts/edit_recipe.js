@@ -2,10 +2,14 @@
 
     // ----------------------- GET DOM VARIABLES -------------------------- //
     const element = new AddRecipeVariables();
-    // --------------------------------------------------------------------- //
-    // ------------------------- FORM INPUT CREATE ------------------------ //
+  
     const counter = new CounterAPI();
     const input = new InputCreate(counter);
+
+    const mobileNavMenu = new NavDropDown();
+    const formSubmit = new ButtonClick(element.submitButton, "full-recipe__form--clicked");
+    const inputAddClickStyle = new ButtonClick(element.addButtons, "full-recipe__add-button--clicked" );
+    const inputRemoveClickStyle = new ButtonClick(element.removeButtons, "full-recipe__remove-button--clicked");
 
     const setIngredientCounter = () => {
 
