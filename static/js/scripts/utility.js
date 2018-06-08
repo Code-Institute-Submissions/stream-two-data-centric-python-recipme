@@ -509,3 +509,112 @@ const totalCharacters = (counter, count) => {
 
     document.getElementById(counter).innerHTML = "Remaining:"+ count;
 };
+
+// ---------------- ADD/REMOVE INPUT FIELDS FOR RECIPE CREATE FORM -------------- //
+
+
+function CounterAPI() {
+
+    this.ingredientCounter = 1;
+    this.methodCounter = 1;
+
+}
+
+function InputCreate(counter) {
+
+    //this.counter = new CounterAPI;
+
+    this.addAnIngredient = (button, parent) => {
+
+        button.addEventListener("click", (e) => {    
+    
+            if (counter.ingredientCounter <= 50) {
+    
+                const quantity = new CreateElement("Quantity", counter.ingredientCounter, "full-recipe__input-ingredient");
+                const ingredient = new CreateElement("Ingredient", counter.ingredientCounter, "full-recipe__input-ingredient");
+                //const br = new createElement("Ingredient", ingredientCounter);
+    
+                parent.appendChild(quantity.createInput());
+                parent.appendChild(ingredient.createInput());
+                parent.appendChild(ingredient.createBr());
+    
+                counter.ingredientCounter += 1;
+            }
+        
+        });
+    
+    };
+    
+    // ----------------- REMOVE INGREDIENT TEXT FIELD ON CLICK ------------- //
+    
+    this.removeIngredient = (button, parent) => {
+    
+        button.addEventListener("click", (e) => {
+            
+            const removeInput = document.getElementById(`Ingredient-${counter.ingredientCounter -1}`);
+            const removeBr = document.getElementById(`br-Ingredient-${counter.ingredientCounter -1}`);
+            const removeQuantity = document.getElementById(`Quantity-${counter.ingredientCounter - 1}`);
+    
+            if (counter.ingredientCounter > 1) {
+    
+                parent.removeChild(removeQuantity);
+                parent.removeChild(removeInput);
+                parent.removeChild(removeBr);
+    
+                counter.ingredientCounter -=1;
+    
+            }
+            
+        });
+        
+    };
+    
+    // ----------------- ADD METHOD TEXT FIELD ON CLICK ------------- //
+    this.addStep = (button, parent) => {
+    
+        button.addEventListener("click", (e) => {    
+    
+            if (counter.methodCounter <= 50) {
+                
+                const step = new CreateElement("Step", counter.methodCounter, "full-recipe__input-step");
+                const stepNumber = new CreateElement("Step", counter.methodCounter, "full-recipe__numeric-input");
+                const br = new CreateElement("Step", counter.methodCounter);
+    
+                parent.appendChild(stepNumber.createStepNumber());
+                parent.appendChild(step.createInput());
+                parent.appendChild(br.createBr());
+    
+                counter.methodCounter += 1;
+            }
+        
+        });
+    
+    };
+    
+    // ----------------- REMOVE METHOD TEXT FIELD ON CLICK ------------- //
+    this.removeStep = (button, parent) => {
+    
+        button.addEventListener("click", (e) => {
+            
+            const removeInput = document.getElementById(`Step-${counter.methodCounter -1}`);
+            const removeBr = document.getElementById(`br-Step-${counter.methodCounter -1}`);
+            const removeStepNumber = document.getElementById(`s-${counter.methodCounter - 1}`);
+            
+            if (counter.methodCounter > 1) {
+    
+                parent.removeChild(removeStepNumber);
+                parent.removeChild(removeInput);
+                parent.removeChild(removeBr);
+    
+                counter.methodCounter -=1;
+                
+            }
+        
+        });
+    
+    };
+
+}
+
+
+

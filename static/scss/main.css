@@ -1237,7 +1237,7 @@ select {
       width: 15rem; } }
   @media (min-width: 991px) {
     .full-recipe__input-step {
-      width: 20rem; } }
+      width: 18rem; } }
 
 .full-recipe__form--clicked {
   border: 1px solid #df6400f6;

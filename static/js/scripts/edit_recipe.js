@@ -1,5 +1,12 @@
 (()=>{
 
+    // ----------------------- GET DOM VARIABLES -------------------------- //
+    const element = new AddRecipeVariables();
+    // --------------------------------------------------------------------- //
+    // ------------------------- FORM INPUT CREATE ------------------------ //
+    const counter = new CounterAPI();
+    const input = new InputCreate(counter);
+
     const setIngredientCounter = () => {
 
         numberOfIngredients = document.getElementsByClassName('ingredient');
