@@ -27,14 +27,6 @@
     justify-content: flex-start;
     align-items: center;
     height: 4rem;
-
-    @include desktop {
-
-       // width: 80%;
-        //position: relative;
-       // left: 10%;
-        
-    }
     
 }
 
@@ -447,7 +439,6 @@ footer p {
 
     @include form-button;
     margin-top: 1.5rem;
-    //transition: width 0.3s $dropDownTransition; 
     background-color: #1d3355;
     color: #fff;
     transition: background-color 0.1s ease-in-out;
@@ -456,7 +447,6 @@ footer p {
 
 .login__button:hover {
 
-    //width: 4rem;
     cursor: pointer;
 }
 
@@ -470,7 +460,6 @@ footer p {
 
     @include form-button;
     margin-top: 0.5rem;
-    //transition: width 0.3s $dropDownTransition;
     background-color:$side-bar;
     color: $title-color;
     transition: background-color 0.1s ease-in-out;
@@ -487,7 +476,7 @@ footer p {
 .signup__button:hover {
 
     cursor: pointer;
-    //width: 4rem;
+
 }
 
 .stats {
@@ -565,14 +554,6 @@ footer p {
     color: $title-color;
 }
 
-
-/*.my-recipme {
-
-    
-    height: 26rem;
-    //justify-content: center;
-}*/
-
 .my-recipme__instructions {
 
     text-align: center;
@@ -602,128 +583,10 @@ footer p {
     }
 }
 
-// RECIPME ACCORDIAN //
-/*
-.accordian {
-
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: 4rem;
-}
-
-
-.accordian-outer {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 80%;
-    position: relative;
-    height: 4rem;
-    align-items: center;
-    
-}
-
-.accordian-outer:hover {
-
-    cursor: pointer;
-}
-
-.accordian-inner {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 0rem;
-    overflow: hidden;
-    transition: max-height .2s ease-in-out;
-    width: 80%;
-    background-color: $accordian-inner;
-    
-}
-
-.show-recipme-accordian-inner {
-
-    max-height: 10rem;
-}
-
-.accordian-outer--color,
- {
-    opacity: 1;
-    //background-color: $title-color;
-    background: linear-gradient($title-color, rgba(29, 52, 88, 0.93));
-    //border: 1px solid #2f4669cc; 
-    transition: opacity 0.3s ease-in-out;
-}
-
-.accordian-outer--active {
-
-    background: linear-gradient($accordian-active, $accordian-active);
-    opacity: 0.8;
-}
-
-
-.accordian-outer__title {
-
-    color: #fff;
-}
-
-.accordian-outer__plus {
-
-    position: absolute;
-    height: 2rem;
-    width: 2rem;
-    left: 0.2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    left: 0.2rem;
-
-}
-
-.accordian-outer__plus:before {
-
-    content:'+';
-    height: 1rem;
-    width: 1rem;
-    color: #fff;
-
-}
-
-.accordian-submit {
-
-    @include form-button;
-    background-color: $side-bar;
-    margin: 0.2rem;
-    max-width: 5rem;
-    cursor: pointer;
-}
-
-
-
-.ingredient__form,
- .all-recipe__form,
- .saved-recipe__form,
- .cuisine__form,
- .course__form {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0rem;
-    //background-color: $accordian-inner;
-
-}
-*/
 .search-instructions p { 
 
     text-align: center;
-    //padding-bottom: 1rem;
+
 }
 
 .search-forms-container {
@@ -734,9 +597,7 @@ footer p {
     width: 100%;
     background-color: $accordian-inner;
     margin-bottom: 2rem;
-    //opacity: 1;
-    //transition: opacity 0.3s $dropDownTransition;
-    //padding-bottom: 1rem;
+
 }
 
 .search-buttons-container--show {
@@ -747,8 +608,6 @@ footer p {
 
 .ingredient {
 
-   // padding-top: 1rem;
-   // padding-bottom: 1rem;
     max-height: 20rem;
     transition: max-height $dropDownTransition;
     background-color: $accordian-inner;
@@ -758,14 +617,6 @@ footer p {
         max-height: 16rem;
     }
 }
-
-/*.ingredient--hide {
-
-    max-height: 0rem;
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-
-}*/
 
 .ingredient__form-container {
 
@@ -815,16 +666,8 @@ footer p {
    
 }
 
-/*.search-form {
-
-    max-height: 18rem;
-    transition: max-height $dropDownTransition;
-}*/
-
 .search-form--hide {
 
-    //display:none;
-   // opacity: 0;
     max-height: 0rem;
     overflow: hidden;
     padding: 0rem;
@@ -850,7 +693,6 @@ footer p {
     flex-direction: row;
     justify-content: center;
     position: relative;
-    //top: 2rem;
    
 }
 
@@ -1113,12 +955,10 @@ select {
     }
 }
 
-//.results-recipe__info h2,
-//.results-recipe__info h3 ,
 .results-recipe__info p {
 
     font-size: 0.7rem;
-   // margin-bottom: 0.5rem;
+
 }
 
 #results-recipe__author {
@@ -1140,7 +980,6 @@ select {
 .results-recipe__title {
 
     @extend.results__heading;
-   // padding-bottom: 1rem;
     text-align:left;
     font-family: $pacifico;
 }
@@ -1148,7 +987,7 @@ select {
 .results-recipe__category {
 
     font-size: 0.8rem;
-    //font-family: $pacifico;
+
 }
 
 .full-recipe-button {
@@ -1366,11 +1205,6 @@ select {
 
 }
 
-.feedback-title {
-
-    
-}
-
 .save-recipe form,
 .recipe-comment form {
 
@@ -1456,7 +1290,6 @@ select {
 .user-comments {
 
     @extend .recipe-comment;
-    //margin: 2rem 0rem;
 
 }
 
@@ -1510,7 +1343,10 @@ select {
 // ---------------------------- CREATE RECIPE ---------------------------- //
 
 
-.full-recipe__fieldset {
+.full-recipe__form-main-details,
+.full-recipe__form-stats,
+.full-recipe__form-ingredients,
+.full-recipe__form-method {
 
     display: flex;
     flex-direction: column;
@@ -1558,8 +1394,6 @@ select {
     display: flex;
     flex-direction: column;
     align-items: left;
-    //margin-bottom: .5rem;
-
 
 }
 
@@ -1581,6 +1415,7 @@ select {
     min-width: 12rem;
     height: 5rem;
     margin-top: 0.5rem;
+    border: 1px solid $title-color;
 
     @include tablet {
 
@@ -1589,7 +1424,7 @@ select {
     }
     @include desktop {
 
-        min-width: 23rem;
+        min-width: 22rem;
     }
 }
 
@@ -1602,7 +1437,7 @@ select {
 
     @extend .full-recipe__input;
     width: 3rem; 
-    //padding-bottom: 0.5rem;
+
 }
 
 .full-recipe__add-button,
@@ -1724,6 +1559,11 @@ select {
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    @include desktop {
+
+        width: 35%;
+    }
 }
 
 
@@ -1764,6 +1604,11 @@ select {
 
 }
 
+.crud-message__button--clicked {
+
+    @include search-button-click;
+}
+
 
 .crud-message__button-form {
 
@@ -1779,12 +1624,22 @@ select {
 
 .crud-message__image-container {
 
-    height: 18rem;
+    height: 17rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: $accordian-inner;
+    
+    @include tablet {
+
+        height: 28rem;
+    }
+
+    @include desktop {
+
+        height: 24rem;
+    }
 }
 .crud-message__image {
 
@@ -1793,7 +1648,7 @@ select {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
-    min-height: 16rem;
+    min-height: 15rem;
     width: 90%;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
     margin-bottom: 1rem;
@@ -1806,5 +1661,10 @@ select {
     @include tablet {
 
         height: 34rem;
+    }
+
+    @include desktop {
+       
+        width: 80%;
     }
 }

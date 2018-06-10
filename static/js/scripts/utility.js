@@ -1,6 +1,4 @@
-
 //---------------------------  GENERAL CLASSES/FUNCTIONS  --------------------------------- // 
-
 //------------------------- BUTTIN CLICK CLASS  ---------------------------------//
 
 class ButtonClick {
@@ -40,8 +38,6 @@ class ButtonClick {
                 this.buttons[i].classList.remove(`${this.style}`);
 
             });
-
-           
 
         }
 
@@ -497,19 +493,22 @@ class CreateElement {
 }
 
  // ----------------- INPUT FIELD CHARACTER COUNTERS ----------------//
- 
-const characterCounter = (input, counter, count) => {
-    document.getElementById(input).onkeyup = function() {
 
-        document.getElementById(counter).innerHTML = "Remaining:"+ (count-this.value.length);
+class CharacterCount {
+
+    characterCounter(inputId, counter, count){
+
+        document.getElementById(inputId).onkeyup = function() {
+
+            document.getElementById(counter).innerHTML = "Remaining:"+ (count-this.value.length);
+        };
     };
-};
 
-const totalCharacters = (counter, count) => {
+    totalCharacters(counter, count){
 
-    document.getElementById(counter).innerHTML = "Remaining:"+ count;
-};
-
+        document.getElementById(counter).innerHTML = "Remaining:"+ count;
+    };
+}
 // ---------------- ADD/REMOVE INPUT FIELDS FOR RECIPE CREATE FORM -------------- //
 
 

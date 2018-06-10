@@ -1,20 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<!--
-<h2>Go ahead and create a new RecipMe</p>
-<br>
-{% with messages = get_flashed_messages() %}
-{% for message in messages %}
-<p>{{ message }}</p>
-{% endfor %}
-{% endwith %}-->
 <body>
 {% include 'full_header.html'%}
 <div class='full-recipe-container'>
     <h2 class='full-recipe-page-title'>Create a new Recipe.</h2>
     <section class='full-recipe add-recipe--width'>
         <form action="{{ url_for('creating_recipe', username=username) }}" method='POST'>
-            <fieldset class='full-recipe__fieldset'>
+            <fieldset class='full-recipe__form-main-details'>
                 <legend class='full-recipe__title'>Main Details</legend>
                 <div class='full-recipe__row'>
                     <div class='full-recipe__column-add-recipe'>
@@ -34,10 +26,8 @@
                 <div class='full-recipe__row'>
                     <p class='full-recipe__text full-recipe__row-add-recipe' id='recipe-description-counter'></p>
                 </div>
-              
             </fieldset>
-            
-            <fieldset class='full-recipe__stats-desktop'>
+            <fieldset class='full-recipe__form-stats'>
                 <legend class='full-recipe__title'>Stats</legend>
                 <div class='full-recipe__row'>
                     <div class='full-recipe__column-add-recipe'>
@@ -89,7 +79,7 @@
                     </div>
                 </div> 
             </fieldset>
-            <fieldset class='full-recipe__ingredients' >
+            <fieldset class='full-recipe__form-ingredients' >
                 <legend class='full-recipe__title'>Ingredients</legend>
                 <div>
                     <button class='full-recipe__add-button' type='button' id='add-ingredient'>Add</button><button class='full-recipe__remove-button' type='button' id='remove-ingredient'>Remove</button>
@@ -97,7 +87,7 @@
                 <div id='ingredients'></div>
                 <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
             </fieldset>
-            <fieldset class='full-recipe__method' >
+            <fieldset class='full-recipe__form-method' >
                 <legend class='full-recipe__title'>Method</legend>
                 <div>
                     <button class='full-recipe__add-button' type='button' id='add-step'>Add</button><button class='full-recipe__remove-button' type='button' id='remove-step'>Remove</button>

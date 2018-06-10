@@ -12,16 +12,20 @@
     const inputAddClickStyle = new ButtonClick(element.addButtons, "full-recipe__add-button--clicked" );
     const inputRemoveClickStyle = new ButtonClick(element.removeButtons, "full-recipe__remove-button--clicked");
 
+    // CHARACTER COUNTER CLASS INSTANTIATION //
+
+    const inputCount = new CharacterCount();
+
     // --------------------------- UI FUNCTION CALLS --------------------- //
     formSubmit.singleButtonClick();
     mobileNavMenu.clickBurgerMenu();
     inputAddClickStyle.multiButtonsClick();
     inputRemoveClickStyle.multiButtonsClick();
 
-    characterCounter("RecipeTitle","recipe-title-counter",50 );
-    characterCounter("RecipeDescription","recipe-description-counter", 150);
-    characterCounter("Cuisine","cuisine-description-counter",50);
-    characterCounter("Course","course-description-counter", 50);
+    inputCount.characterCounter("RecipeTitle","recipe-title-counter",50 );
+    inputCount.characterCounter("RecipeDescription","recipe-description-counter", 150);
+    inputCount.characterCounter("Cuisine","cuisine-description-counter",50);
+    inputCount.characterCounter("Course","course-description-counter", 50);
 
     // ------------------------- CALL INPUT FIELD FORM FUNCTIONS ------- //
     input.addAnIngredient(element.addIngredientButton, element.ingredients);
