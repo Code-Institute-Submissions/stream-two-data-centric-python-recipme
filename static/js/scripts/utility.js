@@ -459,10 +459,8 @@ class CreateElement {
         input.id = `${this.field}-${this.counter}`;
         input.classList.add(`${this._class}`);
         input.type = "text";
-        input.name = `${this.field}`;
+        input.name = `${this.field}`;   
         input.placeholder = `${this.field}`;
-
-    
 
         return input;
     }
@@ -478,7 +476,6 @@ class CreateElement {
         input.name = `StepNumber`;
         input.value = `${this.counter}`;
         
-
         return input;
     }
 
@@ -487,6 +484,7 @@ class CreateElement {
 
         const br = document.createElement("br");
         br.id = `br-${this.field}-${this.counter}`;
+        
         return br;
     }
 

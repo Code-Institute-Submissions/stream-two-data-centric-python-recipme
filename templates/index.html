@@ -28,16 +28,16 @@
                 <form action="{{ url_for('signup') }}" method='POST'>
                     <fieldset id='signup' class='signup signup--color'>
                         <br>
-                        <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' required>
+                        <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' maxlength='50' required>
                         <br>
                         <br>
-                        <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' required>
+                        <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' maxlength='50' required>
                         <br>
                         <br>
-                        <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' required>
+                        <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' maxlength='50'required>
                         <br>
                         <br>
-                        <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                        <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' maxlength='50' required>
                         <br>
                         <input id='signup-button' class='signup__button dropdown' type='submit' value='Sign Up'>
                     </fieldset>

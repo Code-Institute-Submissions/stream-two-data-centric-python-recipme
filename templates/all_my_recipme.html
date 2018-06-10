@@ -1,4 +1,4 @@
-
+<!-- PARTIAL DISPLAYING REASULTS OF ALL RECIPE SEARCH FOR USERS OWN RECIPES, OR SHARED RECIPES -->
 <section class='results'>
     {% if search == 'all_public'%}
     <a id='search-reset-button' class='results__reset' href="{{ url_for('public', username=username) }}">Reset</a>
