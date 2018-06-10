@@ -1,16 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>SUCCESS!</h1>
-{% if action == 'create' %}
-<h2>Recipe Added</h2>
-<p> You have just added another tasty meal to your cookbook!</p>
-{% elif action == 'delete' %}
-<h2>Recipe Deleted</h2>
-<p> You have just removed a meal from your cookbook!</p>
-{% elif action == 'update' %}
-<h2>Recipe Updated</h2>
-<p> You have just updated a meal in your cookbook!</p>
-{% endif %}
-<p>Click the link below to head back to {{ username }} RecipMe home</p>
-<a href="{{ url_for('my_recipme', username=username)}}">MyRecipMe</a>
+<body>
+    {% include 'full_header.html'%}
+    <section class='crud-message-container'>
+        <div class='crud-message__image-container'> 
+            <div class='crud-message__image'></div>
+        </div>
+        <div class='crud-message'>
+            <h1 class='crud-message__heading'>Success!</h1>
+            <div class='crud-message__message-container'>
+                <div class='crud-message__message'>
+                    {% if action == 'create' %}
+                    <h2>Recipe Added</h2>
+                    <p> You have just added another tasty meal to your cookbook!</p>
+                    {% elif action == 'delete' %}
+                    <h2>Recipe Deleted</h2>
+                    <p> You have just removed a meal from your cookbook!</p>
+                    {% elif action == 'update' %}
+                    <h2>Recipe Updated</h2>
+                    <p> You have just updated a meal in your cookbook!</p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr class='hr-90 crud-message__hr'>   
+            <form class='crud-message__button-form' action="{{ url_for('my_recipme', username=username)}}">
+                <button class='crud-message__button'>My Recipes</button>
+            </form>
+            <hr class='hr-90 crud-message__hr'> 
+        </div>
+       
+    </section>
+    {% include 'footer.html' %} 
+<script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
+</body>
 {% endblock %}

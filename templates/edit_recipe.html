@@ -3,7 +3,7 @@
 <body>
 {% include 'full_header.html'%}
     <div class='full-recipe-container'>
-        <h2 class='full-recipe-page-title'>Edit your {{ title }} Recipe</h2>
+        <h2 class='full-recipe-page-title'>Update your Recipe</h2>
         <section class='full-recipe add-recipe--width'>
             <form action="{{ url_for('updating_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
                 <fieldset class='full-recipe__fieldset'>
@@ -97,20 +97,20 @@
                     <div id='ingredients'>
                         {% for ingredient in full_recipe[2] %}
                         <input class='full-recipe__input-ingredient' id='Quantity-{{ loop.index }}' name='Quantity' placeholder='Quantity' type='text' value="{{ ingredient['Quantity'] }}"required>
-                        <input class='full-recipe__input-ingredient' id='Ingredient-{{ loop.index }}' name='Ingredient' placeholder='Ingredient' type='text' value="{{ ingredient['IngredientName'] }}"required>
+                        <input class='full-recipe__input-ingredient edit-ingredient' id='Ingredient-{{ loop.index }}' name='Ingredient' placeholder='Ingredient' type='text' value="{{ ingredient['IngredientName'] }}"required>
                         <br id='br-Ingredient-{{ loop.index }}'>
                         {% endfor %}
                     </div>
                 </fieldset>
-                <fieldset class='full-recipe__method' id = 'method'>
-                    <legend>Method</legend>
+                <fieldset class='full-recipe__method'>
+                    <legend class='full-recipe__title'>Method</legend>
                     <div>
                         <button class='full-recipe__add-button' type='button' id='add-step'>Add</button><button class='full-recipe__remove-button'type='button' id='remove-step'>Remove</button>
                     </div>
                     <div id='method'>
                         {% for method in full_recipe[3] %}
                         <input class='full-recipe__numeric-input' id='s-{{ loop.index }}' min='{{ loop.index }}' max='{{ loop.index }}' name='StepNumber' type='number' value='{{ loop.index }}'required>
-                        <input class='full-recipe__input-step' id='Step-{{ loop.index }}' name='Step' placeholder='Step' type='text' value="{{ method['StepDescription'] }}"required>
+                        <input class='full-recipe__input-step edit-method' id='Step-{{ loop.index }}' name='Step' placeholder='Step' type='text' value="{{ method['StepDescription'] }}"required>
                         <br id='br-Step-{{ loop.index }}'>
                         {% endfor %}
                     </div>   
@@ -126,7 +126,7 @@
     {% block js %}
     <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/scripts/edit_recipe.js')}}" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/scripts/add_recipe.js')}}"></script>
+    <!--<script type="text/javascript" src="{{ url_for('static', filename='js/scripts/add_recipe.js')}}"></script>-->
     
 </body>
 {% endblock %}

@@ -1,7 +1,7 @@
 
 //---------------------------  GENERAL CLASSES/FUNCTIONS  --------------------------------- // 
 
-//------------------------- CLICK FUNCTION  ---------------------------------//
+//------------------------- BUTTIN CLICK CLASS  ---------------------------------//
 
 class ButtonClick {
 
@@ -560,7 +560,7 @@ function InputCreate(counter) {
                 parent.removeChild(removeQuantity);
                 parent.removeChild(removeInput);
                 parent.removeChild(removeBr);
-    
+                
                 counter.ingredientCounter -=1;
     
             }
@@ -585,6 +585,7 @@ function InputCreate(counter) {
                 parent.appendChild(br.createBr());
     
                 counter.methodCounter += 1;
+
             }
         
         });
@@ -605,8 +606,9 @@ function InputCreate(counter) {
                 parent.removeChild(removeStepNumber);
                 parent.removeChild(removeInput);
                 parent.removeChild(removeBr);
-    
+
                 counter.methodCounter -=1;
+
                 
             }
         
