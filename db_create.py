@@ -2,6 +2,10 @@ import os
 import myenviron
 from db import Db
 
+def capitalize_words(string):
+    words = string.split()
+    return ' '.join([word.capitalize() for word in words])
+
 ######################## CLASS FOR SQL QUERY FOR USER CREATION #########################
  
 class QueryCreateUser():
@@ -58,8 +62,8 @@ class QueryCreateRecipe():
         self.cooking_time = int(recipe['CookingTimeMins'])
         self.make_public = int(recipe['MakePublic'])
         self.user_id = int(user_id['UserId'])
-        self.cuisine_name = recipe['CuisineName']
-        self.course_name = recipe['CourseName']
+        self.cuisine_name = capitalize_words(recipe['CuisineName'])
+        self.course_name = capitalize_words(recipe['CourseName'])
         self.calories = int(recipe['Calories'])
         self.cost = int(recipe['Cost'])
         self.servings = int(recipe['Servings'])

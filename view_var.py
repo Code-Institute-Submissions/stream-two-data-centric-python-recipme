@@ -65,7 +65,6 @@ class ViewVariables():
 
     def var_cat_search(self, table, search_by, search_value, 
                             column, category, order_by, direction):
-        #print(order_by)
         query = QueryReadRecipes()
         results = query.query_category_mini_recipes(table, search_by, search_value, 
                                                     column, category, order_by, direction)
@@ -73,7 +72,7 @@ class ViewVariables():
         count = len((recipes))
         groupings = ViewVariables(self.username).groupings()
     
-        return recipes, count, groupings#, form[column[0]], column[0], 
+        return recipes, count, groupings
 
 ##---------------- RETURN FULL RECIPE VIEW FOR CHOSEN RECIPE ----------------##
 
@@ -89,7 +88,7 @@ class ViewVariables():
         ratings = QueryRating(recipe_id).query_rating_and_comments()
         #average = Get().get_average_rating(ratings)
 
-        return username, recipe, ingredients, method, is_saved, ratings#, average
+        return username, recipe, ingredients, method, is_saved, ratings
 
 ##---------------- RETURN ALL PUBLIC RECIPES ----------------##
 

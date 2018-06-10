@@ -2,10 +2,6 @@ import pymysql
 from db import Db
 from math import ceil
 
-#################### CLASSES FOR READING THE MYSQL DB #########################
-
-
-
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
     ## USED FOR USER ALL RECIPES SELECTION, INGREDIENT SEARCH AND SAVED RECIPES ##
 
@@ -240,7 +236,7 @@ class QueryReadRecipes():
             print("Query count Column based on UserId Completed")
 
 
-################### CLASS FOR USER VERIFICATION BASED ON USER #################
+################### CLASS FOR USER DB QUERY  #################
 
 class UserVerify():
     
@@ -279,7 +275,7 @@ class QueryRating():
         finally:
             print("Query Ratings based on RecipeId Completed")
 
-######################## CLASS TO GET STATS ON ALL RECIPES  ###################################################
+######################## CLASSES TO GET STATS ON ALL RECIPES  ###################################################
  
 class QueryAllData():
     

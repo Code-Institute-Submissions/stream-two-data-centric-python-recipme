@@ -1,5 +1,4 @@
 import os
-import uploads
 import db_create
 import write_recipe
 import user_login
@@ -169,7 +168,7 @@ def ingredient_paginate(username, ingredient, order_by, direction):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
-    print(pagination_results)
+    #print(pagination_results)
 
     return render_template('my_recipme.html', search='ingredient', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],

@@ -28,8 +28,8 @@ class QueryDeleteRecipe():
         finally:
             print("Query Delete Saved Recipe from Saved Completed")
 
-###################### CLASS FOR SQL UPDATE QUERIES, INCLUDING RECIPE TABLE,##################
-####################### AND RE-USABLE SINGEL COLUMN QUERY FOR STATS ##########################
+###################### CLASS FOR SQL UPDATE QUERIES ##################
+######################################################################
 
 class UpdateQuery():
     

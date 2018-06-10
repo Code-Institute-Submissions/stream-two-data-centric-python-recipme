@@ -1,7 +1,7 @@
 import os
 import pymysql
 import myenviron
-######## TO GO BACK REMOVE THE CONNECTION FROM A SELF INITIALISING class and into s basic class #######
+
 class Db():
     def __init__(self, commit=False):
         self.connection = pymysql.connect(host=os.environ.get('DATABASE_HOST'), 

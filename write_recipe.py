@@ -78,7 +78,7 @@ class Create():
 
     def write_rating(self, rating, comments, recipe_id, user_id):
         db_create.QueryRateRecipe(rating, comments, recipe_id, user_id).rate_recipe()
-        #print('here')
+       
         return True
 
 ###################### CLASS FOR UPDATING FIELDS #############################
