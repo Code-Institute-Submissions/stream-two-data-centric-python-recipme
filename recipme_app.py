@@ -378,7 +378,14 @@ def rate_recipe(username, recipe_id):
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
 
-
+"""
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
+"""
+
+IP = '0.0.0.0'
+PORT = 5000
+
+if __name__ == '__main__':
+    app.run(host=IP, port=PORT, debug=False)
 
