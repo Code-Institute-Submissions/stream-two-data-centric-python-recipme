@@ -29,6 +29,7 @@ p, a, h3, h4, h5, h6, button, select {
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
   margin-right: .5rem;
+  border-radius: 0;
   background-color: rgba(255, 255, 255, 0);
   text-align: center; }
 
@@ -289,6 +290,7 @@ footer p {
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
   margin-right: .5rem;
+  border-radius: 0;
   width: 11rem;
   color: #1d3355;
   background-color: #e9ef8200; }
@@ -1026,6 +1028,7 @@ select {
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
   margin-right: .5rem;
+  border-radius: 0;
   margin-bottom: 0rem;
   margin-right: 1rem; }
 
