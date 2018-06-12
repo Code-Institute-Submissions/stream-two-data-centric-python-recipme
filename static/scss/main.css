@@ -23,6 +23,9 @@ p, a, h3, h4, h5, h6, button, select {
 input[type=text] {
   appearance: none; }
 
+input {
+  appearance: none; }
+
 .ingredient__input {
   appearance: none;
   margin-top: 0.5rem;
