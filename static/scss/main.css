@@ -20,6 +20,9 @@ p, a, h3, h4, h5, h6, button, select {
   font-size: 0.8rem;
   color: #1d3355; }
 
+input[type=text] {
+  appearance: none; }
+
 .ingredient__input {
   appearance: none;
   margin-top: 0.5rem;
