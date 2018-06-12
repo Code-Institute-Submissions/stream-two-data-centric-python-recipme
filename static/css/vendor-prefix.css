@@ -371,8 +371,8 @@ footer p {
       -ms-flex-align: center;
           align-items: center;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
-  max-height: 320px;
-  max-height: 20rem;
+  max-height: 400px;
+  max-height: 25rem;
   overflow: hidden;
   background-color: #b8b8b84d;
   -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
