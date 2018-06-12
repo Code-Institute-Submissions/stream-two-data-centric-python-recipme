@@ -891,9 +891,8 @@ select {
 
         display: flex;
         flex-direction: row;
-        //flex-wrap: wrap;
         overflow: scroll;
-        justify-content: left;
+        justify-content: flex-start;
     }
 }
 
@@ -903,7 +902,6 @@ select {
 
         display: flex;
         flex-direction: row;
-        //flex-wrap: wrap;
         overflow: scroll;
         justify-content: center;
     }
@@ -1359,7 +1357,7 @@ select {
 
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
 
 }
 
