@@ -28,21 +28,19 @@
                 <form action="{{ url_for('signup') }}" method='POST'>
                     <fieldset id='signup' class='signup signup--color'>
                         <br>
-                        <input class='signup__input' type='text' id='Username' placeholder='Username' name='Username' maxlength='50' required>
-                        <br>
+                        <input class='signup__input' type='text' placeholder='Username' name='Username' maxlength='50' required>
                         <br>
                         <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' maxlength='50' required>
                         <br>
-                        <br>
                         <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' maxlength='50'required>
                         <br>
+                        <input class='signup__input' type='password' placeholder='Password' name='Password' maxlength='50' required>
                         <br>
-                        <input class='signup__input' type='password' id='Password' placeholder='Password' name='Password' maxlength='50' required>
-                        <br>
-                        <input id='signup-button' class='signup__button dropdown' type='submit' value='Sign Up'>
+                        <div class='signup__button-container'>
+                            <input id='signup-button' class='signup__button dropdown' type='submit' value='Sign Up'>
+                        </div>
                     </fieldset>
                 </form>
-                <br>
                 <br>
             </div>
         </section>
@@ -58,11 +56,13 @@
             <form action="{{ url_for('login') }}" method='POST'>
                 <fieldset id='login'class='login show-login-form'>
                     <br>
-                    <input class='login__input' type='text' id='Username' placeholder='Username' name='Username' required>
+                    <input class='login__input' type='text' placeholder='Username' name='Username' required>
                     <br>
-                    <input class='login__input' type='password' id='Password' placeholder='Password' name='Password' required>
+                    <input class='login__input' type='password' placeholder='Password' name='Password' required>
                     <br>
-                    <input id='login-button' class='login__button dropdown' type='submit' value='Login'>
+                    <div class='login__button-container'>
+                        <input id='login-button' class='login__button dropdown' type='submit' value='Login'>
+                    </div>
                 </fieldset>
             </form>
         </div>

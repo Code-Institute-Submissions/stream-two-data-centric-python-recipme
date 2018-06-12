@@ -343,7 +343,7 @@ footer p {
 .show-signup-form {
 
     padding: 0.5rem;
-    max-height: 10rem;
+    min-height: 15rem;
     transition: max-height $dropDownTransition, 
                 padding $dropDownTransition;
    
@@ -426,13 +426,13 @@ footer p {
     @extend .join-us__button:hover;
 }
 
-.signup-submit,
+/*.signup-submit,
 .login-submit {
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
+}*/
 
 
 .login__button {
@@ -442,7 +442,15 @@ footer p {
     background-color: #1d3355;
     color: #fff;
     transition: background-color 0.1s ease-in-out;
-        
+    padding-right: 0;   
+}
+
+.login__button-container,
+.signup__button-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .login__button:hover {
@@ -602,7 +610,7 @@ footer p {
 
 .search-buttons-container--show {
 
-    min-height: 18rem;
+    min-height: 14rem;
 
 }
 
@@ -614,7 +622,7 @@ footer p {
 
     @include large {
 
-        max-height: 16rem;
+        max-height: 17rem;
     }
 }
 
@@ -1044,6 +1052,8 @@ select {
 }
 
 .mini-recipe-break {
+
+    margin-bottom: 1rem;
 
     @include desktop {
 
