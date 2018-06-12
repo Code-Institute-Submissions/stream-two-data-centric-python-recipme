@@ -343,7 +343,7 @@ footer p {
 .show-signup-form {
 
     padding: 0.5rem;
-    min-height: 15rem;
+    max-height: 15rem;
     transition: max-height $dropDownTransition, 
                 padding $dropDownTransition;
    
