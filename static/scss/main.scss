@@ -320,14 +320,14 @@ footer p {
 
 }
 
-.signup, { 
+.signup { 
 
    @include login-page-forms;
    padding: 0;
-   max-height: 0rem;
+   height: 0rem;
    overflow: hidden;
    background-color: #e9ef8200;
-   transition: max-height $dropDownTransition, 
+   transition: height $dropDownTransition, 
                 padding $dropDownTransition;
 }
 
@@ -343,20 +343,19 @@ footer p {
 
     padding: 0.5rem;
     //height: 10rem;
-    transition: max-height $dropDownTransition, 
-                        padding $dropDownTransition;
+    //transition: max-height $dropDownTransition, 
+      //                  padding $dropDownTransition;
    
 }
 
 .show-signup-form {
 
     padding: 0.5rem;
-    max-height: 15rem;
-    transition: max-height $dropDownTransition, 
+    height: 15rem;
+    transition: height $dropDownTransition, 
                 padding $dropDownTransition;
    
 }
-
 
 .signup__input,
 .login__input {

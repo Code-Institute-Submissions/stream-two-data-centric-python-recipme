@@ -271,10 +271,10 @@ footer p {
   flex-direction: column;
   align-items: center;
   padding: 0;
-  max-height: 0rem;
+  height: 0rem;
   overflow: hidden;
   background-color: #e9ef8200;
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .login {
   border: 0;
@@ -287,13 +287,12 @@ footer p {
   background-color: #e9ef8200; }
 
 .show-login-form {
-  padding: 0.5rem;
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  padding: 0.5rem; }
 
 .show-signup-form {
   padding: 0.5rem;
-  max-height: 15rem;
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  height: 15rem;
+  transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
 .login__input {
