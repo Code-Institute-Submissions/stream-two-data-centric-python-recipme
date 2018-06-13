@@ -369,8 +369,7 @@ footer p {
   margin-top: 1.5rem;
   background-color: #1d3355;
   color: #fff;
-  transition: background-color 0.1s ease-in-out;
-  padding-right: 0; }
+  transition: background-color 0.1s ease-in-out; }
 
 .login__button-container,
 .signup__button-container {
