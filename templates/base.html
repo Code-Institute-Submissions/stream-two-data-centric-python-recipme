@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RECIPME</title>
+    <link rel="icon" href="{{ url_for( 'static', filename='images/restaurant-3-24.ico')}}" type="image/ico"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800|Pacifico|" rel="stylesheet"> 
-    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/vendor-prefix.css')}}">
+    <!--<link rel="stylesheet" href="{{ url_for( 'static', filename='css/vendor-prefix.css')}}">-->
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='scss/main.css')}}">
 
 </head>
     {% block content %}

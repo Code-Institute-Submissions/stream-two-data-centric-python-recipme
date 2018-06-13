@@ -377,7 +377,6 @@ def rate_recipe(username, recipe_id):
         ViewFunc().rate_recipe(rating, recipe_id, username)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
-
 """
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
