@@ -291,7 +291,7 @@ footer p {
 
 .show-signup-form {
   padding: 0.5rem;
-  height: 15rem;
+  height: 10rem;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
