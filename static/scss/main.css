@@ -288,7 +288,6 @@ footer p {
 
 .show-login-form {
   padding: 0.5rem;
-  height: 10rem;
   transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .show-signup-form {
