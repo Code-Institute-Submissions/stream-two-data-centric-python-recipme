@@ -286,7 +286,7 @@ footer p {
     //max-height: 25rem;
     overflow: hidden;
     background-color: $accordian-inner;
-    transition: max-height $dropDownTransition;
+    //transition: max-height $dropDownTransition;
   
 }
 
@@ -320,6 +320,8 @@ footer p {
 
 }
 
+
+
 .signup { 
 
    @include login-page-forms;
@@ -351,7 +353,7 @@ footer p {
 .show-signup-form {
 
     padding: 0.5rem;
-    height: 10rem;
+    height: 9rem;
     transition: height $dropDownTransition, 
                 padding $dropDownTransition;
    
