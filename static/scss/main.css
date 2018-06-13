@@ -242,7 +242,6 @@ footer p {
   align-items: center;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
   height: 12rem;
-  overflow: hidden;
   background-color: #b8b8b84d; }
 
 .login-container {

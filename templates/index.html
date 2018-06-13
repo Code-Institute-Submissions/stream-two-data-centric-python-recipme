@@ -25,8 +25,8 @@
         </section>
         <section>
             <div id='forms-container' class='signup-container forms-login-display'>
-                <form id='signup' class='signup-form signup signup--color' action="{{ url_for('signup') }}" method='POST'>
-                    <fieldset class=''>
+                <form class='signup-form' action="{{ url_for('signup') }}" method='POST'>
+                    <fieldset id='signup' class='signup signup--color'>
                         <br>
                         <input class='signup__input' type='text' placeholder='Username' name='Username' maxlength='50' required>
                         <br>
