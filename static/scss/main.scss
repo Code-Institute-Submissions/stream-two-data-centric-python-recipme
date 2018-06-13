@@ -333,6 +333,12 @@ footer p {
                 padding $dropDownTransition;
 }
 
+.signup-form {
+
+    display: flex;
+    flex-direction: column;
+}
+
 .login { 
 
     @include login-page-forms;

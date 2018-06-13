@@ -276,6 +276,10 @@ footer p {
   background-color: #e9ef8200;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
+.signup-form {
+  display: flex;
+  flex-direction: column; }
+
 .login {
   border: 0;
   margin: 1rem;
