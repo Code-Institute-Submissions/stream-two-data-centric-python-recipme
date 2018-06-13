@@ -320,7 +320,7 @@ footer p {
 
 }
 
-.signup, .login { 
+.signup, { 
 
    @include login-page-forms;
    padding: 0;
@@ -331,12 +331,20 @@ footer p {
                 padding $dropDownTransition;
 }
 
+.login { 
+
+    @include login-page-forms;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e9ef8200;
+ }
+
 .show-login-form {
 
     padding: 0.5rem;
     height: 10rem;
     transition: max-height $dropDownTransition, 
-                            padding $dropDownTransition;
+                        padding $dropDownTransition;
    
 }
 
