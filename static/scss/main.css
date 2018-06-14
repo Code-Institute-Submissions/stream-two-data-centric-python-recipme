@@ -240,8 +240,8 @@ footer p {
   overflow: hidden;
   background-color: #b8b8b84d;
   display: flex;
-  flex-direction: row;
-  justify-content: center; }
+  flex-direction: column;
+  align-items: center; }
 
 .signup-container--show {
   height: 10rem; }
@@ -261,11 +261,13 @@ footer p {
   font-family: "Nanum Gothic", sans-serif;
   padding-bottom: 0.5rem; }
 
-.login__legend,
+/*.login__legend, 
 .signup__legend {
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 2rem; }
 
+    font-family: $nanum;
+    font-size: 2rem;
+
+}*/
 .signup {
   border: 0;
   display: flex;

@@ -289,8 +289,8 @@ footer p {
     background-color: $accordian-inner;
     //transition: max-height $dropDownTransition;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   
 }
 
@@ -322,15 +322,13 @@ footer p {
 
 }
 
-.login__legend, 
+/*.login__legend, 
 .signup__legend {
 
     font-family: $nanum;
     font-size: 2rem;
 
-}
-
-//
+}*/
 
 .signup { 
 
