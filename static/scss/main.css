@@ -237,7 +237,10 @@ footer p {
 
 .signup-container {
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
-  background-color: #b8b8b84d; }
+  background-color: #b8b8b84d;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
 
 .login-container {
   display: flex;
