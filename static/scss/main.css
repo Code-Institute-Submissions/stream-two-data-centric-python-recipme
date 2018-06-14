@@ -277,7 +277,8 @@ footer p {
 
 .signup-form {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  height: 14rem; }
 
 .login {
   border: 0;
