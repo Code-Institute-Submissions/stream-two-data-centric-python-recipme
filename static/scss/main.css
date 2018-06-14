@@ -27,8 +27,6 @@ input {
   appearance: none; }
 
 .ingredient__input {
-  appearance: none;
-  padding-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -296,8 +294,6 @@ footer p {
 
 .signup__input,
 .login__input {
-  appearance: none;
-  padding-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -1035,8 +1031,6 @@ select {
   align-items: center; }
 
 .full-recipe__input, .full-recipe__numeric-input, .full-recipe__input-ingredient, .full-recipe__input-step {
-  appearance: none;
-  padding-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
