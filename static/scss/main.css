@@ -27,14 +27,12 @@ input {
   appearance: none; }
 
 .ingredient__input {
-  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
-  margin-right: .5rem;
   border-radius: 0;
   background-color: rgba(255, 255, 255, 0);
   text-align: center; }
@@ -297,14 +295,12 @@ footer p {
 
 .signup__input,
 .login__input {
-  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
-  margin-right: .5rem;
   border-radius: 0;
   width: 11rem;
   color: #1d3355;
@@ -1035,14 +1031,12 @@ select {
   align-items: center; }
 
 .full-recipe__input, .full-recipe__numeric-input, .full-recipe__input-ingredient, .full-recipe__input-step {
-  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
   border-top: 0;
   font-family: "Nanum Gothic", sans-serif;
   font-size: .8rem;
-  margin-right: .5rem;
   border-radius: 0;
   margin-bottom: 0rem;
   margin-right: 1rem; }
