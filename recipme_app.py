@@ -12,7 +12,7 @@ from flask import Flask, redirect, render_template, request, flash
 from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
-app.secret_key = 'my_cat_called_sumo'
+#app.secret_key = 'my_cat_called_sumo'
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -57,11 +57,6 @@ def signup():
                 flash('Username taken, please choose a unique username.')
                 return redirect('/') 
 
-# IF USER ALEADY EXISTS CALL THIS ROUTE #
-#@app.route('/user_taken', methods=['GET', 'POST'])
-#def user_taken():    
-    #eturn render_template('user_taken.html')
-
 # LOGIN ROUTE #
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -81,11 +76,6 @@ def login():
                 flash('Check your details and try again.')
                 return redirect('/')
 
-# IF LOGIN IS INVALID CALL THIS ROUTE # 
-#@app.route('/invalid_login', methods=['GET', 'POST'])
-#def invalid_login():
-    #return render_template('invalid_login.html')
-
 ################ MAIN MY RECIPME ROUTE ##########################       
 
 # USER MY RECIPME MAIN PAGE, POPULATE CUISINES #
@@ -98,7 +88,6 @@ def my_recipme(username):
 
 ################ SEARCH ROUTES #################################
 ################ USER SPECIFIC ROUTES ##########################
-
 
 # ALL RECIPES FOR A GIVEN USER #
 @app.route('/my_recipme/<username>/my_recipme', methods=['GET', 'POST'])
@@ -139,8 +128,6 @@ def category_paginate(username, table, column, category, order_by, direction):
     user_id = Get().get_user_id(username)['UserId']
     recipe_info = ViewVariables(username).var_cat_search(table, 'User.UserId', user_id, column, 
                                                             category, order_by, direction)
-
-   # print(recipe_info)
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
