@@ -27,6 +27,7 @@ input {
   appearance: none; }
 
 .ingredient__input {
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -259,7 +260,6 @@ footer p {
 
 .signup {
   border: 0;
-  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -269,14 +269,14 @@ footer p {
   background-color: #e9ef8200;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  height: 184px; }
+/*.signup-form {
 
+    display: flex;
+    flex-direction: column;
+    height: 184px;
+}*/
 .login {
   border: 0;
-  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -294,6 +294,7 @@ footer p {
 
 .signup__input,
 .login__input {
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
@@ -1031,6 +1032,7 @@ select {
   align-items: center; }
 
 .full-recipe__input, .full-recipe__numeric-input, .full-recipe__input-ingredient, .full-recipe__input-step {
+  margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
   border-right: 0;
