@@ -244,33 +244,16 @@ footer p {
   align-items: center;
   justify-content: center; }
 
-/*.signup-container--show {
-
-    height: 12rem;
-
-}*/
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center; }
 
-/*.forms-login-display {
-
-    max-height: 0rem;
-    transition: max-height $dropDownTransition;
-}*/
 .login__label,
 .signup__label {
   font-family: "Nanum Gothic", sans-serif;
   padding-bottom: 0.5rem; }
 
-/*.login__legend, 
-.signup__legend {
-
-    font-family: $nanum;
-    font-size: 2rem;
-
-}*/
 .signup {
   border: 0;
   display: flex;
@@ -282,12 +265,6 @@ footer p {
   background-color: #e9ef8200;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
-/*.signup-form {
-
-    display: flex;
-    flex-direction: column;
-    height: 184px;
-}*/
 .login {
   border: 0;
   display: flex;
@@ -299,7 +276,7 @@ footer p {
 
 .show-signup-form {
   padding: 0.5rem;
-  height: 10rem;
+  height: 10.5rem;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
@@ -356,13 +333,6 @@ footer p {
 .join-us__button:hover, .more-info-button:hover {
   cursor: pointer; }
 
-/*.signup-submit,
-.login-submit {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}*/
 .login__button {
   height: 2rem;
   width: 6rem;
@@ -377,13 +347,6 @@ footer p {
   color: #fff;
   transition: background-color 0.1s ease-in-out; }
 
-/*.login__button-container,
-.signup__button-container {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}*/
 .login__button:hover {
   cursor: pointer; }
 
@@ -401,7 +364,6 @@ footer p {
   margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
-  margin-bottom: 1rem;
   margin-top: 0.5rem;
   background-color: #df6400f6;
   color: #1d3355;

@@ -192,7 +192,6 @@ footer {
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
-    //margin-top: 2rem;
     align-items: center;
     
 }
@@ -279,27 +278,15 @@ footer p {
 
 .signup-container {
 
-   // display: flex;
-   // flex-direction: column;
-   // align-items: center;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
-    //max-height: 0rem;
-    //max-height: 14rem;
     overflow: hidden;
     background-color: $accordian-inner;
-    //transition: max-height $dropDownTransition;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
   
 }
-
-/*.signup-container--show {
-
-    height: 12rem;
-
-}*/
 
 .login-container {
 
@@ -309,12 +296,6 @@ footer p {
     
 }
 
-/*.forms-login-display {
-
-    max-height: 0rem;
-    transition: max-height $dropDownTransition;
-}*/
-
 .login__label, 
 .signup__label {
 
@@ -323,13 +304,6 @@ footer p {
 
 }
 
-/*.login__legend, 
-.signup__legend {
-
-    font-family: $nanum;
-    font-size: 2rem;
-
-}*/
 
 .signup { 
 
@@ -341,13 +315,6 @@ footer p {
    transition: height $dropDownTransition, 
                 padding $dropDownTransition;
 }
-
-/*.signup-form {
-
-    display: flex;
-    flex-direction: column;
-    height: 184px;
-}*/
 
 .login { 
 
@@ -361,7 +328,7 @@ footer p {
 .show-signup-form {
 
     padding: 0.5rem;
-    height: 10rem;
+    height: 10.5rem;
     transition: height $dropDownTransition, 
                 padding $dropDownTransition;
    
@@ -443,15 +410,6 @@ footer p {
     @extend .join-us__button:hover;
 }
 
-/*.signup-submit,
-.login-submit {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}*/
-
-
 .login__button {
 
     @include form-button;
@@ -461,14 +419,6 @@ footer p {
     transition: background-color 0.1s ease-in-out;
     //padding-right: 0;   
 }
-
-/*.login__button-container,
-.signup__button-container {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}*/
 
 .login__button:hover {
 
@@ -484,7 +434,7 @@ footer p {
 .signup__button {
 
     @include form-button;
-    margin-bottom: 1rem;
+    //margin-bottom: 1rem;
     margin-top: 0.5rem;
     background-color:$side-bar;
     color: $title-color;
