@@ -11,6 +11,7 @@
     window.onscroll = () => {
 
     stickyHeader(element.header, element.unStick);
+    
     }
 //------------------------------------------------------------------------------------//
     // CALL ACCORDIANS //

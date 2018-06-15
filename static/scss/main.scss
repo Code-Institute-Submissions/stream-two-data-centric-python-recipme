@@ -289,16 +289,17 @@ footer p {
     background-color: $accordian-inner;
     //transition: max-height $dropDownTransition;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
   
 }
 
-.signup-container--show {
+/*.signup-container--show {
 
     height: 12rem;
 
-}
+}*/
 
 .login-container {
 
@@ -334,7 +335,7 @@ footer p {
 
    @include login-page-forms;
    padding: 0;
-   //height: 12rem;
+   height: 0rem;
    overflow: hidden;
    background-color: #e9ef8200;
    transition: height $dropDownTransition, 
@@ -351,28 +352,20 @@ footer p {
 .login { 
 
     @include login-page-forms;
-    padding: 0;
+    padding: 0.5rem;
     overflow: hidden;
     background-color: #e9ef8200;
  }
 
-.show-login-form {
+
+.show-signup-form {
 
     padding: 0.5rem;
-    //height: 10rem;
-    //transition: max-height $dropDownTransition, 
-      //                  padding $dropDownTransition;
-   
-}
-
-/*.show-signup-form {
-
-    padding: 0.5rem;
-    height: 136px;
+    height: 10rem;
     transition: height $dropDownTransition, 
                 padding $dropDownTransition;
    
-}*/
+}
 
 .signup__input,
 .login__input {

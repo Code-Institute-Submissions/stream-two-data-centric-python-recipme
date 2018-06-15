@@ -12,7 +12,7 @@ from flask import Flask, redirect, render_template, request, flash
 from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
-#app.secret_key = 'my_cat_called_sumo'
+app.secret_key = 'my_cat_called_sumo'
 
 ###################################################################################
 ################################# ROUTES ###########################################    

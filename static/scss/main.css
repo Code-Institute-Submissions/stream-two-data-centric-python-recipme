@@ -240,12 +240,15 @@ footer p {
   overflow: hidden;
   background-color: #b8b8b84d;
   display: flex;
-  flex-direction: column;
-  align-items: center; }
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
 
-.signup-container--show {
-  height: 12rem; }
+/*.signup-container--show {
 
+    height: 12rem;
+
+}*/
 .login-container {
   display: flex;
   flex-direction: column;
@@ -274,6 +277,7 @@ footer p {
   flex-direction: column;
   align-items: center;
   padding: 0;
+  height: 0rem;
   overflow: hidden;
   background-color: #e9ef8200;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
@@ -289,21 +293,15 @@ footer p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0;
+  padding: 0.5rem;
   overflow: hidden;
   background-color: #e9ef8200; }
 
-.show-login-form {
-  padding: 0.5rem; }
+.show-signup-form {
+  padding: 0.5rem;
+  height: 10rem;
+  transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
-/*.show-signup-form {
-
-    padding: 0.5rem;
-    height: 136px;
-    transition: height $dropDownTransition, 
-                padding $dropDownTransition;
-   
-}*/
 .signup__input,
 .login__input {
   margin-top: 0.5rem;

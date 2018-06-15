@@ -23,24 +23,19 @@
                 {% endwith %}
             </div>
         </section>
-       <!-- <section> -->
-            <div id='forms-container' class='signup-container signup-container--show forms-login-display'>
+       <section>
+            <div id='forms-container' class='signup-container forms-login-display'>
                 <form id='signup' class='signup signup--color' action="{{ url_for('signup') }}" method='POST'>
-                    
                     <input class='signup__input' type='text' placeholder='Username' name='Username' maxlength='50' required>
-                    
                     <input class='signup__input' type='text' id='First' placeholder='First Name' name='First' maxlength='50' required>
-                    
                     <input class='signup__input' type='text' id='Last' placeholder='Last Name' name='Last' maxlength='50'required>
-                    
                     <input class='signup__input' type='password' placeholder='Password' name='Password' maxlength='50' required>
-                    
                     <div class='signup__button-container'>
                         <button id='signup-button' class='signup__button dropdown' type='submit'>Sign Up</button>
                     </div>
                 </form>
             </div>
-        <!--</section>-->
+        </section>
         <section class='join-us'>
             <button id='join-us-button' class='join-us__button' type='button'>Join Us!</button>
             <p class='join-us__text'>
@@ -49,23 +44,22 @@
                 give feedback and most of all, have fun!
             </p>
         </section>
-        <div class='login-container'>
-            <form action="{{ url_for('login') }}" method='POST'>
-                <fieldset id='login'class='login show-login-form'>
-                   
-                    <input class='login__input' type='text' placeholder='Username' name='Username' required>
-                   
-                    <input class='login__input' type='password' placeholder='Password' name='Password' required>
-                   
-                    <div class='login__button-container'>
-                        <button id='login-button' class='login__button dropdown' type='submit'>Login</button>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        <div id='more-info-container' class='more-info'>
-            <button id='more-info' class='more-info-button' type='button'>More info.</button>
-        </div>
+        <section>
+            <div class='login-container'>
+                <form action="{{ url_for('login') }}" method='POST'>
+                    <fieldset id='login'class='login'>
+                        <input class='login__input' type='text' placeholder='Username' name='Username' required>
+                        <input class='login__input' type='password' placeholder='Password' name='Password' required>
+                        <div class='login__button-container'>
+                            <button id='login-button' class='login__button dropdown' type='submit'>Login</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div id='more-info-container' class='more-info'>
+                <button id='more-info' class='more-info-button' type='button'>More info.</button>
+            </div>
+        </section>
         <section id='stats' class='stats stats--color'>
             <p class='stat__stats'><span class='stat__value'>{{ stats[2]['TotalUser'] }}</span><br> Active Users.</p> <br> 
             <p class='stat__stats'><span class='stat__value'>{{ stats[0]['TotalRecipe'] }}</span><br>Total Recipes.</p><br>
