@@ -361,7 +361,7 @@ footer p {
 .show-signup-form {
 
     padding: 0.5rem;
-    height: 11rem;
+    height: 10rem;
     transition: height $dropDownTransition, 
                 padding $dropDownTransition;
    
@@ -484,6 +484,7 @@ footer p {
 .signup__button {
 
     @include form-button;
+    margin-bottom: 1rem;
     margin-top: 0.5rem;
     background-color:$side-bar;
     color: $title-color;
@@ -1225,7 +1226,6 @@ select {
 
         width: 30%;
         
-       
     }
 
 }

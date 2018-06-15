@@ -299,7 +299,7 @@ footer p {
 
 .show-signup-form {
   padding: 0.5rem;
-  height: 11rem;
+  height: 10rem;
   transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
@@ -401,6 +401,7 @@ footer p {
   margin-bottom: 0rem;
   font-family: "Nanum Gothic", sans-serif;
   font-size: 0.8rem;
+  margin-bottom: 1rem;
   margin-top: 0.5rem;
   background-color: #df6400f6;
   color: #1d3355;
