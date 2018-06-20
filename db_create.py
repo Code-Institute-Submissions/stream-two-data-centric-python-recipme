@@ -68,7 +68,7 @@ class QueryCreateRecipe():
         self.cost = int(recipe['Cost'])
         self.servings = int(recipe['Servings'])
         
-
+ 
     def create_recipe(self):
         recipe_values = (self.recipe_title, self.recipe_description,
                                 self.cooking_time, self.make_public,self.user_id) 

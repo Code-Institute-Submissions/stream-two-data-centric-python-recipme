@@ -31,5 +31,4 @@
     loginButtonClick.singleButtonClick();
     signUpButtonClick.singleButtonClick();
 
-
 })();
