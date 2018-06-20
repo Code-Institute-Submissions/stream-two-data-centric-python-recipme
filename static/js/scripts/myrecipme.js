@@ -1,32 +1,27 @@
 
 (()=>{
-    
-    const mobileNavMenu = new NavDropDown();
+    // ------------------- VARIABLES ------------------------------// 
+    const allSearchSubmit = document.getElementsByClassName('search-form__submit');
+    const allCategoryButtons = document.getElementsByClassName('search-buttons__button');
+    const ingredientButton = document.getElementById('search-ingredient');
+    const searchResetButton = document.getElementById('search-reset-button');
+    const fullRecipeButton = document.getElementsByClassName('full-recipe-button__button');
+
+    // INSTANTIATE CLASS TO SHOW AND HIDE SEARCHES //
     const showSearches = new showHide();
-    const element = new MyRecipmeVariables();
-
-// CLICK STYLING //
-    const searchButtonClick = new ButtonClick(element.allSearchSubmit, 
-                                        'search-buttons__button--clicked');
-    const categoryButtonClick = new ButtonClick(element.allCategoryButtons, 
-                                                'search-buttons__button--active');
-    const resetButtonClick = new ButtonClick(element.searchResetButton, 
-                                                    'results__reset--clicked');
-    const fullRecipeButtonClick = new ButtonClick(element.fullRecipeButton, 
-                                                    'full-recipe-button__button--clicked');
-// FUCNTION CALLS //
-
-    mobileNavMenu.clickBurgerMenu();
+   
+    // FUNCTION CALLS //
+    clickBurgerMenu();
     showSearches.showHideSearchForms();
     showSearches.showHideIngredientSearch()
-    searchButtonClick.multiButtonsClick();
-    fullRecipeButtonClick.multiButtonsClick();
-    categoryButtonClick.categoryButtonClick();
-    categoryButtonClick.ingredientButtonClick(element.ingredientButton);
+    multiButtonsClick(allSearchSubmit,'search-buttons__button--clicked' );
+    multiButtonsClick(fullRecipeButton,'full-recipe-button__button--clicked');
+    categoryButtonClick(allCategoryButtons, 'search-buttons__button--active' );
+    ingredientButtonClick(ingredientButton, allCategoryButtons);
 
-    if (element.searchResetButton != null) {
+    if (searchResetButton != null) {
         
-        resetButtonClick.singleButtonClick();
+        singleButtonClick(searchResetButton, 'results__reset--clicked');
     }
 
 })();

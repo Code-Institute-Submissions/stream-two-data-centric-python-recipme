@@ -31,9 +31,6 @@ input {
           appearance: none; }
 
 .ingredient__input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
@@ -139,7 +136,8 @@ input {
           transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
 
 .alter .bars__bar2 {
-  opacity: 0; }
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; }
 
 .alter .bars__bar3 {
   -webkit-transform: rotate(425deg) translate(-0.6rem, 0.2rem);
@@ -329,25 +327,26 @@ footer p {
   color: #1d3355; }
 
 .signup-container {
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  background-color: #b8b8b84d;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.16);
-  max-height: 25rem;
-  overflow: hidden;
-  background-color: #b8b8b84d;
-  -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
 
 .login-container {
   display: -webkit-box;
@@ -364,24 +363,13 @@ footer p {
       -ms-flex-align: center;
           align-items: center; }
 
-.forms-login-display {
-  max-height: 0rem;
-  -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
-
 .login__label,
 .signup__label {
   font-family: "Nanum Gothic", sans-serif;
   padding-bottom: 0.5rem; }
 
-.login__legend,
-.signup__legend {
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 2rem; }
-
-.signup, .login {
+.signup {
   border: 0;
-  margin: 1rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -396,29 +384,39 @@ footer p {
       -ms-flex-align: center;
           align-items: center;
   padding: 0;
-  max-height: 0rem;
+  height: 0rem;
   overflow: hidden;
   background-color: #e9ef8200;
-  -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  -webkit-transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
+  transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
-.show-login-form {
+.login {
+  border: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 0.5rem;
-  max-height: 10rem;
-  -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  overflow: hidden;
+  background-color: #e9ef8200; }
 
 .show-signup-form {
   padding: 0.5rem;
-  max-height: 15rem;
-  -webkit-transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
-  transition: max-height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
+  height: 10.5rem;
+  -webkit-transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88);
+  transition: height 0.4s cubic-bezier(0.23, 0.88, 0, 0.88), padding 0.4s cubic-bezier(0.23, 0.88, 0, 0.88); }
 
 .signup__input,
 .login__input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
@@ -482,13 +480,6 @@ footer p {
 .join-us__button:hover, .more-info-button:hover {
   cursor: pointer; }
 
-/*.signup-submit,
-.login-submit {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}*/
 .login__button {
   height: 2rem;
   width: 6rem;
@@ -502,24 +493,7 @@ footer p {
   background-color: #1d3355;
   color: #fff;
   -webkit-transition: background-color 0.1s ease-in-out;
-  transition: background-color 0.1s ease-in-out;
-  padding-right: 0; }
-
-.login__button-container,
-.signup__button-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center; }
+  transition: background-color 0.1s ease-in-out; }
 
 .login__button:hover {
   cursor: pointer; }
@@ -833,7 +807,8 @@ footer p {
   background-color: #fff;
   color: #df6400f6; }
 
-select {
+.search-sort__search-dropdown,
+.search-sort__search-direction {
   border: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1500,9 +1475,6 @@ select {
           align-items: center; }
 
 .full-recipe__input, .full-recipe__numeric-input, .full-recipe__input-ingredient, .full-recipe__input-step {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
   border-left: 0;
@@ -1628,6 +1600,22 @@ select {
   border: 1px solid #ff3232;
   background-color: #fff;
   color: #ff3232; }
+
+.full-recipe__course-dropdown {
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("../images/if_ic_keyboard_arrow_down_20px_352466_blue.png");
+  background-repeat: no-repeat;
+  background-position: 108px 3px;
+  text-align: center;
+  width: 8rem;
+  height: 1.5rem;
+  text-align: left;
+  width: 6rem;
+  background-position: 76px 6px;
+  padding-top: .5rem; }
 
 .crud-message-container {
   min-height: calc(100vh - 12rem);

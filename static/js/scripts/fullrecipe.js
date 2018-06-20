@@ -1,10 +1,8 @@
 (()=>{
 
     const formButtons = document.getElementsByClassName('form-submit');
-    const mobileNavMenu = new NavDropDown();
-    const formButtonClick = new ButtonClick(formButtons,'feedback-form-buttons--clicked');
     
-    mobileNavMenu.clickBurgerMenu();
-    formButtonClick.multiButtonsClick();
+    clickBurgerMenu();
+    multiButtonsClick(formButtons,'feedback-form-buttons--clicked');
 
 })();

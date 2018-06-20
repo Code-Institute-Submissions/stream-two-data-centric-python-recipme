@@ -3,20 +3,9 @@
     const element = new AddRecipeVariables();
     // --------------------------------------------------------------------- //
     // ------------------------- FORM INPUT CREATE ------------------------ //
-    const counter = new CounterAPI();
+    const counter = new Counter();
     const input = new InputCreate(counter);
     //---------------------------- UI INTERACTION ------------------------- //
-    const mobileNavMenu = new NavDropDown();
-    const formSubmit = new ButtonClick(element.submitButton, "full-recipe__form--clicked");
-    const inputAddClickStyle = new ButtonClick(element.addButtons, "full-recipe__add-button--clicked" );
-    const inputRemoveClickStyle = new ButtonClick(element.removeButtons, "full-recipe__remove-button--clicked");
-
-    // CHARACTER COUNTER CLASS INSTANTIATION //
-
-    const inputCount = new CharacterCount();
-
-    // FUNCTIONS TO SET COUNTER TO NUMBER OF INSTANCES OF AN INGREDIENT OR METHOD //
-
     const setIngredientCounter = () => {
 
         numberOfIngredients = document.getElementsByClassName('edit-ingredient');
@@ -31,23 +20,21 @@
 
     };
  // -------------------------------------------------------------------------------- //
-
     //--- SET COUNTER TO NUMBER OF INSTANCES OF AN INGREDIENT OR METHOD ---//
-
     setIngredientCounter();
     setMethodCounter();
 
     //-------------------------------------------------------------------- //
-    inputCount.characterCounter("RecipeTitle","recipe-title-counter",50 );
-    inputCount.characterCounter("RecipeDescription","recipe-description-counter", 150);
-    inputCount.characterCounter("Cuisine","cuisine-description-counter",50);
-    inputCount.characterCounter("Course","course-description-counter", 50);
+    characterCounter("RecipeTitle","recipe-title-counter",50 );
+    characterCounter("RecipeDescription","recipe-description-counter", 150);
+    characterCounter("Cuisine","cuisine-description-counter",50);
+
+    clickBurgerMenu();
 
     // --------------------------- BUTTON CLICK FUNCTION CALLS --------------------- //
-    formSubmit.singleButtonClick();
-    mobileNavMenu.clickBurgerMenu();
-    inputAddClickStyle.multiButtonsClick();
-    inputRemoveClickStyle.multiButtonsClick();
+    singleButtonClick(element.submitButton, "full-recipe__form--clicked");
+    multiButtonsClick(element.addButtons, "full-recipe__add-button--clicked");
+    multiButtonsClick(element.removeButtons, "full-recipe__remove-button--clicked");
 
     // ------------------------- CALL INPUT FIELD FORM FUNCTIONS ------- //
     input.addAnIngredient(element.addIngredientButton, element.ingredients);
