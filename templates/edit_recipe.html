@@ -40,9 +40,15 @@
                         </div>
                         <div class='full-recipe__column-add-recipe'>
                             <label class='full-recipe__form-label'>Course</label>
-                            <input class='full-recipe__input full-recipe__input-ingredient' type='text' id='Course' placeholder='Course' name='CourseName' value="{{ full_recipe[1][0] ['CourseName'] }}" maxlength='50' required>
-                            <divclass='full-recipe__row'>
-                                <p class='full-recipe__row-add-recipe' id='course-description-counter'></p>
+                            <select class='full-recipe__course-dropdown'name="CourseName">
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Brunch">Brunch</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Supper">Supper</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
                     </div>
                     

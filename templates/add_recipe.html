@@ -40,10 +40,15 @@
                     </div>
                     <div class='full-recipe__column-add-recipe'>
                         <label class='full-recipe__form-label'>Course</label>
-                        <input class='full-recipe__input full-recipe__input-ingredient' type='text' id='Course' placeholder='Course' name='CourseName' maxlength='50' required>
-                        <div class='full-recipe__row'>
-                            <p class='full-recipe__row-add-recipe' id='course-description-counter'></p>
-                        </div>
+                        <select class='full-recipe__course-dropdown' name="CourseName">
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Brunch">Brunch</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Dinner">Dinner</option>
+                            <option value="Supper">Supper</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                 </div>
                 <div class='full-recipe__row'>
@@ -86,7 +91,6 @@
                     <button class='full-recipe__add-button' type='button' id='add-ingredient'>Add</button><button class='full-recipe__remove-button' type='button' id='remove-ingredient'>Remove</button>
                 </div>
                 <div id='ingredients'></div>
-                <!--<input type='text' id='Ingredient' placeholder='Add Ingredient' name='Ingredient' required>-->
             </fieldset>
             <fieldset class='full-recipe__form-method' >
                 <legend class='full-recipe__title'>Method</legend>

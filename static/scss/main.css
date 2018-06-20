@@ -561,7 +561,8 @@ footer p {
   background-color: #fff;
   color: #df6400f6; }
 
-select {
+.search-sort__search-dropdown,
+.search-sort__search-direction {
   border: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1120,6 +1121,22 @@ select {
   border: 1px solid #ff3232;
   background-color: #fff;
   color: #ff3232; }
+
+.full-recipe__course-dropdown {
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("../images/if_ic_keyboard_arrow_down_20px_352466_blue.png");
+  background-repeat: no-repeat;
+  background-position: 108px 3px;
+  text-align: center;
+  width: 8rem;
+  height: 1.5rem;
+  text-align: left;
+  width: 6rem;
+  background-position: 76px 6px;
+  padding-top: .5rem; }
 
 .crud-message-container {
   min-height: calc(100vh - 12rem);

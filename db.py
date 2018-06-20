@@ -1,6 +1,6 @@
 import os
 import pymysql
-#import myenviron
+import myenviron
 
 class Db():
     def __init__(self, commit=False):

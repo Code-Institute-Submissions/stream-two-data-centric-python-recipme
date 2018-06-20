@@ -1,5 +1,6 @@
 // ----------------- LOGIN PAGE ---------------------------------------------------- //
 (() => {
+
     const element = new LoginVariables();
     const form = new Accordian();
     const stat = new StatAccordian(element.moreInfoButton, element.statsContainer, 
@@ -15,7 +16,6 @@
     }
 //------------------------------------------------------------------------------------//
     // CALL ACCORDIANS //
-
     form.formSectionAccordian(element.joinUsButton, element.formsContainer, 
                                                     element.stingContainer);
     stat.statsAccordian();

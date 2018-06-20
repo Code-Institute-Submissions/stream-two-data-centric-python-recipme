@@ -714,7 +714,8 @@ footer p {
     @include search-button-click;
 }
 
-select {
+.search-sort__search-dropdown,
+.search-sort__search-direction {
 
     @include select;
 }
@@ -1503,6 +1504,14 @@ select {
 .full-recipe__remove-button--clicked {
 
     @include remove-input-click;
+}
+
+.full-recipe__course-dropdown {
+    @include select;
+    text-align: left;
+    width: 6rem;
+    background-position: 76px 6px;
+    padding-top: .5rem;
 }
 
 // -------------------- CRUD MESSAGE PAGE STYLES ---------------------- // 
