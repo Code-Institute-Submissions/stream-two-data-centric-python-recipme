@@ -1,4 +1,4 @@
-(()=>{
+(() => {
     
     const myRecipeButton = document.getElementById('my-recipe-button');
 

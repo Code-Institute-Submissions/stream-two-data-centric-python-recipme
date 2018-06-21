@@ -1,5 +1,5 @@
 import pymysql
-from db import Db
+from db import Db, WriteErrorToLog
 from math import ceil
 
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
@@ -90,8 +90,11 @@ class QueryReadRecipes():
                 cursor.execute(get_id_query)
                 username = [row for row in cursor]
                 return(username)
+        except pymysql.err.OperationalError as e:
+            error = e
         finally:
             print("Query read user completed")
+            print(error)
 
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
@@ -292,9 +295,13 @@ class QueryAllData():
                 cursor.execute(rating_query)
                 rating = [row for row in cursor]
                 return rating
-        finally:
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: get_total method in db_read.QueryAllData"
+            log = WriteErrorToLog(str(e), message)
+            log.write_to_doc()
+        else:
             print("Query Total table results complete")
-
+           
     def get_total_public(self):
         try:
             with Db() as cursor:

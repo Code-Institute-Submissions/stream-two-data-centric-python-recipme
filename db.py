@@ -1,6 +1,8 @@
 import os
 import pymysql
-#import myenviron
+import myenviron
+from datetime import datetime
+
 
 class Db():
     def __init__(self, commit=False):
@@ -22,4 +24,19 @@ class Db():
             self.connection.commit()
         self.cursor.close()
         self.connection.close()
+
+class WriteErrorToLog():
+    
+    def __init__(self, error, message):
+        self.error = error
+        self.message = message
+        self.file = "static/logs/error_log.txt"
+
+
+    def write_to_doc(self):
+        log =  (self.error, self.message, str(datetime.now()), "\n")
+
+        print(" ".join(log))
+        with open(self.file, "a") as file:
+            file.writelines(" ".join(log))
 
