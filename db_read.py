@@ -1,5 +1,6 @@
 import pymysql
-from db import Db, WriteErrorToLog
+from datetime import datetime
+from db import log_file, Db, WriteErrorToLog
 from math import ceil
 
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
@@ -78,10 +79,10 @@ class QueryCategory(QuerySelections):
                                                 self.table, self.table, self.table, self.table)
         return search_category
 
-########################### CLASS TO EXECUTE QUERIES AND CALL SELECTIONS ###############################
+########################### CLASS TO EXECUTE READ QUERIES AND CALL SELECTIONS ###############################
 
 class QueryReadRecipes():
-
+    """ GET A USERNAME OR ID FROM THE DB """
     def query_username_or_id(self, select_column, search_column, value):
         try:
             with Db() as cursor:
@@ -91,10 +92,12 @@ class QueryReadRecipes():
                 username = [row for row in cursor]
                 return(username)
         except pymysql.err.OperationalError as e:
-            error = e
-        finally:
-            print("Query read user completed")
-            print(error)
+            message = " FAILED: query_username_or_id method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_username_or_id completed")
+
 
     def query_all_mini_recipes(self, search_by, search_value, order_by, direction):
         """ GET ALL MINI RECIPES ORDERED BY GIVEN USER SELECTION, AND FILTERED BY 
@@ -109,15 +112,18 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get mini recipes completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: query_all_mini_recipes method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_all_mini_recipes completed")
 
 
     def query_category_mini_recipes(self, table, search_by, search_value, 
                                     column, category, order_by, direction):
         """ GET ALL MINI RECIPES FILTERED BY COURSE AND CUISINE, 
             SORTED BY GIVEN USER SELECTION, FOR USER OR PUBLIC FEED """
-        print(table )
         join_table = []
         if table == 'Cuisine':
             join_table = 'Course'
@@ -134,8 +140,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get mini recipes completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: query_category_mini_recipes method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_category_mini_recipes completed")
 
     def query_search_ingredient(self, search_by, search_value, 
                                 ingredient, order_by, direction):
@@ -151,8 +161,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get mini recipes completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_search_ingredient method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_search_ingredient completed")
 
     def query_ingredients_for_full_recipe(self, recipe_id):
         """ GET INGREDIENTS BASED ON GIVEN RECIPE ID """
@@ -163,8 +177,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get ingredients completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_ingredients_for_full_recipe method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_ingredients_for_full_recipe completed")
 
     def query_method_for_full_recipe(self, recipe_id):
         """ GET FULL METHOD BASED ON GIVEN RECIPE ID """
@@ -175,8 +193,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get method completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_method_for_full_recipe method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_method_for_full_recipe completed")
     
     def query_users_saved_recipes(self, user_id, order_by, direction):
         """ QUERY USERS SAVED RECIPES BASED ON USER ID, GET MINI RECIPES INFO BACK """
@@ -188,8 +210,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query get method completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_users_saved_recipes method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_users_saved_recipes completed")
 
     def query_is_recipe_saved(self, user_id, recipe_id):
         """ QUERY IF A USER HAS SAVED A RECIPE """
@@ -201,8 +227,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query is Recipe Saved Complete")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_is_recipe_saved method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_is_recipe_saved completed")
     
     def query_count_and_group_column(self, column, user_id, table):
         """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
@@ -218,8 +248,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query count Column based on UserId Completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_count_and_group_column method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_count_and_group_column completed")
  
     def query_count_and_group_column_public(self, column, value, table):
         """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
@@ -235,8 +269,12 @@ class QueryReadRecipes():
                 cursor.execute(recipes_query)
                 recipes = [row for row in cursor]
                 return recipes
-        finally:
-            print("Query count Column based on UserId Completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_count_and_group_column_public method in db_read.QueryReadRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_count_and_group_column_public completed")
 
 
 ################### CLASS FOR USER DB QUERY  #################
@@ -248,7 +286,7 @@ class UserVerify():
         self.password = user_values['Password']
       
     def query_user(self):
-        """ GET USER BASED ON USER INFO """
+        """ GET USER RECORD BASED ON USER INFO """
         try: 
             with Db() as cursor:
                 query = """SELECT `Username`,`First`,`Last`,`Password`, `UserId` FROM User
@@ -256,8 +294,12 @@ class UserVerify():
                 cursor.execute(query, (self.username))
                 from_db = [result for result in cursor]
                 return from_db
-        finally:
-            print('Query User Complete')
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_user method in db_read.UserVerify."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_user completed")
 
 ######################## CLASS TO QUERY RATINGS TABLE ###################################################
 
@@ -275,8 +317,12 @@ class QueryRating():
                 cursor.execute(rating_query, self.recipe_id)
                 rating = [row for row in cursor]
                 return rating
-        finally:
-            print("Query Ratings based on RecipeId Completed")
+        except pymysql.err.OperationalError as e:
+            message = "FAILED: query_rating_and_comments method in db_read.QueryRating."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("query_rating_and_comments completed")
 
 ######################## CLASSES TO GET STATS ON ALL RECIPES  ###################################################
  
@@ -297,10 +343,10 @@ class QueryAllData():
                 return rating
         except pymysql.err.OperationalError as e:
             message = " FAILED: get_total method in db_read.QueryAllData"
-            log = WriteErrorToLog(str(e), message)
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
             log.write_to_doc()
         else:
-            print("Query Total table results complete")
+            print("get_total complete")
            
     def get_total_public(self):
         try:
@@ -311,8 +357,12 @@ class QueryAllData():
                 cursor.execute(query)
                 result = [row for row in cursor]
                 return result
-        finally:
-            print("Query get total shared recipes complete")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: get_total_public method in db_read.QueryAllData"
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("get_total_public complete")
      
 
 class TotalCuisinesCourses():
@@ -326,6 +376,10 @@ class TotalCuisinesCourses():
                 cursor.execute(query)
                 results = [row for row in cursor]
                 return results 
-        finally:
-            print("Query all cuisine and courses complete")  
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: get_all_cuisines_and_courses method in db_read.TotalCuisinesCourses"
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("get_all_cuisines_and_course complete")
         

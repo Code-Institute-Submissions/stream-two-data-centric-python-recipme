@@ -3,11 +3,12 @@ import pymysql
 import myenviron
 from datetime import datetime
 
+log_file =  "static/logs/error_log.txt"
 
 class Db():
     def __init__(self, commit=False):
         self.connection = pymysql.connect(host=os.environ.get('DATABASE_URL'), 
-                                            port=3306, user=os.environ.get('DATABASE_USER'),
+                                            port=3305, user=os.environ.get('DATABASE_USER'),
                                             password=os.environ.get('DATABASE_PASSWORD'), 
                                             db=os.environ.get('DATABASE_NAME'))
         self.commit = commit
@@ -27,16 +28,23 @@ class Db():
 
 class WriteErrorToLog():
     
-    def __init__(self, error, message):
+    def __init__(self, error, message, file, time_stamp):
         self.error = error
         self.message = message
-        self.file = "static/logs/error_log.txt"
-
+        self.time_stamp = time_stamp
+        self.file = file
 
     def write_to_doc(self):
-        log =  (self.error, self.message, str(datetime.now()), "\n")
+        log =  (self.error, self.message, self.time_stamp, "\n")
 
-        print(" ".join(log))
-        with open(self.file, "a") as file:
-            file.writelines(" ".join(log))
+        try:
+            with open(self.file, "a") as file:
+                file.writelines(" ".join(log))
+        except IOError as e:
+            print(e)
+        else:
+            print("{0} has been written to the error log.".format(log))
+            
+            
+        
 

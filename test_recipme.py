@@ -8,6 +8,7 @@ import write_recipe
 import find_recipe
 import unittest
 import datetime
+import tempfile
 
 
 class TestRecipme(unittest.TestCase):
@@ -116,3 +117,20 @@ class TestRecipme(unittest.TestCase):
 
         self.assertEqual(type(result), str)
         self.assertEqual(result, 'Not Capital')
+
+    def test_write_to_doc(self):
+        error = "error"
+        message = "message"
+        time_stamp = str(datetime.datetime.now())
+        log_elements = (error, message, time_stamp, "\n")
+        log = " ".join(log_elements)
+        file = tempfile.mkstemp()[1]
+
+        try:
+            new_log = db.WriteErrorToLog(error, message, file, time_stamp)
+            new_log.write_to_doc()
+            content = open(file).read()
+        finally:
+            os.remove(file)
+
+        self.assertEqual(log, content)
