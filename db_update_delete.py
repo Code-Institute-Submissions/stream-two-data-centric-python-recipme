@@ -1,5 +1,6 @@
 import pymysql
-from db import Db
+from datetime import datetime
+from db import Db, WriteErrorToLog, log_file
 from db_create import QueryCreateRecipe, QueryCreateMethodItems
 
 ####################### CLASS FOR SQL QUERY TO DELETE RECIPE BASED ON RECIPE ID #########################
@@ -16,8 +17,12 @@ class QueryDeleteRecipe():
                 cursor.execute(""" DELETE FROM %s 
                                     WHERE RecipeId = %s; 
                                 """ % (self.table, self.recipe_id))
-        finally:
-            print("Query Delete Recipe Completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: delete method in db_read.QueryDeleteRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("delete completed")
     
     def delete_saved_recipe(self, user_id):
         try:
@@ -25,11 +30,15 @@ class QueryDeleteRecipe():
                 cursor.execute(""" DELETE FROM %s
                                     WHERE UserId = %s
                                     AND RecipeId = %s;""" % (self.table, user_id, self.recipe_id))
-        finally:
-            print("Query Delete Saved Recipe from Saved Completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: delete_saved_recipe in db_read.QueryDeleteRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("delete_saved_recipe completed")
 
-###################### CLASS FOR SQL UPDATE QUERIES ##################
-######################################################################
+############################### CLASS FOR SQL UPDATE QUERIES ############################################
+#########################################################################################################
 
 class UpdateQuery():
     
@@ -62,8 +71,12 @@ class QueryUpdateRecipe(QueryCreateRecipe):
         try:
             with Db(commit=True) as cursor:
                 cursor.execute(UpdateQuery.recipe_query, recipe_values)
-        finally:
-            print("Query Update Recipe completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: update_recipe in db_read.QueryUpdateRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("update_recipe completed")
 
     def update_stats(self):
         stat_queries = [[UpdateQuery.single_column_query(self,'Cuisine','CuisineName', 
@@ -80,8 +93,13 @@ class QueryUpdateRecipe(QueryCreateRecipe):
             with Db(commit=True) as cursor:
                 for stat in stat_queries:
                     cursor.execute(stat[0])
-        finally:
-            print("Query Update stats completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: update_recipe in db_read.QueryUpdateRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("update_recipe completed")
+
      
 
  

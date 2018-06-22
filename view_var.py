@@ -30,6 +30,7 @@ class ViewVariables():
     def groupings(self):
         public = ViewVariables(self.username).public_recipe_groupings()
         user = ViewVariables(self.username).user_recipe_groupings()
+       
         return user, public
 
 ##---------------- RETURN ALL RECIPES FOR GIVEN USER, COUNT AND CATEGORIES---------------- ##
@@ -41,6 +42,7 @@ class ViewVariables():
         recipes = Get().date_time_converter(result)
         count = len(recipes)
         groupings = ViewVariables(self.username).groupings()
+      
 
         return recipes, count, groupings
 

@@ -14,3 +14,11 @@
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total_public method in db_read.QueryAllData 2018-06-22 12:37:49.264169 
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total method in db_read.QueryAllData 2018-06-22 12:38:09.342864 
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_all_cuisines_and_courses method in db_read.TotalCuisinesCourses 2018-06-22 12:38:29.357957 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)") FAILED: query_count_and_group_column_public method in db_read.QueryReadRecipes. 2018-06-22 16:09:04.911640 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)") FAILED: query_count_and_group_column_public method in db_read.QueryReadRecipes. 2018-06-22 16:09:24.927717 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: query_username_or_id method in db_read.QueryReadRecipes. 2018-06-22 16:09:45.078004 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)") FAILED: query_count_and_group_column_public method in db_read.QueryReadRecipes. 2018-06-22 16:21:33.588911 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)") FAILED: query_count_and_group_column_public method in db_read.QueryReadRecipes. 2018-06-22 16:21:53.608519 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: query_username_or_id method in db_read.QueryReadRecipes. 2018-06-22 16:22:13.629984 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: query_username_or_id method in db_read.QueryReadRecipes. 2018-06-22 16:25:01.886789 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: query_username_or_id method in db_read.QueryReadRecipes. 2018-06-22 16:27:30.065239 

@@ -25,10 +25,6 @@ input[type=text] {
      -moz-appearance: none;
           appearance: none; }
 
-input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none; }
 
 .ingredient__input {
   margin-top: 0.5rem;

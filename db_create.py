@@ -1,6 +1,8 @@
 import os
+import pymysql
 #import myenviron
-from db import Db
+from db import Db, WriteErrorToLog, log_file
+from datetime import datetime
 
 def capitalize_words(string):
     words = string.split()
@@ -23,8 +25,12 @@ class QueryCreateUser():
             with Db(commit=True) as cursor:
                 cursor.execute(query, (self.username, self.first, self.last, self.password))
                 #Db.connection.commit()
-        finally: 
-            print('New User Created')
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: create_user method in db_create.QueryCreateUser."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("create_user completed")
 
 ######################## CLASS FOR SQL QUERY SELECTIONS FOR RECIPE TABLE CREATION, #######################
 ###############################      INGREDIENTS, METHOD AND STATS            #########################
@@ -75,12 +81,14 @@ class QueryCreateRecipe():
                                        
         try:
             with Db(commit=True) as cursor:
-                print(recipe_values)
                 cursor.execute(CreateQuery.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
-        finally:
-            print("Query create recipe completed")
-            return recipe_primary_key
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: create_recipe method in db_create.QueryCreateRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("create_recipe completed")
            
     def create_stats(self, recipe_primary_key):
         stat_queries = [[CreateQuery.two_column_query(self,'Cuisine','CuisineName', 
@@ -97,8 +105,12 @@ class QueryCreateRecipe():
             with Db(commit=True) as cursor:
                 for stat in stat_queries:
                     cursor.execute(stat[0])
-        finally:
-            print("Query create stats completed")
+        except pymysql.err.OperationalError as e:
+            message = " FAILED: create_stats method in db_create.QueryCreateRecipes."
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("create_stats completed")
 
 ###################### CLASS TO EXECUTE THE SQL QUERY FOR METHOD, #########################
 ###########################       AND INGREDIENTS          ################################
@@ -114,9 +126,13 @@ class QueryCreateMethodItems():
             with Db(commit=True) as cursor:
                 cursor.executemany(CreateQuery.ingredients_query, self.ingredients)
                 cursor.executemany(CreateQuery.method_query,self.method)
-        finally:
-            print("Query create recipe completed")
-        
+        except pymysql.err.OperationalError as e:
+            message = """ FAILED: create_ingredients_and_method 
+                                method in db_create.QueryCreateMethodItems."""
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("create_ingredients_and_method completed")
 class QuerySaveRecipe():
     
     def __init__(self, user_id, recipe_id):
@@ -130,8 +146,13 @@ class QuerySaveRecipe():
             with Db(commit=True) as cursor:
                 cursor.execute(save_recipe)
                 print(save_recipe)
-        finally:
-            print("Query create recipe completed")
+        except pymysql.err.OperationalError as e:
+            message = """ FAILED: save_recipe 
+                                method in db_create.QuerySaveRecipe."""
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("save_recipe completed")
 
 class QueryRateRecipe(QuerySaveRecipe):
     
@@ -148,8 +169,14 @@ class QueryRateRecipe(QuerySaveRecipe):
             with Db(commit=True) as cursor:
                 cursor.execute(CreateQuery.rate_query, rating)
                 print(rating)
-        finally:
-            print("Query create recipe completed")
+        except pymysql.err.OperationalError as e:
+            message = """ FAILED: rate_recipe 
+                                method in db_create.QuerySaveRecipe."""
+            log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
+            log.write_to_doc()
+        else:
+            print("rate_recipe completed")
+
         
         
         

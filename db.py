@@ -8,7 +8,7 @@ log_file =  "static/logs/error_log.txt"
 class Db():
     def __init__(self, commit=False):
         self.connection = pymysql.connect(host=os.environ.get('DATABASE_URL'), 
-                                            port=3305, user=os.environ.get('DATABASE_USER'),
+                                            port=3306, user=os.environ.get('DATABASE_USER'),
                                             password=os.environ.get('DATABASE_PASSWORD'), 
                                             db=os.environ.get('DATABASE_NAME'))
         self.commit = commit
