@@ -11,9 +11,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800|Pacifico|" rel="stylesheet"> 
     <link rel="stylesheet" href="{{ url_for( 'static', filename='css/vendor-prefix.css')}}">
     <!--<link rel="stylesheet" href="{{ url_for( 'static', filename='scss/main.css')}}">-->
+    <script defer type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
+    {% block js %}
+    {% endblock js %}
 </head>
     {% block content %}
     {% endblock %}
-    {% block js %}
-    {% endblock %}
+
 </html>

@@ -1003,6 +1003,14 @@ footer p {
 .results-recipe__column{
 
     width: 50%;
+    padding-left: .3rem;
+}
+
+.results-recipe__author,
+.results-recipe__description,
+.results-recipe__title-container {
+
+    padding-left: .3rem;
 }
 //------------- IF NO RECIPES ARE FOUND, THESE STYLES APPLY --------------------//
 .no-recipes {
@@ -1142,11 +1150,17 @@ footer p {
 .full-recipe__method h3 {
 
     padding-left: .5rem;
+    width: 100%;
 }
 
 .full-recipe-break {
 
     margin-top: 1rem;
+}
+
+.stats-separate {
+
+    margin-bottom: 1rem;
 }
 // --------------------------- FULL RECIPE COMMENTS FORMS ETC ----------------------- //
 
@@ -1280,7 +1294,8 @@ footer p {
     font-size: .8rem;
 }
 
-.feedback-title {
+.feedback-title,
+.rate-title {
 
     width: 100%;
     display: flex;
@@ -1625,9 +1640,9 @@ footer p {
         height: 24rem;
     }
 }
-.crud-message__image {
 
-    background-image: url('../images/444-pxhere-60percent.com.jpg');
+.crud-error-image-helper {
+
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
@@ -1651,4 +1666,16 @@ footer p {
        
         width: 80%;
     }
+}
+.crud-message__image {
+
+    background-image: url('../images/444-pxhere-60percent.com.jpg');
+    @extend .crud-error-image-helper;
+}
+
+.error-message__image {
+
+    background-image: url('../images/pan-fire.jpg');
+    @extend .crud-error-image-helper;
+
 }

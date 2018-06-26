@@ -1,0 +1,29 @@
+<!-- PARTIAL DISPLAYING A SUCCESS MESSAGE AFTER A CRUD OPERATION HAS TAKEN PLACE -->
+{% extends 'base.html' %}
+{% block js %}
+<script defer type='text/javascript' src="{{ url_for('static', filename='js/scripts/crud.js') }}"></script>
+{% endblock %}
+{% block content %}
+<body>
+    {% include 'full_header.html'%}
+    <section class='crud-message-container'>
+        <div class='crud-message__image-container'> 
+            <div class='error-message__image'></div>
+        </div>
+        <div class='crud-message'>
+            <h1 class='crud-message__heading'>Ooooops!</h1>
+            <div class='crud-message__message-container'>
+                <div class='crud-message__message'>
+                    {% if error_code == 404 %}
+                        <h2>Error 404. This page could not be found.</h2>
+                    {% elif error_code == 500 %}
+                        <h2>Error 500. Server Error.</h2>
+                    {% endif %}
+                    <p>Apologies but we are experiencing issues at this time. Please come back later.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'footer.html' %} 
+</body>
+{% endblock %}

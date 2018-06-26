@@ -1,5 +1,8 @@
 <!-- PARTIAL DISPLAYING A SUCCESS MESSAGE AFTER A CRUD OPERATION HAS TAKEN PLACE -->
 {% extends 'base.html' %}
+{% block js %}
+<script defer type='text/javascript' src="{{ url_for('static', filename='js/scripts/crud.js') }}"></script>
+{% endblock %}
 {% block content %}
 <body>
     {% include 'full_header.html'%}
@@ -32,7 +35,6 @@
        
     </section>
     {% include 'footer.html' %} 
-<script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
-<script type='text/javascript' src="{{ url_for('static', filename='js/scripts/crud.js') }}"></script>
+
 </body>
 {% endblock %}

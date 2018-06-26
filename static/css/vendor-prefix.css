@@ -25,7 +25,10 @@ input[type=text] {
      -moz-appearance: none;
           appearance: none; }
 
+/*input {
 
+    appearance: none;
+}*/
 .ingredient__input {
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
@@ -1134,7 +1137,13 @@ footer p {
   background-color: #b8b8b84d; }
 
 .results-recipe__column, .full-recipe__column {
-  width: 50%; }
+  width: 50%;
+  padding-left: .3rem; }
+
+.results-recipe__author,
+.results-recipe__description,
+.results-recipe__title-container {
+  padding-left: .3rem; }
 
 .no-recipes {
   height: 5rem;
@@ -1242,10 +1251,14 @@ footer p {
 .full-recipe__description h3,
 .full-recipe__ingredients h3,
 .full-recipe__method h3 {
-  padding-left: .5rem; }
+  padding-left: .5rem;
+  width: 100%; }
 
 .full-recipe-break {
   margin-top: 1rem; }
+
+.stats-separate {
+  margin-bottom: 1rem; }
 
 .save-recipe {
   display: -webkit-box;
@@ -1372,7 +1385,8 @@ footer p {
 .user-comments p {
   font-size: .8rem; }
 
-.feedback-title {
+.feedback-title,
+.rate-title {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1747,8 +1761,7 @@ footer p {
     .crud-message__image-container {
       height: 24rem; } }
 
-.crud-message__image {
-  background-image: url("../images/444-pxhere-60percent.com.jpg");
+.crud-error-image-helper, .crud-message__image, .error-message__image {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -1759,11 +1772,17 @@ footer p {
   margin-bottom: 1rem;
   margin-top: 1rem; }
   @media (min-width: 575px) {
-    .crud-message__image {
+    .crud-error-image-helper, .crud-message__image, .error-message__image {
       height: 15rem; } }
   @media (min-width: 767px) {
-    .crud-message__image {
+    .crud-error-image-helper, .crud-message__image, .error-message__image {
       height: 34rem; } }
   @media (min-width: 991px) {
-    .crud-message__image {
+    .crud-error-image-helper, .crud-message__image, .error-message__image {
       width: 80%; } }
+
+.crud-message__image {
+  background-image: url("../images/444-pxhere-60percent.com.jpg"); }
+
+.error-message__image {
+  background-image: url("../images/pan-fire.jpg"); }

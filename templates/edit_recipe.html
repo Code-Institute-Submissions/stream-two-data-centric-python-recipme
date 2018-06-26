@@ -1,5 +1,8 @@
 <!-- PARTIAL DISPLAYING EDIT RECIPE FORM -->
 {% extends 'base.html' %}
+{% block js %}
+<script defer src="{{ url_for('static', filename='js/scripts/edit_recipe.js')}}" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 <body>
 {% include 'full_header.html'%}
@@ -129,9 +132,5 @@
         </section>
     </div>
     {% include 'footer.html' %}
-    {% endblock %}
-    {% block js %}
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
-    <script defer src="{{ url_for('static', filename='js/scripts/edit_recipe.js')}}" type="text/javascript"></script>    
 </body>
 {% endblock %}

@@ -2,6 +2,7 @@ import pymysql
 from datetime import datetime
 from db import log_file, Db, WriteErrorToLog
 from math import ceil
+from flask import abort
 
 ################### CLASS FOR HOUSING SQL READ QUERY TABLE SELECTIONS #################
     ## USED FOR USER ALL RECIPES SELECTION, INGREDIENT SEARCH AND SAVED RECIPES ##
@@ -235,8 +236,7 @@ class QueryReadRecipes():
             print("query_is_recipe_saved completed")
     
     def query_count_and_group_column(self, column, user_id, table):
-        """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
-        """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
+        """ USE FOR GROUPING CUISINE AND COURSE IN A USER RECIPE SEARCH """
         try: 
             with Db() as cursor:
                 recipes_query = """ SELECT COUNT(%s) as Total,%s
@@ -256,8 +256,7 @@ class QueryReadRecipes():
             print("query_count_and_group_column completed")
  
     def query_count_and_group_column_public(self, column, value, table):
-        """ QUERY THE COUNT OF A SPECIFIC COLUMN FOR A USER, AND GROUP BY THAT COLUMN """
-        """ USE FOR GROUPING CUISINE AND COURSE IN RECIPE SEARCH """
+        """ USE FOR GROUPING CUISINE AND COURSE FOR A SHARED RECIPE SEARCH """
         try: 
             with Db() as cursor:
                 recipes_query = """ SELECT COUNT(%s) as Total, %s
@@ -345,6 +344,7 @@ class QueryAllData():
             message = " FAILED: get_total method in db_read.QueryAllData"
             log = WriteErrorToLog(str(e), message, log_file, str(datetime.now()))
             log.write_to_doc()
+            
         else:
             print("get_total complete")
            

@@ -8,11 +8,19 @@ from find_recipe import Get
 from db_read import UserVerify, QueryReadRecipes
 from view_var import ViewVariables, ViewFunc, Totals
 from db_update_delete import QueryDeleteRecipe, QueryUpdateRecipe
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, abort
 from flask_paginate import Pagination, get_page_args
+
+if os.path.exists('myenviron.py'):
+    import myenviron
+    development=True
+else:
+    development=False
+    
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
+
 
 ###################################################################################
 ################################# ROUTES ###########################################    
@@ -363,14 +371,22 @@ def rate_recipe(username, recipe_id):
         ViewFunc().rate_recipe(rating, recipe_id, username)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
+########### ERROR HANDLING ################################
+@app.errorhandler(500)
+def internal_error(error):
+    error_code=500
+    return render_template('error.html', error_code=500)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    error_code=404
+    return render_template('error.html', error_code=404)
 
 
-if __name__ == '__main__':
-    app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
+if development:
+    if __name__ == '__main__':
+        app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=True)
+else:
+    if __name__ == '__main__':
+        app.run(host=os.environ.get('IP'), port=5000, debug=False)
 
-"""
-PORT = int(os.environ.get("PORT", 5000))
-
-if __name__ == '__main__':
-    app.run(debug=False, host=os.environ.get('IP'), port = PORT)
-"""

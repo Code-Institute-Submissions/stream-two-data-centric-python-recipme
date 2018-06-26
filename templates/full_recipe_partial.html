@@ -1,5 +1,8 @@
 <!-- PARTIAL DISPLAYING THE FULL RECIPE A USER CLICKS ON -->
 {% extends 'base.html' %}
+{% block js %}
+<script defer type='text/javascript' src="{{ url_for('static', filename='js/scripts/fullrecipe.js') }}"></script>
+{% endblock%}
 {% block content %}
 <body>
     {% include 'full_header.html' %}
@@ -42,13 +45,17 @@
                     <p class='full-recipe__text'>{{full_recipe[1][0]['Calories']}}.</p>
                 </div>
             </div>
-            <hr class='hr-90'>
+            <hr class='hr-90 stats-separate'>
             <div class='full-recipe__description'>
-                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Description</h3>
+                <div class='full-recipe__row full-recipe__row--grey-background'>
+                    <h3 class='full-recipe__subtitle'>Description</h3>
+                </div>
                 <p class='full-recipe__text'>{{ full_recipe[1][0]['RecipeDescription']}}</p>
             </div>
             <div class='full-recipe__ingredients'>
-                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Ingredients</h3>
+                <div class='full-recipe__row full-recipe__row--grey-background'>
+                    <h3 class='full-recipe__subtitle'>Ingredients</h3>
+                </div>
                 <ol>
                     {% if full_recipe[2] == [] %}
                     <li>No ingredients for this recipe yet</li>
@@ -60,7 +67,9 @@
                 </ol>
             </div>
             <div class='full-recipe__method'>
-                <h3 class='full-recipe__subtitle full-recipe__row--grey-background'>Method</h3>
+                <div class='full-recipe__row full-recipe__row--grey-background' >
+                    <h3 class='full-recipe__subtitle'>Method</h3>
+                </div>
                 <ol>
                     {% if full_recipe[3] == [] %}
                     <li>No method for this recipe yet</li>
@@ -87,33 +96,30 @@
         {% if full_recipe[4] == False %}
         <section class='save-recipe'>
             <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-                <h4 class='feedback-title'><strong>Save this Recipe?</strong></h4>
+                <h4 class='feedback-title'>Save this Recipe?</h4>
             
                 <div class='form-radio-container'>
                     <input type='radio' name='Saved' value='1' required><label class='form-label input-label'>Save Recipe.</label>
                 </div>
-                <input class='form-submit' type='submit' value='Submit'>
+                <button class='form-submit' type='submit'>Save</button>
             </form>
         </section>
         {% elif full_recipe[4] == True %}
         <section class='save-recipe'>
             <form action="{{ url_for('save_recipe', username=username, recipe_id=recipe_id) }}" method='POST'>
-                <h4 class='feedback-title'><strong>Un-save this Recipe?</strong></h4>
+                <h4 class='feedback-title'>Un-save this Recipe?</h4>
             
                 <div class='form-radio-container'>   
                     <input type='radio' name='Saved' value='0' required><label class='form-label input-label'>Un-save</label>
                 </div>
-                <input class='form-submit' type='submit' value='Submit'>
+                <button class='form-submit' type='submit'>Un-Save</button>
             </form>
         </section>
         {% endif %}
         <section class='recipe-comment'>
             <form action=" {{ url_for('rate_recipe', username=username, recipe_id=recipe_id ) }}" method='POST'>
-                <h4 class='feedback-title'><strong>Leave a comment.</strong></h4>
-            
-                <textarea class='form-label form-text-area' type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
-                <label class='form-label'><strong>Rate this Recipe.</strong></label>
-            
+                
+                <h4 class='rate-title form-label'>Rate this Recipe.</h4>
                 <div class='form-radio-container'>
                     <input type='radio' value='1' name='Rating'><label class='form-label'>1</label>
                     <input type='radio' value='2' name='Rating'><label class='form-label'>2</label>
@@ -121,12 +127,14 @@
                     <input type='radio' value='4' name='Rating'><label class='form-label'>4</label>
                     <input type='radio' value='5' name='Rating' checked><label class='form-label'>5</label>   
                 </div>
-                <input class='form-submit' type='submit' value='Submit'>
+                <h4 class='feedback-title'>Leave a comment.</h4>
+                <textarea class='form-label form-text-area' type='text' placeholder='Comments' name='Comments' maxlength='250' required></textarea>
+                <button type='submit' class='form-submit'>Rate</button>
             </form>
         </section>
         {% if full_recipe[5] != [] %}
         <section class='user-comments'>
-            <h4 class='feedback-title'><strong>Comments</strong></h4>
+            <h4 class='feedback-title'>Comments</strong></h4>
             {% for rating in full_recipe[5] %}
             <p class='full-recipe__text'>rated by <strong>{{ rating['Username'] }}</strong>.</p>
             <p class='full-recipe__text'><strong>{{ rating['Rating'] }} out of 5</strong></p>
@@ -140,7 +148,5 @@
         {% endif %}
     </div>
     {% include 'footer.html' %}
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/fullrecipe.js') }}"></script>
 </body>
 {% endblock%}

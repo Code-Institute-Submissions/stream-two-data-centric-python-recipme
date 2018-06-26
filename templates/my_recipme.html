@@ -1,5 +1,8 @@
 <!-- SEARCH PAGE FOR USERS OWN RECIPES, AND OTHER USERS SAVES RECIPES -->
 {% extends 'base.html' %}
+{% block js %}
+<script defer type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
+{% endblock %}
 {% block content %}
 <body>
     {% include 'full_header.html' %}
@@ -113,7 +116,5 @@
         {% endif %}
     </div>
     {% include 'footer.html' %}
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/utility.js') }}"></script>
-    <script type='text/javascript' src="{{ url_for('static', filename='js/scripts/myrecipme.js') }}"></script>
 </body>
 {% endblock %} 
