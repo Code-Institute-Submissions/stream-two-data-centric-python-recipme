@@ -1,4 +1,3 @@
-myenviron.py
+.vscode
 __pycache__
-.sass-cache
 *.pyc
