@@ -1,1 +1,4 @@
 myenviron.py
+__pycache__
+.sass-cache
+*.pyc

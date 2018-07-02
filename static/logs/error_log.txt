@@ -85,3 +85,7 @@
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total_public method in db_read.QueryAllData 2018-06-26 17:55:46.257093 
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total method in db_read.QueryAllData 2018-06-26 17:56:06.367438 
 (2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_all_cuisines_and_courses method in db_read.TotalCuisinesCourses 2018-06-26 17:56:26.396696 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total method in db_read.QueryAllData 2018-07-02 21:34:45.654362 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total_public method in db_read.QueryAllData 2018-07-02 21:35:05.666869 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_total method in db_read.QueryAllData 2018-07-02 21:35:25.683665 
+(2003, "Can't connect to MySQL server on 'eu-cdbr-west-02.cleardb.net' (timed out)")  FAILED: get_all_cuisines_and_courses method in db_read.TotalCuisinesCourses 2018-07-02 21:35:46.316908 
