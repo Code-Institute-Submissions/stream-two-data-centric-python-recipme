@@ -398,7 +398,7 @@ if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
 """
 
-PORT = os.environ.setdefault("PORT", 5000)
+PORT = int(os.environ.setdefault("PORT", 5000))
 
 if __name__ == '__main__':
     app.run(debug=False, host=os.environ.get('IP'), port = PORT)
