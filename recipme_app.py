@@ -388,4 +388,4 @@ if development:
         app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=True)
 else:
     if __name__ == '__main__':
-        app.run(debug=False, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000))
+        app.run(debug=False, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000)))
