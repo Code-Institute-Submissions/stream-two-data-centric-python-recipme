@@ -17,7 +17,6 @@ if os.path.exists('myenviron.py'):
 else:
     development=False
     
-print(development)
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
@@ -383,23 +382,10 @@ def page_not_found(error):
     error_code=404
     return render_template('error.html', error_code=404)
 
-"""
+
 if development:
     if __name__ == '__main__':
         app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=True)
 else:
     if __name__ == '__main__':
-        app.run(host=os.environ.get('IP'), port=5000, debug=True)
-
-
-"""
-"""
-if __name__ == '__main__':
-    app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
-"""
-
-PORT = int(os.environ.setdefault("PORT", 5000))
-
-if __name__ == '__main__':
-    app.run(debug=False, host=os.environ.get('IP'), port = PORT)
-
+        app.run(debug=False, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000))
