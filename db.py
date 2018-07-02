@@ -1,8 +1,7 @@
 import os
 import pymysql
-if os.environ.get('DEVELOPMENT') == 1:
+if os.path.exists('myenviron.py'):
     import myenviron
-    print(os.environ.get('DEVELOPMENT'))
 from datetime import datetime
 
 log_file =  "static/logs/error_log.txt"

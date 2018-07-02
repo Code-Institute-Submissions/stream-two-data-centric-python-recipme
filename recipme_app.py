@@ -372,6 +372,7 @@ def rate_recipe(username, recipe_id):
         return redirect('/my_recipme/%s/%s' % (username, recipe_id)) 
 
 ########### ERROR HANDLING ################################
+"""
 @app.errorhandler(500)
 def internal_error(error):
     error_code=500
@@ -392,3 +393,4 @@ else:
 """
 if __name__ == '__main__':
         app.run(host=os.environ.get('IP'), port=5000, debug=True)
+"""
