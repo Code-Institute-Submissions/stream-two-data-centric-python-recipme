@@ -74,7 +74,6 @@ webencodings==0.5.1
 Werkzeug==0.14.1
 widgetsnbextension==3.2.1
 wrapt==1.10.11
-astroid==1.6.3
 backports.functools-lru-cache==1.5
 click==6.7
 configparser==3.5.0
