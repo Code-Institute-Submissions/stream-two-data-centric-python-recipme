@@ -135,8 +135,7 @@ input[type=text] {
           transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
 
 .alter .bars__bar2 {
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; }
+  opacity: 0; }
 
 .alter .bars__bar3 {
   -webkit-transform: rotate(425deg) translate(-0.6rem, 0.2rem);
@@ -469,7 +468,6 @@ footer p {
 
 .join-us__button, .more-info-button {
   border: 0;
-  border-bottom: 1px solid #1d3355;
   font-size: 1rem;
   margin-top: 0.5rem;
   background-color: #fff;
