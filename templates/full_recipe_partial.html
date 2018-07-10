@@ -132,19 +132,23 @@
                 <button type='submit' class='form-submit'>Rate</button>
             </form>
         </section>
-        {% if full_recipe[5] != [] %}
+    {% endif %}
+    {% if full_recipe[5] != [] %}
         <section class='user-comments'>
             <h4 class='feedback-title'>Comments</strong></h4>
             {% for rating in full_recipe[5] %}
-            <p class='full-recipe__text'>rated by <strong>{{ rating['Username'] }}</strong>.</p>
-            <p class='full-recipe__text'><strong>{{ rating['Rating'] }} out of 5</strong></p>
-            <p class='full-recipe__text'><em>"{{ rating['Comments'] }}"</em></p>
-            {% if full_recipe[5]|length > 1 %}
-            <hr class='hr-60'>
-            {% endif %}
+                {% if rating == full_recipe[5]|last %}
+                    <p class='full-recipe__text'>rated by <strong>{{ rating['Username'] }}</strong>.</p>
+                    <p class='full-recipe__text'><strong>{{ rating['Rating'] }} out of 5</strong></p>
+                    <p class='full-recipe__text'><em>"{{ rating['Comments'] }}"</em></p>
+                {% else %}
+                    <p class='full-recipe__text'>rated by <strong>{{ rating['Username'] }}</strong>.</p>
+                    <p class='full-recipe__text'><strong>{{ rating['Rating'] }} out of 5</strong></p>
+                    <p class='full-recipe__text'><em>"{{ rating['Comments'] }}"</em></p>
+                    <hr class="hr-60">
+                {% endif %}
             {% endfor %}
         </section>
-        {% endif %}
         {% endif %}
     </div>
     {% include 'footer.html' %}
