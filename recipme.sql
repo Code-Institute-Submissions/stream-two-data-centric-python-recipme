@@ -2,7 +2,7 @@
 /*DROP DATABASE IF EXISTS `heroku_8956bc974ce0fed`;
 
 CREATE DATABASE `heroku_8956bc974ce0fed`;*/
-/*
+
 USE `heroku_8956bc974ce0fed`;
 
 DROP TABLE `Cuisine`;
@@ -21,7 +21,7 @@ SHOW TABLES;
 
 
 /******************* CREATE TABLES ******************************/
-/*
+
 CREATE TABLE `User`
 (
     `UserId` INT NOT NULL AUTO_INCREMENT,
@@ -123,7 +123,7 @@ CREATE TABLE `SavedRecipes`
 );
 
 /******************* CREATE FOREIGN KEYS ******************************/
-/*
+
 ALTER TABLE `Recipe` ADD CONSTRAINT `FK_RecipeUserId`
     FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -200,7 +200,7 @@ ALTER TABLE `SavedRecipes` ADD CONSTRAINT `FK_SavedRecipesUserId`
 
 CREATE INDEX `IFK_SavedRecipesUserId` ON `SavedRecipes` (`UserId`);
 
-/*
+
 /************************ TEST INSERT DATA ************************************/
 
 
