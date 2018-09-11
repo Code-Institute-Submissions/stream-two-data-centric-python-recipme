@@ -360,7 +360,6 @@ def save_recipe(username, recipe_id):
         ViewFunc().save_or_unsave_recipe(saved, username, recipe_id)
         return redirect('/my_recipme/%s/%s' % (username, recipe_id))
 
-
 ########### RATE RECIPE ROUTE ##############################
 
 @app.route('/my_recipme/<username>/rate/<recipe_id>', methods=['GET', 'POST'])
@@ -374,14 +373,17 @@ def rate_recipe(username, recipe_id):
 
 @app.errorhandler(500)
 def internal_error(error):
-    error_code=500
     return render_template('error.html', error_code=500)
 
 @app.errorhandler(404)
 def page_not_found(error):
-    error_code=404
     return render_template('error.html', error_code=404)
 
+@app.errorhandler(503)
+def server_request_interrupted(error):
+    request.stream.read()
+    return render_template('error.html', error_code=503)
+    
 
 if development:
     if __name__ == '__main__':
