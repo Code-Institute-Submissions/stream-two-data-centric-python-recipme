@@ -379,10 +379,10 @@ def internal_error(error):
 def page_not_found(error):
     return render_template('error.html', error_code=404)
 
-@app.errorhandler(503)
-def server_request_interrupted(error):
+#@app.errorhandler(503)
+#def server_request_interrupted(error):
     #request.stream.read()
-    return render_template('error.html', error_code=503)
+ #   return render_template('error.html', error_code=503)
 
 if development:
     if __name__ == '__main__':
