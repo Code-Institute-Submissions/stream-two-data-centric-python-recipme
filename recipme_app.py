@@ -381,12 +381,11 @@ def page_not_found(error):
 
 @app.errorhandler(503)
 def server_request_interrupted(error):
-   # request.stream.read()
     return render_template('error.html', error_code=503)
 
 if development:
     if __name__ == '__main__':
-        app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=True)
+        app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=False)
 else:
     if __name__ == '__main__':
         app.run(debug=True, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000)))
