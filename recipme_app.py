@@ -379,15 +379,14 @@ def internal_error(error):
 def page_not_found(error):
     return render_template('error.html', error_code=404)
 
-@app.errorhandler(H18)
+@app.errorhandler(503)
 def server_request_interrupted(error):
     #request.stream.read()
     return render_template('error.html', error_code=503)
-    
 
 if development:
     if __name__ == '__main__':
         app.run(host=os.environ.get('DEV_HOST'), port=5000, debug=True)
 else:
     if __name__ == '__main__':
-        app.run(debug=False, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000)))
+        app.run(debug=True, host=os.environ.get('IP'), port = int(os.environ.get('PORT', 5000)))
