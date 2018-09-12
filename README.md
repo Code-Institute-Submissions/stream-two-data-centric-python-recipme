@@ -66,7 +66,7 @@ Automated, manual and technical testing of the site was undertaken and passed.
 
 ## Authors
 
-** Dafydd Archard ** this application was created as part of Code Institute's Web Development Online Full-Stack Course in June 2018.
+**Dafydd Archard** this application was created as part of Code Institute's Web Development Online Full-Stack Course in June 2018.
 
 ## Acknowledgments
 
