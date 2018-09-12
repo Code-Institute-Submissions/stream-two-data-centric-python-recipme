@@ -59,8 +59,8 @@ Automated, manual and technical testing of the site was undertaken and passed.
 1. Python Unit Tests were undertaken as I built the logic of the application.
 2. Chrome/Firefox dev tools used throughout to test JS, responsiveness and function.
 3. Testing the site across different devices in real world scenarios. Mobiles, Tablets, Laptops, and Desktops.
-4. Giving the applcation to third party users to get feedback, and see if they could "break" the application.
-5. W3C code validator to pass HTML, CSS and JS. 
+4. I asked third party users to use the application to gather feedback.
+5. I used code validator to pass HTML, CSS and JS. 
 
 
 ## Authors
@@ -72,6 +72,9 @@ Automated, manual and technical testing of the site was undertaken and passed.
 1. http://pleeease.io/play/
 2. w3c Validator service
 3. Stack Overflow
+4. Font Awesome
+5. Google Fonts
+6. Tippy.js
 
 
 
