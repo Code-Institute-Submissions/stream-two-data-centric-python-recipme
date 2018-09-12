@@ -21,11 +21,11 @@ A live demo of the site is available [here] (https://stream-two-recipme-cookbook
 
 ## Built With 
 
-** VSCODE, HTML, CSS, SASS/SCSS, FLEXBOX, JAVASCRIPT, PYTHON3, MYSQL, FLASK, JINJA, PHOTOSHOP, BALSAMIQ.
+** VSCODE, HTML, CSS, SASS/SCSS, FLEXBOX, JAVASCRIPT, PYTHON3, MYSQL, FLASK, JINJA, HEROKU, PHOTOSHOP, BALSAMIQ.
 
 ## UX Design
 
-Details of the UX design and research process is available in the repo "documentation" folder. The documents show how I approached the design of the site using the 5 layers approach. (Strategy, Structure, Scope, Skeleton, Surface). 
+Details of the UX design and research process are available in the repo "documentation" folder. The documents show how I approached the design of the site using the 5 layers approach. (Strategy, Structure, Scope, Skeleton, Surface). 
 
 ## Build Approach
 
@@ -56,12 +56,13 @@ Details of the UX design and research process is available in the repo "document
 
 Automated, manual and technical testing of the site was undertaken and passed. 
 
-1. Python Unit Tests were undertaken as I built the logic of the application.
-2. Chrome/Firefox dev tools used throughout to test JS, responsiveness and function.
-3. Testing the site across different devices in real world scenarios. Mobiles, Tablets, Laptops, and Desktops.
-4. I asked third party users to use the application to gather feedback.
-5. I used code validator to pass HTML, CSS and JS. 
+1. Python Unit Tests were used as I built the logic of the application.
+2. Chrome/Firefox/Safari/Opera dev tools were used throughout front-end developement to test JS, responsiveness and function.
+3. I tested the site across different devices in real world scenarios. Mobiles, Tablets, Laptops, and Desktops etc..
+4. I asked third party users to use the application to gather feedback and make alterations to the UI.
+5. I used W3C code validator to pass HTML, CSS and JS.  
 
+Automated, manual and technical testing of the site was undertaken and passed. 
 
 ## Authors
 
