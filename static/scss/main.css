@@ -23,10 +23,6 @@ p, a, h3, h4, h5, h6, button, select {
 input[type=text] {
   appearance: none; }
 
-/*input {
-
-    appearance: none;
-}*/
 .ingredient__input {
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
@@ -332,6 +328,12 @@ footer p {
 
 .join-us__button:hover, .more-info-button:hover {
   cursor: pointer; }
+
+.login__button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
 
 .login__button {
   height: 2rem;

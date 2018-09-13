@@ -3,9 +3,7 @@
 
 @mixin form-input {
 
-    //appearance: none;
     margin-top: 0.5rem;
-    //margin-bottom: 0.5rem;
     border: 0.5px solid $title-color;
     border-left: 0;
     border-right: 0;
@@ -20,11 +18,8 @@
 @mixin login-page-forms {
 
     border: 0;
-    //margin: 1rem;
-    //width: 15rem;
     display: flex;
     flex-direction: column;
-    //align-content: center;
     align-items: center;
     
 }
@@ -49,15 +44,13 @@
 
     @include form-button;
     margin-top: 1rem;
-    //margin-bottom: 0.5rem;
-    //transition: width 0.3s $dropDownTransition;
     background-color:$side-bar;
     color: $title-color;
     transition: background-color 0.1s ease-in-out;
 
 }
-// MY RECIPME //
 
+// MY RECIPME //
 .ingredient__input {
 
     @include form-input;

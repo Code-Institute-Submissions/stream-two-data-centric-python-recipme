@@ -139,7 +139,6 @@
 
     display: none;
     position: absolute;
-    //left: 61vw;
     
     @include desktop {
 
@@ -410,6 +409,15 @@ footer p {
     @extend .join-us__button:hover;
 }
 
+.login__button-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .login__button {
 
     @include form-button;
@@ -417,7 +425,7 @@ footer p {
     background-color: #1d3355;
     color: #fff;
     transition: background-color 0.1s ease-in-out;
-    //padding-right: 0;   
+       
 }
 
 .login__button:hover {
@@ -434,7 +442,6 @@ footer p {
 .signup__button {
 
     @include form-button;
-    //margin-bottom: 1rem;
     margin-top: 0.5rem;
     background-color:$side-bar;
     color: $title-color;
@@ -825,7 +832,6 @@ footer p {
 .results__heading {
 
     font-family: $nanum;
-   // padding-left: 1rem;
     font-size: .8rem;
     color: $title-color;
     text-align: center;
@@ -890,7 +896,6 @@ footer p {
 
         display: flex;
         flex-direction: row;
-        //flex-wrap: wrap;
         overflow: scroll;
         justify-content: left;
     }
@@ -1131,7 +1136,6 @@ footer p {
     font-family: $nanum;
     font-size: .8rem;
     color: $title-color;
-    //list-style: none;
     padding-left: 0rem;
 }
 

@@ -25,10 +25,6 @@ input[type=text] {
      -moz-appearance: none;
           appearance: none; }
 
-/*input {
-
-    appearance: none;
-}*/
 .ingredient__input {
   margin-top: 0.5rem;
   border: 0.5px solid #1d3355;
@@ -135,7 +131,8 @@ input[type=text] {
           transform: rotate(-65deg) translate(-0.4rem, 0.4rem); }
 
 .alter .bars__bar2 {
-  opacity: 0; }
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; }
 
 .alter .bars__bar3 {
   -webkit-transform: rotate(425deg) translate(-0.6rem, 0.2rem);
@@ -476,6 +473,25 @@ footer p {
 
 .join-us__button:hover, .more-info-button:hover {
   cursor: pointer; }
+
+.login__button-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
 
 .login__button {
   height: 2rem;
