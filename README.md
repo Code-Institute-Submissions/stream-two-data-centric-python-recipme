@@ -71,7 +71,7 @@ Automated, manual and technical testing of the site was undertaken and passed.
 ## Acknowledgments
 
 1. http://pleeease.io/play/
-2. w3c Validator service
+2. W3C Validator service
 3. Stack Overflow
 4. Font Awesome
 5. Google Fonts
