@@ -12,7 +12,9 @@
 
 ## Demo
 
-A live demo of the site is available [here] (https://stream-two-recipme-cookbook.herokuapp.com/). A github repo of the application is available [here] (https://github.com/darchard1984/stream-two-data-centric-python-recipme).
+A live demo of the site is available at https://stream-two-recipme-cookbook.herokuapp.com/. 
+
+A github repo of the application is available at https://github.com/darchard1984/stream-two-data-centric-python-recipme.
 
 ## Getting Started/Deployment
 
@@ -32,7 +34,7 @@ Details of the UX design and research process are available in the repo "documen
 1. I began the build by first designing the MYSQL Schema. Using the 3 phases approach I first worked on a conceptual model, thorugh to a logical model before writing scripts and commands to create a physical MySQL DB. 
 2. I built a local MySQL DB first, and using terminal wrote basic CRUD SQL Commands to populate the tables, modify and delete them, making sure the relationshps between each table were correct before moving on. At this point some changes were made to the script better suit my needs.
 3. After this, I concentrated on writing all the necessary Python backend code to carry out CRUD Operations on the tables. At this point I didn't take any input from the Front End. I wanted to get all the necessary CRUD functionality written first, hardcoding input to tables at this stage. I wanted to make sure moving data to and from the DB was working as expected first. A TDD approach to this phase was carried out where possible.
-4. Once happy with the my backend functionality. I provisioned a remoted DB on Heroku using ClearDB. 
+4. Once happy with the my backend functionality. I provisioned a remote MYSQL DB on Heroku using ClearDB. 
 5. I decided to split my CRUD operations into separate modules. 
 	- db.py - Class containing the main DB connection, called on by all CRUD operations. 
 	- db_read.py - Classes containing code which carry out read queries on the DB.
@@ -46,8 +48,8 @@ Details of the UX design and research process are available in the repo "documen
 	- recipme_app.py - View functions.
 8. Once happy with the backend, I began applying styles and JS to the front end. 
 9. I again found it necessary to split my JS into separate files. 
-	- classes.js - contains classes used by multiple templates.
-	- "each_page.js" - each URL has it's own JS file which calls on classes/functions contained in the utility.js script sheet.
+	- utility.js - contains classes and functions used by multiple templates.
+	- "each_template.js" - each url has it's own JS file which calls on classes/functions contained in the utility.js script sheet.
 10. I tried to write classes and functions that are able to be utlised more than once.
 11. All styles are custom and the grid system is Flexbox.
 12. I used http://pleeease.io/play/ to generate vendor prefixes once the building of the application was complete. This allowed me to concentrate on writing clean SCSS until ready for submission/deployment.
@@ -62,11 +64,9 @@ Automated, manual and technical testing of the site was undertaken and passed.
 4. I asked third party users to use the application to gather feedback and make alterations to the UI.
 5. I used W3C code validator to pass HTML, CSS and JS.  
 
-Automated, manual and technical testing of the site was undertaken and passed. 
-
 ## Authors
 
-**Dafydd Archard** this application was created as part of Code Institute's Web Development Online Full-Stack Course in June 2018.
+**Dafydd Archard** - this application was created as part of Code Institute's Web Development Online Full-Stack Course in June 2018.
 
 ## Acknowledgments
 
@@ -75,7 +75,7 @@ Automated, manual and technical testing of the site was undertaken and passed.
 3. Stack Overflow
 4. Font Awesome
 5. Google Fonts
-6. Tippy.js
+
 
 
 
