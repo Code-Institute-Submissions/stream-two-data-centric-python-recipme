@@ -71,7 +71,7 @@ class Get():
 #------------------ FOR PAGINATION ----------------------------#
 
     def get_results(self, results, offset=0, per_page=10):
-        #print(results[offset: offset + per_page])
+      
         return results[offset: offset + per_page]
 
 #--------------------------------------------------------------#

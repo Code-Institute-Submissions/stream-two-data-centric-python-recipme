@@ -234,8 +234,6 @@ function Counter() {
 
 function InputCreate(counter) {
 
-    //this.counter = new CounterAPI;
-
     this.addAnIngredient = (button, parent) => {
 
         button.addEventListener("click", (e) => {    
@@ -244,8 +242,7 @@ function InputCreate(counter) {
     
                 const quantity = new CreateElement("Quantity", counter.ingredientCounter, "full-recipe__input-ingredient");
                 const ingredient = new CreateElement("Ingredient", counter.ingredientCounter, "full-recipe__input-ingredient");
-                //const br = new createElement("Ingredient", ingredientCounter);
-    
+               
                 parent.appendChild(quantity.createInput());
                 parent.appendChild(ingredient.createInput());
                 parent.appendChild(ingredient.createBr());

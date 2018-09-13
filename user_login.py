@@ -21,7 +21,6 @@ class LogIn():
     ############### SEARCH USER TABLE FOR USER AND RETURN RESULT ######
 
     def get_existing_user(self):
-        #print(self.user_values)
         new_verify = UserVerify(self.user_values)
         existing_user = new_verify.query_user()
 

@@ -115,12 +115,11 @@
             
             if (statsContainer.classList.contains('stats-show')) {
 
-                //scrollTo(moreInfoContainer);
                 statsContainer.classList.remove('stats-show');
                 moreInfoContainer.classList.remove('more-info--style');
 
             } else {
-            // getRecipesData('/stats');
+            
                 statsContainer.classList.add('stats-show');
                 moreInfoContainer.classList.add('more-info--style');
                 setTimeout(scrollTo, 1000);

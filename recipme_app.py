@@ -31,14 +31,14 @@ app.secret_key = os.environ.get('SECRET_KEY')
 def index():
     stats = Totals().get_all_totals()
     percentage_shared = Totals().get_percentage_shared(stats)
-   # print(percentage_shared)
+  
     return render_template('index.html', stats=stats, shared=percentage_shared)
 
 @app.route('/stats', methods = ['GET', 'POST'])
 def stats():
     stats = Totals().get_all_totals()
     stats_json = json.dumps(stats)
-    #print(stats_json)
+    
     return stats_json
     
 # SIGN UP ROUTE #
@@ -125,7 +125,7 @@ def category_search(username):
         keys = [key for key in request.form]
         table, column = keys[2], keys[2] + 'Name'
         category = request.form[table]
-        print(keys)
+       
         return redirect ('/my_recipme/%s/category/search/%s/%s/%s/%s/%s' % (username, table, column, category,
                                                                               order_by, direction))
 # ALL RECIPES FOR A GIVEN CATEGORY PAGINATE #
@@ -161,7 +161,7 @@ def ingredient_paginate(username, ingredient, order_by, direction):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     pagination_results = Get().get_results(recipe_info[0], offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=recipe_info[1], css_framework='bootstrap4')
-    #print(pagination_results)
+   
 
     return render_template('my_recipme.html', search='ingredient', username=username, 
                             ingredient=ingredient, my_recipme=recipe_info[0], count=recipe_info[1],

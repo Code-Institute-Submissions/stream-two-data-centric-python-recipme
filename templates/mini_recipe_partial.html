@@ -9,7 +9,6 @@
 {% elif results|length > 3 %}
 <div class='results-container '>
 {% endif %}
-    <!--<hr class='hr-90'>-->
     {% for recipe in results %}
     <br>
     <div class='results-recipe-container'>
@@ -20,7 +19,6 @@
                         <h2 class='results-recipe__title'>{{ loop.index + (page - 1) * per_page }}. {{ recipe['RecipeTitle']}}</h2>
                     </div>
                 </div>
-            <!-- <hr class='hr-90'>-->
                 <div class='results-recipe__row'>
                     <div class='results-recipe__description'>
                         <h3 class='results-recipe__category'>Description</h3>

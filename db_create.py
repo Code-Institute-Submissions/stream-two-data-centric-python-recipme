@@ -1,5 +1,4 @@
 import os
-#import myenviron
 from db import Db
 
 def capitalize_words(string):
@@ -22,7 +21,6 @@ class QueryCreateUser():
         try:
             with Db(commit=True) as cursor:
                 cursor.execute(query, (self.username, self.first, self.last, self.password))
-                #Db.connection.commit()
         finally: 
             print('New User Created')
 
@@ -75,7 +73,6 @@ class QueryCreateRecipe():
                                        
         try:
             with Db(commit=True) as cursor:
-                print(recipe_values)
                 cursor.execute(CreateQuery.recipe_query, recipe_values)
                 recipe_primary_key = cursor.lastrowid
         finally:
@@ -129,7 +126,6 @@ class QuerySaveRecipe():
         try:
             with Db(commit=True) as cursor:
                 cursor.execute(save_recipe)
-                print(save_recipe)
         finally:
             print("Query create recipe completed")
 
@@ -147,7 +143,6 @@ class QueryRateRecipe(QuerySaveRecipe):
         try:
             with Db(commit=True) as cursor:
                 cursor.execute(CreateQuery.rate_query, rating)
-                print(rating)
         finally:
             print("Query create recipe completed")
         

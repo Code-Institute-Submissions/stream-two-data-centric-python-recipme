@@ -88,7 +88,6 @@ class ViewVariables():
         user_id = Get().get_user_id(username[0]['Username'])['UserId']
         is_saved = Get().get_is_recipe_saved(user_id, recipe_id)
         ratings = QueryRating(recipe_id).query_rating_and_comments()
-        #average = Get().get_average_rating(ratings)
 
         return username, recipe, ingredients, method, is_saved, ratings
 
